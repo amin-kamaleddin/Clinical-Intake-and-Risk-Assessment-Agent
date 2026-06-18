@@ -20,11 +20,7 @@ def get_pending_fields(state: AliceState, section: str) -> list[str]:
 
 
 def build_section_prompt(state: AliceState) -> str:
-    """
-    Build the dynamic, per-turn portion of the system prompt.
-    Tells the model: today's date, patient name, what to collect next,
-    and which section-specific instructions to follow.
-    """
+    """Build the dynamic, per-turn portion of the system prompt."""
     today      = date.today().strftime("%B %d, %Y")
     name       = state["general_information"].get("name")
     section    = state["current_section"]
@@ -49,9 +45,25 @@ def build_section_prompt(state: AliceState) -> str:
     )
 
 
+def build_voice_context(state: AliceState) -> str:
+    """
+    Tell the model how the latest message arrived, so it knows whether to
+    apply the speech-to-text spelling rules.
+    """
+    input_source = state.get("latest_input_source", "typed text")
+    speech_mode  = "ON" if state.get("speech_to_text_active", False) else "OFF"
+    return (
+        f"Speech-to-text mode: {speech_mode}\n"
+        f"Latest input source: {input_source}"
+    )
+
+
 def build_system_prompt(state: AliceState) -> str:
-    """
-    Combine the static prompt with the dynamic section prompt.
-    This is the full system message passed to the model on every turn.
-    """
-    return STATIC_PROMPT + "\n\n" + build_section_prompt(state)
+    """Combine static prompt + voice context + dynamic section prompt."""
+    return (
+        STATIC_PROMPT
+        + "\n\n"
+        + build_voice_context(state)
+        + "\n\n"
+        + build_section_prompt(state)
+    )

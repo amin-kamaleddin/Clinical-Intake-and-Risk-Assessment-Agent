@@ -1,8 +1,7 @@
+import html
+
 from core.state import AliceState
 
-
-# ── Human-readable field labels ────────────────────────────────────────────────
-# Used by format_display to render the info panel on the right.
 
 FIELD_LABELS: dict[str, dict[str, str]] = {
     "general_information": {
@@ -26,14 +25,10 @@ FIELD_LABELS: dict[str, dict[str, str]] = {
 
 
 def format_display(alice_state: AliceState | None) -> str:
-    """
-    Render the collected-information panel as an HTML string.
-    Shows a progress bar, then one row per visible field.
-    """
+    """Render the collected-information panel as an HTML string."""
     if not alice_state or not alice_state.get("current_section"):
         return """
-        <div style="font-family:'Inter',sans-serif;padding:20px;
-                    text-align:center;color:#94a3b8;font-size:13px;font-style:italic;">
+        <div class="empty-info">
             Select a section above to begin
         </div>
         """
@@ -43,7 +38,6 @@ def format_display(alice_state: AliceState | None) -> str:
     labels  = FIELD_LABELS.get(section, {})
     title   = section.replace("_", " ").title()
 
-    # ── Hide conditional fields that don't apply ───────────────────────────────
     def should_show(field: str) -> bool:
         if field == "family_doctor_name" and data.get("has_family_doctor") is False:
             return False
@@ -51,51 +45,49 @@ def format_display(alice_state: AliceState | None) -> str:
             return False
         return True
 
-    visible = {f: l for f, l in labels.items() if should_show(f)}
+    visible_fields = {f: l for f, l in labels.items() if should_show(f)}
 
-    total  = len(visible)
-    filled = sum(1 for f in visible if data.get(f) is not None)
-    pct    = int((filled / total) * 100) if total else 0
+    total      = len(visible_fields)
+    filled     = sum(1 for f in visible_fields if data.get(f) is not None)
+    percentage = int((filled / total) * 100) if total else 0
 
-    # ── Render each field row ──────────────────────────────────────────────────
     fields_html = ""
-    for field, label in visible.items():
-        value = data.get(field)
+    for field, label in visible_fields.items():
+        value      = data.get(field)
+        safe_label = html.escape(str(label))
 
         if value is None:
-            val_html = '<div style="font-size:13px;color:#cbd5e0;font-style:italic;">—</div>'
+            value_html = '<div class="field-empty">—</div>'
 
         elif isinstance(value, bool):
-            color    = "#0F6E56" if value else "#718096"
-            bg       = "#e6f4ef" if value else "#f1f5f9"
-            text     = "Yes"     if value else "No"
-            val_html = (
-                f'<span style="font-size:12px;color:{color};background:{bg};'
-                f'font-weight:600;padding:2px 10px;border-radius:999px;">{text}</span>'
-            )
+            badge_class = "yes-badge" if value else "no-badge"
+            badge_text  = "Yes"       if value else "No"
+            value_html  = f'<span class="boolean-badge {badge_class}">{badge_text}</span>'
 
         else:
-            val_html = f'<div style="font-size:14px;color:#1e293b;font-weight:500;">{value}</div>'
+            safe_value = html.escape(str(value))
+            value_html = f'<div class="field-value">{safe_value}</div>'
 
         fields_html += f"""
-        <div style="padding:11px 0;border-bottom:1px solid #e8f0fb;">
-            <div style="font-size:10px;color:#94a3b8;letter-spacing:0.6px;
-                        text-transform:uppercase;margin-bottom:5px;">{label}</div>
-            {val_html}
+        <div class="info-field">
+            <div class="field-label">{safe_label}</div>
+            {value_html}
         </div>
         """
 
+    safe_title = html.escape(title)
+
     return f"""
-    <div style="font-family:'Inter',sans-serif;padding:4px 8px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;
-                    margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid #dbeafe;">
-            <div style="font-size:13px;font-weight:600;color:#1e40af;">{title}</div>
-            <div style="font-size:11px;color:#94a3b8;">{filled}/{total}</div>
+    <div class="information-panel">
+        <div class="information-header">
+            <div class="information-title">{safe_title}</div>
+            <div class="information-count">{filled}/{total}</div>
         </div>
-        <div style="background:#e2e8f0;border-radius:999px;height:5px;margin-bottom:16px;">
-            <div style="background:linear-gradient(90deg,#185FA5,#3b82f6);height:5px;
-                        border-radius:999px;width:{pct}%;"></div>
+
+        <div class="progress-track">
+            <div class="progress-value" style="width:{percentage}%;"></div>
         </div>
+
         {fields_html}
     </div>
     """

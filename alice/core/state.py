@@ -30,12 +30,16 @@ class AliceState(TypedDict):
     sections_completed:    List[str]
     safety_flag:           bool
     conversation_started:  bool
+
+    # Voice context — tells the prompt how the latest message arrived
+    latest_input_source:   str   # "typed text" | "speech-to-text"
+    speech_to_text_active: bool   # whether patient voice mode is on
+
     general_information:   GeneralInformation
     current_concerns:      CurrentConcerns
 
 
 # ── Field registry ─────────────────────────────────────────────────────────────
-# Defines which fields must be collected, in order, per section.
 
 REQUIRED_FIELDS: dict[str, list[str]] = {
     "general_information": [
@@ -61,11 +65,13 @@ REQUIRED_FIELDS: dict[str, list[str]] = {
 # ── Blank starting state ───────────────────────────────────────────────────────
 
 initial_state: AliceState = {
-    "messages":             [],
-    "current_section":      None,
-    "sections_completed":   [],
-    "safety_flag":          False,
-    "conversation_started": False,
+    "messages":              [],
+    "current_section":       None,
+    "sections_completed":    [],
+    "safety_flag":           False,
+    "conversation_started":  False,
+    "latest_input_source":   "typed text",
+    "speech_to_text_active": False,
     "general_information": {
         "name":               None,
         "gender":             None,

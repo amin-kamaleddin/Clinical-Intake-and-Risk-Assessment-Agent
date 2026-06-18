@@ -22,7 +22,4 @@ def raise_safety_flag() -> str:
     return "flag_raised"
 
 
-# ── Bound tool list ────────────────────────────────────────────────────────────
-# Import this list wherever you need to bind tools to a model.
-
 tools = [save_answer, raise_safety_flag]

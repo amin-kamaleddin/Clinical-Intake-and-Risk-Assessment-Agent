@@ -3,9 +3,7 @@ from datetime import datetime, date
 
 
 # ── Individual validators ──────────────────────────────────────────────────────
-# Each returns (is_valid: bool, result: str | parsed_value)
-# On success  → (True,  cleaned/normalised value)
-# On failure  → (False, human-readable error message for the LLM to relay)
+# Each returns (is_valid: bool, result: cleaned_value | error_message)
 
 def validate_date_of_birth(value: str):
     try:
@@ -97,8 +95,7 @@ def validate_doctor_name(value: str):
 
 
 # ── Validator registry ─────────────────────────────────────────────────────────
-# Maps state field names → their validator function.
-# Fields absent from this dict are saved as-is (no validation needed).
+# NOTE: the "address" key must match the state field name exactly.
 
 FIELD_VALIDATORS = {
     "date_of_birth":      validate_date_of_birth,

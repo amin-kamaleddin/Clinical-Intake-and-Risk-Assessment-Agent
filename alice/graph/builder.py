@@ -4,10 +4,6 @@ from core.state import AliceState
 from graph.nodes import section_node
 
 
-# ── Graph definition ───────────────────────────────────────────────────────────
-# Currently a single node. Adding nodes here (e.g. a router, a summary node)
-# is the only change needed to extend the graph topology.
-
 def build_graph():
     builder = StateGraph(AliceState)
     builder.add_node("section", section_node)
@@ -16,5 +12,4 @@ def build_graph():
     return builder.compile()
 
 
-# ── Compiled graph — import this everywhere ────────────────────────────────────
 graph = build_graph()
