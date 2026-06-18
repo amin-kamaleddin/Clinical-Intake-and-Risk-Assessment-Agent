@@ -24,11 +24,16 @@ FIELD_LABELS: dict[str, dict[str, str]] = {
 }
 
 
-def format_display(alice_state: AliceState | None) -> str:
-    """Render the collected-information panel as an HTML string."""
+def format_display(alice_state):
+    """
+    Render the collected-information panel as an HTML string.
+    All styles are INLINE so they render correctly inside Gradio 6's
+    sandboxed gr.HTML component (external CSS classes do not reach here).
+    """
     if not alice_state or not alice_state.get("current_section"):
         return """
-        <div class="empty-info">
+        <div style="font-family:'Inter',sans-serif;padding:20px;
+                    text-align:center;color:#94a3b8;font-size:13px;font-style:italic;">
             Select a section above to begin
         </div>
         """
@@ -38,7 +43,7 @@ def format_display(alice_state: AliceState | None) -> str:
     labels  = FIELD_LABELS.get(section, {})
     title   = section.replace("_", " ").title()
 
-    def should_show(field: str) -> bool:
+    def should_show(field):
         if field == "family_doctor_name" and data.get("has_family_doctor") is False:
             return False
         if field == "psychiatrist_name"  and data.get("has_psychiatrist")  is False:
@@ -57,37 +62,45 @@ def format_display(alice_state: AliceState | None) -> str:
         safe_label = html.escape(str(label))
 
         if value is None:
-            value_html = '<div class="field-empty">—</div>'
+            value_html = '<div style="font-size:13px;color:#cbd5e0;font-style:italic;">&mdash;</div>'
 
         elif isinstance(value, bool):
-            badge_class = "yes-badge" if value else "no-badge"
-            badge_text  = "Yes"       if value else "No"
-            value_html  = f'<span class="boolean-badge {badge_class}">{badge_text}</span>'
+            color = "#0F6E56" if value else "#718096"
+            bg    = "#e6f4ef" if value else "#f1f5f9"
+            text  = "Yes"     if value else "No"
+            value_html = (
+                f'<span style="display:inline-block;font-size:12px;color:{color};'
+                f'background:{bg};font-weight:600;padding:2px 10px;border-radius:999px;">{text}</span>'
+            )
 
         else:
             safe_value = html.escape(str(value))
-            value_html = f'<div class="field-value">{safe_value}</div>'
+            value_html = (
+                f'<div style="font-size:14px;color:#1e293b;font-weight:500;'
+                f'overflow-wrap:anywhere;">{safe_value}</div>'
+            )
 
-        fields_html += f"""
-        <div class="info-field">
-            <div class="field-label">{safe_label}</div>
-            {value_html}
-        </div>
-        """
+        fields_html += (
+            '<div style="padding:11px 0;border-bottom:1px solid #e8f0fb;">'
+            f'<div style="font-size:10px;color:#94a3b8;letter-spacing:0.6px;'
+            f'text-transform:uppercase;margin-bottom:5px;">{safe_label}</div>'
+            f'{value_html}</div>'
+        )
 
     safe_title = html.escape(title)
 
-    return f"""
-    <div class="information-panel">
-        <div class="information-header">
-            <div class="information-title">{safe_title}</div>
-            <div class="information-count">{filled}/{total}</div>
-        </div>
-
-        <div class="progress-track">
-            <div class="progress-value" style="width:{percentage}%;"></div>
-        </div>
-
-        {fields_html}
-    </div>
-    """
+    return (
+        '<div style="font-family:\'Inter\',sans-serif;padding:4px 8px;">'
+            '<div style="display:flex;align-items:center;justify-content:space-between;'
+            'margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid #dbeafe;">'
+                f'<div style="font-size:13px;font-weight:600;color:#1e40af;">{safe_title}</div>'
+                f'<div style="font-size:11px;color:#94a3b8;">{filled}/{total}</div>'
+            '</div>'
+            '<div style="background:#e2e8f0;border-radius:999px;height:5px;'
+            'margin-bottom:16px;overflow:hidden;">'
+                f'<div style="background:linear-gradient(90deg,#185FA5,#3b82f6);'
+                f'height:5px;border-radius:999px;width:{percentage}%;"></div>'
+            '</div>'
+            f'{fields_html}'
+        '</div>'
+    )

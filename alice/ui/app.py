@@ -56,8 +56,10 @@ def build_demo() -> gr.Blocks:
                 with gr.Row():
                     with gr.Column(elem_classes="voice-card"):
                         gr.HTML("""
-                            <div class="voice-title">ALICE Voice</div>
-                            <div class="voice-description">
+                            <div style="margin-bottom:8px;color:#334155;font-size:13px;font-weight:600;">
+                                ALICE Voice
+                            </div>
+                            <div style="min-height:34px;color:#64748b;font-size:12px;line-height:1.45;">
                                 Reads ALICE's replies aloud automatically.
                             </div>
                         """)
@@ -68,8 +70,10 @@ def build_demo() -> gr.Blocks:
 
                     with gr.Column(elem_classes="voice-card"):
                         gr.HTML("""
-                            <div class="voice-title">Patient Voice</div>
-                            <div class="voice-description">
+                            <div style="margin-bottom:8px;color:#334155;font-size:13px;font-weight:600;">
+                                Patient Voice
+                            </div>
+                            <div style="min-height:34px;color:#64748b;font-size:12px;line-height:1.45;">
                                 Records and sends the patient's answer automatically.
                             </div>
                         """)
@@ -101,13 +105,12 @@ def build_demo() -> gr.Blocks:
                     elem_classes="patient-status",
                 )
 
-                gr.Markdown(
-                    (
-                        "ALICE's voice and patient transcription are AI-generated. "
-                        "Patient recordings are transcribed and submitted automatically."
-                    ),
-                    elem_classes="ai-disclosure",
-                )
+                gr.HTML("""
+                    <div style="color:#64748b;font-size:11px;margin-top:4px;">
+                        ALICE's voice and patient transcription are AI-generated.
+                        Patient recordings are transcribed and submitted automatically.
+                    </div>
+                """)
 
             with gr.Column(scale=1):
                 info_display = gr.HTML(
