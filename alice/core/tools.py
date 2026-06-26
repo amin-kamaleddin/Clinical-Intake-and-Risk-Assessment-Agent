@@ -5,7 +5,7 @@ from langchain_core.tools import tool
 def save_answer(field_name: str, value: str) -> str:
     """
     Call this every time the patient answers a question or corrects a previous answer.
-    field_name: the exact field name (e.g. 'name', 'gender', 'date_of_birth', 'address')
+    field_name: the exact field name (e.g. 'name', 'gender', 'age', 'address')
     value: exactly what the patient said
     """
     return "saved"

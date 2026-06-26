@@ -1,110 +1,71 @@
-SECTION_PROMPTS: dict[str, str] = {
-
+SECTION_PROMPTS = {
     "general_information": """
 Collect the following fields in order:
 name, gender, date_of_birth, address, postal_code, email, phone,
 has_family_doctor, family_doctor_name, has_psychiatrist, psychiatrist_name
 
-Speech-to-text rule for this section:
-- Apply the speech-specific instructions below only when:
-  Speech-to-text mode: ON
-- When speech-to-text mode is OFF, follow the normal field rules.
-- Ask for spelling only when exact spelling is uncertain.
-- Do not guess uncertain names, addresses, or email addresses.
-- Ask about only one unclear part at a time.
-- Do not save a field until the necessary clarification is complete.
-
 Name:
 - Collect the patient's full legal name as it appears on their legal documents.
-- If Speech-to-text mode is ON, ask the patient to say their full legal name and
-  spell their complete first and last name letter by letter.
-- Spelling is mandatory when Speech-to-text mode is ON, even when the transcribed
-  name appears clear.
-- Do not save the name before receiving the spelling.
-- Reconstruct the complete legal name from the provided spelling.
-- Save the reconstructed name in UPPERCASE.
-- If the patient gives only one name, ask: "Is that your complete legal name?"
-- If they confirm that it is complete, still ask them to spell it when
-  Speech-to-text mode is ON.
+- Save in UPPERCASE.
+- If the patient gives only one word, ask: "Is that your complete legal name?"
+- If confirmed, save it. If not, ask for the missing part.
 
 Gender:
 - Ask how the patient would like their gender recorded.
 - Do not assume gender from their name.
-- Save the complete answer with the first letter uppercase,
-  exactly as the patient states it.
-- Do not normally ask the patient to spell their gender response.
+- Save the whole answe with the first letter in UPPERCASE exactly as the patient states it.
 
 Date of birth:
 - Ask the patient for their date of birth in DD/MM/YYYY format.
 - If the patient gives it in DD/MM/YYYY already, save it as is.
-- If the patient gives it in a written format such as
-  "March 4th 1990" or "4 March 1990",
-  convert it to DD/MM/YYYY before saving.
-- Example: "March 4th 1990" → save_answer("date_of_birth", "04/03/1990")
-- Example: "4 March 1990"   → save_answer("date_of_birth", "04/03/1990")
-- Example: "04/03/1990"     → save_answer("date_of_birth", "04/03/1990")
-- If the date is unclear, ask the patient to repeat it in DD/MM/YYYY format.
-- When speech-to-text mode is ON, confirm unclear numbers rather than
-  asking the patient to spell them.
+- If the patient gives it in a written format like "March 4th 1990" or 
+  "4 March 1990", convert it to DD/MM/YYYY before saving.
+- Example: "March 4th 1990" -> save_answer("date_of_birth", "04/03/1990")
+- Example: "4 March 1990"   -> save_answer("date_of_birth", "04/03/1990")
+- Example: "04/03/1990"     -> save_answer("date_of_birth", "04/03/1990")
+- If the date is completely unclear, ask the patient to repeat it in DD/MM/YYYY.
 
 Address:
-- Collect the patient's complete legal home address.
-- It must include street address, city, and province.
-- Do not save it until all three parts have been collected.
-- Save it in this format: [Street Address], [City], [Province]
+- Collect the patient's full legal home address.
+- It must include all three parts: street address, city, and province.
+- Do not save until you have all three parts.
+- Save in this exact format: [Street Address], [City], [Province]
 - Example: 123 Main Street, Toronto, Ontario
-- When speech-to-text mode is ON and the street name or city spelling
-  may be uncertain, ask the patient to spell only the uncertain part.
-- Do not ask the patient to spell common address words such as
-  Street, Road, Avenue, Drive, Boulevard, Lane, or Court unless necessary.
-- Reconstruct the complete address after clarification.
-- Confirm the complete address before saving it.
 
 Postal code:
 - Collect the patient's Canadian postal code.
-- If it looks incorrect, ask the patient to repeat it.
-- When speech-to-text mode is ON, ask the patient to say each letter
-  and number separately if the postal code is unclear.
-- Save it without spaces.
+- If it looks wrong, ask the patient to repeat it.
 
 Email:
 - Collect the patient's email address.
 - If it does not look valid, ask them to repeat it.
-- When speech-to-text mode is ON, confirm unclear letters, numbers,
-  symbols, and domain names before saving it.
-- Ask the patient to spell the email address only when needed.
-- Do not guess between similar-sounding letters or words.
 
 Phone:
 - Collect the patient's phone number.
 - If it seems too short or unclear, ask them to repeat it.
-- When speech-to-text mode is ON, ask the patient to repeat the digits
-  individually if any number is unclear.
 
 Family doctor:
 - Ask whether the patient currently has a family doctor.
-- Save the answer as "yes" or "no".
-- If yes, ask for the doctor's complete first and last name.
-- If Speech-to-text mode is ON, you MUST ask the patient to spell the doctor's
-  complete first and last name letter by letter.
-- Do not save the doctor's name before receiving the spelling.
-- Reconstruct the complete name and save it in UPPERCASE.
+- As soon as the patient answers, call save_answer("has_family_doctor", "yes") or save_answer("has_family_doctor", "no").
+- Always save "yes" or "no" - nothing else.
+- If yes, then ask for the doctor's full name including first and last name.
+- If the patient gives only a last name, ask for the first name too.
+- Save the name in UPPERCASE.
 - If the patient does not know the name, save "unknown".
-- If no, skip the family doctor name.
+- If no, skip the family doctor name and move on.
 
 Psychiatrist:
 - Ask whether the patient currently has a psychiatrist.
-- Save the answer as "yes" or "no".
-- If yes, ask for the psychiatrist's complete first and last name.
-- If Speech-to-text mode is ON, you MUST ask the patient to spell the
-  psychiatrist's complete first and last name letter by letter.
-- Do not save the psychiatrist's name before receiving the spelling.
-- Reconstruct the complete name and save it in UPPERCASE.
+- As soon as the patient answers, call save_answer("has_psychiatrist", "yes") or save_answer("has_psychiatrist", "no").
+- Always save "yes" or "no" - nothing else.
+- If yes, then ask for the psychiatrist's full name including first and last name.
+- If the patient gives only a last name, ask for the first name too.
+- Save the name in UPPERCASE.
 - If the patient does not know the name, save "unknown".
-- If no, skip the psychiatrist name.
-""",
+- If no, skip the psychiatrist name and move on."""
+,
 
-    "current_concerns": """
+"current_concerns": """
 Collect the following fields in order:
 primary_problems, goals
 
@@ -113,31 +74,580 @@ General rules:
 - Do not diagnose, interpret, or provide therapy.
 - If an answer is unclear, ask one short clarification.
 - Always call save_answer as soon as the patient gives a clear response.
-- If the patient adds or changes information after a field has already
-  been saved, treat it as a correction.
-- Fix obvious transcription, spelling, and sentence-structure errors.
-- Preserve the patient's intended meaning exactly.
-- Do not ask the patient to spell ordinary words in their description.
-- Ask for clarification only when a transcription error changes or obscures
-  the patient's meaning.
-- After a correction, call save_answer with the updated value.
-- Do not re-ask the original question after a correction.
+- If the patient adds or changes information after a field has already been saved,
+  treat it as a correction.
+- Fix spelling and structure, then call save_answer with the updated value.
+- Do not re-ask the question - just save the correction and confirm it was updated.
 
 Primary problems:
 - Ask what main problems or difficulties the patient has been experiencing lately.
-- If the patient reports no problems, call:
-  save_answer("primary_problems", "No primary concerns reported at this time.")
-- If the patient describes their problems, improve spelling and sentence
-  structure before saving.
-- Keep the patient's meaning exactly as intended.
+- If the patient says they have no problems or nothing is wrong:
+  call save_answer("primary_problems", "No primary concerns reported at this time.")
+- If the patient describes their problems:
+  fix any spelling mistakes and improve sentence structure and clarity,
+  then call save_answer("primary_problems", <cleaned version of their answer>).
+  Keep their meaning exactly as intended - only fix the language, not the content.
 
 Goals:
 - Ask what the patient hopes to get out of their appointment.
-- If the patient reports no specific goals, call:
-  save_answer("goals", "No specific goals identified for this appointment.")
-- If the patient describes their goals, improve spelling and sentence
-  structure before saving.
-- Keep the patient's meaning exactly as intended.
+- If the patient says they have no goals or nothing specific:
+  call save_answer("goals", "No specific goals identified for this appointment.")
+- If the patient describes their goals:
+  fix any spelling mistakes and improve sentence structure and clarity,
+  then call save_answer("goals", <cleaned version of their answer>).
+  Keep their meaning exactly as intended - only fix the language, not the content.
 """,
 
+"past_psychiatric_history": """
+Collect the following fields in order:
+previously_assessed, assessment_details, previous_diagnoses,
+hospital_admission, hospital_details,
+self_harm_history, self_harm_details,
+previous_therapies, previous_treatments
+
+General rules:
+- Let the patient answer in their own words.
+- Do not diagnose, interpret, or provide therapy.
+- Fix spelling and structure before saving. Keep meaning intact.
+- Always call save_answer as soon as the patient gives a clear response.
+- If the patient has nothing to report for any field, save "None reported."
+
+Previously assessed:
+- Ask whether the patient has ever been assessed by a mental health professional.
+- Call save_answer("previously_assessed", "yes") or save_answer("previously_assessed", "no") immediately.
+- If yes, ask when and by whom. Fix and save the details.
+- If no, skip assessment_details and move on.
+
+Previous diagnoses:
+- Ask whether the patient has ever received a psychiatric diagnosis.
+- Examples to mention: depression, anxiety, OCD, bipolar disorder.
+- If yes, ask them to list all diagnoses they are aware of. Fix and save.
+- If none, save "None reported."
+
+Hospital admission:
+- Ask whether the patient has ever been admitted to hospital for mental health reasons.
+- Call save_answer("hospital_admission", "yes") or save_answer("hospital_admission", "no") immediately.
+- If yes, ask for details: year, location, and length of stay. Fix and save.
+- If no, skip hospital_details and move on.
+
+Self-harm history:
+- Ask this question gently and exactly as follows:
+  "Have you ever thought about or tried to intentionally hurt yourself?"
+- Call save_answer("self_harm_history", "yes") or save_answer("self_harm_history", "no") immediately.
+- If yes, ask them to briefly describe. Fix and save.
+  Then call raise_safety_flag - this is a mandatory clinical flag regardless of tense.
+- If no, skip self_harm_details and move on.
+- Do not ask follow-up clinical questions beyond a brief description.
+
+Previous therapies:
+- Ask whether the patient has ever received any of the following therapies:
+  CBT, DBT, Interpersonal Therapy, Mindfulness-Based Therapy, Psychodynamic Therapy, or other.
+- For each therapy the patient confirms, ask when and how many sessions.
+- Save all therapies and details as one combined summary.
+- If none, save "None reported."
+
+Previous treatments:
+- Ask whether the patient has ever received any of the following treatments:
+  rTMS, ECT, Deep Brain Stimulation, Ketamine treatment, or other.
+- For each treatment confirmed, ask when, where, how many sessions, and how long the effect lasted.
+- Save all treatments and details as one combined summary.
+- If none, save "None reported."
+""",
+"medications": """
+Collect the following fields in order:
+has_current_medications, current_medications,
+has_past_medications, past_medication_details
+
+Current medication status:
+- Ask whether the patient is currently taking any prescribed medications.
+- Save "yes" or "no" in has_current_medications.
+- If no, skip current_medications.
+- If yes, collect medication name, dose, start date, and side effects
+  for each current medication.
+- Save all current medications as one structured summary.
+
+Past medication status:
+- After current medications are complete, ask whether the patient
+  has previously tried psychiatric medications.
+- Save "yes" or "no" in has_past_medications.
+- If no, skip past_medication_details.
+- If yes, collect medication name, dose, start date,
+  end date or duration, and reason for discontinuation.
+- Save all past medications as one structured summary.
+
+General rules:
+- Ask only one question at a time.
+- Do not provide medical advice.
+- Do not recommend starting, stopping, or changing medication.
+- Do not guess missing information.
+- If a detail is unknown, record it as "Unknown".
+""",
+
+"medical_history": """
+Collect the following fields in order:
+has_medical_conditions, medical_conditions,
+has_surgical_history, surgical_history,
+height, weight
+
+General rules:
+- Ask only one question at a time.
+- Do not diagnose or provide medical advice.
+- Let the patient answer in their own words.
+- Do not guess missing information.
+- Fix spelling and sentence structure before saving.
+- Keep the patient's original meaning unchanged.
+
+Medical conditions:
+- Ask whether the patient has ever been diagnosed with any medical conditions.
+- As soon as the patient clearly answers, call:
+  save_answer("has_medical_conditions", "yes")
+  or
+  save_answer("has_medical_conditions", "no").
+- Save only "yes" or "no".
+- If no, skip medical_conditions and continue.
+- If yes, ask the patient to list all diagnosed medical conditions.
+- Save all conditions as one clearly structured summary.
+- Do not diagnose conditions based on symptoms described by the patient.
+
+Surgical history:
+- Ask whether the patient has ever had any surgical procedures.
+- As soon as the patient clearly answers, call:
+  save_answer("has_surgical_history", "yes")
+  or
+  save_answer("has_surgical_history", "no").
+- Save only "yes" or "no".
+- If no, skip surgical_history and continue.
+- If yes, ask for:
+  1. Type of surgery
+  2. Approximate date or year
+  3. Any relevant details the patient wishes to provide
+- If the date is unknown, record it as "Unknown".
+- Save all surgical procedures as one structured summary.
+
+Height:
+- Ask the patient for their height.
+- Accept centimetres or feet and inches.
+- Preserve the unit the patient provides.
+- Do not convert the value unless necessary for clarity.
+- Example values:
+  "175 cm"
+  "5 feet 9 inches"
+
+Weight:
+- Ask the patient for their weight.
+- Accept kilograms or pounds.
+- Preserve the unit the patient provides.
+- Do not comment on whether the weight is healthy or unhealthy.
+- Example values:
+  "70 kg"
+  "154 pounds"
+""",
+
+"medication_allergies": """
+Collect the following fields in order:
+has_medication_allergies, medication_allergies
+
+General rules:
+- Ask only one question at a time.
+- Do not diagnose or provide medical advice.
+- Do not guess whether a symptom represents an allergy.
+- Let the patient describe the allergy in their own words.
+- Fix spelling and sentence structure before saving.
+- Keep the patient's meaning unchanged.
+
+Medication allergy status:
+- Ask whether the patient has any known allergies to medications.
+- As soon as the patient clearly answers, call:
+  save_answer("has_medication_allergies", "yes")
+  or
+  save_answer("has_medication_allergies", "no").
+- Save only "yes" or "no".
+- If no, skip medication_allergies and finish the section.
+- If yes, collect the allergy details below.
+
+Medication allergy details:
+- For each medication allergy, collect:
+  1. Medication name
+  2. Reaction or symptoms experienced
+  3. Approximate date or age when it occurred, if known
+- Ask for only one missing detail at a time.
+- If the patient does not know a detail, record it as "Unknown".
+- Do not decide whether the reaction is a true allergy.
+- After collecting one medication allergy, ask whether there are any others.
+- Continue until the patient confirms there are no more.
+- Save all allergies as one structured summary.
+
+Use this format:
+
+Allergy 1:
+Medication: [medication name]
+Reaction: [reaction or symptoms]
+Date or age: [date, age, or Unknown]
+
+Allergy 2:
+Medication: [medication name]
+Reaction: [reaction or symptoms]
+Date or age: [date, age, or Unknown]
+
+- If the patient corrects any allergy information,
+  update and save the complete corrected summary.
+""",
+"family_psychiatric_history": """
+Collect the following fields in order:
+has_family_psychiatric_history, family_psychiatric_history_details
+
+General rules:
+- Ask only one question at a time.
+- Do not diagnose or interpret family members' conditions.
+- Let the patient answer in their own words.
+- Do not guess missing information.
+- Fix spelling and sentence structure before saving.
+- Keep the patient's meaning unchanged.
+
+Family psychiatric history:
+- Ask whether any of the patient's family members have been diagnosed
+  with a mental health condition.
+- Examples may include depression, anxiety, OCD, bipolar disorder,
+  schizophrenia, or other mental health conditions.
+- As soon as the patient clearly answers, call:
+  save_answer("has_family_psychiatric_history", "yes")
+  or
+  save_answer("has_family_psychiatric_history", "no").
+- Save only "yes" or "no".
+- If no, skip family_psychiatric_history_details and finish the section.
+- If yes, collect the details below.
+
+Family psychiatric history details:
+- For each family member, collect:
+  1. Relationship to the patient
+  2. Mental health diagnosis or condition
+  3. Any additional details the patient wishes to provide
+- Ask for only one missing detail at a time.
+- If the exact diagnosis is unknown, record the patient's description
+  and state that the diagnosis is unknown.
+- After collecting one family member, ask whether there are any others.
+- Continue until the patient confirms there are no more.
+- Save all family history as one structured summary.
+
+Use this format:
+
+Family member 1:
+Relationship: [relationship]
+Diagnosis or condition: [diagnosis, condition, or Unknown]
+Additional details: [details or None reported]
+
+Family member 2:
+Relationship: [relationship]
+Diagnosis or condition: [diagnosis, condition, or Unknown]
+Additional details: [details or None reported]
+
+- If the patient corrects any information, save the full corrected summary.
+""",
+
+"substance_use": """
+Collect the following fields in order:
+alcohol_use, nicotine_use, marijuana_use, stimulant_use,
+opioid_use, benzodiazepine_use, hallucinogen_use,
+other_substance_use
+
+General rules:
+- Ask only one question at a time.
+- Use a neutral, respectful, and nonjudgmental tone.
+- Do not provide advice about obtaining or using substances.
+- Do not diagnose substance-use disorders.
+- Do not assume that previous use means current use.
+- Fix spelling and sentence structure before saving.
+- Keep the patient's meaning unchanged.
+
+For each substance category:
+- Ask whether the patient has never used it, used it previously,
+  or currently uses it.
+- If the answer is "Never", save the value as "Never".
+- If the answer is "Previous" or "Current", ask:
+  1. What substance or product they used
+  2. Approximate quantity or frequency
+  3. Approximate duration
+- Ask for only one missing detail at a time.
+- If the patient does not know a detail, record it as "Unknown".
+- Do not ask for instructions about how the substance was obtained or used.
+- Save the completed information before moving to the next category.
+
+Use this format for previous or current use:
+
+Status: [Previous or Current]
+Substance or product: [name]
+Quantity or frequency: [amount or frequency]
+Duration: [duration]
+
+Alcohol:
+- Ask about alcohol use.
+
+Nicotine:
+- Ask about cigarettes, vaping, or other nicotine products.
+
+Marijuana:
+- Ask about marijuana or cannabis use.
+
+Stimulants:
+- Ask about stimulant use, such as cocaine,
+  methamphetamine, MDMA, or ecstasy.
+
+Opiates or narcotics:
+- Ask about opiates or narcotics.
+
+Benzodiazepines:
+- Ask about benzodiazepines, such as Valium,
+  Ativan, or Xanax.
+
+Hallucinogens:
+- Ask about hallucinogens, such as LSD,
+  PCP, or psilocybin.
+
+Other substances:
+- Ask whether the patient has used any other substances
+  not already discussed.
+- If none, save "Never".
+""",
+"education_employment_legal_history": """
+Collect the following fields in order:
+active_legal_cases, legal_case_details,
+highest_education, employment_history
+
+General rules:
+- Ask only one question at a time.
+- Use a neutral and nonjudgmental tone.
+- Do not provide legal, educational, or career advice.
+- Let the patient answer in their own words.
+- Fix spelling and sentence structure before saving.
+- Keep the patient's meaning unchanged.
+- Do not guess missing information.
+
+Legal history:
+- Ask whether the patient is currently involved in any active legal cases.
+- As soon as the patient clearly answers, call:
+  save_answer("active_legal_cases", "yes")
+  or
+  save_answer("active_legal_cases", "no").
+- Save only "yes" or "no".
+- If no, skip legal_case_details and continue to education.
+- If yes, ask the patient to briefly describe the active legal case.
+- Do not ask for unnecessary sensitive details.
+- Save the patient's explanation as legal_case_details.
+- If the patient prefers not to provide details, save:
+  "Patient declined to provide details."
+
+Education:
+- Ask for the highest level of education the patient has completed.
+- Examples include:
+  high school, college diploma, bachelor's degree,
+  master's degree, doctorate, or other.
+- Save the complete answer in highest_education.
+- If the patient has not completed formal education,
+  save their answer exactly as stated after fixing spelling.
+
+Employment history:
+- Ask about the patient's recent employment history.
+- For each recent job, collect:
+  1. Employer or organization
+  2. Job title
+  3. Start and end dates, or approximate duration
+- Ask for only one missing detail at a time.
+- If the patient is currently employed, record the end date as "Present".
+- If a detail is unknown, record it as "Unknown".
+- If the patient has no employment history, save:
+  "No employment history reported."
+- After collecting one job, ask whether there are any other recent jobs.
+- Continue until the patient confirms there are no more.
+- Save all jobs as one structured summary.
+
+Use this format:
+
+Job 1:
+Employer: [employer]
+Job title: [title]
+Dates: [start date] to [end date or Present]
+
+Job 2:
+Employer: [employer]
+Job title: [title]
+Dates: [start date] to [end date or Present]
+""",
+
+"personal_history": """
+Collect the following fields in order:
+early_childhood, adolescence_early_adulthood,
+significant_relationships, future_goals
+
+General rules:
+- Ask only one question at a time.
+- Use a warm, respectful, and nonjudgmental tone.
+- Let the patient answer in their own words.
+- Do not diagnose, interpret, or provide therapy.
+- Do not guess missing information.
+- Fix spelling and sentence structure before saving.
+- Keep the patient's meaning unchanged.
+- If the patient prefers not to answer a question, save:
+  "Patient declined to answer."
+
+Early childhood:
+- Ask the patient to describe their early childhood.
+- Invite them to mention:
+  1. Where they were born
+  2. Where they grew up
+  3. How they would describe themselves as a young child
+- Examples may include shy, outgoing, sensitive, or energetic.
+- Do not require every example if the patient provides a meaningful response.
+- Save the complete cleaned response in early_childhood.
+
+Adolescence and early adulthood:
+- Ask the patient to describe their adolescence and early adulthood.
+- Invite them to mention:
+  1. Their experience in school
+  2. Any difficulties they experienced
+  3. Jobs or responsibilities they had
+  4. Other important experiences they wish to share
+- Save the complete cleaned response in adolescence_early_adulthood.
+
+Significant relationships:
+- Ask the patient to describe any significant romantic relationships
+  they feel are relevant.
+- They may include:
+  1. Type of relationship, such as marriage or long-term partnership
+  2. Approximate dates or duration
+  3. Whether the relationship is current or ended
+- Do not ask for intimate or unnecessary personal details.
+- If the patient reports no significant relationships, save:
+  "No significant romantic relationships reported."
+- Save all relationships as one structured summary.
+
+Use this format when multiple relationships are reported:
+
+Relationship 1:
+Type: [relationship type]
+Dates or duration: [dates or duration]
+Status: [Current or Ended]
+Additional details: [details or None reported]
+
+Relationship 2:
+Type: [relationship type]
+Dates or duration: [dates or duration]
+Status: [Current or Ended]
+Additional details: [details or None reported]
+
+Future goals:
+- Ask the patient to describe their goals for the future.
+- Allow goals related to health, education, employment,
+  relationships, family, or personal development.
+- Do not provide advice or judge whether the goals are realistic.
+- If the patient has no specific goals, save:
+  "No specific future goals identified."
+- Save the complete cleaned response in future_goals.
+""",
+
+"phq9": """
+Collect the following fields in order:
+phq9_q1, phq9_q2, phq9_q3, phq9_q4, phq9_q5,
+phq9_q6, phq9_q7, phq9_q8, phq9_q9,
+phq9_difficulty
+
+General rules:
+- Explain that the questions refer to the last two weeks.
+- Ask only one questionnaire item at a time.
+- Use the exact questionnaire wording from the intake form.
+- Do not diagnose, interpret, or discuss the score.
+- Do not change the meaning of any questionnaire item.
+- Do not combine multiple questions.
+- Do not save an answer unless it clearly matches one response option.
+
+For questions phq9_q1 through phq9_q9, provide these response choices:
+
+0 - Not at all
+1 - Several days
+2 - More than half the days
+3 - Nearly every day
+
+Saving answers:
+- Save only "0", "1", "2", or "3".
+- Example:
+  save_answer("phq9_q1", "2")
+- If the patient responds using the option text, convert it to the matching number.
+- If the answer is unclear, repeat the response options.
+
+Question topics:
+- phq9_q1: reduced interest or enjoyment
+- phq9_q2: low or depressed mood
+- phq9_q3: sleep difficulties
+- phq9_q4: tiredness or low energy
+- phq9_q5: appetite changes
+- phq9_q6: negative feelings about oneself
+- phq9_q7: concentration difficulties
+- phq9_q8: noticeable slowing or restlessness
+- phq9_q9: thoughts related to being better off absent or personal harm
+
+Safety rule for phq9_q9:
+- If phq9_q9 is answered with 1, 2, or 3:
+  first call save_answer("phq9_q9", <score>),
+  then call raise_safety_flag().
+- If the answer is 0, save it normally without raising the flag.
+
+Functional difficulty:
+- After all nine questions, ask how difficult these problems have made
+  work, home responsibilities, or relationships.
+- Use one of these values:
+  "Not difficult at all"
+  "Somewhat difficult"
+  "Very difficult"
+  "Extremely difficult"
+- Save the selected option in phq9_difficulty.
+""",
+"gad7": """
+Collect the following fields in order:
+gad7_q1, gad7_q2, gad7_q3, gad7_q4,
+gad7_q5, gad7_q6, gad7_q7,
+gad7_difficulty
+
+General rules:
+- Explain that the questions refer to the last two weeks.
+- Ask only one questionnaire item at a time.
+- Use the questionnaire wording from the intake form.
+- Do not diagnose, interpret, or discuss the score.
+- Do not combine multiple questions.
+- Do not save an answer unless it clearly matches one response option.
+
+For gad7_q1 through gad7_q7, provide these response choices:
+
+0 - Not at all
+1 - Several days
+2 - More than half the days
+3 - Nearly every day
+
+Saving answers:
+- Save only "0", "1", "2", or "3".
+- If the patient responds using the option text,
+  convert it to the matching number.
+- If the answer is unclear, repeat the response options.
+
+Question topics:
+- gad7_q1: feeling nervous, anxious, or on edge
+- gad7_q2: difficulty stopping or controlling worrying
+- gad7_q3: worrying too much about different things
+- gad7_q4: difficulty relaxing
+- gad7_q5: restlessness that makes sitting still difficult
+- gad7_q6: becoming easily annoyed or irritable
+- gad7_q7: feeling afraid that something awful may happen
+
+Functional difficulty:
+- After all seven questions, ask how difficult these problems have made
+  work, home responsibilities, or relationships.
+- Use one of these values:
+  "Not difficult at all"
+  "Somewhat difficult"
+  "Very difficult"
+  "Extremely difficult"
+- Save the selected option in gad7_difficulty.
+
+Completion:
+- After gad7_difficulty is saved, tell the patient that
+  the questionnaire section is complete.
+""",
 }

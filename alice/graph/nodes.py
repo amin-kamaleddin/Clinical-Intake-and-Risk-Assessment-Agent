@@ -1,37 +1,32 @@
 from langchain_openai import ChatOpenAI
 
+from core.config import MODEL_NAME
 from core.state import AliceState
 from core.tools import tools
 from core.validators import FIELD_VALIDATORS
+from core.safety import explicit_safety_trigger, SAFETY_REPLY
+from core.scoring import calculate_phq9_total, calculate_gad7_total
 from core.storage import save_record
 from prompts.builder import build_system_prompt, get_pending_fields
 
 
-MODEL_NAME = "gpt-5.4-mini"
-
-SAFETY_RESPONSE = (
-    "I'm really glad you shared that with me. "
-    "You are not alone. Please call 988 or go to your nearest emergency room. "
-    "A member of our care team has been notified. "
-    "Whenever you're ready, we can continue with the intake."
-)
+model = ChatOpenAI(model=MODEL_NAME).bind_tools(tools)
+llm   = ChatOpenAI(model=MODEL_NAME)
 
 
-def section_node(state: AliceState) -> AliceState:
-    """
-    Single LangGraph node — handles one full conversational turn.
-    """
-    section = state["current_section"]
-    model   = ChatOpenAI(model=MODEL_NAME).bind_tools(tools)
-    llm     = ChatOpenAI(model=MODEL_NAME)
+def handle_safety(state: AliceState) -> AliceState:
+    """Raise the flag, sanitise the last user turn, and return the crisis reply."""
+    state["safety_flag"]          = True
+    state["messages"][-1]         = {"role": "user", "content": "safety flag was raised and handled."}
+    state["messages"]             = state["messages"] + [{"role": "assistant", "content": SAFETY_REPLY}]
+    state["conversation_started"] = True
+    return state
 
-    system  = {"role": "system", "content": build_system_prompt(state)}
 
-    # ── Call 1: let the model fire tool calls ──────────────────────────────────
-    response = model.invoke([system] + state["messages"])
-
-    safety_raised = False
+def apply_tool_calls(state: AliceState, section: str, response):
+    """Process save_answer / raise_safety_flag calls. Returns (tool_results, safety_raised)."""
     tool_results  = {}
+    safety_raised = False
 
     for tc in response.tool_calls:
         if tc["name"] == "save_answer":
@@ -41,57 +36,72 @@ def section_node(state: AliceState) -> AliceState:
 
             if validator:
                 valid, result = validator(value)
-                if valid:
-                    state[section][field]  = result
-                    tool_results[tc["id"]] = "saved"
-                else:
-                    tool_results[tc["id"]] = f"invalid: {result}"
+                state[section][field]  = result if valid else state[section][field]
+                tool_results[tc["id"]] = "saved" if valid else f"invalid: {result}"
             else:
-                state[section][field]      = value
-                tool_results[tc["id"]]     = "saved"
+                state[section][field]  = value
+                tool_results[tc["id"]] = "saved"
 
         elif tc["name"] == "raise_safety_flag":
             state["safety_flag"]   = True
             safety_raised          = True
             tool_results[tc["id"]] = "flag_raised"
 
-    # ── Build reply — three possible situations ────────────────────────────────
+    return tool_results, safety_raised
 
+
+def update_completion(state: AliceState, section: str):
+    """Add/remove the section from completed based on pending fields, then save if all done."""
+    pending = get_pending_fields(state, section)
+
+    if pending:
+        if section in state["sections_completed"]:
+            state["sections_completed"].remove(section)
+    elif section not in state["sections_completed"]:
+        state["sections_completed"].append(section)
+
+
+def section_node(state: AliceState) -> AliceState:
+    section = state["current_section"]
+
+    # ── Stage 1: deterministic safety gate on raw patient text ──
+    if state["messages"] and state["messages"][-1].get("role") == "user":
+        if explicit_safety_trigger(state["messages"][-1]["content"]):
+            return handle_safety(state)
+
+    # ── Stage 2: call the model ──
+    system   = {"role": "system", "content": build_system_prompt(state)}
+    response = model.invoke([system] + state["messages"])
+
+    # ── Stage 3: process tool calls ──
+    tool_results, safety_raised = apply_tool_calls(state, section, response)
+
+    # ── Stage 4: section-specific scoring ──
+    if section == "phq9":
+        state["phq9"]["phq9_total"] = calculate_phq9_total(state)
+    if section == "gad7":
+        state["gad7"]["gad7_total"] = calculate_gad7_total(state)
+
+    # ── Stage 5: build the reply ──
     if safety_raised:
-        # Sanitise the triggering message, emit the hardcoded crisis response.
-        state["messages"][-1] = {"role": "user", "content": "safety flag was raised and handled."}
-        reply         = SAFETY_RESPONSE
-        tool_exchange = []
+        return handle_safety(state)
 
-    elif not response.tool_calls:
-        # No tools fired — Call 1 reply is the final reply.
+    if not response.tool_calls:
         reply         = response.content
         tool_exchange = []
-
     else:
-        # Tools fired successfully — Call 2 generates the next question.
-        tool_exchange = [response] + [
-            {
-                "role":         "tool",
-                "content":      tool_results[tc["id"]],
-                "tool_call_id": tc["id"],
-            }
+        tool_exchange  = [response] + [
+            {"role": "tool", "content": tool_results[tc["id"]], "tool_call_id": tc["id"]}
             for tc in response.tool_calls
         ]
         updated_system = {"role": "system", "content": build_system_prompt(state)}
-        reply = llm.invoke([updated_system] + state["messages"] + tool_exchange).content
+        reply          = llm.invoke([updated_system] + state["messages"] + tool_exchange).content
 
-    # ── Check section completion ───────────────────────────────────────────────
-    pending = get_pending_fields(state, section)
-    if not pending and section not in state["sections_completed"]:
-        state["sections_completed"].append(section)
+    # ── Stage 6: completion check + save after every field ──
+    update_completion(state, section)
+    save_record(state)
 
-    # ── Auto-save when both sections are complete ──────────────────────────────
-    if set(state["sections_completed"]) == {"general_information", "current_concerns"}:
-        save_record(state)
-
-    # ── Persist messages ───────────────────────────────────────────────────────
+    # ── Stage 7: commit messages ──
     state["messages"]             = state["messages"] + tool_exchange + [{"role": "assistant", "content": reply}]
     state["conversation_started"] = True
-
     return state

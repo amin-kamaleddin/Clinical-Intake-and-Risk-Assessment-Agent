@@ -3,16 +3,14 @@ import tempfile
 
 from openai import OpenAI
 
+from core.config import STT_MODEL, TTS_MODEL, TTS_VOICE
 
-# Shared client — reads OPENAI_API_KEY from the environment.
+
 openai_client = OpenAI()
 
 
-def text_to_speech(text: str) -> str | None:
-    """
-    Convert an ALICE text response into a temporary MP3 file.
-    Returns the file path, or None on empty input / failure.
-    """
+def text_to_speech(text):
+    """Convert an ALICE text response into a temporary MP3 file."""
     if not text or not str(text).strip():
         return None
 
@@ -21,8 +19,8 @@ def text_to_speech(text: str) -> str | None:
 
     try:
         response = openai_client.audio.speech.create(
-            model="gpt-4o-mini-tts",
-            voice="shimmer",
+            model=TTS_MODEL,
+            voice=TTS_VOICE,
             input=str(text),
             instructions=(
                 "Speak with a warm, friendly, young adult feminine voice. "
@@ -42,19 +40,15 @@ def text_to_speech(text: str) -> str | None:
         return None
 
 
-def transcribe_audio(audio_file: str) -> str | None:
-    """
-    Transcribe a patient recording into text.
-    The prompt biases the model toward preserving spelled-out names and
-    clinical identifiers letter by letter. Returns text, or None on failure.
-    """
+def transcribe_audio(audio_file):
+    """Transcribe a patient recording, preserving spelled-out identifiers."""
     if not audio_file:
         return None
 
     try:
         with open(audio_file, "rb") as audio:
             transcription = openai_client.audio.transcriptions.create(
-                model="gpt-4o-transcribe",
+                model=STT_MODEL,
                 file=audio,
                 prompt=(
                     "This is a Canadian clinical intake conversation. "

@@ -1,106 +1,129 @@
 import html
 
-from core.state import AliceState
+from ui.schema import (
+    SECTION_TITLES,
+    FIELD_LABELS,
+    COMPUTED_FIELDS,
+    normalize_state_schema,
+)
 
 
-FIELD_LABELS: dict[str, dict[str, str]] = {
-    "general_information": {
-        "name":               "Full Name",
-        "gender":             "Gender",
-        "date_of_birth":      "Date of Birth",
-        "address":            "Address",
-        "postal_code":        "Postal Code",
-        "email":              "Email",
-        "phone":              "Phone",
-        "has_family_doctor":  "Has Family Doctor",
-        "family_doctor_name": "Family Doctor Name",
-        "has_psychiatrist":   "Has Psychiatrist",
-        "psychiatrist_name":  "Psychiatrist Name",
-    },
-    "current_concerns": {
-        "primary_problems": "Primary Problems",
-        "goals":            "Goals",
-    },
-}
+def should_show_field(field, data):
+    """Hide conditional detail fields when their controlling answer is False."""
+    conditional_fields = {
+        "family_doctor_name": ("has_family_doctor", False),
+        "psychiatrist_name": ("has_psychiatrist", False),
+        "assessment_details": ("previously_assessed", False),
+        "hospital_details": ("hospital_admission", False),
+        "self_harm_details": ("self_harm_history", False),
+        "current_medications": ("has_current_medications", False),
+        "past_medication_details": ("has_past_medications", False),
+        "medical_conditions": ("has_medical_conditions", False),
+        "surgical_history": ("has_surgical_history", False),
+        "medication_allergies": ("has_medication_allergies", False),
+        "family_psychiatric_history_details": (
+            "has_family_psychiatric_history",
+            False,
+        ),
+        "legal_case_details": ("active_legal_cases", False),
+    }
+
+    dependency = conditional_fields.get(field)
+    if dependency is None:
+        return True
+
+    parent_field, hidden_value = dependency
+    return data.get(parent_field) is not hidden_value
 
 
 def format_display(alice_state):
-    """
-    Render the collected-information panel as an HTML string.
-    All styles are INLINE so they render correctly inside Gradio 6's
-    sandboxed gr.HTML component (external CSS classes do not reach here).
-    """
-    if not alice_state or not alice_state.get("current_section"):
+    if not alice_state:
         return """
-        <div style="font-family:'Inter',sans-serif;padding:20px;
-                    text-align:center;color:#94a3b8;font-size:13px;font-style:italic;">
+        <div class="empty-info">
             Select a section above to begin
         </div>
         """
 
-    section = alice_state["current_section"]
-    data    = alice_state[section]
-    labels  = FIELD_LABELS.get(section, {})
-    title   = section.replace("_", " ").title()
+    alice_state = normalize_state_schema(alice_state)
+    section = alice_state.get("current_section")
 
-    def should_show(field):
-        if field == "family_doctor_name" and data.get("has_family_doctor") is False:
-            return False
-        if field == "psychiatrist_name"  and data.get("has_psychiatrist")  is False:
-            return False
-        return True
+    if not section:
+        return """
+        <div class="empty-info">
+            Select a section above to begin
+        </div>
+        """
 
-    visible_fields = {f: l for f, l in labels.items() if should_show(f)}
+    data = alice_state.get(section, {})
+    labels = FIELD_LABELS.get(section, {})
+    title = SECTION_TITLES.get(section, section.replace("_", " ").title())
 
-    total      = len(visible_fields)
-    filled     = sum(1 for f in visible_fields if data.get(f) is not None)
+    visible_fields = {
+        field: label
+        for field, label in labels.items()
+        if should_show_field(field, data)
+        and not (
+            field in COMPUTED_FIELDS.get(section, set())
+            and data.get(field) is None
+        )
+    }
+
+    progress_fields = [
+        field
+        for field in visible_fields
+        if field not in COMPUTED_FIELDS.get(section, set())
+    ]
+
+    total = len(progress_fields)
+    filled = sum(1 for field in progress_fields if data.get(field) is not None)
     percentage = int((filled / total) * 100) if total else 0
 
     fields_html = ""
     for field, label in visible_fields.items():
-        value      = data.get(field)
+        value = data.get(field)
         safe_label = html.escape(str(label))
 
         if value is None:
-            value_html = '<div style="font-size:13px;color:#cbd5e0;font-style:italic;">&mdash;</div>'
+            value_html = '<div class="field-empty">&mdash;</div>'
 
         elif isinstance(value, bool):
-            color = "#0F6E56" if value else "#718096"
-            bg    = "#e6f4ef" if value else "#f1f5f9"
-            text  = "Yes"     if value else "No"
+            badge_class = "yes-badge" if value else "no-badge"
+            badge_text = "Yes" if value else "No"
             value_html = (
-                f'<span style="display:inline-block;font-size:12px;color:{color};'
-                f'background:{bg};font-weight:600;padding:2px 10px;border-radius:999px;">{text}</span>'
+                f'<span class="boolean-badge {badge_class}">{badge_text}</span>'
             )
+
+        elif field in {"phq9_total", "gad7_total"}:
+            safe_value = html.escape(str(value))
+            value_html = f'<div class="score-value">{safe_value}</div>'
 
         else:
             safe_value = html.escape(str(value))
-            value_html = (
-                f'<div style="font-size:14px;color:#1e293b;font-weight:500;'
-                f'overflow-wrap:anywhere;">{safe_value}</div>'
-            )
+            value_html = f'<div class="field-value">{safe_value}</div>'
 
-        fields_html += (
-            '<div style="padding:11px 0;border-bottom:1px solid #e8f0fb;">'
-            f'<div style="font-size:10px;color:#94a3b8;letter-spacing:0.6px;'
-            f'text-transform:uppercase;margin-bottom:5px;">{safe_label}</div>'
-            f'{value_html}</div>'
-        )
+        fields_html += f"""
+        <div class="info-field">
+            <div class="field-label">{safe_label}</div>
+            {value_html}
+        </div>
+        """
 
     safe_title = html.escape(title)
 
-    return (
-        '<div style="font-family:\'Inter\',sans-serif;padding:4px 8px;">'
-            '<div style="display:flex;align-items:center;justify-content:space-between;'
-            'margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid #dbeafe;">'
-                f'<div style="font-size:13px;font-weight:600;color:#1e40af;">{safe_title}</div>'
-                f'<div style="font-size:11px;color:#94a3b8;">{filled}/{total}</div>'
-            '</div>'
-            '<div style="background:#e2e8f0;border-radius:999px;height:5px;'
-            'margin-bottom:16px;overflow:hidden;">'
-                f'<div style="background:linear-gradient(90deg,#185FA5,#3b82f6);'
-                f'height:5px;border-radius:999px;width:{percentage}%;"></div>'
-            '</div>'
-            f'{fields_html}'
-        '</div>'
-    )
+    return f"""
+    <div class="information-panel">
+        <div class="information-header">
+            <div>
+                <div class="information-kicker">CURRENT SECTION</div>
+                <div class="information-title">{safe_title}</div>
+            </div>
+            <div class="information-count">{filled}/{total}</div>
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-value" style="width:{percentage}%;"></div>
+        </div>
+
+        {fields_html}
+    </div>
+    """

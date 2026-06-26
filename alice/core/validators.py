@@ -2,9 +2,6 @@ import re
 from datetime import datetime, date
 
 
-# ── Individual validators ──────────────────────────────────────────────────────
-# Each returns (is_valid: bool, result: cleaned_value | error_message)
-
 def validate_date_of_birth(value: str):
     try:
         dob = datetime.strptime(value.strip(), "%d/%m/%Y").date()
@@ -31,19 +28,11 @@ def validate_email(value: str):
 
 def validate_address(value: str):
     province_map = {
-        "ON": "Ontario",
-        "BC": "British Columbia",
-        "AB": "Alberta",
-        "SK": "Saskatchewan",
-        "MB": "Manitoba",
-        "QC": "Quebec",
-        "NB": "New Brunswick",
-        "NS": "Nova Scotia",
-        "PE": "Prince Edward Island",
-        "NL": "Newfoundland and Labrador",
-        "YT": "Yukon",
-        "NT": "Northwest Territories",
-        "NU": "Nunavut",
+        "ON": "Ontario", "BC": "British Columbia", "AB": "Alberta",
+        "SK": "Saskatchewan", "MB": "Manitoba", "QC": "Quebec",
+        "NB": "New Brunswick", "NS": "Nova Scotia",
+        "PE": "Prince Edward Island", "NL": "Newfoundland and Labrador",
+        "YT": "Yukon", "NT": "Northwest Territories", "NU": "Nunavut",
     }
     province_names = {v.lower(): v for v in province_map.values()}
 
@@ -81,9 +70,11 @@ def validate_phone(value: str):
 
 def validate_boolean(value: str):
     v = value.lower().strip()
-    if v.startswith(("yes", "y", "true")):
+    yes_values = {"yes", "y", "true", "yeah", "yep"}
+    no_values  = {"no", "n", "false", "nope"}
+    if v in yes_values:
         return True, True
-    if v.startswith(("no", "n", "false")):
+    if v in no_values:
         return True, False
     return False, "Please answer yes or no."
 
@@ -94,17 +85,80 @@ def validate_doctor_name(value: str):
     return True, value.strip().upper()
 
 
-# ── Validator registry ─────────────────────────────────────────────────────────
-# NOTE: the "address" key must match the state field name exactly.
+def validate_height(value: str):
+    value = value.strip()
+    if not value:
+        return False, "Please provide your height."
+    if len(value) > 40:
+        return False, "Please provide a shorter height value."
+    return True, value
+
+
+def validate_weight(value: str):
+    value = value.strip()
+    if not value:
+        return False, "Please provide your weight."
+    if len(value) > 40:
+        return False, "Please provide a shorter weight value."
+    return True, value
+
+
+def validate_phq9_score(value: str):
+    normalized = value.strip().lower()
+    response_map = {
+        "0": 0, "not at all": 0,
+        "1": 1, "several days": 1,
+        "2": 2, "more than half the days": 2,
+        "3": 3, "nearly every day": 3,
+    }
+    if normalized in response_map:
+        return True, response_map[normalized]
+    return (
+        False,
+        "Please answer with 0, 1, 2, or 3, or choose one of the provided frequency options.",
+    )
+
 
 FIELD_VALIDATORS = {
-    "date_of_birth":      validate_date_of_birth,
-    "postal_code":        validate_postal_code,
-    "email":              validate_email,
-    "address":            validate_address,
-    "phone":              validate_phone,
-    "has_family_doctor":  validate_boolean,
-    "has_psychiatrist":   validate_boolean,
+    "date_of_birth": validate_date_of_birth,
+    "postal_code": validate_postal_code,
+    "email": validate_email,
+    "phone": validate_phone,
+    "address": validate_address,
+
+    "has_family_doctor": validate_boolean,
+    "has_psychiatrist": validate_boolean,
+    "previously_assessed": validate_boolean,
+    "hospital_admission": validate_boolean,
+    "self_harm_history": validate_boolean,
+    "has_current_medications": validate_boolean,
+
     "family_doctor_name": validate_doctor_name,
-    "psychiatrist_name":  validate_doctor_name,
+    "psychiatrist_name": validate_doctor_name,
+    "has_past_medications": validate_boolean,
+    "has_medical_conditions": validate_boolean,
+    "has_surgical_history": validate_boolean,
+    "height": validate_height,
+    "weight": validate_weight,
+    "has_medication_allergies": validate_boolean,
+    "has_family_psychiatric_history": validate_boolean,
+    "active_legal_cases": validate_boolean,
+
+    "phq9_q1": validate_phq9_score,
+    "phq9_q2": validate_phq9_score,
+    "phq9_q3": validate_phq9_score,
+    "phq9_q4": validate_phq9_score,
+    "phq9_q5": validate_phq9_score,
+    "phq9_q6": validate_phq9_score,
+    "phq9_q7": validate_phq9_score,
+    "phq9_q8": validate_phq9_score,
+    "phq9_q9": validate_phq9_score,
+
+    "gad7_q1": validate_phq9_score,
+    "gad7_q2": validate_phq9_score,
+    "gad7_q3": validate_phq9_score,
+    "gad7_q4": validate_phq9_score,
+    "gad7_q5": validate_phq9_score,
+    "gad7_q6": validate_phq9_score,
+    "gad7_q7": validate_phq9_score,
 }

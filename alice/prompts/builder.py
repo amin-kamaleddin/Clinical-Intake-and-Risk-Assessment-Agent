@@ -5,18 +5,37 @@ from prompts.static_prompt import STATIC_PROMPT
 from prompts.section_prompts import SECTION_PROMPTS
 
 
-def get_pending_fields(state: AliceState, section: str) -> list[str]:
-    """
-    Return the ordered list of fields still to be collected in the given section.
-    Conditional fields (doctor/psychiatrist name) are excluded when not applicable.
-    """
+# Maps a conditional field -> (controlling field, value that hides it).
+CONDITIONAL_FIELDS = {
+    "family_doctor_name":                 ("has_family_doctor", False),
+    "psychiatrist_name":                  ("has_psychiatrist", False),
+    "assessment_details":                 ("previously_assessed", False),
+    "hospital_details":                   ("hospital_admission", False),
+    "self_harm_details":                  ("self_harm_history", False),
+    "current_medications":                ("has_current_medications", False),
+    "past_medication_details":            ("has_past_medications", False),
+    "medical_conditions":                 ("has_medical_conditions", False),
+    "surgical_history":                   ("has_surgical_history", False),
+    "medication_allergies":               ("has_medication_allergies", False),
+    "family_psychiatric_history_details": ("has_family_psychiatric_history", False),
+    "legal_case_details":                 ("active_legal_cases", False),
+}
+
+
+def get_pending_fields(state: AliceState, section: str) -> list:
+    """Ordered list of fields still to collect, skipping hidden conditionals."""
     section_data = state[section]
-    return [
-        f for f in REQUIRED_FIELDS[section]
-        if section_data.get(f) is None
-        and not (f == "family_doctor_name" and section_data.get("has_family_doctor") is False)
-        and not (f == "psychiatrist_name"  and section_data.get("has_psychiatrist")  is False)
-    ]
+    pending = []
+    for field in REQUIRED_FIELDS[section]:
+        if section_data.get(field) is not None:
+            continue
+        dependency = CONDITIONAL_FIELDS.get(field)
+        if dependency:
+            parent, hidden_value = dependency
+            if section_data.get(parent) is hidden_value:
+                continue
+        pending.append(field)
+    return pending
 
 
 def build_section_prompt(state: AliceState) -> str:
@@ -46,10 +65,7 @@ def build_section_prompt(state: AliceState) -> str:
 
 
 def build_voice_context(state: AliceState) -> str:
-    """
-    Tell the model how the latest message arrived, so it knows whether to
-    apply the speech-to-text spelling rules.
-    """
+    """Tell the model how the latest message arrived."""
     input_source = state.get("latest_input_source", "typed text")
     speech_mode  = "ON" if state.get("speech_to_text_active", False) else "OFF"
     return (

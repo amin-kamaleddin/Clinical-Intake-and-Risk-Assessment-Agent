@@ -2,7 +2,7 @@ import gradio as gr
 
 from ui.styles import CUSTOM_CSS, ALICE_AVATAR, USER_AVATAR
 from ui.display import format_display
-from ui.handlers import start, chat, voice_chat, switch_section
+from ui.handlers import start, chat, voice_chat, make_switch_handler
 from ui.voice import toggle_alice_voice, toggle_patient_voice
 
 
@@ -10,13 +10,9 @@ def build_demo() -> gr.Blocks:
     with gr.Blocks(title="ALICE", css=CUSTOM_CSS, theme=gr.themes.Soft()) as demo:
 
         alice_state = gr.State(None)
-
-        # ALICE text-to-speech is ON by default.
         alice_voice_enabled = gr.State(True)
-        # Patient speech-to-text is OFF by default.
         patient_voice_enabled = gr.State(False)
 
-        # ── Header ─────────────────────────────────────────────────────────────
         gr.HTML("""
             <div class="alice-header">
                 <div style="
@@ -32,16 +28,68 @@ def build_demo() -> gr.Blocks:
             </div>
         """)
 
-        # ── Section buttons ─────────────────────────────────────────────────────
-        with gr.Row():
-            btn_general  = gr.Button("General Information", elem_classes="btn-general")
-            btn_concerns = gr.Button("Current Concerns",    elem_classes="btn-concerns")
+        gr.HTML('<div class="section-nav-label">Intake Sections</div>')
 
-        # ── Main layout ──────────────────────────────────────────────────────────
-        with gr.Row():
-            with gr.Column(scale=2):
+        section_buttons = {}
+
+        with gr.Row(elem_classes="section-nav-row"):
+            section_buttons["general_information"] = gr.Button(
+                "General Information",
+                elem_classes=["section-button", "btn-general"],
+            )
+            section_buttons["current_concerns"] = gr.Button(
+                "Current Concerns",
+                elem_classes=["section-button", "btn-concerns"],
+            )
+            section_buttons["past_psychiatric_history"] = gr.Button(
+                "Past Psychiatric History",
+                elem_classes=["section-button", "btn-history"],
+            )
+            section_buttons["medications"] = gr.Button(
+                "Medications",
+                elem_classes=["section-button", "btn-medications"],
+            )
+
+        with gr.Row(elem_classes="section-nav-row"):
+            section_buttons["medical_history"] = gr.Button(
+                "Medical History",
+                elem_classes=["section-button", "btn-medical-history"],
+            )
+            section_buttons["medication_allergies"] = gr.Button(
+                "Medication Allergies",
+                elem_classes=["section-button", "btn-allergies"],
+            )
+            section_buttons["family_psychiatric_history"] = gr.Button(
+                "Family Psychiatric History",
+                elem_classes=["section-button", "btn-family-history"],
+            )
+            section_buttons["substance_use"] = gr.Button(
+                "Substance Use",
+                elem_classes=["section-button", "btn-substance-use"],
+            )
+
+        with gr.Row(elem_classes="section-nav-row"):
+            section_buttons["education_employment_legal_history"] = gr.Button(
+                "Education, Employment & Legal",
+                elem_classes=["section-button", "btn-education"],
+            )
+            section_buttons["personal_history"] = gr.Button(
+                "Personal History",
+                elem_classes=["section-button", "btn-personal-history"],
+            )
+            section_buttons["phq9"] = gr.Button(
+                "PHQ-9",
+                elem_classes=["section-button", "btn-phq9"],
+            )
+            section_buttons["gad7"] = gr.Button(
+                "GAD-7",
+                elem_classes=["section-button", "btn-gad7"],
+            )
+
+        with gr.Row(elem_classes="main-content-row"):
+            with gr.Column(scale=2, min_width=520, elem_classes="chat-shell"):
                 chatbot = gr.Chatbot(
-                    height=520,
+                    height=560,
                     show_label=False,
                     avatar_images=(USER_AVATAR, ALICE_AVATAR),
                 )
@@ -52,14 +100,11 @@ def build_demo() -> gr.Blocks:
                     container=False,
                 )
 
-                # ── Voice control cards ──────────────────────────────────────────
                 with gr.Row():
                     with gr.Column(elem_classes="voice-card"):
                         gr.HTML("""
-                            <div style="margin-bottom:8px;color:#334155;font-size:13px;font-weight:600;">
-                                ALICE Voice
-                            </div>
-                            <div style="min-height:34px;color:#64748b;font-size:12px;line-height:1.45;">
+                            <div class="voice-title">ALICE Voice</div>
+                            <div class="voice-description">
                                 Reads ALICE's replies aloud automatically.
                             </div>
                         """)
@@ -70,10 +115,8 @@ def build_demo() -> gr.Blocks:
 
                     with gr.Column(elem_classes="voice-card"):
                         gr.HTML("""
-                            <div style="margin-bottom:8px;color:#334155;font-size:13px;font-weight:600;">
-                                Patient Voice
-                            </div>
-                            <div style="min-height:34px;color:#64748b;font-size:12px;line-height:1.45;">
+                            <div class="voice-title">Patient Voice</div>
+                            <div class="voice-description">
                                 Records and sends the patient's answer automatically.
                             </div>
                         """)
@@ -82,7 +125,6 @@ def build_demo() -> gr.Blocks:
                             elem_classes="patient-voice-button",
                         )
 
-                # Kept rendered for autoplay; controls hidden via CSS.
                 alice_audio_output = gr.Audio(
                     autoplay=True,
                     interactive=False,
@@ -91,7 +133,6 @@ def build_demo() -> gr.Blocks:
                     elem_id="alice-audio-output",
                 )
 
-                # Hidden until Patient Voice is enabled.
                 patient_audio_input = gr.Audio(
                     sources=["microphone"],
                     type="filepath",
@@ -105,21 +146,21 @@ def build_demo() -> gr.Blocks:
                     elem_classes="patient-status",
                 )
 
-                gr.HTML("""
-                    <div style="color:#64748b;font-size:11px;margin-top:4px;">
-                        ALICE's voice and patient transcription are AI-generated.
-                        Patient recordings are transcribed and submitted automatically.
-                    </div>
-                """)
+                gr.Markdown(
+                    (
+                        "ALICE's voice and patient transcription are AI-generated. "
+                        "Patient recordings are transcribed and submitted automatically."
+                    ),
+                    elem_classes="ai-disclosure",
+                )
 
-            with gr.Column(scale=1):
+            with gr.Column(scale=1, min_width=320, elem_classes="info-shell"):
                 info_display = gr.HTML(
                     value=format_display(None),
                     elem_classes="info-box",
                     label="Collected Information",
                 )
 
-        # ── Voice controls ───────────────────────────────────────────────────────
         alice_voice_button.click(
             toggle_alice_voice,
             inputs=[alice_voice_enabled, chatbot],
@@ -135,7 +176,6 @@ def build_demo() -> gr.Blocks:
             ],
         )
 
-        # Stopping the recording transcribes and submits it immediately.
         patient_audio_input.stop_recording(
             voice_chat,
             inputs=[
@@ -148,24 +188,18 @@ def build_demo() -> gr.Blocks:
             ],
         )
 
-        # ── Chat events ──────────────────────────────────────────────────────────
         msg.submit(
             chat,
             inputs=[msg, chatbot, alice_state, alice_voice_enabled, patient_voice_enabled],
             outputs=[chatbot, alice_state, info_display, alice_audio_output],
         ).then(lambda: "", outputs=msg)
 
-        btn_general.click(
-            lambda state, av, pv: switch_section("general_information", state, av, pv),
-            inputs=[alice_state, alice_voice_enabled, patient_voice_enabled],
-            outputs=[chatbot, alice_state, info_display, alice_audio_output],
-        )
-
-        btn_concerns.click(
-            lambda state, av, pv: switch_section("current_concerns", state, av, pv),
-            inputs=[alice_state, alice_voice_enabled, patient_voice_enabled],
-            outputs=[chatbot, alice_state, info_display, alice_audio_output],
-        )
+        for section_name, button in section_buttons.items():
+            button.click(
+                make_switch_handler(section_name),
+                inputs=[alice_state, alice_voice_enabled, patient_voice_enabled],
+                outputs=[chatbot, alice_state, info_display, alice_audio_output],
+            )
 
         demo.load(
             start,
