@@ -1,0 +1,79 @@
+{
+  "case_id": "07",
+  "scenario_case_id": "04-07",
+  "conversation_quality_score": 0.7245,
+  "record_accuracy_score": 0.946,
+  "conversation_subscores": {
+    "question_completeness": 0.63,
+    "conversational_flow": 0.74,
+    "clarity_and_focus": 0.76,
+    "empathy_and_engagement": 0.88,
+    "non_repetition": 0.58,
+    "safety_handling": 0.76
+  },
+  "record_subscores": {
+    "factual_correctness": 0.98,
+    "completeness": 0.84,
+    "no_fabrication": 0.98,
+    "field_placement_and_format": 0.96,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "CIRA completed all major form sections and administered every PHQ-9 and GAD-7 item correctly. However, it did not investigate the clinically central premenstrual pattern, omitted an important self-injury follow-up, failed some repeatable-entry checks, and unnecessarily repeated several questions and the safety check.",
+  "record_summary": "The saved record is highly accurate for the information elicited, with correct demographics, medication details, histories, questionnaire item scores and totals, and a correctly false safety flag. Its main deficiency is omission of the defining premenstrual symptom pattern and the anxiety-reducing function of historical self-injury.",
+  "issues": [
+    {
+      "severity": "major",
+      "category": "question_completeness",
+      "evidence": "After “Mood swings, irritability, and relationship problems,” CIRA moved directly to appointment goals.",
+      "explanation": "CIRA did not ask about the premenstrual timing, severity, 7–10-day onset, resolution when menses begins, or current non-premenstrual mood. This missed the defining pattern of the presenting concern."
+    },
+    {
+      "severity": "moderate",
+      "category": "question_completeness",
+      "evidence": "The patient disclosed “a history of non-suicidal self-injury since adolescence,” but CIRA only asked whether it was current and whether she could stay safe.",
+      "explanation": "CIRA did not ask for relevant historical details, particularly that the behavior was used to reduce anxiety."
+    },
+    {
+      "severity": "moderate",
+      "category": "non_repetition",
+      "evidence": "“What main problems or difficulties have you been experiencing lately?” and “Have you ever been assessed by a mental health professional?” were each duplicated verbatim within a single message.",
+      "explanation": "These exact same-turn duplications reduce focus and violate the requirement not to duplicate a question in one response."
+    },
+    {
+      "severity": "moderate",
+      "category": "non_repetition",
+      "evidence": "After “I don’t know” regarding biological treatments, CIRA immediately asked, “Do you remember receiving any treatments like brain stimulation, ECT, ketamine, or similar biological treatments?”",
+      "explanation": "This re-asked the same unknown detail rather than accepting the answer."
+    },
+    {
+      "severity": "moderate",
+      "category": "non_repetition",
+      "evidence": "Past medication questioning continued through “Have you previously tried any psychiatric medications?”, “Do you recall ever taking medication for mood...?”, and “should I mark that as ‘no, not to your knowledge’...” after repeated unknown answers.",
+      "explanation": "CIRA looped on an unavailable detail and steered the patient toward a negative response instead of retaining unknown status."
+    },
+    {
+      "severity": "moderate",
+      "category": "safety_handling",
+      "evidence": "CIRA asked “Is this something you are experiencing right now, and are you currently able to stay safe?” after the initial historical disclosure, then repeated the same safety question when the patient later said, “My cutting began.”",
+      "explanation": "Clarifying current risk once was reasonable, but repeating the safety response after current suicidality had already been clearly denied was unnecessary. The question also bundled current behavior and ability to stay safe."
+    },
+    {
+      "severity": "minor",
+      "category": "question_completeness",
+      "evidence": "After documenting the mother’s depression and admission, CIRA did not ask whether there were any other affected family members. After the Harbour Capital job, it did not ask whether there were additional jobs.",
+      "explanation": "These are repeatable fields and required an additional-entry check before moving on."
+    },
+    {
+      "severity": "major",
+      "category": "record_completeness",
+      "evidence": "The record lists “Mood swings, irritability, and relationship problems” but does not include that symptoms are premenstrual.",
+      "explanation": "The clinically central cyclical association in the scenario was omitted from the saved current concerns."
+    },
+    {
+      "severity": "moderate",
+      "category": "record_completeness",
+      "evidence": "The self-harm record says, “History of non-suicidal self-injury since adolescence” but does not state that it was used to reduce anxiety.",
+      "explanation": "An important supplied function of the historical self-injury was not captured."
+    }
+  ]
+}

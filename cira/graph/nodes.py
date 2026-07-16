@@ -15,11 +15,19 @@ llm   = ChatOpenAI(model=MODEL_NAME)
 
 
 def handle_safety(state: AliceState) -> AliceState:
-    """Raise the flag, sanitise the last user turn, and return the crisis reply."""
-    state["safety_flag"]          = True
-    state["messages"][-1]         = {"role": "user", "content": "safety flag was raised and handled."}
-    state["messages"]             = state["messages"] + [{"role": "assistant", "content": SAFETY_REPLY}]
+    """Raise the safety flag once while preserving the original conversation."""
+    already_raised = bool(state.get("safety_flag"))
+    state["safety_flag"] = True
+
+    # Do not overwrite the patient's original message.
+    # Add the safety reply only the first time the flag is raised.
+    if not already_raised:
+        state["messages"] = state["messages"] + [
+            {"role": "assistant", "content": SAFETY_REPLY}
+        ]
+
     state["conversation_started"] = True
+    save_record(state)
     return state
 
 
@@ -34,18 +42,40 @@ def apply_tool_calls(state: AliceState, section: str, response):
             value     = tc["args"]["value"]
             validator = FIELD_VALIDATORS.get(field)
 
+            saved_value = None
             if validator:
                 valid, result = validator(value)
-                state[section][field]  = result if valid else state[section][field]
-                tool_results[tc["id"]] = "saved" if valid else f"invalid: {result}"
+                if valid:
+                    state[section][field] = result
+                    saved_value = result
+                    tool_results[tc["id"]] = "saved"
+                else:
+                    tool_results[tc["id"]] = f"invalid: {result}"
             else:
-                state[section][field]  = value
+                state[section][field] = value
+                saved_value = value
                 tool_results[tc["id"]] = "saved"
 
+            # PHQ-9 question 9 is a deterministic safety rule.
+            # Any successfully saved score above zero raises the flag, even when
+            # the patient's raw reply is only "Several days".
+            if section == "phq9" and field == "phq9_q9" and saved_value is not None:
+                try:
+                    q9_score = int(saved_value)
+                except (TypeError, ValueError):
+                    q9_score = 0
+
+                if q9_score > 0 and not state.get("safety_flag", False):
+                    safety_raised = True
+
         elif tc["name"] == "raise_safety_flag":
-            state["safety_flag"]   = True
-            safety_raised          = True
-            tool_results[tc["id"]] = "flag_raised"
+            # Defer the actual state mutation to handle_safety(), which also
+            # appends the safety reply exactly once and saves the record.
+            if not state.get("safety_flag", False):
+                safety_raised = True
+                tool_results[tc["id"]] = "flag_raised"
+            else:
+                tool_results[tc["id"]] = "flag_already_raised"
 
     return tool_results, safety_raised
 
@@ -65,7 +95,14 @@ def section_node(state: AliceState) -> AliceState:
     section = state["current_section"]
 
     # ── Stage 1: deterministic safety gate on raw patient text ──
-    if state["messages"] and state["messages"][-1].get("role") == "user":
+    # Run only before a safety concern has already been handled.
+    # IMPORTANT: explicit_safety_trigger() must distinguish current patient risk
+    # from historical, negated, hypothetical, and third-person statements.
+    if (
+        not state.get("safety_flag", False)
+        and state["messages"]
+        and state["messages"][-1].get("role") == "user"
+    ):
         if explicit_safety_trigger(state["messages"][-1]["content"]):
             return handle_safety(state)
 

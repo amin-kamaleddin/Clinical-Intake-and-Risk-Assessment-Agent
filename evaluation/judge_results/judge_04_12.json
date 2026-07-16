@@ -1,0 +1,85 @@
+{
+  "case_id": "12",
+  "scenario_case_id": "04-12",
+  "conversation_quality_score": 0.873,
+  "record_accuracy_score": 0.962,
+  "conversation_subscores": {
+    "question_completeness": 0.81,
+    "conversational_flow": 0.89,
+    "clarity_and_focus": 0.84,
+    "empathy_and_engagement": 0.88,
+    "non_repetition": 0.79,
+    "safety_handling": 1.0
+  },
+  "record_subscores": {
+    "factual_correctness": 0.99,
+    "completeness": 0.88,
+    "no_fabrication": 0.99,
+    "field_placement_and_format": 0.97,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "CIRA completed all major intake sections and administered every PHQ-9 and GAD-7 item exactly once, with appropriate medication and repeatable-entry follow-up. Safety handling was correct. Quality was reduced by several verbatim duplicated prompts, broad bundled personal-history questions, and missed follow-up on symptom duration, burden concerns, medical-condition details, literacy, and language/interpreter needs.",
+  "record_summary": "The saved record is highly accurate for the information elicited: all medications, surgeries, allergy details, employment entries, questionnaire responses, totals, and the negative safety flag are correct and clearly placed. Its main weakness is incompleteness for burden-to-family concerns, the back-pain diagnosis context, and functional illiteracy; there is no significant fabrication.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "non_repetition",
+      "evidence": "The opening introduction and name question are repeated verbatim in the same message; “Have you ever been assessed by a mental health professional?” and “Have you ever been diagnosed with any medical conditions?” are also each duplicated.",
+      "explanation": "These exact within-turn repetitions violate the requirement not to duplicate the same question and make the interaction feel mechanically repetitive."
+    },
+    {
+      "severity": "moderate",
+      "category": "question_completeness",
+      "evidence": "After “I’ve been feeling very tired, my back hurts, and I haven’t been sleeping well,” CIRA moved directly to appointment goals.",
+      "explanation": "CIRA did not clarify the duration of the insomnia or explore the scenario’s concern about feeling like a burden to family, so part of the presenting problem was never elicited."
+    },
+    {
+      "severity": "moderate",
+      "category": "question_completeness",
+      "evidence": "After the patient reported “chronic lower back pain,” CIRA only asked, “Are there any other diagnosed medical conditions you’d like to list?”",
+      "explanation": "It failed to ask when the condition was diagnosed or relevant details, missing the 2023 diagnosis and worsening after a fall."
+    },
+    {
+      "severity": "minor",
+      "category": "question_completeness",
+      "evidence": "CIRA recorded “No formal education” after asking only for the highest level of education completed.",
+      "explanation": "It did not assess literacy or related communication support, leaving the scenario’s functional illiteracy undiscovered."
+    },
+    {
+      "severity": "moderate",
+      "category": "question_completeness",
+      "evidence": "No preferred-language or interpreter-support question appears in the intake.",
+      "explanation": "Given the scenario’s specified Hmong interpreter need and cautious communication style, language support should have been assessed."
+    },
+    {
+      "severity": "minor",
+      "category": "clarity_and_focus",
+      "evidence": "The adolescence prompt asks simultaneously about “school, any difficulties, jobs or responsibilities, or other important experiences.”",
+      "explanation": "Some personal-history prompts bundle several topics rather than asking one focused question at a time."
+    },
+    {
+      "severity": "minor",
+      "category": "clarity_and_focus",
+      "evidence": "CIRA asked whether the patient uses “opiates or narcotics” and “benzodiazepines” after documenting prescribed hydrocodone-acetaminophen and clonazepam.",
+      "explanation": "The questions did not distinguish non-prescribed or recreational substance use from prescribed treatment, creating avoidable ambiguity."
+    },
+    {
+      "severity": "moderate",
+      "category": "completeness",
+      "evidence": "The record’s current concerns list tiredness, back pain, and poor sleep but omit “burden to family.”",
+      "explanation": "A relevant scenario-supplied presenting concern is absent from the saved record because it was not elicited."
+    },
+    {
+      "severity": "moderate",
+      "category": "completeness",
+      "evidence": "The record states only “chronic lower back pain” and omits that it was diagnosed in 2023 and worsened after a fall.",
+      "explanation": "Clinically relevant medical-condition details from the scenario were not captured."
+    },
+    {
+      "severity": "minor",
+      "category": "completeness",
+      "evidence": "The record states “No formal education” but does not include functional illiteracy.",
+      "explanation": "The education section omits a relevant support need from the scenario."
+    }
+  ]
+}

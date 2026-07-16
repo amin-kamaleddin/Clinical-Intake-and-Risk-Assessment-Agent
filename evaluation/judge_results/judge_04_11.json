@@ -1,0 +1,91 @@
+{
+  "case_id": "11",
+  "scenario_case_id": "04-11",
+  "conversation_quality_score": 0.764,
+  "record_accuracy_score": 0.8925,
+  "conversation_subscores": {
+    "question_completeness": 0.62,
+    "conversational_flow": 0.82,
+    "clarity_and_focus": 0.68,
+    "empathy_and_engagement": 0.84,
+    "non_repetition": 0.58,
+    "safety_handling": 1.0
+  },
+  "record_subscores": {
+    "factual_correctness": 0.93,
+    "completeness": 0.69,
+    "no_fabrication": 0.98,
+    "field_placement_and_format": 0.95,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "CIRA completed the major intake sections and all questionnaire scoring, remained respectful, and correctly avoided an unnecessary safety response. However, it failed to seek additional family-history and relationship entries, omitted medication frequency and some presenting symptoms, and included several duplicated or bundled questions.",
+  "record_summary": "Demographics, medical history, substance use, employment, questionnaire item values and totals, and the false safety flag are accurate. The main record weakness is incompleteness: two family-history entries, medication frequency, lack of future orientation, coworker interest, and the prior time off after the father’s death were not preserved.",
+  "issues": [
+    {
+      "severity": "major",
+      "category": "question_completeness",
+      "evidence": "After documenting the mother, CIRA asked only, “For your mother, are there any additional details...” and then moved to substance use.",
+      "explanation": "CIRA did not ask whether there were any other affected family members, so it missed the sister with depression and maternal uncle who died by suicide."
+    },
+    {
+      "severity": "moderate",
+      "category": "question_completeness",
+      "evidence": "Medication follow-ups covered dose, start time, and side effects, but CIRA never asked how often it was taken.",
+      "explanation": "The supplied medication frequency, “one tablet each morning,” was not elicited or recorded."
+    },
+    {
+      "severity": "moderate",
+      "category": "question_completeness",
+      "evidence": "After “I’ve been separated from my spouse after 6 years of marriage,” CIRA moved directly to future goals.",
+      "explanation": "It did not ask about additional significant relationships and therefore missed the disclosed scenario fact that the patient was interested in a coworker."
+    },
+    {
+      "severity": "moderate",
+      "category": "question_completeness",
+      "evidence": "The presenting-problem questions elicited “floundering at work and can’t concentrate,” followed immediately by goals.",
+      "explanation": "There was no follow-up to capture the supplied lack of future orientation or further characterize the work impairment and depressive presentation."
+    },
+    {
+      "severity": "moderate",
+      "category": "non_repetition",
+      "evidence": "“Have you ever been assessed by a mental health professional?” appears twice in the same CIRA message; the early-childhood prompt is also repeated verbatim.",
+      "explanation": "These are direct duplicate questions and reduce clarity and efficiency."
+    },
+    {
+      "severity": "moderate",
+      "category": "clarity_and_focus",
+      "evidence": "PHQ-9 Question 1 and its response options are repeated in one message, including the garbled text “oes this bynta.”",
+      "explanation": "The malformed duplicate is distracting and violates the requirement to ask each questionnaire item exactly once, although the response was still mapped correctly."
+    },
+    {
+      "severity": "minor",
+      "category": "non_repetition",
+      "evidence": "After the patient answered “I don’t know” about biological treatments, CIRA immediately asked, “Do you remember receiving any treatments like rTMS, ECT...”",
+      "explanation": "CIRA should have accepted the clearly unknown answer rather than looping over essentially the same detail."
+    },
+    {
+      "severity": "major",
+      "category": "record_completeness",
+      "evidence": "The record lists only “Relationship: Mother” under family psychiatric history.",
+      "explanation": "It omits the sister’s depression and maternal uncle’s death by suicide, both relevant supplied family-history entries."
+    },
+    {
+      "severity": "moderate",
+      "category": "record_completeness",
+      "evidence": "The medication record states name, unknown dose, start time, and side effects but not “one tablet each morning.”",
+      "explanation": "A supplied medication-administration detail is missing."
+    },
+    {
+      "severity": "moderate",
+      "category": "record_completeness",
+      "evidence": "The current concerns omit “no future orientation,” and significant relationships omit interest in a coworker.",
+      "explanation": "Relevant scenario facts were not captured because the conversation did not elicit them."
+    },
+    {
+      "severity": "minor",
+      "category": "record_factual_correctness",
+      "evidence": "The record says “previous_therapies: None reported,” while the scenario lists “time off after father's death.”",
+      "explanation": "Although the patient clarified that there was no formal therapy, the record fails to preserve the supplied prior supportive intervention/history."
+    }
+  ]
+}

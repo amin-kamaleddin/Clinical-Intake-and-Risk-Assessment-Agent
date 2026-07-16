@@ -134,53 +134,110 @@ Self-harm history:
 - Ask this question gently and exactly as follows:
   "Have you ever thought about or tried to intentionally hurt yourself?"
 - Call save_answer("self_harm_history", "yes") or save_answer("self_harm_history", "no") immediately.
-- If yes, ask them to briefly describe. Fix and save.
-  Then call raise_safety_flag - this is a mandatory clinical flag regardless of tense.
+- If yes, ask them to briefly describe the event and clarify whether there is any
+  current or immediate safety concern.
+- Save the historical details in self_harm_details.
+- Call raise_safety_flag only when the patient describes a current safety concern,
+  cannot confirm that they are currently safe, or meets another condition in the
+  global safety protocol. Historical self-harm alone must not trigger the flag.
 - If no, skip self_harm_details and move on.
-- Do not ask follow-up clinical questions beyond a brief description.
+- Do not conduct a detailed risk assessment; ask only the brief clarification needed
+  to distinguish historical information from current risk.
 
 Previous therapies:
 - Ask whether the patient has ever received any of the following therapies:
   CBT, DBT, Interpersonal Therapy, Mindfulness-Based Therapy, Psychodynamic Therapy, or other.
-- For each therapy the patient confirms, ask when and how many sessions.
-- Save all therapies and details as one combined summary.
-- If none, save "None reported."
+- If the answer is no, save "None reported."
+- If yes, collect each therapy separately. For each therapy ask, one question at a time:
+  1. What type of therapy was it?
+  2. When did they receive it?
+  3. Approximately how many sessions did they attend?
+- After completing one therapy, ask whether there were any other therapies.
+- Do NOT call save_answer("previous_therapies", ...) after only learning the therapy name.
+- Call save_answer only after all required details have been asked once and the patient
+  confirms there are no additional therapies. Use "Unknown" for details they do not know.
+- Save every therapy in one combined summary.
 
 Previous treatments:
-- Ask whether the patient has ever received any of the following treatments:
-  rTMS, ECT, Deep Brain Stimulation, Ketamine treatment, or other.
-- For each treatment confirmed, ask when, where, how many sessions, and how long the effect lasted.
-- Save all treatments and details as one combined summary.
-- If none, save "None reported."
+- Ask whether the patient has ever received rTMS, ECT, Deep Brain Stimulation,
+  ketamine treatment, or another biological treatment.
+- If the patient says "I don't know," clarify once whether they remember receiving any
+  of these treatments. If they still do not know, save "Unknown" and move on.
+- If no, save "None reported."
+- If yes, collect each treatment separately. For each treatment ask, one question at a time:
+  1. Which treatment?
+  2. When was it received?
+  3. Where was it received?
+  4. Approximately how many sessions?
+  5. How long did the benefit or effect last?
+- After completing one treatment, ask whether there were any others.
+- Do NOT save a name-only or partial answer. Save one combined summary only after all
+  required details have been asked once and the patient confirms there are no more.
+  Use "Unknown" for details they do not know.
 """,
 "medications": """
 Collect the following fields in order:
 has_current_medications, current_medications,
 has_past_medications, past_medication_details
 
+General medication rules:
+- Ask only one question at a time.
+- Do not provide medical advice or recommend starting, stopping, or changing medication.
+- Do not guess missing information.
+- A patient may have more than one current or past medication.
+- Do not move on after collecting only the first medication.
+- After each medication is sufficiently described, ask whether there are any others.
+- Continue until the patient clearly confirms there are no additional medications.
+- If the patient does not know a requested detail, record that detail as "Unknown"
+  and do not ask for it repeatedly.
+- Preserve all medications already collected. Each save_answer call for a medication
+  summary must include every medication collected so far, not only the newest one.
+- Do not ask the same medication question twice in one response.
+
 Current medication status:
-- Ask whether the patient is currently taking any prescribed medications.
-- Save "yes" or "no" in has_current_medications.
-- If no, skip current_medications.
-- If yes, collect medication name, dose, start date, and side effects
-  for each current medication.
-- Save all current medications as one structured summary.
+1. Ask whether the patient is currently taking any prescribed medications.
+2. Immediately save "yes" or "no" in has_current_medications.
+3. If no, skip current_medications and move to past medication status.
+4. If yes, collect each current medication one at a time.
+5. For each current medication, ask every intake-form detail once, one question at a time:
+   - medication name, or purpose if the name is unknown;
+   - dose;
+   - start date, or approximate duration if the start date is unknown;
+   - side effects.
+   Frequency may also be collected when known, but it does not replace the required fields above.
+6. If the patient does not know a detail, record it as "Unknown" and continue.
+7. Do NOT call save_answer("current_medications", ...) after receiving only the medication name.
+   Keep the partial entry in conversational context until dose, start date/duration, and
+   side effects have each been asked once.
+8. After completing those details, ask: "Are you taking any other prescribed medications?"
+9. If yes, collect the next medication using the same process.
+10. If no, call save_answer once with a combined summary of every current medication.
+11. If the patient knows only the purpose, such as "medication for Parkinson's," preserve
+    that purpose and mark unavailable details as "Unknown."
 
 Past medication status:
-- After current medications are complete, ask whether the patient
-  has previously tried psychiatric medications.
-- Save "yes" or "no" in has_past_medications.
-- If no, skip past_medication_details.
-- If yes, collect medication name, dose, start date,
-  end date or duration, and reason for discontinuation.
-- Save all past medications as one structured summary.
+1. After current medications are complete, ask whether the patient has previously
+   tried any psychiatric medications.
+2. Immediately save "yes" or "no" in has_past_medications.
+3. If no, skip past_medication_details.
+4. If yes, collect each past medication one at a time.
+5. For each past medication, ask every intake-form detail once, one question at a time:
+   - medication name;
+   - dose;
+   - start date and end date, or approximate duration;
+   - reason for discontinuation.
+   Benefit and side effects may also be recorded when reported.
+6. If the patient does not know a detail, record "Unknown" and continue.
+7. Do NOT call save_answer("past_medication_details", ...) after receiving only a name.
+8. After completing the required details, ask whether there were any other past
+   psychiatric medications. Repeat until the patient clearly says there were no others.
+9. Save one combined final summary containing every past medication and all known details.
 
-General rules:
-- Ask only one question at a time.
-- Do not provide medical advice.
-- Do not recommend starting, stopping, or changing medication.
-- Do not guess missing information.
-- If a detail is unknown, record it as "Unknown".
+Completion:
+- The current-medication field is complete only after the patient says there are
+  no other current medications, or clearly states they cannot provide more information.
+- The past-medication field is complete only after the patient says there are
+  no other past psychiatric medications, or clearly states they cannot provide more information.
 """,
 
 "medical_history": """
@@ -318,6 +375,9 @@ Family psychiatric history:
 - If yes, collect the details below.
 
 Family psychiatric history details:
+- Safety-related information about a family member belongs in this family-history field.
+- A statement such as "my uncle died by suicide" is about another person and must not, by itself, raise the patient's safety flag.
+- Do not ask the patient whether they are currently safe unless the same message also contains a separate patient-related current safety signal.
 - For each family member, collect:
   1. Relationship to the patient
   2. Mental health diagnosis or condition

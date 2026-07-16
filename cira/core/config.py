@@ -3,7 +3,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 # Model names — overridable via environment for reproducible eval runs.
-MODEL_NAME       = os.getenv("CIRA_MODEL", "gpt-5.4-mini")
+MODEL_NAME       = os.getenv("CIRA_MODEL", "gpt-5.5")
 
 STT_MODEL        = os.getenv("CIRA_STT_MODEL", "gpt-4o-transcribe")
 TTS_MODEL        = os.getenv("CIRA_TTS_MODEL", "gpt-4o-mini-tts")
