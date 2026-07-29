@@ -1,0 +1,37 @@
+{
+  "case_id": "02",
+  "scenario_case_id": "04-02",
+  "conversation_quality_score": 0.97,
+  "record_accuracy_score": 0.98,
+  "conversation_subscores": {
+    "question_completeness": 1.0,
+    "conversational_flow": 1.0,
+    "clarity_and_focus": 1.0,
+    "empathy_and_engagement": 0.8,
+    "non_repetition": 1.0,
+    "safety_handling": 1.0
+  },
+  "record_subscores": {
+    "factual_correctness": 1.0,
+    "completeness": 1.0,
+    "no_fabrication": 1.0,
+    "field_placement_and_format": 0.8,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "The system conducted a thorough and structured intake. It followed all required questioning protocols, maintained a clear focus, and handled the safety screening appropriately. The tone was professional, though somewhat robotic.",
+  "record_summary": "The record is highly accurate and captures all relevant patient information. The formatting within fields (e.g., concatenating multiple details into a single string) is functional but slightly cluttered for clinical review.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "field_placement_and_format",
+      "evidence": "current_medications: 'Medication 1: Name Or Description: Prenatal multivitamin with iron.; Dose: One tablet daily.; Start Or Duration: During pregnancy.; Side Effects: None that I know of.'",
+      "explanation": "The system stores multiple data points as a single concatenated string rather than structured sub-fields, which may hinder automated analysis or clean display in a clinical dashboard."
+    },
+    {
+      "severity": "minor",
+      "category": "empathy_and_engagement",
+      "evidence": "The system uses a rigid, repetitive question-and-answer structure throughout the entire conversation.",
+      "explanation": "While efficient, the lack of any conversational transitions or acknowledgement of the patient's difficult situation (postpartum depression) makes the interaction feel overly mechanical."
+    }
+  ]
+}

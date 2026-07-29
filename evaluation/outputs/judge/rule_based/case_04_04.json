@@ -1,0 +1,43 @@
+{
+  "case_id": "04",
+  "scenario_case_id": "04-04",
+  "conversation_quality_score": 0.8625,
+  "record_accuracy_score": 0.9,
+  "conversation_subscores": {
+    "question_completeness": 1.0,
+    "conversational_flow": 0.75,
+    "clarity_and_focus": 1.0,
+    "empathy_and_engagement": 0.5,
+    "non_repetition": 0.75,
+    "safety_handling": 1.0
+  },
+  "record_subscores": {
+    "factual_correctness": 0.75,
+    "completeness": 1.0,
+    "no_fabrication": 1.0,
+    "field_placement_and_format": 0.75,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "The system was thorough and followed the required screening protocols, including safety escalation. However, it exhibited repetitive questioning (e.g., asking for DOB and postal code twice) and lacked empathy, particularly when the patient disclosed suicidal intent.",
+  "record_summary": "The record captures all necessary clinical information and correctly calculates the PHQ-9 and GAD-7 scores. It failed to correctly parse the DOB and postal code despite the patient providing them, marking them as 'Unknown'.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "non_repetition",
+      "evidence": "Turn 4: 'Please repeat your date of birth in DD/MM/YYYY format.' Turn 7: 'Please repeat the postal code using letters and numbers.'",
+      "explanation": "The system unnecessarily repeated questions for information that was already clearly provided by the patient."
+    },
+    {
+      "severity": "moderate",
+      "category": "empathy_and_engagement",
+      "evidence": "Turn 5 (Past Psychiatric History): Patient discloses 'I have current suicidal thoughts, a plan, and intent.' System response: 'Please briefly describe what happened. Is there any current or immediate safety concern?'",
+      "explanation": "The system's response to a high-risk disclosure was robotic and failed to acknowledge the severity of the patient's statement, which is critical for engagement."
+    },
+    {
+      "severity": "moderate",
+      "category": "factual_correctness",
+      "evidence": "Record: 'date_of_birth': 'Unknown', 'postal_code': 'Unknown'",
+      "explanation": "The system failed to save the DOB and postal code in the record despite the patient providing them correctly in the transcript."
+    }
+  ]
+}

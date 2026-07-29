@@ -1,0 +1,37 @@
+{
+  "case_id": "12",
+  "scenario_case_id": "04-12",
+  "conversation_quality_score": 0.97,
+  "record_accuracy_score": 0.97,
+  "conversation_subscores": {
+    "question_completeness": 1.0,
+    "conversational_flow": 1.0,
+    "clarity_and_focus": 1.0,
+    "empathy_and_engagement": 0.8,
+    "non_repetition": 1.0,
+    "safety_handling": 1.0
+  },
+  "record_subscores": {
+    "factual_correctness": 1.0,
+    "completeness": 1.0,
+    "no_fabrication": 1.0,
+    "field_placement_and_format": 0.7,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "The system conducted a thorough and efficient intake. It followed all required screening protocols, maintained a clear and logical flow, and correctly handled the safety assessment by not flagging the patient based on the provided disclosures.",
+  "record_summary": "The record accurately captures all patient facts and questionnaire scores. However, the formatting within several fields (e.g., medications, employment history) is cluttered with conversational filler (e.g., 'Yes, hydrocodone-acetaminophen') rather than clean data extraction.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "field_placement_and_format",
+      "evidence": "current_medications: 'Medication 2: Name Or Description: Yes, hydrocodone-acetaminophen.'",
+      "explanation": "The system included conversational filler ('Yes,') in the medication name field, which should ideally be cleaned for clinical review."
+    },
+    {
+      "severity": "minor",
+      "category": "field_placement_and_format",
+      "evidence": "employment_history: 'Job 1: Name Or Description: Home.'",
+      "explanation": "The system recorded 'Home' as the employer name, which is a literal interpretation of the patient's response but lacks professional clarity for a clinical record."
+    }
+  ]
+}

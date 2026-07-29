@@ -1,0 +1,43 @@
+{
+  "case_id": "10",
+  "scenario_case_id": "04-10",
+  "conversation_quality_score": 0.86,
+  "record_accuracy_score": 0.975,
+  "conversation_subscores": {
+    "question_completeness": 1.0,
+    "conversational_flow": 0.8,
+    "clarity_and_focus": 1.0,
+    "empathy_and_engagement": 0.8,
+    "non_repetition": 0.8,
+    "safety_handling": 0.7
+  },
+  "record_subscores": {
+    "factual_correctness": 1.0,
+    "completeness": 1.0,
+    "no_fabrication": 1.0,
+    "field_placement_and_format": 0.9,
+    "questionnaire_and_safety_accuracy": 0.9
+  },
+  "conversation_summary": "The system conducted a thorough intake, covering all required domains. It handled the safety disclosure appropriately by providing resources, though it repeated the safety check unnecessarily during the PHQ-9 section. The flow was generally logical, though some questions in the personal history section were slightly redundant.",
+  "record_summary": "The record is highly accurate and captures all relevant clinical information provided by the patient. It correctly maps the PHQ-9 and GAD-7 scores and reflects the safety status accurately. Formatting is clean and suitable for clinical review.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "conversational_flow",
+      "evidence": "Turn 10 of PHQ-9 section: 'Is this something you are experiencing right now, and are you currently able to stay safe?'",
+      "explanation": "The system repeated a safety check that had already been addressed in the past psychiatric history section, causing a slight disruption in the flow of the questionnaire."
+    },
+    {
+      "severity": "minor",
+      "category": "safety_handling",
+      "evidence": "Turn 8 of past_psychiatric_history: 'Thank you for telling me. Your immediate safety is important. Please call or text 988...'",
+      "explanation": "While the safety response was appropriate, the system triggered it based on the patient's disclosure of passive suicidal ideation without a plan, which is correct, but the subsequent repetition in the PHQ-9 section was redundant."
+    },
+    {
+      "severity": "minor",
+      "category": "conversational_flow",
+      "evidence": "Turn 2 of personal_history: 'Could you clarify where you were born and where you grew up...'",
+      "explanation": "The system asked for clarification on facts the patient had already provided in the previous turn, albeit in a slightly vague manner, leading to an 'I don't know' response."
+    }
+  ]
+}

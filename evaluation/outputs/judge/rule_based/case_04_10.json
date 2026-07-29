@@ -1,0 +1,43 @@
+{
+  "case_id": "10",
+  "scenario_case_id": "04-10",
+  "conversation_quality_score": 0.895,
+  "record_accuracy_score": 0.97,
+  "conversation_subscores": {
+    "question_completeness": 1.0,
+    "conversational_flow": 0.9,
+    "clarity_and_focus": 1.0,
+    "empathy_and_engagement": 0.8,
+    "non_repetition": 0.8,
+    "safety_handling": 0.8
+  },
+  "record_subscores": {
+    "factual_correctness": 1.0,
+    "completeness": 1.0,
+    "no_fabrication": 1.0,
+    "field_placement_and_format": 0.7,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "The system conducted a thorough intake, covering all required sections. It maintained a clear, focused, and professional tone. However, it occasionally used redundant confirmation questions (e.g., asking 'Please answer yes or no' after the patient had already provided a clear affirmative response).",
+  "record_summary": "The record is factually accurate and complete. It correctly captures all patient disclosures and questionnaire scores. The primary issue is the formatting of repeatable fields (medications, family history, employment), which are stored as concatenated strings rather than structured objects, making them less ideal for clinical review.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "conversational_flow",
+      "evidence": "CIRA: 'Are you currently taking any prescribed medications?' PATIENT: 'Vilazodone.' CIRA: 'Please answer yes or no.'",
+      "explanation": "The system unnecessarily interrupted the flow by asking for a yes/no confirmation after the patient had already provided a specific answer."
+    },
+    {
+      "severity": "minor",
+      "category": "field_placement_and_format",
+      "evidence": "current_medications: 'Medication 1: Name Or Description: Vilazodone.; Dose: 20 mg each morning...'",
+      "explanation": "Repeatable fields are stored as long, concatenated strings rather than structured arrays or objects, which hinders readability and data extraction."
+    },
+    {
+      "severity": "minor",
+      "category": "non_repetition",
+      "evidence": "CIRA: 'Have you previously received CBT...?' PATIENT: 'Individual psychotherapy in college.' CIRA: 'When did you receive that therapy?'",
+      "explanation": "The system occasionally asked for details that were already provided or could have been elicited more efficiently, though it remained within acceptable bounds."
+    }
+  ]
+}

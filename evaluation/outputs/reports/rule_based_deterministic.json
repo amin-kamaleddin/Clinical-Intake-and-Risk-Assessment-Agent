@@ -1,0 +1,1629 @@
+{
+  "summary": {
+    "system": "rule_based",
+    "total_cases": 12,
+    "evaluated_cases": 12,
+    "passed": 10,
+    "failed": 2,
+    "errors": 0,
+    "expected_safety_flags": 5,
+    "actual_safety_flags": 6,
+    "missed_safety_cases": [],
+    "unexpected_safety_cases": [
+      "07"
+    ],
+    "metric_accuracy": {
+      "safety_flag": 0.9167,
+      "safety_q9_invariant": 1.0,
+      "phq9_total": 1.0,
+      "gad7_total": 1.0,
+      "all_sections_completed": 1.0,
+      "medication_coverage": 0.9167,
+      "asked_for_additional_medications": 1.0,
+      "no_consecutive_duplicate_cira_question": 1.0,
+      "safety_response_not_repeated": 1.0
+    }
+  },
+  "cases": [
+    {
+      "case_id": "01",
+      "scenario_case_id": "04-01",
+      "title": "Moody and Irritable",
+      "system": "rule_based",
+      "record_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/records/case_04_01.json",
+      "transcript_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/transcripts/case_04_01.json",
+      "status": "PASS",
+      "passed_checks": 9,
+      "total_checks": 9,
+      "score": 1.0,
+      "checks": {
+        "safety_flag": {
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        "safety_q9_invariant": {
+          "expected": "PHQ-9 Q9 > 0 implies safety_flag=True",
+          "actual": {
+            "q9_score": 0,
+            "required": false,
+            "actual": false,
+            "passed": true
+          },
+          "passed": true
+        },
+        "phq9_total": {
+          "expected": 3,
+          "actual": 3,
+          "passed": true
+        },
+        "gad7_total": {
+          "expected": 8,
+          "actual": 8,
+          "passed": true
+        },
+        "all_sections_completed": {
+          "expected": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "actual": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "passed": true
+        },
+        "medication_coverage": {
+          "expected": "all identifiable medication entries captured",
+          "actual": {
+            "passed": true,
+            "details": {
+              "current_medications": {
+                "expected_entries": [
+                  "Methylphenidate short-acting; 10 mg each morning and 5 mg at noon; started September 2024; reduced appetite at lunch"
+                ],
+                "expected_names": [
+                  "Methylphenidate short-acting"
+                ],
+                "actual": "Medication 1: Name Or Description: Methylphenidate short-acting.; Dose: 10 mg in the morning and 5 mg at noon.; Start Or Duration: September 2024.; Side Effects: Reduced appetite at lunch.",
+                "missing_names": [],
+                "passed": true
+              },
+              "past_medication_details": {
+                "expected_entries": [],
+                "expected_names": [],
+                "actual": null,
+                "missing_names": [],
+                "passed": true
+              }
+            }
+          },
+          "passed": true
+        },
+        "asked_for_additional_medications": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "no_consecutive_duplicate_cira_question": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_response_not_repeated": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      },
+      "completed_sections": [
+        "general_information",
+        "current_concerns",
+        "past_psychiatric_history",
+        "medications",
+        "medical_history",
+        "medication_allergies",
+        "family_psychiatric_history",
+        "substance_use",
+        "education_employment_legal_history",
+        "personal_history",
+        "phq9",
+        "gad7"
+      ],
+      "conversation_details": {
+        "expected_medication_entry_count": 1,
+        "asked_for_more": true,
+        "duplicate_questions": [],
+        "safety_response_count": 0
+      }
+    },
+    {
+      "case_id": "02",
+      "scenario_case_id": "04-02",
+      "title": "Postpartum Sadness",
+      "system": "rule_based",
+      "record_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/records/case_04_02.json",
+      "transcript_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/transcripts/case_04_02.json",
+      "status": "PASS",
+      "passed_checks": 9,
+      "total_checks": 9,
+      "score": 1.0,
+      "checks": {
+        "safety_flag": {
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        "safety_q9_invariant": {
+          "expected": "PHQ-9 Q9 > 0 implies safety_flag=True",
+          "actual": {
+            "q9_score": 0,
+            "required": false,
+            "actual": false,
+            "passed": true
+          },
+          "passed": true
+        },
+        "phq9_total": {
+          "expected": 17,
+          "actual": 17,
+          "passed": true
+        },
+        "gad7_total": {
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        "all_sections_completed": {
+          "expected": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "actual": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "passed": true
+        },
+        "medication_coverage": {
+          "expected": "all identifiable medication entries captured",
+          "actual": {
+            "passed": true,
+            "details": {
+              "current_medications": {
+                "expected_entries": [
+                  "Prenatal multivitamin with iron; one tablet daily; started during pregnancy; no side effects known"
+                ],
+                "expected_names": [
+                  "Prenatal multivitamin with iron"
+                ],
+                "actual": "Medication 1: Name Or Description: Prenatal multivitamin with iron.; Dose: One tablet daily.; Start Or Duration: During pregnancy.; Side Effects: None that I know of.",
+                "missing_names": [],
+                "passed": true
+              },
+              "past_medication_details": {
+                "expected_entries": [],
+                "expected_names": [],
+                "actual": null,
+                "missing_names": [],
+                "passed": true
+              }
+            }
+          },
+          "passed": true
+        },
+        "asked_for_additional_medications": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "no_consecutive_duplicate_cira_question": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_response_not_repeated": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      },
+      "completed_sections": [
+        "general_information",
+        "current_concerns",
+        "past_psychiatric_history",
+        "medications",
+        "medical_history",
+        "medication_allergies",
+        "family_psychiatric_history",
+        "substance_use",
+        "education_employment_legal_history",
+        "personal_history",
+        "phq9",
+        "gad7"
+      ],
+      "conversation_details": {
+        "expected_medication_entry_count": 1,
+        "asked_for_more": true,
+        "duplicate_questions": [],
+        "safety_response_count": 0
+      }
+    },
+    {
+      "case_id": "03",
+      "scenario_case_id": "04-03",
+      "title": "Grief and Depression",
+      "system": "rule_based",
+      "record_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/records/case_04_03.json",
+      "transcript_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/transcripts/case_04_03.json",
+      "status": "PASS",
+      "passed_checks": 9,
+      "total_checks": 9,
+      "score": 1.0,
+      "checks": {
+        "safety_flag": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_q9_invariant": {
+          "expected": "PHQ-9 Q9 > 0 implies safety_flag=True",
+          "actual": {
+            "q9_score": 1,
+            "required": true,
+            "actual": true,
+            "passed": true
+          },
+          "passed": true
+        },
+        "phq9_total": {
+          "expected": 18,
+          "actual": 18,
+          "passed": true
+        },
+        "gad7_total": {
+          "expected": 13,
+          "actual": 13,
+          "passed": true
+        },
+        "all_sections_completed": {
+          "expected": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "actual": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "passed": true
+        },
+        "medication_coverage": {
+          "expected": "all identifiable medication entries captured",
+          "actual": {
+            "passed": true,
+            "details": {
+              "current_medications": {
+                "expected_entries": [],
+                "expected_names": [],
+                "actual": null,
+                "missing_names": [],
+                "passed": true
+              },
+              "past_medication_details": {
+                "expected_entries": [
+                  "Sertraline; 100 mg daily; taken for about 18 months in his 30s; stopped after sustained recovery"
+                ],
+                "expected_names": [
+                  "Sertraline"
+                ],
+                "actual": "Past medication 1: Name Or Description: Sertraline.; Dose: 100 mg daily.; Dates Or Duration: I took it for about 18 months in my 30s, and I stopped after sustained recovery.; Discontinuation Reason: It was stopped after sustained recovery.",
+                "missing_names": [],
+                "passed": true
+              }
+            }
+          },
+          "passed": true
+        },
+        "asked_for_additional_medications": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "no_consecutive_duplicate_cira_question": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_response_not_repeated": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      },
+      "completed_sections": [
+        "general_information",
+        "current_concerns",
+        "past_psychiatric_history",
+        "medications",
+        "medical_history",
+        "medication_allergies",
+        "family_psychiatric_history",
+        "substance_use",
+        "education_employment_legal_history",
+        "personal_history",
+        "phq9",
+        "gad7"
+      ],
+      "conversation_details": {
+        "expected_medication_entry_count": 1,
+        "asked_for_more": true,
+        "duplicate_questions": [],
+        "safety_response_count": 0
+      }
+    },
+    {
+      "case_id": "04",
+      "scenario_case_id": "04-04",
+      "title": "Lost Interest in Life",
+      "system": "rule_based",
+      "record_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/records/case_04_04.json",
+      "transcript_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/transcripts/case_04_04.json",
+      "status": "PASS",
+      "passed_checks": 9,
+      "total_checks": 9,
+      "score": 1.0,
+      "checks": {
+        "safety_flag": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_q9_invariant": {
+          "expected": "PHQ-9 Q9 > 0 implies safety_flag=True",
+          "actual": {
+            "q9_score": 3,
+            "required": true,
+            "actual": true,
+            "passed": true
+          },
+          "passed": true
+        },
+        "phq9_total": {
+          "expected": 25,
+          "actual": 25,
+          "passed": true
+        },
+        "gad7_total": {
+          "expected": 14,
+          "actual": 14,
+          "passed": true
+        },
+        "all_sections_completed": {
+          "expected": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "actual": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "passed": true
+        },
+        "medication_coverage": {
+          "expected": "all identifiable medication entries captured",
+          "actual": {
+            "passed": true,
+            "details": {
+              "current_medications": {
+                "expected_entries": [
+                  "Sertraline; 50 mg each morning; started one week ago; mild nausea"
+                ],
+                "expected_names": [
+                  "Sertraline"
+                ],
+                "actual": "Medication 1: Name Or Description: Sertraline.; Dose: 50 mg each morning.; Start Or Duration: One week ago.; Side Effects: Mild nausea.",
+                "missing_names": [],
+                "passed": true
+              },
+              "past_medication_details": {
+                "expected_entries": [],
+                "expected_names": [],
+                "actual": null,
+                "missing_names": [],
+                "passed": true
+              }
+            }
+          },
+          "passed": true
+        },
+        "asked_for_additional_medications": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "no_consecutive_duplicate_cira_question": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_response_not_repeated": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      },
+      "completed_sections": [
+        "general_information",
+        "current_concerns",
+        "past_psychiatric_history",
+        "medications",
+        "medical_history",
+        "medication_allergies",
+        "family_psychiatric_history",
+        "substance_use",
+        "education_employment_legal_history",
+        "personal_history",
+        "phq9",
+        "gad7"
+      ],
+      "conversation_details": {
+        "expected_medication_entry_count": 1,
+        "asked_for_more": true,
+        "duplicate_questions": [],
+        "safety_response_count": 1
+      }
+    },
+    {
+      "case_id": "05",
+      "scenario_case_id": "04-05",
+      "title": "Despair",
+      "system": "rule_based",
+      "record_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/records/case_04_05.json",
+      "transcript_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/transcripts/case_04_05.json",
+      "status": "PASS",
+      "passed_checks": 9,
+      "total_checks": 9,
+      "score": 1.0,
+      "checks": {
+        "safety_flag": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_q9_invariant": {
+          "expected": "PHQ-9 Q9 > 0 implies safety_flag=True",
+          "actual": {
+            "q9_score": 1,
+            "required": true,
+            "actual": true,
+            "passed": true
+          },
+          "passed": true
+        },
+        "phq9_total": {
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        },
+        "gad7_total": {
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        "all_sections_completed": {
+          "expected": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "actual": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "passed": true
+        },
+        "medication_coverage": {
+          "expected": "all identifiable medication entries captured",
+          "actual": {
+            "passed": true,
+            "details": {
+              "current_medications": {
+                "expected_entries": [],
+                "expected_names": [],
+                "actual": null,
+                "missing_names": [],
+                "passed": true
+              },
+              "past_medication_details": {
+                "expected_entries": [
+                  "Fluoxetine; 20 mg daily; taken for 6 weeks in 2025; stopped because of marked fatigue"
+                ],
+                "expected_names": [
+                  "Fluoxetine"
+                ],
+                "actual": "Past medication 1: Name Or Description: Fluoxetine.; Dose: 20 mg daily.; Dates Or Duration: I took it for 6 weeks in 2025.; Discontinuation Reason: I stopped it because of marked fatigue.",
+                "missing_names": [],
+                "passed": true
+              }
+            }
+          },
+          "passed": true
+        },
+        "asked_for_additional_medications": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "no_consecutive_duplicate_cira_question": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_response_not_repeated": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      },
+      "completed_sections": [
+        "general_information",
+        "current_concerns",
+        "past_psychiatric_history",
+        "medications",
+        "medical_history",
+        "medication_allergies",
+        "family_psychiatric_history",
+        "substance_use",
+        "education_employment_legal_history",
+        "personal_history",
+        "phq9",
+        "gad7"
+      ],
+      "conversation_details": {
+        "expected_medication_entry_count": 1,
+        "asked_for_more": true,
+        "duplicate_questions": [],
+        "safety_response_count": 0
+      }
+    },
+    {
+      "case_id": "06",
+      "scenario_case_id": "04-06",
+      "title": "Feeling Low for Years",
+      "system": "rule_based",
+      "record_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/records/case_04_06.json",
+      "transcript_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/transcripts/case_04_06.json",
+      "status": "PASS",
+      "passed_checks": 9,
+      "total_checks": 9,
+      "score": 1.0,
+      "checks": {
+        "safety_flag": {
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        "safety_q9_invariant": {
+          "expected": "PHQ-9 Q9 > 0 implies safety_flag=True",
+          "actual": {
+            "q9_score": 0,
+            "required": false,
+            "actual": false,
+            "passed": true
+          },
+          "passed": true
+        },
+        "phq9_total": {
+          "expected": 5,
+          "actual": 5,
+          "passed": true
+        },
+        "gad7_total": {
+          "expected": 6,
+          "actual": 6,
+          "passed": true
+        },
+        "all_sections_completed": {
+          "expected": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "actual": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "passed": true
+        },
+        "medication_coverage": {
+          "expected": "all identifiable medication entries captured",
+          "actual": {
+            "passed": true,
+            "details": {
+              "current_medications": {
+                "expected_entries": [
+                  "Citalopram; 20 mg each morning; started March 2025; mild dry mouth",
+                  "Multivitamin; one tablet daily; start date unknown; no side effects",
+                  "Oral contraceptive; one tablet daily; started 2022; no side effects."
+                ],
+                "expected_names": [
+                  "Citalopram",
+                  "Multivitamin",
+                  "Oral contraceptive"
+                ],
+                "actual": "Medication 1: Name Or Description: Citalopram.; Dose: 20 mg each morning.; Start Or Duration: I started it in March 2025.; Side Effects: Mild dry mouth.\nMedication 2: Name Or Description: Yes, I am taking a multivitamin.; Dose: One tablet daily.; Start Or Duration: Unknown; Side Effects: None.\nMedication 3: Name Or Description: Yes, I am taking an oral contraceptive.; Dose: One tablet daily.; Start Or Duration: I started it in 2022.; Side Effects: None.",
+                "missing_names": [],
+                "passed": true
+              },
+              "past_medication_details": {
+                "expected_entries": [],
+                "expected_names": [],
+                "actual": null,
+                "missing_names": [],
+                "passed": true
+              }
+            }
+          },
+          "passed": true
+        },
+        "asked_for_additional_medications": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "no_consecutive_duplicate_cira_question": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_response_not_repeated": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      },
+      "completed_sections": [
+        "general_information",
+        "current_concerns",
+        "past_psychiatric_history",
+        "medications",
+        "medical_history",
+        "medication_allergies",
+        "family_psychiatric_history",
+        "substance_use",
+        "education_employment_legal_history",
+        "personal_history",
+        "phq9",
+        "gad7"
+      ],
+      "conversation_details": {
+        "expected_medication_entry_count": 3,
+        "asked_for_more": true,
+        "duplicate_questions": [],
+        "safety_response_count": 0
+      }
+    },
+    {
+      "case_id": "07",
+      "scenario_case_id": "04-07",
+      "title": "Mood Swings",
+      "system": "rule_based",
+      "record_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/records/case_04_07.json",
+      "transcript_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/transcripts/case_04_07.json",
+      "status": "FAIL",
+      "passed_checks": 8,
+      "total_checks": 9,
+      "score": 0.8889,
+      "checks": {
+        "safety_flag": {
+          "expected": false,
+          "actual": true,
+          "passed": false
+        },
+        "safety_q9_invariant": {
+          "expected": "PHQ-9 Q9 > 0 implies safety_flag=True",
+          "actual": {
+            "q9_score": 0,
+            "required": false,
+            "actual": true,
+            "passed": true
+          },
+          "passed": true
+        },
+        "phq9_total": {
+          "expected": 6,
+          "actual": 6,
+          "passed": true
+        },
+        "gad7_total": {
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        "all_sections_completed": {
+          "expected": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "actual": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "passed": true
+        },
+        "medication_coverage": {
+          "expected": "all identifiable medication entries captured",
+          "actual": {
+            "passed": true,
+            "details": {
+              "current_medications": {
+                "expected_entries": [
+                  "Combined oral contraceptive; one tablet daily; started 2023; no known side effects"
+                ],
+                "expected_names": [
+                  "Combined oral contraceptive"
+                ],
+                "actual": "Medication 1: Name Or Description: Combined oral contraceptive.; Dose: One tablet daily.; Start Or Duration: I started it in 2023.; Side Effects: None that I know of.",
+                "missing_names": [],
+                "passed": true
+              },
+              "past_medication_details": {
+                "expected_entries": [],
+                "expected_names": [],
+                "actual": null,
+                "missing_names": [],
+                "passed": true
+              }
+            }
+          },
+          "passed": true
+        },
+        "asked_for_additional_medications": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "no_consecutive_duplicate_cira_question": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_response_not_repeated": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      },
+      "completed_sections": [
+        "general_information",
+        "current_concerns",
+        "past_psychiatric_history",
+        "medications",
+        "medical_history",
+        "medication_allergies",
+        "family_psychiatric_history",
+        "substance_use",
+        "education_employment_legal_history",
+        "personal_history",
+        "phq9",
+        "gad7"
+      ],
+      "conversation_details": {
+        "expected_medication_entry_count": 1,
+        "asked_for_more": true,
+        "duplicate_questions": [],
+        "safety_response_count": 1
+      }
+    },
+    {
+      "case_id": "08",
+      "scenario_case_id": "04-08",
+      "title": "Stress, Drugs, and Unhappiness",
+      "system": "rule_based",
+      "record_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/records/case_04_08.json",
+      "transcript_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/transcripts/case_04_08.json",
+      "status": "PASS",
+      "passed_checks": 9,
+      "total_checks": 9,
+      "score": 1.0,
+      "checks": {
+        "safety_flag": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_q9_invariant": {
+          "expected": "PHQ-9 Q9 > 0 implies safety_flag=True",
+          "actual": {
+            "q9_score": 1,
+            "required": true,
+            "actual": true,
+            "passed": true
+          },
+          "passed": true
+        },
+        "phq9_total": {
+          "expected": 15,
+          "actual": 15,
+          "passed": true
+        },
+        "gad7_total": {
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        "all_sections_completed": {
+          "expected": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "actual": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "passed": true
+        },
+        "medication_coverage": {
+          "expected": "all identifiable medication entries captured",
+          "actual": {
+            "passed": true,
+            "details": {
+              "current_medications": {
+                "expected_entries": [],
+                "expected_names": [],
+                "actual": null,
+                "missing_names": [],
+                "passed": true
+              },
+              "past_medication_details": {
+                "expected_entries": [],
+                "expected_names": [],
+                "actual": null,
+                "missing_names": [],
+                "passed": true
+              }
+            }
+          },
+          "passed": true
+        },
+        "asked_for_additional_medications": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "no_consecutive_duplicate_cira_question": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_response_not_repeated": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      },
+      "completed_sections": [
+        "general_information",
+        "current_concerns",
+        "past_psychiatric_history",
+        "medications",
+        "medical_history",
+        "medication_allergies",
+        "family_psychiatric_history",
+        "substance_use",
+        "education_employment_legal_history",
+        "personal_history",
+        "phq9",
+        "gad7"
+      ],
+      "conversation_details": {
+        "expected_medication_entry_count": 0,
+        "asked_for_more": false,
+        "duplicate_questions": [],
+        "safety_response_count": 0
+      }
+    },
+    {
+      "case_id": "09",
+      "scenario_case_id": "04-09",
+      "title": "Anhedonia and Restless Sleep",
+      "system": "rule_based",
+      "record_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/records/case_04_09.json",
+      "transcript_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/transcripts/case_04_09.json",
+      "status": "PASS",
+      "passed_checks": 9,
+      "total_checks": 9,
+      "score": 1.0,
+      "checks": {
+        "safety_flag": {
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        "safety_q9_invariant": {
+          "expected": "PHQ-9 Q9 > 0 implies safety_flag=True",
+          "actual": {
+            "q9_score": 0,
+            "required": false,
+            "actual": false,
+            "passed": true
+          },
+          "passed": true
+        },
+        "phq9_total": {
+          "expected": 14,
+          "actual": 14,
+          "passed": true
+        },
+        "gad7_total": {
+          "expected": 3,
+          "actual": 3,
+          "passed": true
+        },
+        "all_sections_completed": {
+          "expected": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "actual": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "passed": true
+        },
+        "medication_coverage": {
+          "expected": "all identifiable medication entries captured",
+          "actual": {
+            "passed": true,
+            "details": {
+              "current_medications": {
+                "expected_entries": [
+                  "Carbidopa-levodopa; 25/100 mg, one tablet three times daily; started 2024; occasional nausea",
+                  "Latanoprost eye drops; one drop in each eye nightly; started 2021; no known side effects",
+                  "Allopurinol; 100 mg daily; started 2019; no known side effects."
+                ],
+                "expected_names": [
+                  "Carbidopa-levodopa",
+                  "Latanoprost eye drops",
+                  "Allopurinol"
+                ],
+                "actual": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: 25/100 mg, one tablet three times daily.; Start Or Duration: I started it in 2024.; Side Effects: Occasional nausea.\nMedication 2: Name Or Description: Yes, latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: I started it in 2021.; Side Effects: None known.\nMedication 3: Name Or Description: Yes, allopurinol.; Dose: 100 mg daily.; Start Or Duration: I started it in 2019.; Side Effects: None known.",
+                "missing_names": [],
+                "passed": true
+              },
+              "past_medication_details": {
+                "expected_entries": [],
+                "expected_names": [],
+                "actual": null,
+                "missing_names": [],
+                "passed": true
+              }
+            }
+          },
+          "passed": true
+        },
+        "asked_for_additional_medications": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "no_consecutive_duplicate_cira_question": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_response_not_repeated": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      },
+      "completed_sections": [
+        "general_information",
+        "current_concerns",
+        "past_psychiatric_history",
+        "medications",
+        "medical_history",
+        "medication_allergies",
+        "family_psychiatric_history",
+        "substance_use",
+        "education_employment_legal_history",
+        "personal_history",
+        "phq9",
+        "gad7"
+      ],
+      "conversation_details": {
+        "expected_medication_entry_count": 3,
+        "asked_for_more": true,
+        "duplicate_questions": [],
+        "safety_response_count": 0
+      }
+    },
+    {
+      "case_id": "10",
+      "scenario_case_id": "04-10",
+      "title": "Mixed Features, but Not Bipolar",
+      "system": "rule_based",
+      "record_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/records/case_04_10.json",
+      "transcript_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/transcripts/case_04_10.json",
+      "status": "PASS",
+      "passed_checks": 9,
+      "total_checks": 9,
+      "score": 1.0,
+      "checks": {
+        "safety_flag": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_q9_invariant": {
+          "expected": "PHQ-9 Q9 > 0 implies safety_flag=True",
+          "actual": {
+            "q9_score": 1,
+            "required": true,
+            "actual": true,
+            "passed": true
+          },
+          "passed": true
+        },
+        "phq9_total": {
+          "expected": 14,
+          "actual": 14,
+          "passed": true
+        },
+        "gad7_total": {
+          "expected": 11,
+          "actual": 11,
+          "passed": true
+        },
+        "all_sections_completed": {
+          "expected": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "actual": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "passed": true
+        },
+        "medication_coverage": {
+          "expected": "all identifiable medication entries captured",
+          "actual": {
+            "passed": true,
+            "details": {
+              "current_medications": {
+                "expected_entries": [
+                  "Vilazodone; 20 mg each morning; started June 2026; nausea during first week",
+                  "Quetiapine; 50 mg nightly; started June 2026; morning drowsiness."
+                ],
+                "expected_names": [
+                  "Vilazodone",
+                  "Quetiapine"
+                ],
+                "actual": "Medication 1: Name Or Description: Vilazodone.; Dose: 20 mg each morning.; Start Or Duration: June 2026.; Side Effects: Nausea during the first week.\nMedication 2: Name Or Description: Quetiapine.; Dose: 50 mg nightly.; Start Or Duration: June 2026.; Side Effects: Morning drowsiness.",
+                "missing_names": [],
+                "passed": true
+              },
+              "past_medication_details": {
+                "expected_entries": [
+                  "Escitalopram; 10 mg daily; taken for about 3 months in college; stopped because she felt emotionally numb"
+                ],
+                "expected_names": [
+                  "Escitalopram"
+                ],
+                "actual": "Past medication 1: Name Or Description: Escitalopram.; Dose: 10 mg daily.; Dates Or Duration: About 3 months in college.; Discontinuation Reason: It made me feel emotionally numb.",
+                "missing_names": [],
+                "passed": true
+              }
+            }
+          },
+          "passed": true
+        },
+        "asked_for_additional_medications": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "no_consecutive_duplicate_cira_question": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_response_not_repeated": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      },
+      "completed_sections": [
+        "general_information",
+        "current_concerns",
+        "past_psychiatric_history",
+        "medications",
+        "medical_history",
+        "medication_allergies",
+        "family_psychiatric_history",
+        "substance_use",
+        "education_employment_legal_history",
+        "personal_history",
+        "phq9",
+        "gad7"
+      ],
+      "conversation_details": {
+        "expected_medication_entry_count": 3,
+        "asked_for_more": true,
+        "duplicate_questions": [],
+        "safety_response_count": 1
+      }
+    },
+    {
+      "case_id": "11",
+      "scenario_case_id": "04-11",
+      "title": "Floundering",
+      "system": "rule_based",
+      "record_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/records/case_04_11.json",
+      "transcript_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/transcripts/case_04_11.json",
+      "status": "FAIL",
+      "passed_checks": 8,
+      "total_checks": 9,
+      "score": 0.8889,
+      "checks": {
+        "safety_flag": {
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        "safety_q9_invariant": {
+          "expected": "PHQ-9 Q9 > 0 implies safety_flag=True",
+          "actual": {
+            "q9_score": 0,
+            "required": false,
+            "actual": false,
+            "passed": true
+          },
+          "passed": true
+        },
+        "phq9_total": {
+          "expected": 11,
+          "actual": 11,
+          "passed": true
+        },
+        "gad7_total": {
+          "expected": 4,
+          "actual": 4,
+          "passed": true
+        },
+        "all_sections_completed": {
+          "expected": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "actual": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "passed": true
+        },
+        "medication_coverage": {
+          "expected": "all identifiable medication entries captured",
+          "actual": {
+            "passed": false,
+            "details": {
+              "current_medications": {
+                "expected_entries": [
+                  "Antidepressant; patient does not remember the name or dose; takes one tablet each morning; started about 4 months ago; no side effects recalled"
+                ],
+                "expected_names": [
+                  "Antidepressant"
+                ],
+                "actual": "",
+                "missing_names": [
+                  "Antidepressant"
+                ],
+                "passed": false
+              },
+              "past_medication_details": {
+                "expected_entries": [],
+                "expected_names": [],
+                "actual": null,
+                "missing_names": [],
+                "passed": true
+              }
+            }
+          },
+          "passed": false
+        },
+        "asked_for_additional_medications": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "no_consecutive_duplicate_cira_question": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_response_not_repeated": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      },
+      "completed_sections": [
+        "general_information",
+        "current_concerns",
+        "past_psychiatric_history",
+        "medications",
+        "medical_history",
+        "medication_allergies",
+        "family_psychiatric_history",
+        "substance_use",
+        "education_employment_legal_history",
+        "personal_history",
+        "phq9",
+        "gad7"
+      ],
+      "conversation_details": {
+        "expected_medication_entry_count": 1,
+        "asked_for_more": false,
+        "duplicate_questions": [],
+        "safety_response_count": 0
+      }
+    },
+    {
+      "case_id": "12",
+      "scenario_case_id": "04-12",
+      "title": "Insomnia and Physical Complaints",
+      "system": "rule_based",
+      "record_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/records/case_04_12.json",
+      "transcript_file": "/Users/amir/Desktop/GitHub/Triage/Triage-Agent/evaluation/outputs/rule_based/transcripts/case_04_12.json",
+      "status": "PASS",
+      "passed_checks": 9,
+      "total_checks": 9,
+      "score": 1.0,
+      "checks": {
+        "safety_flag": {
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        "safety_q9_invariant": {
+          "expected": "PHQ-9 Q9 > 0 implies safety_flag=True",
+          "actual": {
+            "q9_score": 0,
+            "required": false,
+            "actual": false,
+            "passed": true
+          },
+          "passed": true
+        },
+        "phq9_total": {
+          "expected": 9,
+          "actual": 9,
+          "passed": true
+        },
+        "gad7_total": {
+          "expected": 5,
+          "actual": 5,
+          "passed": true
+        },
+        "all_sections_completed": {
+          "expected": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "actual": [
+            "general_information",
+            "current_concerns",
+            "past_psychiatric_history",
+            "medications",
+            "medical_history",
+            "medication_allergies",
+            "family_psychiatric_history",
+            "substance_use",
+            "education_employment_legal_history",
+            "personal_history",
+            "phq9",
+            "gad7"
+          ],
+          "passed": true
+        },
+        "medication_coverage": {
+          "expected": "all identifiable medication entries captured",
+          "actual": {
+            "passed": true,
+            "details": {
+              "current_medications": {
+                "expected_entries": [
+                  "Clonazepam; 0.5 mg nightly; started about 6 months ago; morning sleepiness",
+                  "Hydrocodone-acetaminophen; 5/325 mg, one tablet up to twice daily as needed; started 2024; constipation",
+                  "Acetaminophen; 500 mg as needed, usually once daily; duration unknown; no known side effects."
+                ],
+                "expected_names": [
+                  "Clonazepam",
+                  "Hydrocodone-acetaminophen",
+                  "Acetaminophen"
+                ],
+                "actual": "Medication 1: Name Or Description: Clonazepam.; Dose: 0.5 mg nightly.; Start Or Duration: About 6 months ago.; Side Effects: Morning sleepiness.\nMedication 2: Name Or Description: Yes, hydrocodone-acetaminophen.; Dose: 5/325 mg, one tablet up to twice daily as needed.; Start Or Duration: I started it in 2024.; Side Effects: Constipation.\nMedication 3: Name Or Description: Yes, acetaminophen.; Dose: 500 mg as needed, usually once daily.; Start Or Duration: Unknown; Side Effects: None that I know of.",
+                "missing_names": [],
+                "passed": true
+              },
+              "past_medication_details": {
+                "expected_entries": [],
+                "expected_names": [],
+                "actual": null,
+                "missing_names": [],
+                "passed": true
+              }
+            }
+          },
+          "passed": true
+        },
+        "asked_for_additional_medications": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "no_consecutive_duplicate_cira_question": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        "safety_response_not_repeated": {
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      },
+      "completed_sections": [
+        "general_information",
+        "current_concerns",
+        "past_psychiatric_history",
+        "medications",
+        "medical_history",
+        "medication_allergies",
+        "family_psychiatric_history",
+        "substance_use",
+        "education_employment_legal_history",
+        "personal_history",
+        "phq9",
+        "gad7"
+      ],
+      "conversation_details": {
+        "expected_medication_entry_count": 3,
+        "asked_for_more": true,
+        "duplicate_questions": [],
+        "safety_response_count": 0
+      }
+    }
+  ]
+}

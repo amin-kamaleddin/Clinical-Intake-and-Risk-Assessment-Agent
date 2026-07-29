@@ -1,0 +1,43 @@
+{
+  "case_id": "03",
+  "scenario_case_id": "04-03",
+  "conversation_quality_score": 0.92,
+  "record_accuracy_score": 0.99,
+  "conversation_subscores": {
+    "question_completeness": 1.0,
+    "conversational_flow": 0.8,
+    "clarity_and_focus": 1.0,
+    "empathy_and_engagement": 0.8,
+    "non_repetition": 0.8,
+    "safety_handling": 1.0
+  },
+  "record_subscores": {
+    "factual_correctness": 1.0,
+    "completeness": 1.0,
+    "no_fabrication": 1.0,
+    "field_placement_and_format": 0.9,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "The system conducted a thorough intake, covering all required sections. It maintained a professional tone and correctly identified the safety risk based on the PHQ-9 Q9 response. Minor flow issues occurred, such as redundant questioning in the past psychiatric history section and a slightly awkward transition in the employment section.",
+  "record_summary": "The record is highly accurate and captures all relevant patient data. The PHQ-9 and GAD-7 scores are correctly calculated and mapped. The formatting is generally clear, though some fields contain concatenated strings that could be structured more cleanly for clinical review.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "conversational_flow",
+      "evidence": "Turn 2 of past_psychiatric_history: 'When were you assessed, and by whom?'",
+      "explanation": "The patient had already provided this information in the previous turn, making the follow-up redundant."
+    },
+    {
+      "severity": "minor",
+      "category": "conversational_flow",
+      "evidence": "Turn 4 of education_employment_legal_history: 'Please answer yes or no.'",
+      "explanation": "The system prompted for a yes/no answer after the patient had already provided a detailed response about their employment, which was confusing and unnecessary."
+    },
+    {
+      "severity": "minor",
+      "category": "field_placement_and_format",
+      "evidence": "past_psychiatric_history.previous_therapies",
+      "explanation": "The field contains concatenated strings (e.g., 'Yes, individual psychotherapy.; 1998.; Approximately 16 weekly sessions.') rather than structured data."
+    }
+  ]
+}

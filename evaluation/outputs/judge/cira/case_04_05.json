@@ -1,0 +1,43 @@
+{
+  "case_id": "05",
+  "scenario_case_id": "04-05",
+  "conversation_quality_score": 0.95,
+  "record_accuracy_score": 0.955,
+  "conversation_subscores": {
+    "question_completeness": 1.0,
+    "conversational_flow": 0.9,
+    "clarity_and_focus": 1.0,
+    "empathy_and_engagement": 0.9,
+    "non_repetition": 0.8,
+    "safety_handling": 1.0
+  },
+  "record_subscores": {
+    "factual_correctness": 1.0,
+    "completeness": 0.9,
+    "no_fabrication": 1.0,
+    "field_placement_and_format": 0.8,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "The system conducted a thorough intake, covering all required domains. It maintained a professional and clear tone. It correctly identified the safety risk and provided an appropriate, non-repetitive safety response. Minor issues included redundant questioning in the past psychiatric history section regarding therapy types.",
+  "record_summary": "The record is highly accurate and captures all relevant clinical information. The PHQ-9 and GAD-7 scores are correctly calculated. Some formatting in the 'previous_therapies' and 'substance_use' fields is slightly cluttered, but the information is present and readable.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "non_repetition",
+      "evidence": "Turn 6: 'Have you ever received CBT, DBT... or another type of therapy?' Turn 7: 'What type of therapy was it?'",
+      "explanation": "The system asked for the type of therapy immediately after the patient had already identified it as 'Supportive psychotherapy' in the previous turn."
+    },
+    {
+      "severity": "minor",
+      "category": "field_placement_and_format",
+      "evidence": "previous_therapies: 'Supportive psychotherapy — received in 2025; approximately 3 sessions. Supportive psychotherapy — date received: Unknown; approximately number of sessions: Unknown.'",
+      "explanation": "The record includes a duplicate, empty entry for the same therapy session, likely due to the system's logic for handling repeatable fields."
+    },
+    {
+      "severity": "minor",
+      "category": "field_placement_and_format",
+      "evidence": "substance_use: 'alcohol_use': 'Status: Previous\nSubstance or product: Unknown\nQuantity or frequency: Unknown\nDuration: Unknown'",
+      "explanation": "The record format for substance use is somewhat verbose and includes unnecessary 'Unknown' fields for details that were not requested or relevant."
+    }
+  ]
+}

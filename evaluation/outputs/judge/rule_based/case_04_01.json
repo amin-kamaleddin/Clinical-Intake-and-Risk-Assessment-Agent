@@ -1,0 +1,43 @@
+{
+  "case_id": "01",
+  "scenario_case_id": "04-01",
+  "conversation_quality_score": 0.92,
+  "record_accuracy_score": 0.925,
+  "conversation_subscores": {
+    "question_completeness": 1.0,
+    "conversational_flow": 0.8,
+    "clarity_and_focus": 1.0,
+    "empathy_and_engagement": 0.8,
+    "non_repetition": 0.8,
+    "safety_handling": 1.0
+  },
+  "record_subscores": {
+    "factual_correctness": 1.0,
+    "completeness": 0.9,
+    "no_fabrication": 0.9,
+    "field_placement_and_format": 0.7,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "The system conducted a thorough intake, covering all required sections. It maintained a clear, professional tone. However, it occasionally repeated questions or asked for information that had already been provided in the previous turn (e.g., in the past psychiatric history section).",
+  "record_summary": "The record accurately captures the patient's clinical information and questionnaire scores. The formatting of repeatable fields (medications, family history) is somewhat cluttered, incorporating conversational filler and redundant labels, which may hinder quick clinical review.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "conversational_flow",
+      "evidence": "Turn 2 of past_psychiatric_history: 'When were you assessed, and by whom?'",
+      "explanation": "The patient had already provided this information in the previous turn. The system failed to integrate the prior answer."
+    },
+    {
+      "severity": "minor",
+      "category": "field_placement_and_format",
+      "evidence": "family_psychiatric_history_details: 'Family member 1: Name Or Description: My father.; Diagnosis Or Condition: Anxiety and depression.; Additional Details: My mother has ADHD.'",
+      "explanation": "The record format for family history is messy, mixing multiple family members into a single field and including conversational filler like 'Yes, my maternal grandfather' as a name/description."
+    },
+    {
+      "severity": "minor",
+      "category": "field_placement_and_format",
+      "evidence": "personal_history: 'significant_relationships': 'No significant romantic relationships reported.'",
+      "explanation": "The system inferred 'No significant romantic relationships' from the patient's 'I don't know' response, which is a slight over-interpretation of the unknown status."
+    }
+  ]
+}

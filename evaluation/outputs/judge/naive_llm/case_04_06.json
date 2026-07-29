@@ -1,0 +1,37 @@
+{
+  "case_id": "06",
+  "scenario_case_id": "04-06",
+  "conversation_quality_score": 0.975,
+  "record_accuracy_score": 0.99,
+  "conversation_subscores": {
+    "question_completeness": 1.0,
+    "conversational_flow": 1.0,
+    "clarity_and_focus": 1.0,
+    "empathy_and_engagement": 0.9,
+    "non_repetition": 0.9,
+    "safety_handling": 1.0
+  },
+  "record_subscores": {
+    "factual_correctness": 1.0,
+    "completeness": 1.0,
+    "no_fabrication": 1.0,
+    "field_placement_and_format": 0.9,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "The system conducted a thorough and well-structured intake. It followed the required sequence, asked clear questions, and handled the questionnaires correctly. It was slightly repetitive in the medical and allergy sections by asking for 'other' entries even after the patient had already stated 'no' to the initial inquiry, but this did not significantly impede the flow.",
+  "record_summary": "The record is accurate and complete. It captures all patient disclosures correctly. The formatting is generally good, though some fields contain full sentences rather than concise data points, which is acceptable for clinical review.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "non_repetition",
+      "evidence": "CIRA: 'Do you have any current or past medical conditions? Please list each one.' -> PATIENT: 'No...' -> CIRA: 'Are there any other current or past medical conditions?'",
+      "explanation": "The system asked for additional entries after the patient had already provided a definitive negative response, which was slightly redundant."
+    },
+    {
+      "severity": "minor",
+      "category": "field_placement_and_format",
+      "evidence": "record.current_concerns.primary_problems: 'I’ve been feeling low for years, and I’ve been dealing with guilt and feeling like I’m underachieving.'",
+      "explanation": "The record captures the patient's verbatim response rather than summarizing the primary problems into a concise clinical format."
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+import re
+
 from langchain_openai import ChatOpenAI
 
 from core.config import MODEL_NAME
@@ -10,8 +12,42 @@ from core.storage import save_record
 from prompts.builder import build_system_prompt, get_pending_fields
 
 
-model = ChatOpenAI(model=MODEL_NAME).bind_tools(tools)
-llm   = ChatOpenAI(model=MODEL_NAME)
+model = ChatOpenAI(model=MODEL_NAME,reasoning_effort="none").bind_tools(tools)
+llm   = ChatOpenAI(model=MODEL_NAME,reasoning_effort="none")
+
+
+
+REPEATABLE_TEXT_FIELDS = {
+    "current_medications", "past_medication_details",
+    "previous_diagnoses", "previous_therapies", "previous_treatments",
+    "hospital_details", "medical_conditions", "surgical_history",
+    "medication_allergies", "family_psychiatric_history_details",
+}
+
+
+def _merge_repeatable_value(existing, incoming):
+    """Never let a repeatable free-text field lose an already-saved entry."""
+    if not existing:
+        return incoming
+    if not incoming:
+        return existing
+
+    incoming_norm = " ".join(str(incoming).split()).lower()
+    preserved = []
+    for entry in re.split(r"\.\s+", str(existing)):
+        entry = entry.strip()
+        if not entry:
+            continue
+        # An entry's identity is the text before its first field separator
+        # ("Citalopram; 20 mg ..." -> "citalopram"). If that identity is absent
+        # from the new value, the model dropped the entry; keep it.
+        name = entry.split(";")[0].strip().lower()
+        if name and name not in incoming_norm:
+            preserved.append(entry)
+
+    if preserved:
+        return str(incoming).rstrip(". ") + ". " + ". ".join(preserved)
+    return incoming
 
 
 def handle_safety(state: AliceState) -> AliceState:
@@ -25,6 +61,11 @@ def handle_safety(state: AliceState) -> AliceState:
         state["messages"] = state["messages"] + [
             {"role": "assistant", "content": SAFETY_REPLY}
         ]
+
+    # Handling safety must not cost the current section its completion. If every
+    # field was already collected, still mark the section done; otherwise this
+    # early path would silently drop it from sections_completed.
+    update_completion(state, state["current_section"])
 
     state["conversation_started"] = True
     save_record(state)
@@ -52,6 +93,8 @@ def apply_tool_calls(state: AliceState, section: str, response):
                 else:
                     tool_results[tc["id"]] = f"invalid: {result}"
             else:
+                if field in REPEATABLE_TEXT_FIELDS:
+                    value = _merge_repeatable_value(state[section].get(field), value)
                 state[section][field] = value
                 saved_value = value
                 tool_results[tc["id"]] = "saved"
@@ -120,9 +163,6 @@ def section_node(state: AliceState) -> AliceState:
         state["gad7"]["gad7_total"] = calculate_gad7_total(state)
 
     # ── Stage 5: build the reply ──
-    if safety_raised:
-        return handle_safety(state)
-
     if not response.tool_calls:
         reply         = response.content
         tool_exchange = []
@@ -134,7 +174,11 @@ def section_node(state: AliceState) -> AliceState:
         updated_system = {"role": "system", "content": build_system_prompt(state)}
         reply          = llm.invoke([updated_system] + state["messages"] + tool_exchange).content
 
-    # ── Stage 6: completion check + save after every field ──
+
+    if safety_raised and not state.get("safety_flag", False):
+        state["safety_flag"] = True
+        reply = SAFETY_REPLY + "\n\n" + (reply or "")
+
     update_completion(state, section)
     save_record(state)
 

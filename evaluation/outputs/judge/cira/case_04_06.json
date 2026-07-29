@@ -1,0 +1,43 @@
+{
+  "case_id": "06",
+  "scenario_case_id": "04-06",
+  "conversation_quality_score": 0.975,
+  "record_accuracy_score": 0.945,
+  "conversation_subscores": {
+    "question_completeness": 1.0,
+    "conversational_flow": 1.0,
+    "clarity_and_focus": 1.0,
+    "empathy_and_engagement": 0.9,
+    "non_repetition": 0.9,
+    "safety_handling": 1.0
+  },
+  "record_subscores": {
+    "factual_correctness": 1.0,
+    "completeness": 0.9,
+    "no_fabrication": 0.9,
+    "field_placement_and_format": 0.9,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "The system conducted a thorough and well-structured intake. It followed a logical progression, asked clear questions, and handled the questionnaire sections correctly. It was respectful and maintained a professional tone throughout.",
+  "record_summary": "The record is highly accurate and captures the patient's history well. There is a minor redundancy in the 'previous_therapies' field where the same information is listed twice, and the 'significant_relationships' section includes a slight interpretation of 'ended' status that was not explicitly stated by the patient.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "no_repetition",
+      "evidence": "In the past_psychiatric_history section, the system asked about biological treatments twice (turn 10 and 11).",
+      "explanation": "The system repeated the list of biological treatments after the patient initially responded 'I do not know', which was unnecessary."
+    },
+    {
+      "severity": "minor",
+      "category": "completeness",
+      "evidence": "record.past_psychiatric_history.previous_therapies",
+      "explanation": "The record lists 'Individual psychotherapy' twice, once with correct details and once with 'Unknown' details, creating a redundant and slightly confusing entry."
+    },
+    {
+      "severity": "minor",
+      "category": "no_fabrication",
+      "evidence": "record.personal_history.significant_relationships",
+      "explanation": "The record labels the patient's past relationships as 'Status: Ended'. While the patient mentioned being single and having dysfunctional relationships, she did not explicitly state that all past relationships had 'ended' in the context of the intake."
+    }
+  ]
+}

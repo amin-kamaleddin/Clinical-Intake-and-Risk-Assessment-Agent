@@ -1,0 +1,49 @@
+{
+  "case_id": "05",
+  "scenario_case_id": "04-05",
+  "conversation_quality_score": 0.945,
+  "record_accuracy_score": 0.915,
+  "conversation_subscores": {
+    "question_completeness": 1.0,
+    "conversational_flow": 1.0,
+    "clarity_and_focus": 1.0,
+    "empathy_and_engagement": 0.9,
+    "non_repetition": 1.0,
+    "safety_handling": 0.8
+  },
+  "record_subscores": {
+    "factual_correctness": 0.9,
+    "completeness": 0.9,
+    "no_fabrication": 1.0,
+    "field_placement_and_format": 0.7,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "The system conducted a thorough and well-structured intake. It followed all required questioning protocols, maintained a clear focus, and handled the PHQ-9 and GAD-7 questionnaires correctly. The safety handling was appropriate in terms of flagging, though the system did not explicitly acknowledge the patient's disclosure of passive suicidal ideation during the conversation.",
+  "record_summary": "The record is largely accurate and captures the patient's history well. However, there are significant formatting issues in the 'current_concerns' section, which incorrectly states no concerns were reported, and the 'employment_history' and 'previous_therapies' fields contain messy, concatenated strings rather than clean data entries.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "factual_correctness",
+      "evidence": "produced_record.current_concerns.primary_problems: 'No primary concerns reported at this time.'",
+      "explanation": "The record incorrectly states no primary concerns were reported, despite the patient clearly stating 'Despair, irritability, no pleasure in anything, and feeling like a burden' in the transcript."
+    },
+    {
+      "severity": "minor",
+      "category": "field_placement_and_format",
+      "evidence": "produced_record.past_psychiatric_history.previous_therapies: 'Yes, supportive psychotherapy.; In 2025.; 3 sessions.'",
+      "explanation": "The field contains concatenated strings rather than structured data, making it difficult to read."
+    },
+    {
+      "severity": "minor",
+      "category": "field_placement_and_format",
+      "evidence": "produced_record.education_employment_legal_history.employment_history: 'Job 1: Name Or Description: Home.; Job Title: Homemaker.; Dates: 2013 to present. Job 2: Name Or Description: Yes, Westgate Department Store.; Job Title: Retail sales associate.; Dates: 2010 to 2013.'",
+      "explanation": "The employment history is formatted as a single block of text with redundant labels, which is suboptimal for clinical review."
+    },
+    {
+      "severity": "minor",
+      "category": "empathy_and_engagement",
+      "evidence": "Transcript turn 9 (PHQ-9 Q9)",
+      "explanation": "The system did not provide a brief, empathetic acknowledgement of the patient's disclosure of suicidal ideation, moving immediately to the next question."
+    }
+  ]
+}

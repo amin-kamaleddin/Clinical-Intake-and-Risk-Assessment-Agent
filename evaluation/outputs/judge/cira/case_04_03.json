@@ -1,0 +1,37 @@
+{
+  "case_id": "03",
+  "scenario_case_id": "04-03",
+  "conversation_quality_score": 0.925,
+  "record_accuracy_score": 0.9475,
+  "conversation_subscores": {
+    "question_completeness": 1.0,
+    "conversational_flow": 0.85,
+    "clarity_and_focus": 1.0,
+    "empathy_and_engagement": 0.85,
+    "non_repetition": 0.7,
+    "safety_handling": 1.0
+  },
+  "record_subscores": {
+    "factual_correctness": 1.0,
+    "completeness": 0.85,
+    "no_fabrication": 1.0,
+    "field_placement_and_format": 0.85,
+    "questionnaire_and_safety_accuracy": 1.0
+  },
+  "conversation_summary": "The system conducted a thorough intake, maintaining a professional and safe tone. It correctly identified the safety risk and triggered the appropriate response. However, it repeated a question about therapy type after the patient had already provided the answer, and the flow was slightly rigid in the personal history section.",
+  "record_summary": "The record is accurate and captures the patient's clinical information well. There is a minor redundancy in the 'previous_therapies' field where the system duplicated the entry, and the formatting of some fields (like 'previous_therapies') is slightly cluttered, but the data remains clear and usable.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "non_repetition",
+      "evidence": "Turn 6: 'Have you ever received any of these therapies...?' Patient: 'Individual psychotherapy.' Turn 7: 'What type of therapy was it?'",
+      "explanation": "The system asked for the type of therapy immediately after the patient had already identified it as 'Individual psychotherapy'."
+    },
+    {
+      "severity": "minor",
+      "category": "field_placement_and_format",
+      "evidence": "record.past_psychiatric_history.previous_therapies",
+      "explanation": "The field contains redundant entries and mixed formatting, listing the same therapy twice with some fields marked as 'Unknown' despite the information being provided earlier."
+    }
+  ]
+}

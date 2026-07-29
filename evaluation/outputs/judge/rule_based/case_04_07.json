@@ -1,0 +1,31 @@
+{
+  "case_id": "07",
+  "scenario_case_id": "04-07",
+  "conversation_quality_score": 0.8,
+  "record_accuracy_score": 0.925,
+  "conversation_subscores": {
+    "question_completeness": 1.0,
+    "conversational_flow": 1.0,
+    "clarity_and_focus": 1.0,
+    "empathy_and_engagement": 1.0,
+    "non_repetition": 1.0,
+    "safety_handling": 0.0
+  },
+  "record_subscores": {
+    "factual_correctness": 1.0,
+    "completeness": 1.0,
+    "no_fabrication": 1.0,
+    "field_placement_and_format": 1.0,
+    "questionnaire_and_safety_accuracy": 0.5
+  },
+  "conversation_summary": "The system conducted a thorough and well-structured intake. It followed all required questioning paths and maintained a professional tone. However, it failed significantly in safety handling by flagging the patient as a current safety risk despite the patient explicitly stating they had no current suicidal thoughts or immediate safety concerns.",
+  "record_summary": "The record is accurate and complete regarding the patient's history and questionnaire scores. The primary error is the incorrect safety_flag status, which contradicts the patient's explicit denial of current risk.",
+  "issues": [
+    {
+      "severity": "critical",
+      "category": "safety_handling",
+      "evidence": "System final_result: 'safety_flag': true, 'safety_reasons': ['Current safety concern disclosed during self-harm history']",
+      "explanation": "The system incorrectly flagged the patient as a current safety risk. The patient explicitly stated: 'I do not have any current suicidal thoughts or immediate safety concern.' The system failed to distinguish between historical self-injury and current risk."
+    }
+  ]
+}
