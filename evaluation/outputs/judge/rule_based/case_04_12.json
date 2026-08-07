@@ -1,37 +1,468 @@
 {
+  "system": "rule_based",
   "case_id": "12",
   "scenario_case_id": "04-12",
-  "conversation_quality_score": 0.97,
-  "record_accuracy_score": 0.97,
-  "conversation_subscores": {
-    "question_completeness": 1.0,
-    "conversational_flow": 1.0,
-    "clarity_and_focus": 1.0,
-    "empathy_and_engagement": 0.8,
-    "non_repetition": 1.0,
-    "safety_handling": 1.0
+  "persona_id": "moderate",
+  "record_score": 0.9778,
+  "flow_score": 0.7,
+  "record_detail": {
+    "record_score": 0.9778,
+    "record_score_contested": 0.9524,
+    "fields_contested": 21,
+    "fields_auto_resolved": 24,
+    "fields_confirmed_absent": 9,
+    "fields_scored": 45,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 43,
+      "partial": 2,
+      "missing": 0,
+      "contradicted": 0,
+      "fabricated": 1
+    },
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_treatments"
+    ],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 10.0,
+        "score": 1.0
+      },
+      "past_psychiatric_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medications": {
+        "fields": 5,
+        "credit": 5.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 6,
+        "credit": 5.5,
+        "score": 0.9167
+      },
+      "medication_allergies": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 4,
+        "credit": 3.5,
+        "score": 0.875
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      }
+    }
   },
-  "record_subscores": {
-    "factual_correctness": 1.0,
-    "completeness": 1.0,
-    "no_fabrication": 1.0,
-    "field_placement_and_format": 0.7,
-    "questionnaire_and_safety_accuracy": 1.0
-  },
-  "conversation_summary": "The system conducted a thorough and efficient intake. It followed all required screening protocols, maintained a clear and logical flow, and correctly handled the safety assessment by not flagging the patient based on the provided disclosures.",
-  "record_summary": "The record accurately captures all patient facts and questionnaire scores. However, the formatting within several fields (e.g., medications, employment history) is cluttered with conversational filler (e.g., 'Yes, hydrocodone-acetaminophen') rather than clean data extraction.",
+  "flow_summary": "The system successfully completed the intake and maintained a professional tone. However, it struggled significantly with the 'past_psychiatric_history' section, where it continued to ask follow-up questions about a treatment the patient had already clearly stated she never received.",
   "issues": [
     {
-      "severity": "minor",
-      "category": "field_placement_and_format",
-      "evidence": "current_medications: 'Medication 2: Name Or Description: Yes, hydrocodone-acetaminophen.'",
-      "explanation": "The system included conversational filler ('Yes,') in the medication name field, which should ideally be cleaned for clinical review."
+      "severity": "moderate",
+      "category": "redundant_questioning",
+      "evidence": "The system continued to ask 'When was it received?', 'Where was it received?', and 'Approximately how many sessions did you receive?' after the patient explicitly stated she had not received those treatments."
     },
     {
       "severity": "minor",
-      "category": "field_placement_and_format",
-      "evidence": "employment_history: 'Job 1: Name Or Description: Home.'",
-      "explanation": "The system recorded 'Home' as the employer name, which is a literal interpretation of the patient's response but lacks professional clarity for a clinical record."
+      "category": "clarity",
+      "evidence": "The system asked 'Please answer yes or no' in the employment section, which was confusing because the patient had just provided a descriptive answer to the previous question."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "08/03/1967",
+      "produced": "08/03/1967"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M1N3J5",
+      "produced": "M1N3J5"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "mai.fang.family@example.com",
+      "produced": "mai.fang.family@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550109",
+      "produced": "4165550109"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": "yes"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": "yes"
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": "yes"
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": "yes"
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": "yes"
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "substance_use.alcohol_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "MAI FANG",
+      "produced": "MY NAME IS MAI FANG."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female."
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "41 Birchmount Road, Scarborough, Ontario",
+      "produced": "41 Birchmount Road, Scarborough, Ontario."
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. HENRY LO",
+      "produced": "DR. HENRY LO."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "fatigue; back pain; insomnia; burden to family",
+      "produced": "I’ve been feeling tired a lot, my back hurts, and I haven’t been sleeping well. Also, I feel like I’m a burden to my family."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "sleep better; have more energy",
+      "produced": "I want to sleep better and have more energy."
+    },
+    {
+      "ref": "medications.current_medications[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Clonazepam; 0.5 mg nightly; started about 6 months ago; morning sleepiness",
+      "produced": "Medication 1: Name Or Description: Clonazepam.; Dose: 0.5 mg at night, I think.; Start Or Duration: Maybe about 6 months ago.; Side Effects: I feel sleepy in the morning.\nMedication 2: Name Or Description: Yes, I take another one for pain.; Dose: I think it’s the 5/325 one, and I take it up to twice a day as needed.; Start Or Duration: In 2024, I think.; Side Effects: It can make me constipated.\nMedication 3: Name Or Description: Yes, there’s one more — acetaminophen.; Dose: 500 mg as needed, usually once a day.; Start Or Duration: I don’t know when I started it.; Side Effects: None that I know of."
+    },
+    {
+      "ref": "medications.current_medications[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Hydrocodone-acetaminophen; 5/325 mg, one tablet up to twice daily as needed; started 2024; constipation",
+      "produced": "Medication 1: Name Or Description: Clonazepam.; Dose: 0.5 mg at night, I think.; Start Or Duration: Maybe about 6 months ago.; Side Effects: I feel sleepy in the morning.\nMedication 2: Name Or Description: Yes, I take another one for pain.; Dose: I think it’s the 5/325 one, and I take it up to twice a day as needed.; Start Or Duration: In 2024, I think.; Side Effects: It can make me constipated.\nMedication 3: Name Or Description: Yes, there’s one more — acetaminophen.; Dose: 500 mg as needed, usually once a day.; Start Or Duration: I don’t know when I started it.; Side Effects: None that I know of."
+    },
+    {
+      "ref": "medications.current_medications[2]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Acetaminophen; 500 mg as needed, usually once daily; duration unknown; no known side effects.",
+      "produced": "Medication 1: Name Or Description: Clonazepam.; Dose: 0.5 mg at night, I think.; Start Or Duration: Maybe about 6 months ago.; Side Effects: I feel sleepy in the morning.\nMedication 2: Name Or Description: Yes, I take another one for pain.; Dose: I think it’s the 5/325 one, and I take it up to twice a day as needed.; Start Or Duration: In 2024, I think.; Side Effects: It can make me constipated.\nMedication 3: Name Or Description: Yes, there’s one more — acetaminophen.; Dose: 500 mg as needed, usually once a day.; Start Or Duration: I don’t know when I started it.; Side Effects: None that I know of."
+    },
+    {
+      "ref": "medical_history.medical_conditions",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing diagnosis date and cause of worsening.",
+      "expected": "Chronic lower back pain; diagnosed 2023; worsened after a fall",
+      "produced": "I only know about my chronic lower back pain."
+    },
+    {
+      "ref": "medical_history.surgical_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Gallbladder removal; 2015; no ongoing complications",
+      "produced": "Surgery: Gallbladder removal.; Date: In 2015, I think.; Details: No, nothing else."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "158 cm",
+      "produced": "158 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "72 kg",
+      "produced": "72 kg."
+    },
+    {
+      "ref": "medication_allergies.medication_allergies",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Codeine; causes rash and facial swelling",
+      "produced": "Allergy 1: Name Or Description: Codeine.; Reaction: I got a rash and my face swelled up.; Date Or Age: I don’t know."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing the detail about functional illiteracy.",
+      "expected": "no formal education; functionally illiterate",
+      "produced": "I never had formal schooling."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Homemaker; 1990 to present",
+      "produced": "Job 1: Name Or Description: Home.; Job Title: Homemaker.; Dates: 1990 to present.\nJob 2: Name Or Description: Yes, a garment factory.; Job Title: Seasonal worker.; Dates: 1988 to 1990."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Seasonal garment factory worker; 1988 to 1990.",
+      "produced": "Job 1: Name Or Description: Home.; Job Title: Homemaker.; Dates: 1990 to present.\nJob 2: Name Or Description: Yes, a garment factory.; Job Title: Seasonal worker.; Dates: 1988 to 1990."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "born in Laos; refugee camp",
+      "produced": "I was born in Laos, and I spent time in a refugee camp. That’s mostly what I remember."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "refugee camp; resettled",
+      "produced": "I was still in the refugee camp, and then I was resettled. That’s about all I can say."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "widowed; husband died; heart attack",
+      "produced": "My husband died a year ago from a heart attack."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "support family; regain energy",
+      "produced": "I want to support my family and have my energy come back."
+    }
+  ],
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_treatments",
+      "section": "past_psychiatric_history",
+      "field": "previous_treatments",
+      "entry_index": null,
+      "expected": null,
+      "produced": "Unknown; I don’t know — I haven’t had any of those treatments.; I don’t know. I haven’t had it anywhere.; I don’t know. I didn’t receive any sessions.; I don’t know. There was no benefit, because I didn’t have that treatment.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
     }
   ]
 }

@@ -1,13 +1,25 @@
-"""Stage 4 - LLM-as-a-judge over both systems with one blinded rubric.
+"""Stage 4 - LLM judging: record fidelity and conversation flow.
 
-Reads the transcript + record artifacts each system produced and scores them
-with the same judge, model, temperature, and weights. The system identity is
-never shown to the judge.
+Two calls per case, each producing one number:
+
+* ``record_score``  - fields enumerated by ``harness.record_check``, verdicted
+  categorically by the LLM, aggregated back into a number by code. Exact and
+  boolean matches are auto-resolved without the model.
+* ``flow_score``    - one holistic 0-1 score for interviewing quality from the
+  transcript alone.
+
+Separate calls, not one combined call: shorter prompts judge more reliably, and
+a record failure cannot bleed into the flow number or vice versa. At 12 cases
+across 3 systems that is 72 calls, so the extra cost is negligible.
+
+PHQ-9, GAD-7 and the safety flag are NOT judged here. They have exact expected
+values and belong to ``harness.structured_score``, which the deterministic
+scoring stage runs. Nothing is scored twice.
 
 Reads:   outputs/<system>/transcripts/case_XX.json
          outputs/<system>/records/case_XX.json
-Writes:  outputs/judge/<system>/case_XX.json         (per-case judge output)
-         outputs/reports/judge_comparison.json         (summary + paired diff)
+Writes:  outputs/judge/<system>/case_XX.json
+         outputs/reports/judge_comparison.json
 
 Run directly::
 
@@ -24,6 +36,8 @@ from pathlib import Path
 from statistics import mean
 
 from harness import config
+from harness import personas
+from harness import record_check
 
 
 def load_json(path: Path):
@@ -41,10 +55,18 @@ def load_scenarios(case_filter: str | None = None) -> list[dict]:
     return scenarios
 
 
+def _resolve_persona(transcript: dict, record: dict, case_id: str) -> str:
+    """Prefer what the artifacts recorded; fall back to re-deriving it."""
+    for source in (transcript, record):
+        if isinstance(source, dict) and source.get("persona_id"):
+            return str(source["persona_id"])
+    return personas.resolve_assignment().get(case_id, personas.DEFAULT_PERSONA_ID)
+
+
 # --------------------------------------------------------------------------- #
-# Judging
+# One case
 # --------------------------------------------------------------------------- #
-def _judge_one(judge, scenario: dict, system: str) -> dict:
+def _judge_one(record_judge, flow_judge, scenario: dict, system: str) -> dict:
     """Judge a single case. Returns a report row (OK or ERROR); never raises."""
     from harness.llm_judge import save_judge_result
 
@@ -52,50 +74,80 @@ def _judge_one(judge, scenario: dict, system: str) -> dict:
     transcript_path = config.transcript_path(system, case_id)
     record_path = config.record_path(system, case_id)
 
+    base = {
+        "system": system,
+        "case_id": config.short_case_id(case_id),
+        "scenario_case_id": case_id,
+    }
+
     if not transcript_path.exists() or not record_path.exists():
-        return {
-            "system": system,
-            "case_id": config.short_case_id(case_id),
-            "scenario_case_id": case_id,
-            "status": "ERROR",
-            "error": "missing transcript or record artifact",
-        }
+        return {**base, "status": "ERROR",
+                "error": "missing transcript or record artifact"}
 
     try:
         transcript = load_json(transcript_path)
         produced_record = load_json(record_path)
-        # System identity is intentionally not passed to the judge.
-        result = judge.evaluate(
-            scenario=scenario,
-            transcript=transcript,
-            produced_record=produced_record,
+        persona_id = _resolve_persona(transcript, produced_record, case_id)
+
+        # --- record fidelity: code enumerates, LLM verdicts the ambiguous ---
+        rows = record_check.build_rows(scenario, produced_record)
+        judged = record_judge.judge(rows["to_judge"])
+        all_rows = [
+            {**row, "verdict_source": "auto"} for row in rows["auto"]
+        ] + judged
+        record_result = record_check.score(
+            all_rows, rows["unsupported"], rows.get("confirmed_absent")
         )
+
+        # --- conversation flow: transcript only ---
+        flow = flow_judge.judge(scenario, transcript, persona_id=persona_id)
+
+        result = {
+            **base,
+            "persona_id": persona_id,
+            "record_score": record_result["record_score"],
+            "flow_score": flow.flow_score,
+            "record_detail": record_result,
+            "flow_summary": flow.flow_summary,
+            "issues": [issue.model_dump() for issue in flow.issues],
+            "field_verdicts": [
+                {
+                    "ref": row["ref"],
+                    "verdict": row.get("verdict"),
+                    "source": row.get("verdict_source"),
+                    "note": row.get("note", ""),
+                    "expected": row["expected"],
+                    "produced": row["produced"],
+                }
+                for row in all_rows
+            ],
+            "fabricated": rows["unsupported"],
+        }
+
         result_path = config.judge_path(system, case_id)
         save_judge_result(result, result_path)
-        return {
-            **result.model_dump(),
-            "system": system,
-            "transcript_file": str(transcript_path),
-            "record_file": str(record_path),
-            "judge_result_file": str(result_path),
-            "status": "OK",
-        }
+        return {**result, "judge_result_file": str(result_path), "status": "OK"}
+
     except Exception as error:  # noqa: BLE001 - report and continue
-        return {
-            "system": system,
-            "case_id": config.short_case_id(case_id),
-            "scenario_case_id": case_id,
-            "status": "ERROR",
-            "error": str(error),
-        }
+        return {**base, "status": "ERROR", "error": str(error)}
 
 
-def judge_system(judge, scenarios: list[dict], system: str) -> list[dict]:
+def _print_row(system: str, case_id: str, row: dict) -> None:
+    if row.get("status") == "OK":
+        record = row.get("record_score")
+        print(f"[{system}] {case_id} [{row.get('persona_id', '?'):>8}]: "
+              f"record={record if record is None else f'{record:.3f}'} | "
+              f"flow={row['flow_score']:.3f} | "
+              f"fabricated={row['record_detail']['fabricated_fields']}")
+    else:
+        print(f"[{system}] {case_id}: ERROR - {row.get('error')}")
+
+
+def judge_system(record_judge, flow_judge, scenarios: list[dict], system: str) -> list[dict]:
     """Judge every scenario for one system, concurrently.
 
-    A bounded thread pool means one stalled or slow case no longer blocks the
-    others, and independent cases overlap. Each case has its own timeout inside
-    the judge, so the pool cannot hang forever. Results are returned in scenario
+    A bounded pool means one slow case does not block the others; each call has
+    its own timeout, so the pool cannot hang. Results come back in scenario
     order regardless of completion order.
     """
     workers = max(1, min(config.JUDGE_MAX_WORKERS, len(scenarios)))
@@ -103,91 +155,113 @@ def judge_system(judge, scenarios: list[dict], system: str) -> list[dict]:
 
     if workers == 1:
         for index, scenario in enumerate(scenarios):
-            print(f"[{system}] Judging {scenario['case_id']}...")
-            row = _judge_one(judge, scenario, system)
+            row = _judge_one(record_judge, flow_judge, scenario, system)
             report[index] = row
             _print_row(system, scenario["case_id"], row)
         return report
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        future_to_index = {
-            pool.submit(_judge_one, judge, scenario, system): index
+        futures = {
+            pool.submit(_judge_one, record_judge, flow_judge, scenario, system): index
             for index, scenario in enumerate(scenarios)
         }
-        print(f"[{system}] Judging {len(scenarios)} cases "
-              f"with {workers} workers...")
-        for future in as_completed(future_to_index):
-            index = future_to_index[future]
+        print(f"[{system}] Judging {len(scenarios)} cases with {workers} workers...")
+        for future in as_completed(futures):
+            index = futures[future]
             row = future.result()
             report[index] = row
             _print_row(system, scenarios[index]["case_id"], row)
     return report
 
 
-def _print_row(system: str, case_id: str, row: dict) -> None:
-    if row.get("status") == "OK":
-        print(f"[{system}] {case_id}: "
-              f"conversation={row['conversation_quality_score']:.3f} | "
-              f"record={row['record_accuracy_score']:.3f}")
-    else:
-        print(f"[{system}] {case_id}: ERROR - {row.get('error')}")
-
-
 # --------------------------------------------------------------------------- #
 # Aggregation
 # --------------------------------------------------------------------------- #
-def average_subscores(cases: list[dict], group: str) -> dict[str, float] | None:
-    ok = [c for c in cases if c.get("status") == "OK"]
-    if not ok:
-        return None
-    names = ok[0][group].keys()
-    return {name: round(mean(c[group][name] for c in ok), 4) for name in names}
+def _mean(values) -> float | None:
+    values = [v for v in values if v is not None]
+    return round(mean(values), 4) if values else None
 
 
 def summarize_system(system: str, cases: list[dict]) -> dict:
     ok = [c for c in cases if c.get("status") == "OK"]
+
+    verdict_totals = {verdict: 0 for verdict in record_check.VERDICTS}
+    for case in ok:
+        for verdict, count in case["record_detail"]["verdict_counts"].items():
+            verdict_totals[verdict] = verdict_totals.get(verdict, 0) + count
+
+    fabricated = sum(c["record_detail"]["fabricated_fields"] for c in ok)
+    unjudged = sum(c["record_detail"]["fields_unjudged"] for c in ok)
+
     return {
         "system": system,
         "evaluated_cases": len(ok),
         "error_cases": len(cases) - len(ok),
-        "mean_conversation_quality_score": (
-            round(mean(c["conversation_quality_score"] for c in ok), 4) if ok else None
+        "mean_record_score": _mean(c["record_score"] for c in ok),
+        # The number that actually separates systems; see record_check.score.
+        "mean_record_score_contested": _mean(
+            c["record_detail"]["record_score_contested"] for c in ok
         ),
-        "mean_record_accuracy_score": (
-            round(mean(c["record_accuracy_score"] for c in ok), 4) if ok else None
+        "mean_fields_contested": _mean(
+            c["record_detail"]["fields_contested"] for c in ok
         ),
-        "mean_conversation_subscores": average_subscores(ok, "conversation_subscores"),
-        "mean_record_subscores": average_subscores(ok, "record_subscores"),
+        "mean_flow_score": _mean(c["flow_score"] for c in ok),
+        "verdict_counts": verdict_totals,
+        # Reported, never subtracted from record_score.
+        "fabricated_fields_total": fabricated,
+        "fabricated_fields_per_case": (
+            round(fabricated / len(ok), 3) if ok else None
+        ),
+        # A non-zero value here is a harness problem, not a system result.
+        "unjudged_fields_total": unjudged,
     }
 
 
+def summarize_by_persona(cases: list[dict]) -> dict:
+    """Split the two judge numbers by patient persona, easiest -> hardest."""
+    ok = [c for c in cases if c.get("status") == "OK"]
+    breakdown = {}
+    for persona_id in personas.PERSONA_IDS:
+        subset = [c for c in ok if c.get("persona_id") == persona_id]
+        if not subset:
+            continue
+        breakdown[persona_id] = {
+            "cases": len(subset),
+            "mean_record_score": _mean(c["record_score"] for c in subset),
+            "mean_record_score_contested": _mean(
+                c["record_detail"]["record_score_contested"] for c in subset
+            ),
+            "mean_flow_score": _mean(c["flow_score"] for c in subset),
+            "fabricated_fields_per_case": round(
+                sum(c["record_detail"]["fabricated_fields"] for c in subset)
+                / len(subset), 3
+            ),
+        }
+    return breakdown
+
+
 def build_paired_comparison(all_cases: dict[str, list[dict]]) -> list[dict]:
+    """Per-case side-by-side on the cases every system completed."""
     by_system = {
         system: {c["scenario_case_id"]: c for c in cases if c.get("status") == "OK"}
         for system, cases in all_cases.items()
     }
     if not by_system or any(not v for v in by_system.values()):
         return []
+
     common = sorted(set.intersection(*[set(v) for v in by_system.values()]))
-    system_names = list(by_system)
     rows = []
     for case_id in common:
-        row = {"scenario_case_id": case_id, "systems": {}}
-        for system in system_names:
-            case = by_system[system][case_id]
+        row = {
+            "scenario_case_id": case_id,
+            "persona_id": next(iter(by_system.values()))[case_id].get("persona_id"),
+            "systems": {},
+        }
+        for system, cases in by_system.items():
+            case = cases[case_id]
             row["systems"][system] = {
-                "conversation_quality_score": case["conversation_quality_score"],
-                "record_accuracy_score": case["record_accuracy_score"],
-            }
-        if len(system_names) == 2:
-            first, second = system_names
-            row["difference_second_minus_first"] = {
-                "conversation_quality_score": round(
-                    row["systems"][second]["conversation_quality_score"]
-                    - row["systems"][first]["conversation_quality_score"], 4),
-                "record_accuracy_score": round(
-                    row["systems"][second]["record_accuracy_score"]
-                    - row["systems"][first]["record_accuracy_score"], 4),
+                "record_score": case["record_score"],
+                "flow_score": case["flow_score"],
             }
         rows.append(row)
     return rows
@@ -197,43 +271,64 @@ def build_paired_comparison(all_cases: dict[str, list[dict]]) -> list[dict]:
 # Entry point
 # --------------------------------------------------------------------------- #
 def run(systems=None, case_filter: str | None = None) -> dict:
-    from harness.llm_judge import IntakeLLMJudge
+    from harness.llm_judge import ConversationFlowJudge, RecordFidelityJudge
 
     config.ensure_output_dirs()
     systems = list(systems) if systems else list(config.SYSTEMS)
     scenarios = load_scenarios(case_filter)
 
-    judge = IntakeLLMJudge()
-    all_cases = {system: judge_system(judge, scenarios, system) for system in systems}
+    record_judge = RecordFidelityJudge()
+    flow_judge = ConversationFlowJudge()
 
-    summaries = {s: summarize_system(s, cases) for s, cases in all_cases.items()}
-    paired = build_paired_comparison(all_cases)
+    all_cases = {
+        system: judge_system(record_judge, flow_judge, scenarios, system)
+        for system in systems
+    }
 
     report = {
-        "judge_model": judge.model_name,
+        "judge_model": config.JUDGE_MODEL_NAME,
         "judge_temperature": config.JUDGE_TEMPERATURE,
         "evaluation_design": {
             "same_judge": True,
             "same_rubric": True,
             "system_identity_hidden_from_prompt": True,
             "paired_on_same_scenarios": True,
+            "same_persona_per_case_across_systems": True,
+            "questionnaires_and_safety_scored_deterministically": True,
+            "record_fields_enumerated_by_code": True,
+            "fabrication_reported_not_penalized": True,
         },
-        "systems": summaries,
-        "paired_cases": paired,
+        "systems": {s: summarize_system(s, c) for s, c in all_cases.items()},
+        "by_persona": {s: summarize_by_persona(c) for s, c in all_cases.items()},
+        "paired_cases": build_paired_comparison(all_cases),
         "cases": all_cases,
     }
 
     config.JUDGE_REPORT_PATH.write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    print(f"\nSaved comparison report: {config.JUDGE_REPORT_PATH}")
+
+    print("\n" + "=" * 72)
+    print("JUDGE SUMMARY")
+    print("=" * 72)
+    for system, summary in report["systems"].items():
+        print(f"{system:>12} | record={summary['mean_record_score']} "
+              f"contested={summary['mean_record_score_contested']} "
+              f"flow={summary['mean_flow_score']} "
+              f"fabricated/case={summary['fabricated_fields_per_case']}")
+        for persona_id, stats in report["by_persona"].get(system, {}).items():
+            print(f"{system:>12} |   {persona_id:>8}: "
+                  f"record={stats['mean_record_score']} "
+                  f"flow={stats['mean_flow_score']}")
+    print("Saved comparison report:", config.JUDGE_REPORT_PATH)
+    print("=" * 72)
     return report
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Judge intake systems with one rubric.")
     parser.add_argument("--system", action="append", choices=config.SYSTEMS,
-                        help="Judge only this system (repeatable). Default: both.")
+                        help="Judge only this system (repeatable). Default: all.")
     parser.add_argument("--case", default=None, help="Judge a single case id, e.g. 04-01")
     args = parser.parse_args()
     run(systems=args.system, case_filter=args.case)

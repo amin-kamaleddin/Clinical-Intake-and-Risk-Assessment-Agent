@@ -42,4 +42,24 @@ def raise_safety_flag() -> str:
     return "flag_raised"
 
 
-tools = [save_answer, raise_safety_flag]
+@tool
+def confirm_no_more_entries(field_name: str) -> str:
+    """
+    Confirm that a repeatable field has no further entries.
+
+    Repeatable fields hold more than one entry - for example several
+    medications, several medical conditions, several family members with a
+    psychiatric history, or several past jobs. Saving one entry does NOT
+    complete such a field.
+
+    After saving an entry, always ask whether there are any others. Call this
+    tool ONLY once the patient has clearly confirmed there are no more
+    (for example "no, that's all", "that's everything", "no others").
+
+    Args:
+        field_name: The exact intake field name, e.g. "current_medications".
+    """
+    return "confirmed"
+
+
+tools = [save_answer, raise_safety_flag, confirm_no_more_entries]

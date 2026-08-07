@@ -3,6 +3,32 @@
   "scenario_case_id": "04-07",
   "title": "Mood Swings",
   "system": "rule_based",
+  "persona_id": "confused",
+  "patient_behaviour": {
+    "persona": {
+      "id": "confused",
+      "label": "Unclear and disorganised",
+      "difficulty_rank": 3,
+      "description": "Hard to interview. Rambles, misreads questions, needs the frequency scale re-explained, discloses out of order. Tests whether the agent can actively guide rather than merely transcribe.",
+      "temperature": 0.8,
+      "questionnaire_deflection_probability": 0.8,
+      "max_deflections_per_item": 2,
+      "deflection_budget_per_instrument": 5,
+      "freetext_hedge_probability": 0.5,
+      "freetext_hedge_budget_per_section": 4
+    },
+    "temperature": 0.8,
+    "temperature_pinned": false,
+    "questionnaire_deflections": 0,
+    "freetext_hedges": 4,
+    "max_consecutive_hedges": 1,
+    "hedges_by_section": {
+      "(none)": 4
+    },
+    "deflections_by_instrument": {},
+    "deflections_by_item": {},
+    "deflection_log": []
+  },
   "conversation": [
     {
       "section": "general_information",
@@ -14,7 +40,7 @@
       "section": "general_information",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "EMILY WANG"
+      "message": "Um—sorry, do you mean like the name on my ID? I always get thrown by that one. I can give you part of it, I guess, but I’m not sure if you want the whole formal version or just what people call me day to day."
     },
     {
       "section": "general_information",
@@ -26,7 +52,7 @@
       "section": "general_information",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Female"
+      "message": "Female."
     },
     {
       "section": "general_information",
@@ -50,7 +76,7 @@
       "section": "general_information",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "500 Wellington Street West, Toronto, Ontario"
+      "message": "Oh—um, the address part is the one I always mix up when it’s asked all together. I can do the street, I think, but I’m not sure you want just that? Sorry, could you maybe ask it piece by piece?"
     },
     {
       "section": "general_information",
@@ -86,55 +112,79 @@
       "section": "general_information",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "4165550137"
+      "message": "Sorry—phone number, right? I keep blanking on whether you want the full thing or just the first part. It starts with four one six, and then I get a bit muddled… could you ask it again or break it up?"
     },
     {
       "section": "general_information",
       "turn": 8,
+      "speaker": "CIRA",
+      "message": "Please repeat your 10-digit phone number."
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "4165550137"
+    },
+    {
+      "section": "general_information",
+      "turn": 9,
       "speaker": "CIRA",
       "message": "Do you currently have a family doctor?"
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 9,
       "speaker": "PATIENT",
       "message": "Yes, I do."
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 10,
       "speaker": "CIRA",
       "message": "What is your family doctor's full first and last name?"
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 10,
       "speaker": "PATIENT",
-      "message": "Dr. Grace Lim"
+      "message": "Dr. Grace Lim."
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 11,
       "speaker": "CIRA",
       "message": "Do you currently have a psychiatrist?"
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 11,
       "speaker": "PATIENT",
-      "message": "Yes, I do."
+      "message": "Um… I think I know who you mean, but I’m not sure if you’re asking about a current one or, like, someone I’ve seen before. It’s one of those questions I should probably answer properly if you want the exact thing, because I’m getting myself tangled up. Could you ask it again a different way?"
     },
     {
       "section": "general_information",
-      "turn": 11,
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "Please answer yes or no."
+    },
+    {
+      "section": "general_information",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "Yes."
+    },
+    {
+      "section": "general_information",
+      "turn": 13,
       "speaker": "CIRA",
       "message": "What is your psychiatrist's full first and last name?"
     },
     {
       "section": "general_information",
-      "turn": 11,
+      "turn": 13,
       "speaker": "PATIENT",
-      "message": "Dr. Omar Haddad"
+      "message": "Dr. Omar Haddad."
     },
     {
       "section": "current_concerns",
@@ -146,7 +196,7 @@
       "section": "current_concerns",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Mostly mood swings that get worse before my period, with irritability and some relationship strain."
+      "message": "It’s mostly my mood, I think—around my period it gets really bad, like I get irritable and everything feels off, and then it spills into relationships. Outside of that I’m generally okay."
     },
     {
       "section": "current_concerns",
@@ -158,7 +208,7 @@
       "section": "current_concerns",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I want to get the mood swings under control and save my relationships."
+      "message": "I want the mood swings under control, honestly. And to stop it from messing up my relationships."
     },
     {
       "section": "past_psychiatric_history",
@@ -170,7 +220,7 @@
       "section": "past_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I haven't."
+      "message": "No, not that I remember."
     },
     {
       "section": "past_psychiatric_history",
@@ -182,7 +232,7 @@
       "section": "past_psychiatric_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "I don’t think so. No diagnosis that I know of."
     },
     {
       "section": "past_psychiatric_history",
@@ -194,7 +244,7 @@
       "section": "past_psychiatric_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "No, I haven't."
+      "message": "No."
     },
     {
       "section": "past_psychiatric_history",
@@ -206,7 +256,7 @@
       "section": "past_psychiatric_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "Yes — I have a history of non-suicidal self-injury since adolescence, and it has usually helped reduce my anxiety."
+      "message": "Yes — that’s in the past. I’ve done non-suicidal self-injury since I was a teenager, but it was never about wanting to die. It usually helped take the edge off my anxiety."
     },
     {
       "section": "past_psychiatric_history",
@@ -218,7 +268,7 @@
       "section": "past_psychiatric_history",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "It was non-suicidal self-injury starting in adolescence, used to reduce anxiety. I do not have any current suicidal thoughts or immediate safety concern."
+      "message": "It was cutting, back in adolescence and after that too at times, but only as a way to calm myself down. There isn’t any current or immediate safety concern, and I’m not having suicidal thoughts."
     },
     {
       "section": "past_psychiatric_history",
@@ -230,19 +280,43 @@
       "section": "past_psychiatric_history",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "I don’t know—I don’t think I’ve had therapy, but I’m not sure I’m remembering all the terms right."
     },
     {
       "section": "past_psychiatric_history",
       "turn": 7,
       "speaker": "CIRA",
-      "message": "Have you ever received rTMS, ECT, deep brain stimulation, ketamine treatment, or another biological treatment?"
+      "message": "When did you receive that therapy?"
     },
     {
       "section": "past_psychiatric_history",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "I don’t know."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "Approximately how many sessions did you attend?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "I don’t know."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "Have you ever received rTMS, ECT, deep brain stimulation, ketamine treatment, or another biological treatment?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "No, I haven’t had any of those."
     },
     {
       "section": "medications",
@@ -254,7 +328,7 @@
       "section": "medications",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes — a combined oral contraceptive."
+      "message": "Yes — I’m on a combined oral contraceptive."
     },
     {
       "section": "medications",
@@ -266,7 +340,7 @@
       "section": "medications",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Combined oral contraceptive."
+      "message": "It’s the combined oral contraceptive — that’s the one I’m taking."
     },
     {
       "section": "medications",
@@ -290,7 +364,7 @@
       "section": "medications",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "I started it in 2023."
+      "message": "Started in 2023."
     },
     {
       "section": "medications",
@@ -326,7 +400,7 @@
       "section": "medications",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "No, I haven’t."
     },
     {
       "section": "medical_history",
@@ -338,7 +412,7 @@
       "section": "medical_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I haven't."
+      "message": "No, none that I know of."
     },
     {
       "section": "medical_history",
@@ -350,7 +424,7 @@
       "section": "medical_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "No, I haven't."
+      "message": "No."
     },
     {
       "section": "medical_history",
@@ -362,7 +436,7 @@
       "section": "medical_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "167 cm"
+      "message": "167 cm."
     },
     {
       "section": "medical_history",
@@ -374,7 +448,7 @@
       "section": "medical_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "60 kg"
+      "message": "60 kg."
     },
     {
       "section": "medication_allergies",
@@ -386,7 +460,7 @@
       "section": "medication_allergies",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I don't."
+      "message": "No, none that I know of."
     },
     {
       "section": "family_psychiatric_history",
@@ -398,7 +472,7 @@
       "section": "family_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes — my mother has major depressive disorder."
+      "message": "Yes—my mother has major depressive disorder."
     },
     {
       "section": "family_psychiatric_history",
@@ -554,7 +628,7 @@
       "section": "education_employment_legal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I'm not."
+      "message": "No."
     },
     {
       "section": "education_employment_legal_history",
@@ -578,7 +652,7 @@
       "section": "education_employment_legal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Yes — I’m an investment banking analyst at Harbour Capital, and I’ve been there since 2022."
+      "message": "Yes — I’m an investment banking analyst at Harbour Capital. I've been there since 2022."
     },
     {
       "section": "education_employment_legal_history",
@@ -638,7 +712,7 @@
       "section": "personal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "I was born and grew up here, but I don't have anything else to add."
+      "message": "I was born and grew up… well, just here, really. Nothing unusual that I can think of."
     },
     {
       "section": "personal_history",
@@ -650,7 +724,7 @@
       "section": "personal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "That’s when the cutting began, and I was in school."
+      "message": "That’s when the cutting started, and school was… kind of intense, I guess. I don’t know what else is important there."
     },
     {
       "section": "personal_history",
@@ -662,7 +736,7 @@
       "section": "personal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "I had one significant relationship that lasted about two years, and it ended three months ago. I’m currently single."
+      "message": "I had one significant relationship that lasted about two years, and it ended three months ago. I’m single now."
     },
     {
       "section": "personal_history",
@@ -674,7 +748,7 @@
       "section": "personal_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "I want stable relationships and to keep building my career."
+      "message": "I want stable relationships… and to keep building my career, I guess."
     },
     {
       "section": "phq9",
@@ -686,7 +760,7 @@
       "section": "phq9",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "phq9",
@@ -698,7 +772,7 @@
       "section": "phq9",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "phq9",
@@ -710,7 +784,7 @@
       "section": "phq9",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Not at all"
+      "message": "Not at all."
     },
     {
       "section": "phq9",
@@ -722,7 +796,7 @@
       "section": "phq9",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "phq9",
@@ -734,7 +808,7 @@
       "section": "phq9",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "phq9",
@@ -746,7 +820,7 @@
       "section": "phq9",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "phq9",
@@ -758,7 +832,7 @@
       "section": "phq9",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "phq9",
@@ -770,7 +844,7 @@
       "section": "phq9",
       "turn": 8,
       "speaker": "PATIENT",
-      "message": "Not at all"
+      "message": "Not at all."
     },
     {
       "section": "phq9",
@@ -782,7 +856,7 @@
       "section": "phq9",
       "turn": 9,
       "speaker": "PATIENT",
-      "message": "Not at all"
+      "message": "Not at all."
     },
     {
       "section": "phq9",
@@ -794,7 +868,7 @@
       "section": "phq9",
       "turn": 10,
       "speaker": "PATIENT",
-      "message": "Somewhat difficult"
+      "message": "Somewhat difficult."
     },
     {
       "section": "gad7",
@@ -806,7 +880,7 @@
       "section": "gad7",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "More than half the days"
+      "message": "More than half the days."
     },
     {
       "section": "gad7",
@@ -818,7 +892,7 @@
       "section": "gad7",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "gad7",
@@ -830,7 +904,7 @@
       "section": "gad7",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "More than half the days"
+      "message": "More than half the days."
     },
     {
       "section": "gad7",
@@ -842,7 +916,7 @@
       "section": "gad7",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "gad7",
@@ -854,7 +928,7 @@
       "section": "gad7",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "gad7",
@@ -866,7 +940,7 @@
       "section": "gad7",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "More than half the days"
+      "message": "More than half the days."
     },
     {
       "section": "gad7",
@@ -878,7 +952,7 @@
       "section": "gad7",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "gad7",
@@ -890,7 +964,7 @@
       "section": "gad7",
       "turn": 8,
       "speaker": "PATIENT",
-      "message": "Somewhat difficult"
+      "message": "Somewhat difficult."
     }
   ],
   "final_result": {

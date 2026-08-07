@@ -1,4 +1,4 @@
-from typing import TypedDict, Optional, List
+from typing import Dict, TypedDict, Optional, List
 
 
 # ── Section names that must all be complete before a record is saved ────────────
@@ -152,6 +152,23 @@ class AliceState(TypedDict):
     phq9: PHQ9
     gad7: GAD7
 
+    # ── Bookkeeping ────────────────────────────────────────────────────────
+    #
+    # These MUST be declared here, not only in ``initial_state``. LangGraph
+    # builds its state channels from this TypedDict's annotations, so any key
+    # that is missing from the class is silently dropped from the state that
+    # graph.invoke() returns - it survives inside a single node call and then
+    # vanishes.
+    #
+    # Leaving ``entries_confirmed`` undeclared caused a livelock: the model
+    # confirmed a repeatable field, the section was marked complete inside the
+    # node, the confirmation was stripped on the way out, the driver saw the
+    # field pending again, and the same "anything else?" exchange repeated
+    # forever.
+    safety_text_sent: bool
+    entries_confirmed: List[str]
+    repeatable_followups: Dict[str, int]
+
 
 # ── Required fields per section (controls collection order + completion) ─────────
 
@@ -211,6 +228,39 @@ REQUIRED_FIELDS = {
         "gad7_difficulty",
     ],
 }
+
+
+# ── Repeatable free-text fields ────────────────────────────────────────────────
+#
+# These hold MORE THAN ONE entry (three family members, four medications, two
+# jobs). They used to be treated as complete the moment they held any value,
+# which ended the section before CIRA could ask "is there anyone/anything else?"
+# - the patient's second and third entries were never elicited at all.
+#
+# They are now only complete once the model has explicitly confirmed there are
+# no further entries (see ``entries_confirmed`` below), so the field ends when
+# the PATIENT says it is done rather than when the model stops talking.
+#
+# Defined here rather than in graph/nodes.py so prompts/builder.py can import it
+# without a circular import.
+
+REPEATABLE_TEXT_FIELDS = {
+    "current_medications", "past_medication_details",
+    "previous_diagnoses", "previous_therapies", "previous_treatments",
+    "hospital_details", "medical_conditions", "surgical_history",
+    "medication_allergies", "family_psychiatric_history_details",
+    "employment_history",
+}
+
+# How many CONSECUTIVE UNPRODUCTIVE turns a repeatable field may sit open before
+# it is auto-confirmed. A safety valve against a model that never calls
+# confirm_no_more_entries.
+#
+# The counter resets whenever a new entry is actually saved, so turns where the
+# interview is making progress do not count toward it. Counting every pending
+# turn closed family history after three asks while the patient was still
+# saying "ask me one person at a time" - two relatives were lost.
+MAX_REPEATABLE_FOLLOWUPS = 5
 
 
 # ── Blank starting state ───────────────────────────────────────────────────────
@@ -300,4 +350,35 @@ initial_state: AliceState = {
         "gad7_q4": None, "gad7_q5": None, "gad7_q6": None,
         "gad7_q7": None, "gad7_difficulty": None, "gad7_total": None,
     },
+    # Set once the safety message has been delivered, so it is sent exactly
+    # once. Tracked separately from safety_flag, which is now raised before the
+    # reply is built and would otherwise suppress its own message.
+    "safety_text_sent": False,
+    # Repeatable fields the patient has confirmed hold no further entries.
+    "entries_confirmed": [],
+    # field -> how many times we have already asked "any more?" for it.
+    "repeatable_followups": {},
 }
+
+
+# ── Field -> owning section ────────────────────────────────────────────────────
+#
+# The model can call save_answer for a field belonging to a section other than
+# the one currently being collected - the intended behaviour when a patient
+# volunteers something out of order, and something the intake explicitly wants
+# to capture rather than discard.
+#
+# Writes used to go to ``state[current_section][field]`` unconditionally. Since
+# the state is a plain dict at runtime, that silently created the key inside the
+# WRONG section: the record was corrupted, the real field stayed empty and was
+# re-asked, and the stray key looked like a fabricated field to the evaluator.
+# Routing by field name fixes all three.
+
+FIELD_TO_SECTION = {
+    field: section
+    for section, fields in REQUIRED_FIELDS.items()
+    for field in fields
+}
+# Derived fields that are written but never "collected".
+FIELD_TO_SECTION["phq9_total"] = "phq9"
+FIELD_TO_SECTION["gad7_total"] = "gad7"

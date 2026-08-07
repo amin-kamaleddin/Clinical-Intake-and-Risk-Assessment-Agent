@@ -1,31 +1,455 @@
 {
+  "system": "cira",
   "case_id": "12",
   "scenario_case_id": "04-12",
-  "conversation_quality_score": 0.985,
-  "record_accuracy_score": 0.9675,
-  "conversation_subscores": {
-    "question_completeness": 1.0,
-    "conversational_flow": 1.0,
-    "clarity_and_focus": 1.0,
-    "empathy_and_engagement": 0.9,
-    "non_repetition": 1.0,
-    "safety_handling": 1.0
+  "persona_id": "moderate",
+  "record_score": 0.9,
+  "flow_score": 0.85,
+  "record_detail": {
+    "record_score": 0.9,
+    "record_score_contested": 0.7667,
+    "fields_contested": 15,
+    "fields_auto_resolved": 30,
+    "fields_confirmed_absent": 10,
+    "fields_scored": 45,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 39,
+      "partial": 3,
+      "missing": 2,
+      "contradicted": 1,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 9.0,
+        "score": 0.9
+      },
+      "past_psychiatric_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medications": {
+        "fields": 5,
+        "credit": 3.0,
+        "score": 0.6
+      },
+      "medical_history": {
+        "fields": 6,
+        "credit": 5.0,
+        "score": 0.8333
+      },
+      "medication_allergies": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 4,
+        "credit": 3.5,
+        "score": 0.875
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      }
+    }
   },
-  "record_subscores": {
-    "factual_correctness": 1.0,
-    "completeness": 0.95,
-    "no_fabrication": 0.9,
-    "field_placement_and_format": 1.0,
-    "questionnaire_and_safety_accuracy": 1.0
-  },
-  "conversation_summary": "The system conducted a thorough and efficient intake. It followed all required questioning protocols, maintained a professional tone, and correctly identified that no safety intervention was required based on the patient's responses.",
-  "record_summary": "The record is highly accurate and captures all relevant clinical information. It correctly maps the PHQ-9 and GAD-7 scores and accurately reflects the patient's medical and psychiatric history. A minor issue exists where the system added 'cholecystectomy' to the surgical history, which was not explicitly stated by the patient, though it is a correct medical term for the procedure described.",
+  "flow_summary": "The system conducted a thorough and professional intake. It handled the patient's occasional imprecision and requests for clarification well, effectively redirecting and re-explaining questions when necessary. The flow was logical and adhered to the required structure.",
   "issues": [
     {
       "severity": "minor",
-      "category": "no_fabrication",
-      "evidence": "record.medical_history.surgical_history: 'Gallbladder removal (cholecystectomy)'",
-      "explanation": "The system added the medical term 'cholecystectomy' which was not provided by the patient. While medically accurate, it technically constitutes an addition not present in the transcript."
+      "category": "clarity",
+      "evidence": "In the personal history section, the system asked a very broad, multi-part question: 'Could you describe your adolescence and early adulthood, including your experience in school, any difficulties you faced, jobs or responsibilities you had, and other important experiences you would like to share?'"
+    },
+    {
+      "severity": "minor",
+      "category": "efficiency",
+      "evidence": "When the patient asked for clarification on the PHQ-9 and GAD-7 scales, the system repeated the entire list of options, which was helpful but slightly repetitive."
     }
-  ]
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "MAI FANG",
+      "produced": "MAI FANG"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "41 Birchmount Road, Scarborough, Ontario",
+      "produced": "41 Birchmount Road, Scarborough, Ontario"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M1N3J5",
+      "produced": "M1N3J5"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "mai.fang.family@example.com",
+      "produced": "mai.fang.family@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550109",
+      "produced": "4165550109"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. HENRY LO",
+      "produced": "DR. HENRY LO"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.current_medications[1]",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Hydrocodone-acetaminophen; 5/325 mg, one tablet up to twice daily as needed; started 2024; constipation",
+      "produced": "Clonazepam; 0.5 mg nightly; started approximately 6 months ago; morning sleepiness. Hydrocodone-acetaminophen; 5/325 mg, one tablet up to twice daily as needed; started 2024; constipation"
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "missing",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": null
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "158 cm",
+      "produced": "158 cm"
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "72 kg",
+      "produced": "72 kg"
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "substance_use.alcohol_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "contradicted",
+      "source": "llm",
+      "note": "The produced date 03/08/1967 is ambiguous and likely interpreted as March 8th rather than August 3rd.",
+      "expected": "08/03/1967",
+      "produced": "03/08/1967"
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "fatigue; back pain; insomnia; burden to family",
+      "produced": "Feeling tired, back pain, and poor sleep for approximately 11 months. At home, the patient feels like a burden to their family."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "sleep better; have more energy",
+      "produced": "Improve sleep and have more energy."
+    },
+    {
+      "ref": "medications.current_medications[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Clonazepam; 0.5 mg nightly; started about 6 months ago; morning sleepiness",
+      "produced": "Clonazepam; 0.5 mg nightly; started approximately 6 months ago; morning sleepiness. Hydrocodone-acetaminophen; 5/325 mg, one tablet up to twice daily as needed; started 2024; constipation"
+    },
+    {
+      "ref": "medications.current_medications[2]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The acetaminophen entry is not present in the produced list.",
+      "expected": "Acetaminophen; 500 mg as needed, usually once daily; duration unknown; no known side effects.",
+      "produced": "Clonazepam; 0.5 mg nightly; started approximately 6 months ago; morning sleepiness. Hydrocodone-acetaminophen; 5/325 mg, one tablet up to twice daily as needed; started 2024; constipation"
+    },
+    {
+      "ref": "medical_history.medical_conditions",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The detail regarding the condition worsening after a fall is missing.",
+      "expected": "Chronic lower back pain; diagnosed 2023; worsened after a fall",
+      "produced": "Chronic lower back pain; diagnosed 2023"
+    },
+    {
+      "ref": "medical_history.surgical_history",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The detail regarding no ongoing complications is missing.",
+      "expected": "Gallbladder removal; 2015; no ongoing complications",
+      "produced": "Gallbladder removal; 2015"
+    },
+    {
+      "ref": "medication_allergies.medication_allergies",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Codeine; causes rash and facial swelling",
+      "produced": "Codeine; rash and facial swelling; Unknown"
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The detail regarding functional illiteracy is missing.",
+      "expected": "no formal education; functionally illiterate",
+      "produced": "No formal education"
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Homemaker; 1990 to present",
+      "produced": "Homemaker, At home; 1990 to Present. Seasonal worker, Employer unknown; 1988 to 1990"
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Seasonal garment factory worker; 1988 to 1990.",
+      "produced": "Homemaker, At home; 1990 to Present. Seasonal worker, Employer unknown; 1988 to 1990"
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "born in Laos; refugee camp",
+      "produced": "Born in Laos and spent early childhood in a refugee camp."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "refugee camp; resettled",
+      "produced": "Spent adolescence in a refugee camp and later resettled. No further information provided about school."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "widowed; husband died; heart attack",
+      "produced": "Marriage; husband died of a heart attack; widowed."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "support family; regain energy",
+      "produced": "Support my family and regain my energy."
+    }
+  ],
+  "fabricated": []
 }

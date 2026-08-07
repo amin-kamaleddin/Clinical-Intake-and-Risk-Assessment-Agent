@@ -19,6 +19,7 @@ import argparse
 import json
 
 from harness import config
+from harness import personas
 from harness.patient_simulator import PatientSimulator
 from harness.rule_based_cira import RuleBasedCIRA
 
@@ -37,11 +38,13 @@ def load_scenarios(case_filter: str | None = None) -> list[dict]:
     return scenarios
 
 
-def run_case(scenario: dict) -> None:
+def run_case(scenario: dict, persona=None) -> None:
     case_id = scenario["case_id"]
-    print(f"\n{'=' * 70}\nRule-based: {case_id} - {scenario.get('title', '')}\n{'=' * 70}")
+    persona = personas.get_persona(persona)
+    print(f"\n{'=' * 70}\nRule-based: {case_id} - {scenario.get('title', '')}")
+    print(f"Patient persona: {persona.id} ({persona.label})\n{'=' * 70}")
 
-    patient = PatientSimulator(scenario)
+    patient = PatientSimulator(scenario, persona=persona)
     engine = RuleBasedCIRA()
 
     def answer(question: str) -> str:
@@ -57,6 +60,8 @@ def run_case(scenario: dict) -> None:
         "scenario_case_id": case_id,
         "title": scenario.get("title", ""),
         "system": SYSTEM,
+        "persona_id": persona.id,
+        "patient_behaviour": patient.behaviour_summary(),
         "conversation": result.transcript,
         "final_result": {
             "safety_flag": result.safety_flag,
@@ -72,6 +77,7 @@ def run_case(scenario: dict) -> None:
         "case_id": config.short_case_id(case_id),
         "scenario_case_id": case_id,
         "system": SYSTEM,
+        "persona_id": persona.id,
         "safety_reasons": result.safety_reasons,
         "issues": result.issues,
     })
@@ -85,9 +91,23 @@ def run_case(scenario: dict) -> None:
     print(f"Saved transcript + record for {case_id}")
 
 
-def run(case_filter: str | None = None) -> None:
+def run(
+    case_filter: str | None = None,
+    persona_override: str | None = None,
+    persona_seed: int | None = None,
+    persona_strategy: str | None = None,
+) -> None:
     config.ensure_output_dirs()
     scenarios = load_scenarios(case_filter)
+
+    # Resolved from the full scenario file, so a --case run uses the same
+    # persona the case would get in a full run, and so every system faces the
+    # identical patient on the identical case.
+    assignment = personas.resolve_assignment(
+        seed=persona_seed,
+        strategy=persona_strategy,
+        override=persona_override or config.PERSONA_OVERRIDE,
+    )
 
     print("=" * 70)
     print("RULE-BASED BASELINE")
@@ -96,7 +116,7 @@ def run(case_filter: str | None = None) -> None:
 
     for scenario in scenarios:
         try:
-            run_case(scenario)
+            run_case(scenario, persona=assignment.get(scenario["case_id"]))
         except Exception as error:  # noqa: BLE001 - report and continue
             print(f"ERROR while running {scenario['case_id']}: {error}")
 
@@ -106,8 +126,19 @@ def run(case_filter: str | None = None) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the rule-based baseline.")
     parser.add_argument("--case", default=None, help="Run a single case id, e.g. 04-01")
+    parser.add_argument("--persona", choices=personas.PERSONA_IDS, default=None,
+                        help="Force this persona onto every case.")
+    parser.add_argument("--persona-seed", type=int, default=None,
+                        help="Seed for the persona assignment.")
+    parser.add_argument("--persona-strategy",
+                        choices=personas.ASSIGNMENT_STRATEGIES, default=None)
     args = parser.parse_args()
-    run(case_filter=args.case)
+    run(
+        case_filter=args.case,
+        persona_override=args.persona,
+        persona_seed=args.persona_seed,
+        persona_strategy=args.persona_strategy,
+    )
 
 
 if __name__ == "__main__":

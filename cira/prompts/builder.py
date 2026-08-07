@@ -1,6 +1,6 @@
 from datetime import date
 
-from core.state import AliceState, REQUIRED_FIELDS
+from core.state import AliceState, REQUIRED_FIELDS, REPEATABLE_TEXT_FIELDS
 from prompts.static_prompt import STATIC_PROMPT
 from prompts.section_prompts import SECTION_PROMPTS
 
@@ -23,19 +23,66 @@ CONDITIONAL_FIELDS = {
 
 
 def get_pending_fields(state: AliceState, section: str) -> list:
-    """Ordered list of fields still to collect, skipping hidden conditionals."""
+    """Ordered list of fields still to collect, skipping hidden conditionals.
+
+    A repeatable field is NOT complete just because it holds a value. It stays
+    pending until the patient has confirmed there are no further entries, which
+    is what keeps the section alive long enough for CIRA to ask. Previously the
+    first saved entry emptied the pending list, the driver ended the section,
+    and every later entry was lost - the single largest source of record error.
+    """
     section_data = state[section]
+    confirmed = set(state.get("entries_confirmed") or [])
     pending = []
+
     for field in REQUIRED_FIELDS[section]:
-        if section_data.get(field) is not None:
+        has_value = section_data.get(field) is not None
+
+        if has_value:
+            if field in REPEATABLE_TEXT_FIELDS and field not in confirmed:
+                pending.append(field)
             continue
+
         dependency = CONDITIONAL_FIELDS.get(field)
         if dependency:
             parent, hidden_value = dependency
             if section_data.get(parent) is hidden_value:
                 continue
         pending.append(field)
+
     return pending
+
+
+def repeatable_status(state: AliceState, section: str) -> str:
+    """Prompt text telling the model which repeatable fields still need a 'no more'.
+
+    Without this the model sees a pending field that already holds a value and
+    re-asks it from scratch, which reads as repetition. With it, the model knows
+    the correct next move is "is there anything else?" followed by the tool call.
+    """
+    section_data = state[section]
+    confirmed = set(state.get("entries_confirmed") or [])
+
+    lines = []
+    for field in REQUIRED_FIELDS[section]:
+        if field not in REPEATABLE_TEXT_FIELDS:
+            continue
+        value = section_data.get(field)
+        if value is None or field in confirmed:
+            continue
+        lines.append(
+            f"- {field} already holds: {value}\n"
+            f"  Do NOT ask for this field again from scratch. Ask only whether "
+            f"there are any FURTHER entries. If the patient gives another entry, "
+            f"save the combined value with save_answer. When the patient confirms "
+            f"there are no more, call confirm_no_more_entries(\"{field}\")."
+        )
+
+    if not lines:
+        return ""
+    return (
+        "\nRepeatable fields awaiting confirmation:\n" + "\n".join(lines) + "\n"
+    )
 
 
 def build_section_prompt(state: AliceState) -> str:
@@ -56,7 +103,8 @@ def build_section_prompt(state: AliceState) -> str:
         f"Patient name: {name if name else 'not collected yet'}\n"
         f"{greeting}\n\n"
         f"Next field to collect: {next_field}\n"
-        f"All pending fields: {pending}\n\n"
+        f"All pending fields: {pending}\n"
+        f"{repeatable_status(state, section)}\n"
         f"{SECTION_PROMPTS[section]}\n\n"
         "When all fields are collected say: "
         "'All done! Please take a look at the panel on the right — "

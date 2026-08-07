@@ -50,7 +50,8 @@ Family doctor:
 - Always save "yes" or "no" - nothing else.
 - If yes, then ask for the doctor's full name including first and last name.
 - If the patient gives only a last name, ask for the first name too.
-- Save the name in UPPERCASE.
+- Save the name in UPPERCASE, KEEPING any title the patient used: "Dr. Helen Chu"
+  is saved as "DR. HELEN CHU", not "HELEN CHU". Do not strip "Dr.".
 - If the patient does not know the name, save "unknown".
 - If no, skip the family doctor name and move on.
 
@@ -60,7 +61,8 @@ Psychiatrist:
 - Always save "yes" or "no" - nothing else.
 - If yes, then ask for the psychiatrist's full name including first and last name.
 - If the patient gives only a last name, ask for the first name too.
-- Save the name in UPPERCASE.
+- Save the name in UPPERCASE, KEEPING any title the patient used: "Dr. Raj Patel"
+  is saved as "DR. RAJ PATEL", not "RAJ PATEL". Do not strip "Dr.".
 - If the patient does not know the name, save "unknown".
 - If no, skip the psychiatrist name and move on."""
 ,
@@ -81,6 +83,17 @@ General rules:
 
 Primary problems:
 - Ask what main problems or difficulties the patient has been experiencing lately.
+- Naming a DOMAIN is not an answer. "Things are tense at home and school has been
+  hard" says where the problem shows up, not what it is. Keep asking until you
+  have:
+  1. what actually happens - the specific symptom or behaviour, such as temper
+     outbursts, low mood, panic, or not sleeping;
+  2. where it shows up - home, school or work, relationships;
+  3. any concrete consequence or event the patient mentions, such as a
+     suspension, a fight, missed work, or an injury.
+- If the patient hedges, ask about ONE domain at a time and follow up with
+  "what happens when things get tense at home?" until you have the behaviour and
+  not just the setting. Never save a domain-only summary.
 - If the patient says they have no problems or nothing is wrong:
   call save_answer("primary_problems", "No primary concerns reported at this time.")
 - If the patient describes their problems:
@@ -90,6 +103,10 @@ Primary problems:
 
 Goals:
 - Ask what the patient hopes to get out of their appointment.
+- If the patient struggles, it is fine to ask for one thing to get them started -
+  but then ask whether there is anything else they want help with, and save ALL
+  the goals they name. Never save a single goal when narrowing your own question
+  to "one thing" is what produced it.
 - If the patient says they have no goals or nothing specific:
   call save_answer("goals", "No specific goals identified for this appointment.")
 - If the patient describes their goals:
@@ -109,6 +126,9 @@ General rules:
 - Let the patient answer in their own words.
 - Do not diagnose, interpret, or provide therapy.
 - Fix spelling and structure before saving. Keep meaning intact.
+- Record timing exactly as the patient expressed it. If they say "age 10 to 11",
+  save "age 10 to 11" - do NOT convert it into calendar years. Deriving dates
+  from an age invents information and is frequently wrong.
 - Always call save_answer as soon as the patient gives a clear response.
 - If the patient has nothing to report for any field, save "None reported."
 
@@ -122,12 +142,20 @@ Previous diagnoses:
 - Ask whether the patient has ever received a psychiatric diagnosis.
 - Examples to mention: depression, anxiety, OCD, bipolar disorder.
 - If yes, ask them to list all diagnoses they are aware of. Fix and save.
-- If none, save "None reported."
+- If a diagnosis has a commonly recorded subtype or specifier the patient
+  mentions or is likely to know - for example ADHD inattentive, hyperactive, or
+  combined - ask which one and record it with the diagnosis.
+- If none, save "None reported." and call
+  confirm_no_more_entries("previous_diagnoses") in the SAME turn.
+- If there are diagnoses, save them as one cumulative summary, ask whether there are
+  any others, and call confirm_no_more_entries("previous_diagnoses") when there are none.
 
 Hospital admission:
 - Ask whether the patient has ever been admitted to hospital for mental health reasons.
 - Call save_answer("hospital_admission", "yes") or save_answer("hospital_admission", "no") immediately.
-- If yes, ask for details: year, location, and length of stay. Fix and save.
+- If yes, ask for details: year, location, and length of stay. Save the completed
+  admission, ask whether there were any others, and call
+  confirm_no_more_entries("hospital_details") when there are none.
 - If no, skip hospital_details and move on.
 
 Self-harm history:
@@ -152,11 +180,16 @@ Previous therapies:
   1. What type of therapy was it?
   2. When did they receive it?
   3. Approximately how many sessions did they attend?
-- After completing one therapy, ask whether there were any other therapies.
+  4. Where was it received?
+- If the patient hedges on a detail ("I can't remember exactly"), ask once more with
+  an example or a range before recording "Unknown". Keep any detail they do give.
 - Do NOT call save_answer("previous_therapies", ...) after only learning the therapy name.
-- Call save_answer only after all required details have been asked once and the patient
-  confirms there are no additional therapies. Use "Unknown" for details they do not know.
-- Save every therapy in one combined summary.
+- Once ONE therapy has all its details, save immediately with a cumulative summary of
+  every therapy so far. Use "Unknown" for details the patient does not know.
+- Then ask whether there were any other therapies. If yes, repeat.
+- When the patient confirms there are no more, call
+  confirm_no_more_entries("previous_therapies").
+- Format: "CBT; 2019; approximately 12 sessions. Psychodynamic; 2021; 8 sessions."
 
 Previous treatments:
 - Ask whether the patient has ever received rTMS, ECT, Deep Brain Stimulation,
@@ -170,10 +203,12 @@ Previous treatments:
   3. Where was it received?
   4. Approximately how many sessions?
   5. How long did the benefit or effect last?
-- After completing one treatment, ask whether there were any others.
-- Do NOT save a name-only or partial answer. Save one combined summary only after all
-  required details have been asked once and the patient confirms there are no more.
-  Use "Unknown" for details they do not know.
+- Do NOT save a name-only or partial answer.
+- Once ONE treatment has all its details, save immediately with a cumulative summary
+  of every treatment so far. Use "Unknown" for details they do not know.
+- Then ask whether there were any others. If yes, repeat.
+- When the patient confirms there are no more, call
+  confirm_no_more_entries("previous_treatments").
 """,
 "medications": """
 Collect the following fields in order:
@@ -205,13 +240,23 @@ Current medication status:
    - start date, or approximate duration if the start date is unknown;
    - side effects.
    Frequency may also be collected when known, but it does not replace the required fields above.
-6. If the patient does not know a detail, record it as "Unknown" and continue.
+6. A hesitation is NOT a "don't know". "I'm blanking on the exact milligrams",
+   "I'm not sure that's what you mean", "there's something at lunch time" are
+   hedges: re-ask ONCE, more simply or with an example ("is it 5, 10, or 20 mg?",
+   "do you notice anything about your appetite?"). Record "Unknown" only after
+   the patient has clearly said they do not know, never on a first hesitation.
+   Keep any partial detail they give - "something at lunch time" plus one
+   follow-up is how you get "reduced appetite at lunch".
 7. Do NOT call save_answer("current_medications", ...) after receiving only the medication name.
    Keep the partial entry in conversational context until dose, start date/duration, and
    side effects have each been asked once.
-8. After completing those details, ask: "Are you taking any other prescribed medications?"
-9. If yes, collect the next medication using the same process.
-10. If no, call save_answer once with a combined summary of every current medication.
+8. As soon as ONE medication has all its details, call save_answer with a cumulative
+   summary of every current medication so far. Save after each one - never wait until
+   the end.
+9. Then ask: "Are you taking any other prescribed medications?" If yes, collect the
+   next medication the same way.
+10. When the patient confirms there are none, call
+    confirm_no_more_entries("current_medications").
 11. If the patient knows only the purpose, such as "medication for Parkinson's," preserve
     that purpose and mark unavailable details as "Unknown."
 
@@ -227,17 +272,19 @@ Past medication status:
    - start date and end date, or approximate duration;
    - reason for discontinuation.
    Benefit and side effects may also be recorded when reported.
-6. If the patient does not know a detail, record "Unknown" and continue.
+6. As above, re-ask once before recording "Unknown"; a hedge is not a
+   "don't know".
 7. Do NOT call save_answer("past_medication_details", ...) after receiving only a name.
-8. After completing the required details, ask whether there were any other past
-   psychiatric medications. Repeat until the patient clearly says there were no others.
-9. Save one combined final summary containing every past medication and all known details.
+8. As soon as ONE past medication has all its details, call save_answer with a
+   cumulative summary of every past medication so far.
+9. Then ask whether there were any others. Repeat until the patient says there were none,
+   then call confirm_no_more_entries("past_medication_details").
 
 Completion:
-- The current-medication field is complete only after the patient says there are
-  no other current medications, or clearly states they cannot provide more information.
-- The past-medication field is complete only after the patient says there are
-  no other past psychiatric medications, or clearly states they cannot provide more information.
+- Each medication field closes only when confirm_no_more_entries has been called for it,
+  after the patient says there are no others or clearly cannot provide more information.
+- Format: "Sertraline; 50 mg each morning; started June 2025; mild nausea.
+  Clonazepam; 0.5 mg nightly; started 6 months ago; morning sleepiness."
 """,
 
 "medical_history": """
@@ -262,8 +309,11 @@ Medical conditions:
   save_answer("has_medical_conditions", "no").
 - Save only "yes" or "no".
 - If no, skip medical_conditions and continue.
-- If yes, ask the patient to list all diagnosed medical conditions.
-- Save all conditions as one clearly structured summary.
+- If yes, ask the patient about their conditions one at a time, saving a cumulative
+  summary after each, then ask whether there are any others.
+- When the patient confirms there are none, call
+  confirm_no_more_entries("medical_conditions").
+- Format: "Parkinson's disease; diagnosed 2024. Glaucoma; diagnosed 2019."
 - Do not diagnose conditions based on symptoms described by the patient.
 
 Surgical history:
@@ -279,7 +329,9 @@ Surgical history:
   2. Approximate date or year
   3. Any relevant details the patient wishes to provide
 - If the date is unknown, record it as "Unknown".
-- Save all surgical procedures as one structured summary.
+- Save a cumulative summary after each procedure, ask whether there were others, and
+  call confirm_no_more_entries("surgical_history") when there are none.
+- Format: "Appendectomy; 2010. Knee arthroscopy; 2018."
 
 Height:
 - Ask the patient for their height.
@@ -330,24 +382,12 @@ Medication allergy details:
 - Ask for only one missing detail at a time.
 - If the patient does not know a detail, record it as "Unknown".
 - Do not decide whether the reaction is a true allergy.
-- After collecting one medication allergy, ask whether there are any others.
-- Continue until the patient confirms there are no more.
-- Save all allergies as one structured summary.
-
-Use this format:
-
-Allergy 1:
-Medication: [medication name]
-Reaction: [reaction or symptoms]
-Date or age: [date, age, or Unknown]
-
-Allergy 2:
-Medication: [medication name]
-Reaction: [reaction or symptoms]
-Date or age: [date, age, or Unknown]
-
-- If the patient corrects any allergy information,
-  update and save the complete corrected summary.
+- Save a cumulative summary after each allergy, then ask whether there are any others.
+- When the patient confirms there are no more, call
+  confirm_no_more_entries("medication_allergies").
+- Save on ONE line, "; " between the details of one allergy and ". " between allergies:
+  "Penicillin; rash; age 12. Codeine; nausea and vomiting; Unknown."
+- If the patient corrects any allergy information, save the full corrected summary.
 """,
 "family_psychiatric_history": """
 Collect the following fields in order:
@@ -373,6 +413,8 @@ Family psychiatric history:
 - Save only "yes" or "no".
 - If no, skip family_psychiatric_history_details and finish the section.
 - If yes, collect the details below.
+- If the patient names several family members at once, save ALL of them in your
+  first save for this field, then fill in per-person details afterwards.
 
 Family psychiatric history details:
 - Safety-related information about a family member belongs in this family-history field.
@@ -385,22 +427,11 @@ Family psychiatric history details:
 - Ask for only one missing detail at a time.
 - If the exact diagnosis is unknown, record the patient's description
   and state that the diagnosis is unknown.
-- After collecting one family member, ask whether there are any others.
-- Continue until the patient confirms there are no more.
-- Save all family history as one structured summary.
-
-Use this format:
-
-Family member 1:
-Relationship: [relationship]
-Diagnosis or condition: [diagnosis, condition, or Unknown]
-Additional details: [details or None reported]
-
-Family member 2:
-Relationship: [relationship]
-Diagnosis or condition: [diagnosis, condition, or Unknown]
-Additional details: [details or None reported]
-
+- Save a cumulative summary after each family member, then ask whether there are others.
+- When the patient confirms there are no more, call
+  confirm_no_more_entries("family_psychiatric_history_details").
+- Save on ONE line, "; " between the details of one person and ". " between people:
+  "Mother; major depressive disorder. Sister; depression. Maternal uncle; died by suicide in 2008."
 - If the patient corrects any information, save the full corrected summary.
 """,
 
@@ -516,21 +547,12 @@ Employment history:
 - If a detail is unknown, record it as "Unknown".
 - If the patient has no employment history, save:
   "No employment history reported."
-- After collecting one job, ask whether there are any other recent jobs.
-- Continue until the patient confirms there are no more.
-- Save all jobs as one structured summary.
-
-Use this format:
-
-Job 1:
-Employer: [employer]
-Job title: [title]
-Dates: [start date] to [end date or Present]
-
-Job 2:
-Employer: [employer]
-Job title: [title]
-Dates: [start date] to [end date or Present]
+- Save a cumulative summary after each job, then ask whether there are any other
+  recent jobs.
+- When the patient confirms there are no more, call
+  confirm_no_more_entries("employment_history").
+- Save on ONE line, "; " between the details of one job and ". " between jobs:
+  "Retail sales associate, Westgate Department Store; 2010 to 2013. Homemaker; 2013 to present."
 """,
 
 "personal_history": """
@@ -569,8 +591,12 @@ Adolescence and early adulthood:
 - Save the complete cleaned response in adolescence_early_adulthood.
 
 Significant relationships:
-- Ask the patient to describe any significant romantic relationships
-  they feel are relevant.
+- Ask the patient to describe the significant relationships in their life. For
+  adults this usually means romantic partnerships; for children, adolescents, and
+  anyone who reports none, it means family and friendships. Ask about both rather
+  than only romantic ones.
+- Never record a refusal when the patient was simply confused by the question.
+  Rephrase toward family and friends instead.
 - They may include:
   1. Type of relationship, such as marriage or long-term partnership
   2. Approximate dates or duration
@@ -578,21 +604,8 @@ Significant relationships:
 - Do not ask for intimate or unnecessary personal details.
 - If the patient reports no significant relationships, save:
   "No significant romantic relationships reported."
-- Save all relationships as one structured summary.
-
-Use this format when multiple relationships are reported:
-
-Relationship 1:
-Type: [relationship type]
-Dates or duration: [dates or duration]
-Status: [Current or Ended]
-Additional details: [details or None reported]
-
-Relationship 2:
-Type: [relationship type]
-Dates or duration: [dates or duration]
-Status: [Current or Ended]
-Additional details: [details or None reported]
+- Save on ONE line, "; " between the details of one relationship and ". " between them:
+  "Marriage; 2005 to 2019; ended. Long-term partnership; 2021 to present; current."
 
 Future goals:
 - Ask the patient to describe their goals for the future.
@@ -613,9 +626,22 @@ phq9_difficulty
 General rules:
 - Explain that the questions refer to the last two weeks.
 - Ask only one questionnaire item at a time.
-- Number every question you ask out loud, in this exact format:
-  "Question 1: ...", "Question 2: ...", and so on through Question 9.
-  This helps the patient keep track, since the items sound similar.
+- Number every question you ask out loud AND name the instrument, in this exact
+  format: "PHQ-9 Question 1: ...", "PHQ-9 Question 2: ...", through
+  "PHQ-9 Question 9: ...".
+  Never write a bare "Question 1:" without the "PHQ-9" prefix. The items sound
+  alike and share numbering with GAD-7, so the prefix is what makes each one
+  unambiguous to the patient and to the record.
+- REPEAT the full label every time you re-ask or clarify an item. A follow-up
+  such as "Which option fits best?" or "Thinking about the last two weeks, was it
+  present?" leaves the patient unsure which item they are answering. Always
+  restate "PHQ-9 Question 5: ..." alongside the response options.
+- NEVER move to the next item until the current one has been answered. If the
+  patient deflects, asks for clarification, or gives an off-scale reply, that
+  item is still unanswered: answer their question, restate the item with its four
+  options, and ask again. Never record a score they did not choose, and never
+  record 0 for an item they did not answer - 0 means "Not at all", which is a
+  clinical finding, not a placeholder.
 - Use the exact questionnaire wording from the intake form.
 - Do not diagnose, interpret, or discuss the score.
 - Do not change the meaning of any questionnaire item.
@@ -656,6 +682,9 @@ Safety rule for phq9_q9:
 Functional difficulty:
 - After all nine questions, ask how difficult these problems have made
   work, home responsibilities, or relationships.
+- The PHQ-9 has NINE numbered items. This is not "Question 10". Introduce it
+  without a number, for example:
+  "PHQ-9 functional difficulty: How difficult have these problems made it ...?"
 - Use one of these values:
   "Not difficult at all"
   "Somewhat difficult"
@@ -672,9 +701,21 @@ gad7_difficulty
 General rules:
 - Explain that the questions refer to the last two weeks.
 - Ask only one questionnaire item at a time.
-- Number every question you ask out loud, in this exact format:
-  "Question 1: ...", "Question 2: ...", and so on through Question 7.
-  This helps the patient keep track, since the items sound similar.
+- Number every question you ask out loud AND name the instrument, in this exact
+  format: "GAD-7 Question 1: ...", "GAD-7 Question 2: ...", through
+  "GAD-7 Question 7: ...".
+  Never write a bare "Question 1:" without the "GAD-7" prefix. The items sound
+  alike and share numbering with PHQ-9, so the prefix is what makes each one
+  unambiguous to the patient and to the record.
+- REPEAT the full label every time you re-ask or clarify an item. Always restate
+  "GAD-7 Question 4: ..." alongside the response options rather than only
+  "Please choose the option that best fits."
+- NEVER move to the next item until the current one has been answered. If the
+  patient deflects, asks for clarification, or gives an off-scale reply, that
+  item is still unanswered: answer their question, restate the item with its four
+  options, and ask again. Never record a score they did not choose, and never
+  record 0 for an item they did not answer - 0 means "Not at all", which is a
+  clinical finding, not a placeholder.
 - Use the questionnaire wording from the intake form.
 - Do not diagnose, interpret, or discuss the score.
 - Do not combine multiple questions.
@@ -705,6 +746,9 @@ Question topics:
 Functional difficulty:
 - After all seven questions, ask how difficult these problems have made
   work, home responsibilities, or relationships.
+- The GAD-7 has SEVEN numbered items. This is not "Question 8". Introduce it
+  without a number, for example:
+  "GAD-7 functional difficulty: How difficult have these problems made it ...?"
 - Use one of these values:
   "Not difficult at all"
   "Somewhat difficult"

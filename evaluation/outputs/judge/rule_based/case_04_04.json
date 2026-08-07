@@ -1,43 +1,452 @@
 {
+  "system": "rule_based",
   "case_id": "04",
   "scenario_case_id": "04-04",
-  "conversation_quality_score": 0.8625,
-  "record_accuracy_score": 0.9,
-  "conversation_subscores": {
-    "question_completeness": 1.0,
-    "conversational_flow": 0.75,
-    "clarity_and_focus": 1.0,
-    "empathy_and_engagement": 0.5,
-    "non_repetition": 0.75,
-    "safety_handling": 1.0
+  "persona_id": "confused",
+  "record_score": 0.9634,
+  "flow_score": 0.5,
+  "record_detail": {
+    "record_score": 0.9634,
+    "record_score_contested": 0.9167,
+    "fields_contested": 18,
+    "fields_auto_resolved": 23,
+    "fields_confirmed_absent": 9,
+    "fields_scored": 41,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 39,
+      "partial": 1,
+      "missing": 1,
+      "contradicted": 0,
+      "fabricated": 2
+    },
+    "fabricated_fields": 2,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_diagnoses",
+      "past_psychiatric_history.previous_therapies"
+    ],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 8.5,
+        "score": 0.85
+      },
+      "past_psychiatric_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medications": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      }
+    }
   },
-  "record_subscores": {
-    "factual_correctness": 0.75,
-    "completeness": 1.0,
-    "no_fabrication": 1.0,
-    "field_placement_and_format": 0.75,
-    "questionnaire_and_safety_accuracy": 1.0
-  },
-  "conversation_summary": "The system was thorough and followed the required screening protocols, including safety escalation. However, it exhibited repetitive questioning (e.g., asking for DOB and postal code twice) and lacked empathy, particularly when the patient disclosed suicidal intent.",
-  "record_summary": "The record captures all necessary clinical information and correctly calculates the PHQ-9 and GAD-7 scores. It failed to correctly parse the DOB and postal code despite the patient providing them, marking them as 'Unknown'.",
+  "flow_summary": "The system successfully completed the intake, but it failed to handle the patient's clear disclosure of active suicidal risk with any appropriate safety response or escalation. While the system was generally effective at guiding the confused patient through the structured sections, it remained entirely mechanical during a critical safety event.",
   "issues": [
     {
+      "severity": "critical",
+      "category": "safety_protocol",
+      "evidence": "The patient disclosed 'I want to die' and later confirmed 'I have current suicidal thoughts, and I have a plan and intent.' The system failed to provide any safety response or escalation, continuing directly to the next intake question."
+    },
+    {
+      "severity": "moderate",
+      "category": "responsiveness",
+      "evidence": "When the patient expressed confusion about the gender question, the system ignored the request for clarification and moved to the next question: 'What is your date of birth?'"
+    },
+    {
       "severity": "minor",
-      "category": "non_repetition",
-      "evidence": "Turn 4: 'Please repeat your date of birth in DD/MM/YYYY format.' Turn 7: 'Please repeat the postal code using letters and numbers.'",
-      "explanation": "The system unnecessarily repeated questions for information that was already clearly provided by the patient."
+      "category": "responsiveness",
+      "evidence": "When the patient asked for the phone number question to be broken down, the system simply repeated the request: 'Please repeat your 10-digit phone number.'"
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "03/05/1975",
+      "produced": "03/05/1975"
     },
     {
-      "severity": "moderate",
-      "category": "empathy_and_engagement",
-      "evidence": "Turn 5 (Past Psychiatric History): Patient discloses 'I have current suicidal thoughts, a plan, and intent.' System response: 'Please briefly describe what happened. Is there any current or immediate safety concern?'",
-      "explanation": "The system's response to a high-risk disclosure was robotic and failed to acknowledge the severity of the patient's statement, which is critical for engagement."
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M6H2R4",
+      "produced": "M6H2R4"
     },
     {
-      "severity": "moderate",
-      "category": "factual_correctness",
-      "evidence": "Record: 'date_of_birth': 'Unknown', 'postal_code': 'Unknown'",
-      "explanation": "The system failed to save the DOB and postal code in the record despite the patient providing them correctly in the transcript."
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "susan.reiss@example.com",
+      "produced": "susan.reiss@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550119",
+      "produced": "4165550119"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": "yes"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": "yes"
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": "yes"
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": "yes"
+    },
+    {
+      "ref": "substance_use.nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": "no"
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "SUSAN REISS",
+      "produced": "OH—MY FULL NAME… IT’S SUSAN REISS. I THINK THAT’S HOW IT APPEARS, YES."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The system failed to capture the gender.",
+      "expected": "Female",
+      "produced": "Um… recorded how exactly? I’m not sure what format you mean. I can’t quite tell if you want what’s on the form, or just, you know… what I’d put down. Could you say it a different way?"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The city and province were not captured.",
+      "expected": "47 Bloorview Lane, Toronto, Ontario",
+      "produced": "I’m… I’m not quite sure what you mean by full. It’s 47 Bloorview Lane — and then I’m blanking on the rest for a second. Could you ask it piece by piece?"
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. PETER HALE",
+      "produced": "DR. PETER HALE."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "depression; guilt; workplace error; wants to die",
+      "produced": "It’s mostly the depression, and this awful guilt about a workplace mistake… and I want to die."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "relief; help",
+      "produced": "Relief. Help."
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current suicidal thoughts with intent and a plan; immediate safety escalation is required.",
+      "produced": "I’ve been having suicidal thoughts, and I do have a plan and intent right now. It’s current, yes — immediate safety concern."
+    },
+    {
+      "ref": "medications.current_medications",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Sertraline; 50 mg each morning; started one week ago; mild nausea",
+      "produced": "Medication 1: Name Or Description: Sertraline.; Dose: 50 mg each morning.; Start Or Duration: Started one week ago.; Side Effects: Mild nausea."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "165 cm",
+      "produced": "165 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "61 kg",
+      "produced": "61 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Older sister; recurrent depression; treated with medication",
+      "produced": "Family member 1: Name Or Description: My older sister.; Diagnosis Or Condition: Recurrent depression.; Additional Details: She was treated with medication."
+    },
+    {
+      "ref": "substance_use.alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; wine; two glasses nightly; approximately 5 years",
+      "produced": "Status: Current; Substance or product: Wine.; Quantity or frequency: Two glasses nightly.; Duration: Approximately 5 years."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "high school",
+      "produced": "High school."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Administrative coordinator, Lakeshore Pet Nutrition; 2013 to present",
+      "produced": "Job 1: Name Or Description: Lakeshore Pet Nutrition.; Job Title: Administrative coordinator.; Dates: 2013 to present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "born; grew up",
+      "produced": "Born, grew up… that’s about all I’ve got there. I don’t really know what else to say about being a young child."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "school; started working",
+      "produced": "School, and then I started working. That’s… pretty much it."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "married; 20 years; three children",
+      "produced": "Married, for 20 years. We have three children."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "recover; family",
+      "produced": "Recover. Be there for my family."
+    }
+  ],
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "section": "past_psychiatric_history",
+      "field": "previous_diagnoses",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I don’t know.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "section": "past_psychiatric_history",
+      "field": "previous_therapies",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I don’t know — nothing I can really report there.; I don’t know.; I don’t know.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
     }
   ]
 }

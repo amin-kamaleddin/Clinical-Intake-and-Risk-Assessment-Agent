@@ -3,6 +3,32 @@
   "scenario_case_id": "04-05",
   "title": "Despair",
   "system": "rule_based",
+  "persona_id": "moderate",
+  "patient_behaviour": {
+    "persona": {
+      "id": "moderate",
+      "label": "Somewhat unclear",
+      "difficulty_rank": 2,
+      "description": "Cooperative but imprecise. Hedges, bundles facts, occasionally drifts one step off-topic, sometimes needs a nudge to commit.",
+      "temperature": 0.4,
+      "questionnaire_deflection_probability": 0.35,
+      "max_deflections_per_item": 1,
+      "deflection_budget_per_instrument": 2,
+      "freetext_hedge_probability": 0.25,
+      "freetext_hedge_budget_per_section": 2
+    },
+    "temperature": 0.4,
+    "temperature_pinned": false,
+    "questionnaire_deflections": 0,
+    "freetext_hedges": 2,
+    "max_consecutive_hedges": 1,
+    "hedges_by_section": {
+      "(none)": 2
+    },
+    "deflections_by_instrument": {},
+    "deflections_by_item": {},
+    "deflection_log": []
+  },
   "conversation": [
     {
       "section": "general_information",
@@ -14,7 +40,7 @@
       "section": "general_information",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "ANGELA SMITH"
+      "message": "It’s Angela Smith."
     },
     {
       "section": "general_information",
@@ -26,7 +52,7 @@
       "section": "general_information",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Female"
+      "message": "Female."
     },
     {
       "section": "general_information",
@@ -38,89 +64,113 @@
       "section": "general_information",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "17/06/1993"
+      "message": "17/06/1993."
     },
     {
       "section": "general_information",
       "turn": 4,
+      "speaker": "CIRA",
+      "message": "Please repeat your date of birth in DD/MM/YYYY format."
+    },
+    {
+      "section": "general_information",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "17/06/1993."
+    },
+    {
+      "section": "general_information",
+      "turn": 5,
       "speaker": "CIRA",
       "message": "What is your full home address, including street address, city, and province?"
     },
     {
       "section": "general_information",
-      "turn": 4,
+      "turn": 5,
       "speaker": "PATIENT",
-      "message": "330 Weston Road, Toronto, Ontario"
+      "message": "330 Weston Road, Toronto, Ontario."
     },
     {
       "section": "general_information",
-      "turn": 5,
+      "turn": 6,
       "speaker": "CIRA",
       "message": "What is your Canadian postal code?"
     },
     {
       "section": "general_information",
-      "turn": 5,
+      "turn": 6,
       "speaker": "PATIENT",
-      "message": "M6N3P7"
+      "message": "M6N3P7."
     },
     {
       "section": "general_information",
-      "turn": 6,
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "Please repeat the postal code using letters and numbers."
+    },
+    {
+      "section": "general_information",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "I think it’s the one for my address, but I’m not totally sure what format you want there. Could you say it another way?"
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
       "speaker": "CIRA",
       "message": "What is your email address?"
     },
     {
       "section": "general_information",
-      "turn": 6,
+      "turn": 8,
       "speaker": "PATIENT",
-      "message": "angela.smith@example.com"
+      "message": "angela.smith@example.com."
     },
     {
       "section": "general_information",
-      "turn": 7,
+      "turn": 9,
       "speaker": "CIRA",
       "message": "What is your phone number, including area code?"
     },
     {
       "section": "general_information",
-      "turn": 7,
+      "turn": 9,
       "speaker": "PATIENT",
-      "message": "4165550163"
+      "message": "416-555-0163."
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 10,
       "speaker": "CIRA",
       "message": "Do you currently have a family doctor?"
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 10,
       "speaker": "PATIENT",
       "message": "Yes, I do."
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 11,
       "speaker": "CIRA",
       "message": "What is your family doctor's full first and last name?"
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 11,
       "speaker": "PATIENT",
-      "message": "DR. MARCUS REID"
+      "message": "Dr. Marcus Reid."
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 12,
       "speaker": "CIRA",
       "message": "Do you currently have a psychiatrist?"
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 12,
       "speaker": "PATIENT",
       "message": "No, I don’t."
     },
@@ -134,7 +184,7 @@
       "section": "current_concerns",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Despair, irritability, no pleasure in anything, and feeling like a burden."
+      "message": "Mostly despair and irritability, and I just don’t get pleasure from anything anymore. I also feel like a burden."
     },
     {
       "section": "current_concerns",
@@ -146,7 +196,7 @@
       "section": "current_concerns",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Someone to talk to and to feel better."
+      "message": "I’d like someone to talk to, and I want to feel better."
     },
     {
       "section": "past_psychiatric_history",
@@ -206,7 +256,7 @@
       "section": "past_psychiatric_history",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, I haven’t."
     },
     {
       "section": "past_psychiatric_history",
@@ -218,7 +268,7 @@
       "section": "past_psychiatric_history",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "Yes, supportive psychotherapy."
+      "message": "I’ve talked with someone before, yes — I’m not sure which category you mean exactly. Could you say the type another way?"
     },
     {
       "section": "past_psychiatric_history",
@@ -242,7 +292,7 @@
       "section": "past_psychiatric_history",
       "turn": 8,
       "speaker": "PATIENT",
-      "message": "3 sessions."
+      "message": "About 3 sessions."
     },
     {
       "section": "past_psychiatric_history",
@@ -254,7 +304,7 @@
       "section": "past_psychiatric_history",
       "turn": 9,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "No, I haven’t."
     },
     {
       "section": "medications",
@@ -266,7 +316,7 @@
       "section": "medications",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I’m not."
+      "message": "No, I’m not on anything right now."
     },
     {
       "section": "medications",
@@ -278,7 +328,7 @@
       "section": "medications",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Yes, fluoxetine."
+      "message": "Yes — I tried one antidepressant before."
     },
     {
       "section": "medications",
@@ -314,7 +364,7 @@
       "section": "medications",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "I took it for 6 weeks in 2025."
+      "message": "I took it for about 6 weeks in 2025."
     },
     {
       "section": "medications",
@@ -326,7 +376,7 @@
       "section": "medications",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "I stopped it because of marked fatigue."
+      "message": "It was stopped because it made me feel really tired, kind of a marked fatigue."
     },
     {
       "section": "medications",
@@ -350,7 +400,7 @@
       "section": "medical_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, I haven’t been diagnosed with any medical conditions."
     },
     {
       "section": "medical_history",
@@ -362,7 +412,7 @@
       "section": "medical_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, I haven’t had any surgeries."
     },
     {
       "section": "medical_history",
@@ -374,7 +424,7 @@
       "section": "medical_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "168 cm"
+      "message": "I’m about 168 cm tall."
     },
     {
       "section": "medical_history",
@@ -386,7 +436,7 @@
       "section": "medical_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "59 kg"
+      "message": "Around 59 kg."
     },
     {
       "section": "medication_allergies",
@@ -398,7 +448,7 @@
       "section": "medication_allergies",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, I don’t have any medication allergies."
     },
     {
       "section": "family_psychiatric_history",
@@ -410,7 +460,7 @@
       "section": "family_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, my mother has recurrent depression."
+      "message": "Yes, my mother has recurrent depression. And my older brother has anxiety."
     },
     {
       "section": "family_psychiatric_history",
@@ -446,7 +496,7 @@
       "section": "family_psychiatric_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "My older brother has anxiety."
+      "message": "Yes — my older brother has anxiety."
     },
     {
       "section": "family_psychiatric_history",
@@ -470,7 +520,7 @@
       "section": "substance_use",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Previous."
+      "message": "Previous. But I haven’t had any since pregnancy."
     },
     {
       "section": "substance_use",
@@ -482,7 +532,7 @@
       "section": "substance_use",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "I don’t know, just alcohol."
     },
     {
       "section": "substance_use",
@@ -494,7 +544,7 @@
       "section": "substance_use",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "I don’t know."
     },
     {
       "section": "substance_use",
@@ -506,7 +556,7 @@
       "section": "substance_use",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "I don’t know."
     },
     {
       "section": "substance_use",
@@ -602,7 +652,7 @@
       "section": "education_employment_legal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, I’m not. Could you tell me if you need the details for anything specific?"
     },
     {
       "section": "education_employment_legal_history",
@@ -626,7 +676,7 @@
       "section": "education_employment_legal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Yes, I was a retail sales associate at Westgate Department Store from 2010 to 2013."
+      "message": "Yes — I’m a homemaker now."
     },
     {
       "section": "education_employment_legal_history",
@@ -674,7 +724,7 @@
       "section": "education_employment_legal_history",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "Yes, Westgate Department Store."
+      "message": "Yes — Westgate Department Store."
     },
     {
       "section": "education_employment_legal_history",
@@ -722,7 +772,7 @@
       "section": "personal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "I was born and grew up here."
+      "message": "I was born and grew up here, I think. Not much else I’d add."
     },
     {
       "section": "personal_history",
@@ -734,7 +784,7 @@
       "section": "personal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "There was possible childhood depression, and my parents divorced."
+      "message": "There was maybe some childhood depression, and my parents divorced. That’s the main thing I remember."
     },
     {
       "section": "personal_history",
@@ -746,7 +796,7 @@
       "section": "personal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "I’m married, and it’s been 13 years."
+      "message": "I’m married, and it’s been about 13 years. My husband can be pretty critical sometimes, and we have children."
     },
     {
       "section": "personal_history",
@@ -758,7 +808,7 @@
       "section": "personal_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "I want to feel like myself and be there for my family."
+      "message": "I want to feel like myself again, mostly for my family."
     },
     {
       "section": "phq9",
@@ -854,7 +904,7 @@
       "section": "phq9",
       "turn": 8,
       "speaker": "PATIENT",
-      "message": "More than half the days."
+      "message": "More than half the days. I've been pacing a lot, if that counts."
     },
     {
       "section": "phq9",

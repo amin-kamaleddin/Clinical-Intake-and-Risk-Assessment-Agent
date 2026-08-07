@@ -1,7 +1,10 @@
-gradio
-pillow
-openai
-python-dotenv
-pytest
-langgraph
+# CIRA evaluation harness dependencies.
+# The rule-based engine and the deterministic scorer use only the standard
+# library. The patient simulator and the LLM judge need these:
+langchain-core
 langchain-openai
+pydantic>=2
+python-dotenv
+
+# The live CIRA stage additionally imports the CIRA agent package itself
+# (LangGraph, etc.) from the sibling ../cira folder; install that separately.

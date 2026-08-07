@@ -3,6 +3,32 @@
   "scenario_case_id": "04-10",
   "title": "Mixed Features, but Not Bipolar",
   "system": "rule_based",
+  "persona_id": "moderate",
+  "patient_behaviour": {
+    "persona": {
+      "id": "moderate",
+      "label": "Somewhat unclear",
+      "difficulty_rank": 2,
+      "description": "Cooperative but imprecise. Hedges, bundles facts, occasionally drifts one step off-topic, sometimes needs a nudge to commit.",
+      "temperature": 0.4,
+      "questionnaire_deflection_probability": 0.35,
+      "max_deflections_per_item": 1,
+      "deflection_budget_per_instrument": 2,
+      "freetext_hedge_probability": 0.25,
+      "freetext_hedge_budget_per_section": 2
+    },
+    "temperature": 0.4,
+    "temperature_pinned": false,
+    "questionnaire_deflections": 0,
+    "freetext_hedges": 2,
+    "max_consecutive_hedges": 1,
+    "hedges_by_section": {
+      "(none)": 2
+    },
+    "deflections_by_instrument": {},
+    "deflections_by_item": {},
+    "deflection_log": []
+  },
   "conversation": [
     {
       "section": "general_information",
@@ -14,7 +40,7 @@
       "section": "general_information",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "JESSICA BROOKS"
+      "message": "I think it’s Jessica Brooks."
     },
     {
       "section": "general_information",
@@ -26,7 +52,7 @@
       "section": "general_information",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Female"
+      "message": "Female."
     },
     {
       "section": "general_information",
@@ -38,103 +64,127 @@
       "section": "general_information",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "24/04/1999"
+      "message": "24/04/1999."
     },
     {
       "section": "general_information",
       "turn": 4,
+      "speaker": "CIRA",
+      "message": "Please repeat your date of birth in DD/MM/YYYY format."
+    },
+    {
+      "section": "general_information",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "24/04/1999."
+    },
+    {
+      "section": "general_information",
+      "turn": 5,
       "speaker": "CIRA",
       "message": "What is your full home address, including street address, city, and province?"
     },
     {
       "section": "general_information",
-      "turn": 4,
+      "turn": 5,
       "speaker": "PATIENT",
-      "message": "220 Danforth Avenue, Toronto, Ontario"
+      "message": "I’m not totally sure what part you want first—do you mean the street address or the full mailing address?"
     },
     {
       "section": "general_information",
-      "turn": 5,
+      "turn": 6,
       "speaker": "CIRA",
       "message": "What is your Canadian postal code?"
     },
     {
       "section": "general_information",
-      "turn": 5,
+      "turn": 6,
       "speaker": "PATIENT",
-      "message": "M4K1N2"
+      "message": "M4K1N2."
     },
     {
       "section": "general_information",
-      "turn": 6,
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "Please repeat the postal code using letters and numbers."
+    },
+    {
+      "section": "general_information",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "I think I have it somewhere, but I’m not quite following—do you want me to spell out the whole code?"
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
       "speaker": "CIRA",
       "message": "What is your email address?"
     },
     {
       "section": "general_information",
-      "turn": 6,
+      "turn": 8,
       "speaker": "PATIENT",
-      "message": "jessica.brooks@example.com"
+      "message": "jessica.brooks@example.com."
     },
     {
       "section": "general_information",
-      "turn": 7,
+      "turn": 9,
       "speaker": "CIRA",
       "message": "What is your phone number, including area code?"
     },
     {
       "section": "general_information",
-      "turn": 7,
+      "turn": 9,
       "speaker": "PATIENT",
-      "message": "4165550128"
+      "message": "4165550128."
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 10,
       "speaker": "CIRA",
       "message": "Do you currently have a family doctor?"
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 10,
       "speaker": "PATIENT",
       "message": "Yes, I do."
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 11,
       "speaker": "CIRA",
       "message": "What is your family doctor's full first and last name?"
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 11,
       "speaker": "PATIENT",
-      "message": "DR. IAN COLE"
+      "message": "Dr. Ian Cole."
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 12,
       "speaker": "CIRA",
       "message": "Do you currently have a psychiatrist?"
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 12,
       "speaker": "PATIENT",
       "message": "Yes, I do."
     },
     {
       "section": "general_information",
-      "turn": 11,
+      "turn": 13,
       "speaker": "CIRA",
       "message": "What is your psychiatrist's full first and last name?"
     },
     {
       "section": "general_information",
-      "turn": 11,
+      "turn": 13,
       "speaker": "PATIENT",
-      "message": "DR. MEENA RAO"
+      "message": "Dr. Meena Rao."
     },
     {
       "section": "current_concerns",
@@ -146,7 +196,7 @@
       "section": "current_concerns",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Depression, after the breakup, the hospitalisation, and the overdose."
+      "message": "Mostly depression, and it all got worse after a breakup and then the hospital stay."
     },
     {
       "section": "current_concerns",
@@ -158,7 +208,7 @@
       "section": "current_concerns",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Stay safe, recover, and get back on track for law school."
+      "message": "I want to stay safe and get back on track, and eventually law school if things settle down."
     },
     {
       "section": "past_psychiatric_history",
@@ -170,7 +220,7 @@
       "section": "past_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, I have."
+      "message": "Yes, during my first psychiatric admission in June 2026."
     },
     {
       "section": "past_psychiatric_history",
@@ -182,7 +232,7 @@
       "section": "past_psychiatric_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I was assessed during my first psychiatric admission in June 2026."
+      "message": "I was assessed during my first psychiatric admission in June 2026, but I don’t remember the person’s name."
     },
     {
       "section": "past_psychiatric_history",
@@ -206,7 +256,7 @@
       "section": "past_psychiatric_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "Yes, I have."
+      "message": "Yes, I was admitted once."
     },
     {
       "section": "past_psychiatric_history",
@@ -218,7 +268,7 @@
       "section": "past_psychiatric_history",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "June 2026, at St. Michael's Hospital, for 7 days."
+      "message": "It was in June 2026 at St. Michael’s Hospital, and I was there for about 7 days."
     },
     {
       "section": "past_psychiatric_history",
@@ -230,7 +280,7 @@
       "section": "past_psychiatric_history",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "Yes, I have."
+      "message": "Yes — I’ve had one suicide attempt after a breakup, and I’m horrified by it now."
     },
     {
       "section": "past_psychiatric_history",
@@ -242,7 +292,7 @@
       "section": "past_psychiatric_history",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "Several days. I still sometimes feel I would be better off dead, but I do not have a current plan."
+      "message": "It was an impulsive overdose after the breakup. Several days. I still sometimes feel I would be better off dead, but I do not have a current plan."
     },
     {
       "section": "past_psychiatric_history",
@@ -254,7 +304,7 @@
       "section": "past_psychiatric_history",
       "turn": 8,
       "speaker": "PATIENT",
-      "message": "Individual psychotherapy in college."
+      "message": "Yes, I’ve had individual psychotherapy in college."
     },
     {
       "section": "past_psychiatric_history",
@@ -266,7 +316,7 @@
       "section": "past_psychiatric_history",
       "turn": 9,
       "speaker": "PATIENT",
-      "message": "In college."
+      "message": "In college, I think."
     },
     {
       "section": "past_psychiatric_history",
@@ -278,7 +328,7 @@
       "section": "past_psychiatric_history",
       "turn": 10,
       "speaker": "PATIENT",
-      "message": "Approximately 8 sessions."
+      "message": "About 8 sessions."
     },
     {
       "section": "past_psychiatric_history",
@@ -290,7 +340,7 @@
       "section": "past_psychiatric_history",
       "turn": 11,
       "speaker": "PATIENT",
-      "message": "Ketamine treatment."
+      "message": "Yes, I had ketamine treatment."
     },
     {
       "section": "past_psychiatric_history",
@@ -314,7 +364,7 @@
       "section": "past_psychiatric_history",
       "turn": 13,
       "speaker": "PATIENT",
-      "message": "St. Michael's Hospital."
+      "message": "At St. Michael’s Hospital."
     },
     {
       "section": "past_psychiatric_history",
@@ -350,136 +400,136 @@
       "section": "medications",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Vilazodone."
+      "message": "Yes, I’m on something for my mood."
     },
     {
       "section": "medications",
       "turn": 2,
-      "speaker": "CIRA",
-      "message": "Please answer yes or no."
-    },
-    {
-      "section": "medications",
-      "turn": 2,
-      "speaker": "PATIENT",
-      "message": "Yes."
-    },
-    {
-      "section": "medications",
-      "turn": 3,
       "speaker": "CIRA",
       "message": "What is the name of your current medication, or its purpose if you do not know the name?"
     },
     {
       "section": "medications",
-      "turn": 3,
+      "turn": 2,
       "speaker": "PATIENT",
       "message": "Vilazodone."
     },
     {
       "section": "medications",
-      "turn": 4,
+      "turn": 3,
       "speaker": "CIRA",
       "message": "What dose do you take?"
     },
     {
       "section": "medications",
-      "turn": 4,
+      "turn": 3,
       "speaker": "PATIENT",
       "message": "20 mg each morning."
     },
     {
       "section": "medications",
-      "turn": 5,
+      "turn": 4,
       "speaker": "CIRA",
       "message": "When did you start it, or approximately how long have you taken it?"
     },
     {
       "section": "medications",
-      "turn": 5,
+      "turn": 4,
       "speaker": "PATIENT",
       "message": "June 2026."
     },
     {
       "section": "medications",
-      "turn": 6,
+      "turn": 5,
       "speaker": "CIRA",
       "message": "What side effects have you experienced, if any?"
     },
     {
       "section": "medications",
-      "turn": 6,
+      "turn": 5,
       "speaker": "PATIENT",
       "message": "Nausea during the first week."
     },
     {
       "section": "medications",
-      "turn": 7,
+      "turn": 6,
       "speaker": "CIRA",
       "message": "Are you taking any other prescribed medications? If yes, please give the medication name."
     },
     {
       "section": "medications",
-      "turn": 7,
+      "turn": 6,
       "speaker": "PATIENT",
-      "message": "Quetiapine."
+      "message": "Yes, one other one."
     },
     {
       "section": "medications",
-      "turn": 8,
+      "turn": 7,
       "speaker": "CIRA",
       "message": "What dose do you take?"
     },
     {
       "section": "medications",
-      "turn": 8,
+      "turn": 7,
       "speaker": "PATIENT",
       "message": "50 mg nightly."
     },
     {
       "section": "medications",
-      "turn": 9,
+      "turn": 8,
       "speaker": "CIRA",
       "message": "When did you start it, or approximately how long have you taken it?"
     },
     {
       "section": "medications",
-      "turn": 9,
+      "turn": 8,
       "speaker": "PATIENT",
       "message": "June 2026."
     },
     {
       "section": "medications",
-      "turn": 10,
+      "turn": 9,
       "speaker": "CIRA",
       "message": "What side effects have you experienced, if any?"
     },
     {
       "section": "medications",
-      "turn": 10,
+      "turn": 9,
       "speaker": "PATIENT",
       "message": "Morning drowsiness."
     },
     {
       "section": "medications",
-      "turn": 11,
+      "turn": 10,
       "speaker": "CIRA",
       "message": "Are you taking any other prescribed medications? If yes, please give the medication name."
     },
     {
       "section": "medications",
-      "turn": 11,
+      "turn": 10,
       "speaker": "PATIENT",
       "message": "No, those are all."
     },
     {
       "section": "medications",
-      "turn": 12,
+      "turn": 11,
       "speaker": "CIRA",
       "message": "Have you previously tried any psychiatric medications?"
     },
     {
       "section": "medications",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "Yes, I tried escitalopram before."
+    },
+    {
+      "section": "medications",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "What was the name of the past psychiatric medication?"
+    },
+    {
+      "section": "medications",
       "turn": 12,
       "speaker": "PATIENT",
       "message": "Escitalopram."
@@ -488,71 +538,47 @@
       "section": "medications",
       "turn": 13,
       "speaker": "CIRA",
-      "message": "Please answer yes or no."
+      "message": "What dose did you take?"
     },
     {
       "section": "medications",
       "turn": 13,
       "speaker": "PATIENT",
-      "message": "Yes."
-    },
-    {
-      "section": "medications",
-      "turn": 14,
-      "speaker": "CIRA",
-      "message": "What was the name of the past psychiatric medication?"
-    },
-    {
-      "section": "medications",
-      "turn": 14,
-      "speaker": "PATIENT",
-      "message": "Escitalopram."
-    },
-    {
-      "section": "medications",
-      "turn": 15,
-      "speaker": "CIRA",
-      "message": "What dose did you take?"
-    },
-    {
-      "section": "medications",
-      "turn": 15,
-      "speaker": "PATIENT",
       "message": "10 mg daily."
     },
     {
       "section": "medications",
-      "turn": 16,
+      "turn": 14,
       "speaker": "CIRA",
       "message": "When did you start and stop it, or approximately how long did you take it?"
     },
     {
       "section": "medications",
-      "turn": 16,
+      "turn": 14,
       "speaker": "PATIENT",
       "message": "About 3 months in college."
     },
     {
       "section": "medications",
-      "turn": 17,
+      "turn": 15,
       "speaker": "CIRA",
       "message": "Why was it discontinued?"
     },
     {
       "section": "medications",
-      "turn": 17,
+      "turn": 15,
       "speaker": "PATIENT",
-      "message": "It made me feel emotionally numb."
+      "message": "I stopped because I felt emotionally numb."
     },
     {
       "section": "medications",
-      "turn": 18,
+      "turn": 16,
       "speaker": "CIRA",
       "message": "Were there any other past psychiatric medications? If yes, please give the medication name."
     },
     {
       "section": "medications",
-      "turn": 18,
+      "turn": 16,
       "speaker": "PATIENT",
       "message": "No, those are all."
     },
@@ -566,7 +592,7 @@
       "section": "medical_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "I do not have any medical conditions that I know of."
+      "message": "No, I haven’t been told I have any medical conditions."
     },
     {
       "section": "medical_history",
@@ -578,7 +604,7 @@
       "section": "medical_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I do not know of any surgical history."
+      "message": "No, none that I know of."
     },
     {
       "section": "medical_history",
@@ -590,7 +616,7 @@
       "section": "medical_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "164 cm"
+      "message": "About 164 cm."
     },
     {
       "section": "medical_history",
@@ -602,7 +628,7 @@
       "section": "medical_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "78 kg"
+      "message": "Around 78 kg."
     },
     {
       "section": "medication_allergies",
@@ -614,7 +640,7 @@
       "section": "medication_allergies",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I don't have any known medication allergies."
+      "message": "No, I don’t have any medication allergies that I know of."
     },
     {
       "section": "family_psychiatric_history",
@@ -626,101 +652,89 @@
       "section": "family_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "My sister has panic disorder and depression."
+      "message": "Yes, I think my sister has panic disorder and depression."
     },
     {
       "section": "family_psychiatric_history",
       "turn": 2,
-      "speaker": "CIRA",
-      "message": "Please answer yes or no."
-    },
-    {
-      "section": "family_psychiatric_history",
-      "turn": 2,
-      "speaker": "PATIENT",
-      "message": "Yes."
-    },
-    {
-      "section": "family_psychiatric_history",
-      "turn": 3,
       "speaker": "CIRA",
       "message": "Which family member, and what is their relationship to you?"
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 3,
+      "turn": 2,
       "speaker": "PATIENT",
       "message": "My sister."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 4,
+      "turn": 3,
       "speaker": "CIRA",
       "message": "What diagnosis or mental health condition did they have?"
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 4,
+      "turn": 3,
       "speaker": "PATIENT",
       "message": "Panic disorder and depression."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 5,
+      "turn": 4,
       "speaker": "CIRA",
       "message": "Are there any additional details you wish to provide about that family member?"
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 5,
+      "turn": 4,
       "speaker": "PATIENT",
-      "message": "No, those are all."
+      "message": "I don’t know anything else."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 6,
+      "turn": 5,
       "speaker": "CIRA",
       "message": "Are there any other family members with a mental health condition? If yes, state their relationship to you."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 6,
+      "turn": 5,
       "speaker": "PATIENT",
-      "message": "My brother."
+      "message": "Yes, my brother."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 7,
+      "turn": 6,
       "speaker": "CIRA",
       "message": "What diagnosis or mental health condition did they have?"
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 7,
+      "turn": 6,
       "speaker": "PATIENT",
       "message": "Alcohol and cocaine use disorder."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 8,
+      "turn": 7,
       "speaker": "CIRA",
       "message": "Are there any additional details you wish to provide about that family member?"
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 8,
+      "turn": 7,
       "speaker": "PATIENT",
-      "message": "No, those are all."
+      "message": "No, that’s all I know."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 9,
+      "turn": 8,
       "speaker": "CIRA",
       "message": "Are there any other family members with a mental health condition? If yes, state their relationship to you."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 9,
+      "turn": 8,
       "speaker": "PATIENT",
       "message": "No, those are all."
     },
@@ -830,7 +844,7 @@
       "section": "education_employment_legal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I’m not."
+      "message": "No, none."
     },
     {
       "section": "education_employment_legal_history",
@@ -842,7 +856,7 @@
       "section": "education_employment_legal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Bachelor's degree."
+      "message": "A bachelor's degree."
     },
     {
       "section": "education_employment_legal_history",
@@ -854,65 +868,53 @@
       "section": "education_employment_legal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "I work as an administrative assistant at Ontario Legal Services."
+      "message": "Yes, I work as an administrative assistant."
     },
     {
       "section": "education_employment_legal_history",
       "turn": 4,
-      "speaker": "CIRA",
-      "message": "Please answer yes or no."
-    },
-    {
-      "section": "education_employment_legal_history",
-      "turn": 4,
-      "speaker": "PATIENT",
-      "message": "Yes."
-    },
-    {
-      "section": "education_employment_legal_history",
-      "turn": 5,
       "speaker": "CIRA",
       "message": "What was the employer or organization for your most recent job?"
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 5,
+      "turn": 4,
       "speaker": "PATIENT",
       "message": "Ontario Legal Services."
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 6,
+      "turn": 5,
       "speaker": "CIRA",
       "message": "What was your job title?"
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 6,
+      "turn": 5,
       "speaker": "PATIENT",
       "message": "Administrative assistant."
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 7,
+      "turn": 6,
       "speaker": "CIRA",
       "message": "What were the start and end dates, or approximate duration? Say Present if you still work there."
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 7,
+      "turn": 6,
       "speaker": "PATIENT",
       "message": "2021 to present."
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 8,
+      "turn": 7,
       "speaker": "CIRA",
       "message": "Are there any other recent jobs? If yes, give the employer or organization."
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 8,
+      "turn": 7,
       "speaker": "PATIENT",
       "message": "No, those are all."
     },
@@ -926,7 +928,7 @@
       "section": "personal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "I was born and grew up there."
+      "message": "I was born and grew up here, and I don’t really have much else to add about that."
     },
     {
       "section": "personal_history",
@@ -938,7 +940,7 @@
       "section": "personal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "In high school I was moody, and I had depression in college."
+      "message": "High school was okay, but I was pretty moody, and I had depression in college."
     },
     {
       "section": "personal_history",
@@ -950,7 +952,7 @@
       "section": "personal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "I was in a two-year relationship, and it recently ended."
+      "message": "I’m single now, and I recently ended a two-year relationship."
     },
     {
       "section": "personal_history",
@@ -962,7 +964,7 @@
       "section": "personal_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "Law school and stability."
+      "message": "Law school, and mostly just wanting stability."
     },
     {
       "section": "phq9",

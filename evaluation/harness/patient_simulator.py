@@ -1,20 +1,44 @@
 """Simulate one patient consistently across a complete intake.
 
-Behaviour is unchanged from the original ``patient_simulator.py``; the only
-difference is that model/endpoint settings and .env loading now come from
-``harness.config`` instead of being recomputed here, so the module works
-regardless of where it sits in the tree.
+The simulator takes a **persona** (see ``harness.personas``) that controls how
+the patient communicates: ``clear`` reproduces the original cooperative
+behaviour exactly, while ``moderate`` and ``confused`` progressively degrade
+clarity so the intake system has to guide rather than transcribe.
+
+Two things are deliberately kept out of the persona's reach:
+
+* **Facts.** The persona shapes delivery only. Free-text answers still come
+  from the same ``patient_facts``, and the prompt forbids stating any concrete
+  detail that contradicts them.
+* **Questionnaire scores.** PHQ-9/GAD-7 items are still answered from the
+  stored score with the exact frequency phrase. A hard persona may *defer* an
+  item - reply with something non-committal so the interviewer has to re-ask or
+  re-explain the scale - but the eventual answer is unchanged. Deferral is
+  bounded per item and per instrument, so an item can never loop, both PHQ-9
+  and GAD-7 get their share of the difficulty, and turn counts stay inside
+  ``config.MAX_TURNS_PER_SECTION``.
+
+Deferral decisions come from a per-case RNG seeded with
+``(persona seed, case id, persona id)``, so a rerun with the same seed produces
+the same deferral pattern.
 """
 
 import json
+import random
 import re
 import sys
 
 from harness import config
+from harness import personas as personas_module
 
 # langchain is imported lazily inside the methods that need it, so this module
 # (and any stage that imports it) loads even when the LLM dependencies are not
 # installed. The dependency is only required to actually simulate a patient.
+
+
+def normalize_question(text: str) -> str:
+    """Collapse whitespace and case so a re-ask is recognised as the same question."""
+    return re.sub(r"\s+", " ", str(text or "")).strip().lower()
 
 
 SCORE_TO_RESPONSE = {
@@ -28,16 +52,75 @@ SCORE_TO_RESPONSE = {
 class PatientSimulator:
     """Simulate one patient consistently across a complete CIRA intake."""
 
-    def __init__(self, scenario: dict):
+    def __init__(self, scenario: dict, persona=None, seed: int | None = None):
+        """Parameters
+        ----------
+        scenario
+            A single entry from ``cira_scenarios.json``.
+        persona
+            A ``Persona``, a persona id, or ``None`` for the default ``clear``
+            persona (which reproduces the pre-persona behaviour).
+        seed
+            Base seed for this patient's stochastic behaviour. Defaults to
+            ``config.PERSONA_SEED``. Combined with the case id and persona id,
+            so two cases sharing a persona still behave differently.
+        """
         from langchain_openai import ChatOpenAI
 
         self.scenario = scenario
+        self.persona = personas_module.get_persona(persona)
+
+        # A pinned CIRA_EVAL_TEMPERATURE wins, so the persona's effect can be
+        # isolated to its prompt when you want that comparison.
+        self.temperature = (
+            config.PATIENT_TEMPERATURE
+            if config.PATIENT_TEMPERATURE_IS_PINNED
+            else self.persona.temperature
+        )
+
         self.model = ChatOpenAI(
             model=config.PATIENT_MODEL_NAME,
-            temperature=config.PATIENT_TEMPERATURE,
+            temperature=self.temperature,
             base_url=config.OPENROUTER_BASE_URL,
             api_key=config.OPENROUTER_API_KEY,
         )
+
+        base_seed = config.PERSONA_SEED if seed is None else seed
+        self._rng = random.Random(
+            f"cira-patient::{base_seed}::{scenario.get('case_id')}::{self.persona.id}"
+        )
+
+        # Deferral bookkeeping, reported afterwards via ``behaviour_summary()``.
+        self._deflections_by_item: dict[str, int] = {}
+        self._deflections_by_instrument: dict[str, int] = {}
+        self._deflection_log: list[dict] = []
+
+        # Free-text hedging. Persona behaviour in a free-text answer otherwise
+        # depends entirely on the model obeying a prompt, which it does
+        # unevenly; this makes a bounded amount of it deterministic.
+        self._hedges_used = 0
+        self._hedged_last_turn = False
+        self._hedges_this_section = 0
+        self._hedges_by_section: dict[str, int] = {}
+        self._current_section = "(none)"
+        self._hedged_questions: set[str] = set()
+
+        # The last instrument CIRA named. CIRA's questionnaire prompts tell it
+        # to number items as "Question 1:", which carries no instrument name, so
+        # the patterns below cannot tell PHQ-9 item 3 from GAD-7 item 3. Without
+        # this the item falls through to the LLM and the patient improvises an
+        # answer off the fixed scale, silently corrupting the totals that
+        # structured_score treats as ground truth.
+        self._current_instrument: str | None = None
+        # The specific item last asked. CIRA re-asks and clarifications often
+        # drop the item label ("Thinking about the last two weeks overall, was
+        # poor appetite or overeating present: 0 - Not at all ..."), which used
+        # to lose the deterministic path entirely: the item fell through to the
+        # LLM, the patient improvised an answer off the fixed scale, and the
+        # instrument total was silently corrupted. Latching the item means a
+        # re-ask still resolves to the same stored score.
+        self._current_item: str | None = None
+
         self.history = []
         self.system_prompt = self._build_system_prompt()
 
@@ -63,15 +146,17 @@ You are acting as a patient during an automated evaluation of CIRA,
 a clinical intake agent.
 
 GENERAL RULES
-1. Answer only CIRA's latest question.
+1. Address CIRA's latest question. How directly you address it is governed by
+   your COMMUNICATION STYLE below, which overrides this rule.
 2. Use only the supplied patient facts and plans.
 3. Never invent information.
-4. Answer naturally and briefly.
+4. Answer naturally.
 5. Do not reveal the full history at once.
 6. Never mention being an AI, simulator, evaluation, hidden label, or test case.
 7. Remain consistent throughout the conversation.
 8. If a fact is null or unknown, say that you do not know or have nothing to report.
 9. Do not calculate or disclose PHQ-9 or GAD-7 totals.
+10. Never mention or hint at your communication style; simply speak that way.
 
 MULTI-ENTRY RULES
 1. For medications and other repeatable information, reveal one entry at a time.
@@ -100,6 +185,29 @@ Gradual disclosure plan:
 
 Patient facts:
 {patient_facts}
+
+{self._persona_precedence_block()}
+""".strip()
+
+    def _persona_precedence_block(self) -> str:
+        """The persona block, placed LAST and declared to win on conflicts.
+
+        It used to sit in the middle, ahead of ~4,000 characters of scenario
+        instructions telling the patient to answer only what was asked, briefly
+        and precisely. Those came later and were far more specific, so they won:
+        a "confused" twelve-year-old was reciting a correctly formatted address
+        and a doctor's name in capitals. Position and an explicit precedence
+        note are what make the persona actually take effect.
+        """
+        return f"""
+{self.persona.behaviour_block}
+
+PRECEDENCE
+The COMMUNICATION STYLE above governs HOW you speak and overrides any earlier
+instruction to answer briefly, precisely, directly, or only the latest question.
+It does NOT override the facts: everything you say must still come from the
+patient facts, and you must never state a concrete detail that contradicts them.
+Style is yours to control; content is not.
 """.strip()
 
     @staticmethod
@@ -138,26 +246,81 @@ Patient facts:
 
         return None
 
-    def _deterministic_questionnaire_answer(self, question: str) -> str | None:
-        """Return the exact expected PHQ-9/GAD-7 response when identifiable."""
+    def _track_instrument(self, question: str) -> None:
+        """Latch onto the most recent explicit PHQ-9 / GAD-7 mention."""
+        lower = question.lower()
+        if re.search(r"phq[\s-]?9", lower):
+            self._current_instrument = "phq9"
+        elif re.search(r"gad[\s-]?7", lower):
+            self._current_instrument = "gad7"
+
+    def _bare_question_number(self, question: str) -> int | None:
+        """Item number from an unqualified "Question 3:" / "Question 3 of 9"."""
+        match = re.search(r"\bquestion\s*#?\s*(\d{1,2})\b", question.lower())
+        return int(match.group(1)) if match else None
+
+    def _looks_like_scale_prompt(self, question: str) -> bool:
+        """True when the message restates the response options.
+
+        Used to recognise an unlabelled re-ask. Requiring two or more of the
+        fixed phrases keeps ordinary conversation from being read as a
+        questionnaire turn.
+        """
+        lower = question.lower()
+        return sum(
+            phrase in lower
+            for phrase in personas_module.CANONICAL_RESPONSES
+        ) >= 2
+
+    def _answer_for(self, item_key: str) -> str:
+        instrument = item_key.split("_", 1)[0]
+        return self.scenario["patient_facts"][instrument][item_key]
+
+    def _identify_questionnaire_item(self, question: str) -> tuple[str, str] | None:
+        """Return ``(item_key, exact_response)`` for an identifiable item.
+
+        The item key (e.g. ``"phq9_q3"``) is what lets deferral be counted per
+        item rather than per turn, so re-asking the same item always converges.
+        """
         phq_number = self._question_number(question, "phq9", 9)
         if phq_number is not None:
-            score = self.scenario["patient_facts"]["phq9"][f"phq9_q{phq_number}"]
-            return SCORE_TO_RESPONSE[int(score)]
+            key = f"phq9_q{phq_number}"
+            self._current_item = key
+            return key, SCORE_TO_RESPONSE[int(self._answer_for(key))]
 
         gad_number = self._question_number(question, "gad7", 7)
         if gad_number is not None:
-            score = self.scenario["patient_facts"]["gad7"][f"gad7_q{gad_number}"]
-            return SCORE_TO_RESPONSE[int(score)]
+            key = f"gad7_q{gad_number}"
+            self._current_item = key
+            return key, SCORE_TO_RESPONSE[int(self._answer_for(key))]
+
+        # Fall back to the latched instrument for a bare "Question N:".
+        if self._current_instrument:
+            limit = 9 if self._current_instrument == "phq9" else 7
+            number = self._bare_question_number(question)
+            if number is not None and 1 <= number <= limit:
+                key = f"{self._current_instrument}_q{number}"
+                self._current_item = key
+                return key, SCORE_TO_RESPONSE[int(self._answer_for(key))]
 
         lower = question.lower()
-        if "phq-9" in lower or "phq9" in lower:
-            if "difficult" in lower:
-                return self.scenario["patient_facts"]["phq9"]["phq9_difficulty"]
+        if ("phq-9" in lower or "phq9" in lower) and "difficult" in lower:
+            self._current_item = "phq9_difficulty"
+            return "phq9_difficulty", self._answer_for("phq9_difficulty")
 
-        if "gad-7" in lower or "gad7" in lower:
-            if "difficult" in lower:
-                return self.scenario["patient_facts"]["gad7"]["gad7_difficulty"]
+        if ("gad-7" in lower or "gad7" in lower) and "difficult" in lower:
+            self._current_item = "gad7_difficulty"
+            return "gad7_difficulty", self._answer_for("gad7_difficulty")
+
+        # Unlabelled re-ask: the message restates the response options but
+        # carries no item label, so it is a clarification of the item already
+        # in progress. Without this the item is handed to the LLM and the score
+        # is invented.
+        if self._current_item and self._looks_like_scale_prompt(question):
+            key = self._current_item
+            if key.endswith("_difficulty"):
+                return key, self._answer_for(key)
+            return key, SCORE_TO_RESPONSE[int(self._answer_for(key))]
 
         return None
 
@@ -165,16 +328,110 @@ Patient facts:
     def _looks_like_questionnaire(question: str) -> bool:
         return bool(re.search(r"phq[\s-]?9|gad[\s-]?7", question.lower()))
 
+    # ------------------------------------------------------------------ #
+    # Persona-driven deferral
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def _instrument_of(item_key: str) -> str:
+        """"phq9_q3" -> "phq9". Budgets are counted per instrument."""
+        return item_key.split("_", 1)[0]
+
+    def begin_section(self, section: str) -> None:
+        """Start a new intake section and refresh the per-section hedge budget.
+
+        Called by the driver at each section boundary. Without it the budget is
+        spent in the opening sections and the rest of the intake is effectively
+        run against the ``clear`` persona.
+        """
+        self._current_section = section
+        self._hedges_this_section = 0
+
+    def _should_hedge(self, question: str) -> bool:
+        """Whether to stall on this free-text question rather than answer it.
+
+        A given question is hedged at most once, so a re-ask always gets a real
+        answer and no field can loop. The budget bounds total turn inflation.
+        """
+        persona = self.persona
+        if persona.freetext_hedge_probability <= 0:
+            return False
+        if self._hedges_this_section >= persona.freetext_hedge_budget_per_section:
+            return False
+        if normalize_question(question) in self._hedged_questions:
+            return False
+        # Never hedge twice in a row. A question is only hedged once, but the
+        # interviewer rephrases when stalled, and each rephrasing counted as a
+        # new question - so the patient could stonewall one field across four
+        # different wordings and the interviewer would give up. One hedge per
+        # exchange keeps the persona hard while guaranteeing that a single good
+        # follow-up always gets the real answer.
+        if self._hedged_last_turn:
+            return False
+        return self._rng.random() < persona.freetext_hedge_probability
+
+    HEDGE_DIRECTIVE = (
+        "FOR THIS REPLY ONLY: do not give the concrete answer yet. Stall in a "
+        "way that fits your communication style - hedge, give only part of it, "
+        "wander off the point, mishear the question, or ask what they mean. Do "
+        "not state the fact you are being asked for. If the interviewer asks "
+        "again or breaks the question down, answer properly next time. Never "
+        "say a detail that contradicts your facts."
+    )
+
+    def _should_deflect(self, item_key: str) -> bool:
+        """Decide whether to stall on this questionnaire item.
+
+        Three gates, all of which must pass. Together they guarantee the intake
+        terminates: an item can be deferred at most ``max_deflections_per_item``
+        times, and each instrument at most
+        ``deflection_budget_per_instrument`` times.
+        """
+        persona = self.persona
+        if persona.max_deflections_per_item <= 0 or not persona.deflection_lines:
+            return False
+
+        instrument = self._instrument_of(item_key)
+        if (
+            self._deflections_by_instrument.get(instrument, 0)
+            >= persona.deflection_budget_per_instrument
+        ):
+            return False
+        if self._deflections_by_item.get(item_key, 0) >= persona.max_deflections_per_item:
+            return False
+        return self._rng.random() < persona.questionnaire_deflection_probability
+
+    def _deflection_line(self, item_key: str) -> str:
+        line = self._rng.choice(self.persona.deflection_lines)
+        instrument = self._instrument_of(item_key)
+        self._deflections_by_item[item_key] = self._deflections_by_item.get(item_key, 0) + 1
+        self._deflections_by_instrument[instrument] = (
+            self._deflections_by_instrument.get(instrument, 0) + 1
+        )
+        self._deflection_log.append({
+            "item": item_key,
+            "instrument": instrument,
+            "attempt": self._deflections_by_item[item_key],
+            "response": line,
+        })
+        return line
+
     def answer(self, cira_question: str) -> str:
         from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
-        deterministic_answer = self._deterministic_questionnaire_answer(cira_question)
+        self._track_instrument(cira_question)
+        identified = self._identify_questionnaire_item(cira_question)
 
         # Preserve both sides of the conversation in simulator memory.
         self.history.append(HumanMessage(content=cira_question))
 
-        if deterministic_answer is not None:
-            patient_answer = deterministic_answer
+        if identified is not None:
+            item_key, exact_response = identified
+            if self._should_deflect(item_key):
+                patient_answer = self._deflection_line(item_key)
+            else:
+                patient_answer = exact_response
+            # Questionnaire turns never count as a free-text hedge.
+            self._hedged_last_turn = False
         else:
             # A question that references an instrument but produced no
             # deterministic answer means the item number could not be parsed;
@@ -190,8 +447,42 @@ Patient facts:
                 SystemMessage(content=self.system_prompt),
                 *self.history,
             ]
+            hedging = self._should_hedge(cira_question)
+            self._hedged_last_turn = hedging
+            if hedging:
+                self._hedges_used += 1
+                self._hedges_this_section += 1
+                self._hedges_by_section[self._current_section] = (
+                    self._hedges_by_section.get(self._current_section, 0) + 1
+                )
+                self._hedged_questions.add(normalize_question(cira_question))
+                messages.append(SystemMessage(content=self.HEDGE_DIRECTIVE))
             response = self.model.invoke(messages)
             patient_answer = response.content.strip()
 
         self.history.append(AIMessage(content=patient_answer))
         return patient_answer
+
+    # ------------------------------------------------------------------ #
+    # Reporting
+    # ------------------------------------------------------------------ #
+    def behaviour_summary(self) -> dict:
+        """What the persona actually did, for stamping into artifacts.
+
+        Deferral counts are the useful diagnostic: they say how much extra work
+        the persona created, which separates "the system needed more turns
+        because the patient stalled" from "it needed more turns because it
+        looped".
+        """
+        return {
+            "persona": self.persona.metadata(),
+            "temperature": self.temperature,
+            "temperature_pinned": config.PATIENT_TEMPERATURE_IS_PINNED,
+            "questionnaire_deflections": sum(self._deflections_by_item.values()),
+            "freetext_hedges": self._hedges_used,
+            "max_consecutive_hedges": 1,
+            "hedges_by_section": dict(self._hedges_by_section),
+            "deflections_by_instrument": dict(self._deflections_by_instrument),
+            "deflections_by_item": dict(self._deflections_by_item),
+            "deflection_log": self._deflection_log,
+        }

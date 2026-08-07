@@ -3,6 +3,32 @@
   "scenario_case_id": "04-11",
   "title": "Floundering",
   "system": "rule_based",
+  "persona_id": "moderate",
+  "patient_behaviour": {
+    "persona": {
+      "id": "moderate",
+      "label": "Somewhat unclear",
+      "difficulty_rank": 2,
+      "description": "Cooperative but imprecise. Hedges, bundles facts, occasionally drifts one step off-topic, sometimes needs a nudge to commit.",
+      "temperature": 0.4,
+      "questionnaire_deflection_probability": 0.35,
+      "max_deflections_per_item": 1,
+      "deflection_budget_per_instrument": 2,
+      "freetext_hedge_probability": 0.25,
+      "freetext_hedge_budget_per_section": 2
+    },
+    "temperature": 0.4,
+    "temperature_pinned": false,
+    "questionnaire_deflections": 0,
+    "freetext_hedges": 2,
+    "max_consecutive_hedges": 1,
+    "hedges_by_section": {
+      "(none)": 2
+    },
+    "deflections_by_instrument": {},
+    "deflections_by_item": {},
+    "deflection_log": []
+  },
   "conversation": [
     {
       "section": "general_information",
@@ -14,7 +40,7 @@
       "section": "general_information",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "James Campbell"
+      "message": "I think it’s James Campbell."
     },
     {
       "section": "general_information",
@@ -26,7 +52,7 @@
       "section": "general_information",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Male"
+      "message": "Male, I believe."
     },
     {
       "section": "general_information",
@@ -38,91 +64,115 @@
       "section": "general_information",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "15/06/1994"
+      "message": "15/06/1994."
     },
     {
       "section": "general_information",
       "turn": 4,
+      "speaker": "CIRA",
+      "message": "Please repeat your date of birth in DD/MM/YYYY format."
+    },
+    {
+      "section": "general_information",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "15/06/1994."
+    },
+    {
+      "section": "general_information",
+      "turn": 5,
       "speaker": "CIRA",
       "message": "What is your full home address, including street address, city, and province?"
     },
     {
       "section": "general_information",
-      "turn": 4,
+      "turn": 5,
       "speaker": "PATIENT",
-      "message": "9 Prince Arthur Avenue, Toronto, Ontario"
+      "message": "I’m not sure I’ve got the exact full thing right off the top of my head. It’s on Prince Arthur Avenue in Toronto, but I’d have to double-check the rest."
     },
     {
       "section": "general_information",
-      "turn": 5,
+      "turn": 6,
       "speaker": "CIRA",
       "message": "What is your Canadian postal code?"
     },
     {
       "section": "general_information",
-      "turn": 5,
+      "turn": 6,
       "speaker": "PATIENT",
-      "message": "M5R1B2"
+      "message": "M5R1B2."
     },
     {
       "section": "general_information",
-      "turn": 6,
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "Please repeat the postal code using letters and numbers."
+    },
+    {
+      "section": "general_information",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "M5R 1B2."
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
       "speaker": "CIRA",
       "message": "What is your email address?"
     },
     {
       "section": "general_information",
-      "turn": 6,
+      "turn": 8,
       "speaker": "PATIENT",
-      "message": "james.campbell@example.com"
+      "message": "james.campbell@example.com."
     },
     {
       "section": "general_information",
-      "turn": 7,
+      "turn": 9,
       "speaker": "CIRA",
       "message": "What is your phone number, including area code?"
     },
     {
       "section": "general_information",
-      "turn": 7,
+      "turn": 9,
       "speaker": "PATIENT",
-      "message": "4165550185"
+      "message": "4165550185."
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 10,
       "speaker": "CIRA",
       "message": "Do you currently have a family doctor?"
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 10,
       "speaker": "PATIENT",
-      "message": "Yes."
+      "message": "Yes, I do."
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 11,
       "speaker": "CIRA",
       "message": "What is your family doctor's full first and last name?"
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 11,
       "speaker": "PATIENT",
-      "message": "Dr. Eva Lindqvist"
+      "message": "Dr. Eva Lindqvist."
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 12,
       "speaker": "CIRA",
       "message": "Do you currently have a psychiatrist?"
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 12,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, I don’t."
     },
     {
       "section": "current_concerns",
@@ -134,7 +184,7 @@
       "section": "current_concerns",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "I've been floundering at work and can't concentrate. I also can't really imagine a future right now."
+      "message": "Mostly I’m floundering at work — like I can’t really get a simple project moving. I’m also having a hard time concentrating, and I don’t really feel like I can picture much of a future right now."
     },
     {
       "section": "current_concerns",
@@ -146,7 +196,7 @@
       "section": "current_concerns",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "To be able to function at work and move forward."
+      "message": "Mostly to function better at work and start moving forward again."
     },
     {
       "section": "past_psychiatric_history",
@@ -158,91 +208,103 @@
       "section": "past_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I haven't."
+      "message": "I’m not sure I’d call it that exactly… maybe you mean by a psychiatrist or therapist? I’ve had some help before, but I’m not certain how you want me to count that."
     },
     {
       "section": "past_psychiatric_history",
       "turn": 2,
+      "speaker": "CIRA",
+      "message": "Please answer yes or no."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "No."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 3,
       "speaker": "CIRA",
       "message": "Have you ever received a psychiatric diagnosis, such as depression, anxiety, OCD, or bipolar disorder? If yes, please list the diagnoses."
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 2,
+      "turn": 3,
       "speaker": "PATIENT",
-      "message": "Depression."
+      "message": "Yes — depression, back in college, and it seemed to come up more than once."
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 3,
+      "turn": 4,
       "speaker": "CIRA",
       "message": "Have you ever been admitted to a hospital for mental health reasons?"
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 3,
+      "turn": 4,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, never."
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 4,
+      "turn": 5,
       "speaker": "CIRA",
       "message": "Have you ever thought about or tried to intentionally hurt yourself?"
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 4,
+      "turn": 5,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, I haven’t."
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 5,
+      "turn": 6,
       "speaker": "CIRA",
       "message": "Have you previously received CBT, DBT, interpersonal therapy, mindfulness-based therapy, psychodynamic therapy, or another therapy?"
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 5,
+      "turn": 6,
       "speaker": "PATIENT",
-      "message": "I had time off after my father's death."
+      "message": "Not really one of those formal therapies — I mainly took some time off after my father died."
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 6,
+      "turn": 7,
       "speaker": "CIRA",
       "message": "When did you receive that therapy?"
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 6,
+      "turn": 7,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "I don’t know the exact time, just that it was after my father died."
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 7,
+      "turn": 8,
       "speaker": "CIRA",
       "message": "Approximately how many sessions did you attend?"
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 7,
+      "turn": 8,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "I don’t know, I’m afraid."
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 8,
+      "turn": 9,
       "speaker": "CIRA",
       "message": "Have you ever received rTMS, ECT, deep brain stimulation, ketamine treatment, or another biological treatment?"
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 8,
+      "turn": 9,
       "speaker": "PATIENT",
-      "message": "No, I haven't."
+      "message": "No, none of those."
     },
     {
       "section": "medications",
@@ -254,7 +316,7 @@
       "section": "medications",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, I am taking an antidepressant."
+      "message": "Yes, I’m on something for my mood."
     },
     {
       "section": "medications",
@@ -266,19 +328,67 @@
       "section": "medications",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I don't remember the name. It's an antidepressant."
+      "message": "I can’t remember the name exactly — it’s an antidepressant, I think."
     },
     {
       "section": "medications",
       "turn": 3,
       "speaker": "CIRA",
-      "message": "Have you previously tried any psychiatric medications?"
+      "message": "What dose do you take?"
     },
     {
       "section": "medications",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "I don’t know the dose."
+    },
+    {
+      "section": "medications",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "When did you start it, or approximately how long have you taken it?"
+    },
+    {
+      "section": "medications",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "About 4 months ago, roughly."
+    },
+    {
+      "section": "medications",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "What side effects have you experienced, if any?"
+    },
+    {
+      "section": "medications",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "None that I can really recall."
+    },
+    {
+      "section": "medications",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "Are you taking any other prescribed medications? If yes, please give the medication name."
+    },
+    {
+      "section": "medications",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "No, that’s the only one I’m on."
+    },
+    {
+      "section": "medications",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "Have you previously tried any psychiatric medications?"
+    },
+    {
+      "section": "medications",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "No, I haven’t."
     },
     {
       "section": "medical_history",
@@ -290,7 +400,7 @@
       "section": "medical_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No medical conditions that I know of."
     },
     {
       "section": "medical_history",
@@ -302,7 +412,7 @@
       "section": "medical_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, none."
     },
     {
       "section": "medical_history",
@@ -314,7 +424,7 @@
       "section": "medical_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "183 cm"
+      "message": "About 183 cm, I think."
     },
     {
       "section": "medical_history",
@@ -326,7 +436,7 @@
       "section": "medical_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "79 kg"
+      "message": "Around 79 kg."
     },
     {
       "section": "medication_allergies",
@@ -338,7 +448,7 @@
       "section": "medication_allergies",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, not that I know of."
     },
     {
       "section": "family_psychiatric_history",
@@ -350,101 +460,89 @@
       "section": "family_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "My mother has major depressive disorder."
+      "message": "Yes — my mother has depression."
     },
     {
       "section": "family_psychiatric_history",
       "turn": 2,
-      "speaker": "CIRA",
-      "message": "Please answer yes or no."
-    },
-    {
-      "section": "family_psychiatric_history",
-      "turn": 2,
-      "speaker": "PATIENT",
-      "message": "Yes."
-    },
-    {
-      "section": "family_psychiatric_history",
-      "turn": 3,
       "speaker": "CIRA",
       "message": "Which family member, and what is their relationship to you?"
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 3,
+      "turn": 2,
       "speaker": "PATIENT",
       "message": "My mother."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 4,
+      "turn": 3,
       "speaker": "CIRA",
       "message": "What diagnosis or mental health condition did they have?"
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 4,
+      "turn": 3,
       "speaker": "PATIENT",
-      "message": "Major depressive disorder."
+      "message": "Major depressive disorder, I think."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 5,
+      "turn": 4,
       "speaker": "CIRA",
       "message": "Are there any additional details you wish to provide about that family member?"
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 5,
+      "turn": 4,
       "speaker": "PATIENT",
-      "message": "Yes, my maternal uncle died by suicide."
+      "message": "My sister has depression too."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 6,
+      "turn": 5,
       "speaker": "CIRA",
       "message": "Are there any other family members with a mental health condition? If yes, state their relationship to you."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 6,
+      "turn": 5,
       "speaker": "PATIENT",
-      "message": "My sister."
+      "message": "I think there was also an uncle on my mother’s side, but I’m fuzzy on the details."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 7,
+      "turn": 6,
       "speaker": "CIRA",
       "message": "What diagnosis or mental health condition did they have?"
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 7,
+      "turn": 6,
       "speaker": "PATIENT",
-      "message": "Depression."
+      "message": "He died by suicide, I believe."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 8,
+      "turn": 7,
       "speaker": "CIRA",
       "message": "Are there any additional details you wish to provide about that family member?"
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 8,
+      "turn": 7,
       "speaker": "PATIENT",
-      "message": "No, those are all."
+      "message": "No, that’s all I know."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 9,
+      "turn": 8,
       "speaker": "CIRA",
       "message": "Are there any other family members with a mental health condition? If yes, state their relationship to you."
     },
     {
       "section": "family_psychiatric_history",
-      "turn": 9,
+      "turn": 8,
       "speaker": "PATIENT",
       "message": "No, those are all."
     },
@@ -554,7 +652,7 @@
       "section": "education_employment_legal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, none."
     },
     {
       "section": "education_employment_legal_history",
@@ -566,7 +664,7 @@
       "section": "education_employment_legal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Master's degree in architecture."
+      "message": "I’ve got a master’s degree, in architecture."
     },
     {
       "section": "education_employment_legal_history",
@@ -578,7 +676,7 @@
       "section": "education_employment_legal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Yes. I work as an architect at Northline Studio."
+      "message": "Yes — I’m an architect at Northline Studio, and I’ve been there since 2020."
     },
     {
       "section": "education_employment_legal_history",
@@ -638,7 +736,7 @@
       "section": "personal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "I was born and grew up here. That’s all I really remember."
+      "message": "I was born and grew up, mostly. I don’t really have much more to add there."
     },
     {
       "section": "personal_history",
@@ -650,7 +748,7 @@
       "section": "personal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I went to college, and my father died of leukemia."
+      "message": "College, and my father died of leukemia when I was younger. That was a big thing."
     },
     {
       "section": "personal_history",
@@ -662,7 +760,7 @@
       "section": "personal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "I’m separated from my spouse after 6 years of marriage, and the divorce is in progress."
+      "message": "I was married for about 6 years, but that’s ending now — we’re separated and the divorce is in progress. There’s also a coworker I’m interested in, though nothing’s really happened there."
     },
     {
       "section": "personal_history",
@@ -674,7 +772,7 @@
       "section": "personal_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "I want to rebuild my life and career."
+      "message": "I want to rebuild things, especially my career."
     },
     {
       "section": "phq9",

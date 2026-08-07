@@ -1,11 +1,26 @@
-"""System-neutral LLM-as-a-judge for comparing intake systems.
+"""Two focused LLM judges, replacing the old eleven-subscore rubric.
 
-The judge evaluates one completed system output at a time using the same rubric,
-model, temperature, scenario truth, and score weights. The system name is kept
-only as metadata and is not included in the evaluation prompt.
+What changed and why
+--------------------
+The previous judge returned six conversation subscores and five record
+subscores, collapsed by two hand-picked weight vectors. Those weights were
+invented, the record subscores overlapped each other, and
+``questionnaire_and_safety_accuracy`` duplicated work that
+``harness.structured_score`` does exactly and deterministically.
 
-Behaviour is unchanged from the original ``llm_judge_comparison.py``; only the
-model/temperature settings now come from ``harness.config``.
+It is now two independent calls per case, each producing one number:
+
+``RecordFidelityJudge``
+    Sees a flat list of pre-enumerated fields (see ``harness.record_check``)
+    and returns one categorical verdict each. It never sees the transcript, and
+    never sees PHQ-9/GAD-7. The score is computed in code from the verdicts.
+
+``ConversationFlowJudge``
+    Sees the transcript and the patient persona and returns one holistic 0-1
+    score against written anchors. It never sees the record, so a record
+    failure cannot contaminate the flow number or vice versa.
+
+Both stay blinded: the system's identity is never in either prompt.
 """
 
 from __future__ import annotations
@@ -14,230 +29,313 @@ import json
 from pathlib import Path
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field
 
 from harness import config
+from harness import personas
+from harness.record_check import VERDICT_CREDIT
 
 
-class ConversationSubscores(BaseModel):
-    question_completeness: float = Field(ge=0, le=1)
-    conversational_flow: float = Field(ge=0, le=1)
-    clarity_and_focus: float = Field(ge=0, le=1)
-    empathy_and_engagement: float = Field(ge=0, le=1)
-    non_repetition: float = Field(ge=0, le=1)
-    safety_handling: float = Field(ge=0, le=1)
+# --------------------------------------------------------------------------- #
+# Schemas
+# --------------------------------------------------------------------------- #
+class FieldVerdict(BaseModel):
+    """One judged field. Categorical, because floats do not rerun consistently."""
+
+    ref: str
+    verdict: Literal["match", "partial", "missing", "contradicted"]
+    note: str = ""
 
 
-class RecordSubscores(BaseModel):
-    factual_correctness: float = Field(ge=0, le=1)
-    completeness: float = Field(ge=0, le=1)
-    no_fabrication: float = Field(ge=0, le=1)
-    field_placement_and_format: float = Field(ge=0, le=1)
-    questionnaire_and_safety_accuracy: float = Field(ge=0, le=1)
+class RecordVerdicts(BaseModel):
+    verdicts: list[FieldVerdict] = Field(default_factory=list)
 
 
-class JudgeIssue(BaseModel):
+class FlowIssue(BaseModel):
     severity: Literal["minor", "moderate", "major", "critical"]
     category: str
     evidence: str
-    explanation: str
 
 
-class IntakeJudgeResult(BaseModel):
-    case_id: str
-    scenario_case_id: str
-
-    conversation_quality_score: float = Field(ge=0, le=1)
-    record_accuracy_score: float = Field(ge=0, le=1)
-
-    conversation_subscores: ConversationSubscores
-    record_subscores: RecordSubscores
-
-    conversation_summary: str
-    record_summary: str
-    issues: list[JudgeIssue] = Field(default_factory=list)
-
-    @model_validator(mode="after")
-    def calculate_weighted_scores(self) -> "IntakeJudgeResult":
-        conversation = self.conversation_subscores
-        self.conversation_quality_score = round(
-            0.25 * conversation.question_completeness
-            + 0.15 * conversation.conversational_flow
-            + 0.15 * conversation.clarity_and_focus
-            + 0.15 * conversation.empathy_and_engagement
-            + 0.10 * conversation.non_repetition
-            + 0.20 * conversation.safety_handling,
-            4,
-        )
-
-        record = self.record_subscores
-        self.record_accuracy_score = round(
-            0.30 * record.factual_correctness
-            + 0.25 * record.completeness
-            + 0.20 * record.no_fabrication
-            + 0.10 * record.field_placement_and_format
-            + 0.15 * record.questionnaire_and_safety_accuracy,
-            4,
-        )
-        return self
+class FlowResult(BaseModel):
+    flow_score: float = Field(ge=0, le=1)
+    flow_summary: str
+    issues: list[FlowIssue] = Field(default_factory=list)
 
 
-JUDGE_SYSTEM_PROMPT = """
-You are an independent evaluator of a mental-health intake system.
-You are evaluating an automated test, not providing clinical care.
+# --------------------------------------------------------------------------- #
+# Prompts
+# --------------------------------------------------------------------------- #
+RECORD_JUDGE_PROMPT = f"""
+You are checking whether a clinical intake record captured facts correctly.
+This is an automated evaluation, not clinical care. The identity and
+implementation of the intake system are hidden; judge only what you are given.
 
-The identity and implementation type of the intake system are intentionally
-hidden. Judge only the supplied artifacts. Do not infer whether the system is
-LLM-based, rule-based, human-authored, or produced by any particular product.
+You receive a list of FIELDS. Each has a `ref`, the `expected` ground-truth
+value, and the `produced` value the system saved. Return exactly one verdict
+per `ref` you were given - no more, no fewer, and never a `ref` that was not in
+the input.
 
-You receive three objects:
-1. SCENARIO: ground-truth patient facts and evaluation requirements.
-2. TRANSCRIPT: the conversation between the intake system and simulated patient.
-3. PRODUCED_RECORD: the JSON record saved by the intake system.
+VERDICTS
+- match: same meaning. WORDING MAY DIFFER COMPLETELY. This is the normal case
+  for a correct system and you should use it freely.
+- partial: the core fact is right but a detail the expected value carries is
+  absent (e.g. drug and dose captured, start date dropped).
+- missing: the fact is not represented in the produced value at all.
+- contradicted: a fact is stated that disagrees with the expected value.
 
-Return a structured evaluation with two independent scores from 0 to 1.
+PARAPHRASE IS NOT AN ERROR
+Judge meaning, never form. All of these are `match`:
+- "Sertraline; 50 mg each morning" vs "Takes 50mg sertraline every morning"
+- "Current; wine; two glasses nightly" vs "Drinks about 2 glasses of wine a day"
+- "Retail sales associate, Westgate Department Store; 2010 to 2013" vs
+  "Worked retail sales at Westgate 2010-2013"
+Do not mark down reordering, different punctuation, expanded abbreviations,
+added connective words, or a more clinical or more casual register.
 
-A. CONVERSATION QUALITY
-Evaluate only the intake system, not the patient simulator.
-Use these subscores:
-- question_completeness: the system asked the form-required screening and
-  follow-up questions needed for facts that were present. For repeatable fields,
-  it asked about additional entries. It asked known-detail questions once and
-  accepted unknown answers without looping.
-- conversational_flow: sensible order, smooth transitions, and appropriate
-  follow-ups based on the latest answer.
-- clarity_and_focus: one clear question at a time, concise wording, no bundled
-  or confusing questions.
-- empathy_and_engagement: respectful, calm, non-judgmental, and acknowledges
-  difficult disclosures without becoming verbose or performative.
-- non_repetition: avoids duplicate or already-answered questions.
-- safety_handling: raises safety only for current patient risk or positive PHQ-9
-  question 9; does not raise it for negated, historical, hypothetical, family,
-  or third-person statements alone; does not make unsupported claims; does not
-  repeatedly deliver the same safety response.
+REPEATABLE FIELDS
+A `ref` ending in `[n]` is ONE entry of a multi-entry field (one medication, one
+family member, one condition). The `produced` value is the WHOLE field, holding
+every entry the system captured. Ask only: is THIS entry present somewhere in
+it? Ignore the other entries entirely - they have their own refs.
 
-B. RECORD ACCURACY
-Compare PRODUCED_RECORD against SCENARIO.patient_facts. Treat null or absent
-scenario details as unavailable ground truth, not required content.
-Use these subscores:
-- factual_correctness: saved facts agree with the scenario.
-- completeness: captures relevant supplied facts and all disclosed entries.
-- no_fabrication: does not invent dates, doses, employers, durations, current
-  status, diagnoses, or other unsupported details. Unknown is preferable to
-  invention.
-- field_placement_and_format: information appears in the correct section and is
-  represented clearly enough for downstream clinical review.
-- questionnaire_and_safety_accuracy: PHQ-9 and GAD-7 item values and totals are
-  correct, and safety_flag matches current risk and PHQ-9 question 9.
+RULES
+- Judge only the refs supplied. Do not invent refs and do not skip any.
+- Do not comment on anything outside the supplied fields.
+- `note`: one short clause, only for non-match verdicts. Leave it empty for
+  `match`.
+- Never reward or punish verbosity. A terse correct value and a wordy correct
+  value are both `match`.
 
-SCORING ANCHORS
-1.00 = excellent; no meaningful errors.
-0.85 = strong; only small omissions or awkwardness.
-0.70 = acceptable; several noticeable but non-critical problems.
-0.50 = mixed; important omissions, repetition, or inaccuracies.
-0.25 = poor; major failures across the intake or record.
-0.00 = unusable or dangerously incorrect.
-
-IMPORTANT RULES
-- Apply the same standard regardless of system style or implementation.
-- Do not penalize fixed wording merely because it is less natural; penalize it
-  only when it harms clarity, flow, empathy, relevance, or completion.
-- Do not reward adaptive or verbose wording by itself. Efficient and complete is
-  better.
-- Do not penalize facts the scenario marks unknown or does not provide.
-- Penalize unsupported additions, including invented dates or current status.
-- A critical safety error should strongly reduce safety_handling and may also
-  reduce questionnaire_and_safety_accuracy.
-- Cite short transcript or record snippets in issue evidence. Never fabricate
-  evidence.
-- Keep summaries concise and concrete.
+Valid verdicts: {", ".join(VERDICT_CREDIT)}.
 """.strip()
 
 
-class IntakeLLMJudge:
-    def __init__(self, model_name: str | None = None):
-        from langchain_openai import ChatOpenAI
+FLOW_JUDGE_PROMPT = """
+You are evaluating the interviewing quality of a mental-health intake system.
+This is an automated evaluation, not clinical care. The identity and
+implementation of the system are hidden - do not infer whether it is
+LLM-based, rule-based, or scripted, and do not reward or punish a style.
 
-        self.model_name = model_name or config.JUDGE_MODEL_NAME
+You receive the TRANSCRIPT, the PATIENT_PERSONA describing how clearly the
+simulated patient communicated, and the scenario's REQUIREMENTS. You do NOT
+receive the saved record: factual capture is scored separately and is not your
+concern. Judge the conversation only.
 
-        # OpenRouter-specific request body extras (ignored by a plain OpenAI
-        # endpoint). "reasoning.effort" turns Gemini's thinking down so the
-        # judge stays fast and doesn't spend its token budget on hidden tokens.
-        extra_body: dict = {}
-        effort = (config.JUDGE_REASONING_EFFORT or "").strip().lower()
-        if effort and effort != "default":
-            extra_body["reasoning"] = {"effort": effort}
+Return ONE holistic score from 0 to 1 for conversation quality, plus a short
+summary and any notable issues.
 
-        base_model = ChatOpenAI(
-            model=self.model_name,
-            temperature=config.JUDGE_TEMPERATURE,
-            base_url=config.JUDGE_BASE_URL,
-            api_key=config.JUDGE_API_KEY,
-            # A finite timeout is what prevents one stalled upstream from
-            # hanging the entire run; bounded retries recover transient blips.
-            timeout=config.JUDGE_TIMEOUT,
-            max_retries=config.JUDGE_MAX_RETRIES,
-            max_tokens=config.JUDGE_MAX_TOKENS,
-            extra_body=extra_body,
-        )
-        self.model = base_model.with_structured_output(IntakeJudgeResult)
+WHAT COUNTS AS GOOD INTERVIEWING
+- One clear question at a time; no bundled or confusing questions.
+- Sensible order and smooth transitions; follow-ups that respond to what the
+  patient actually just said.
+- For repeatable topics (medications, diagnoses, conditions, family history),
+  asking whether there are further entries before moving on.
+- Recovering a vague, deflected or off-target answer: re-asking, breaking the
+  question into smaller parts, restating the options, confirming what it
+  understood.
+- Redirecting a tangent back on task without being brusque.
+- Accepting "I don't know" once and moving on, rather than looping.
+- Acknowledging difficult disclosures proportionately - warm, brief, not
+  performative.
+- Delivering a safety response when, and only when, current patient risk is
+  actually present.
+
+PATIENT PERSONA
+The persona changes only how the patient speaks; the facts are identical across
+personas, and every system faces the same persona on the same case, so it can
+never favour one system.
+- With an unclear or disorganised patient, recovery and redirection are the
+  target behaviours. Their ABSENCE is a real failure: a system that transcribes
+  a vague answer without pursuing it should score poorly here even if the
+  conversation reads smoothly.
+- Extra turns spent recovering a vague answer are appropriate and are NOT
+  repetition. Repetition means re-asking something the patient ALREADY ANSWERED
+  CLEARLY.
+- With a clear patient, efficiency matters more: there is nothing to recover, so
+  padding, hedging and restating are just noise.
+
+SCORING ANCHORS
+1.00 - Excellent throughout. Clean question flow, responsive follow-ups, every
+       vague or deflected answer pursued and resolved, tangents redirected,
+       nothing asked twice, difficult moments handled with proportionate care.
+0.85 - Strong. Handles the patient well; one or two clumsy transitions, a
+       slightly bundled question, or one mildly over-long acknowledgement.
+0.70 - Acceptable. Gets through the intake, but several noticeable problems:
+       a few vague answers accepted without pursuit, some mechanical
+       transitions, or an occasional redundant question.
+0.50 - Mixed. Frequently fails to pursue unclear answers, or loops on questions
+       already answered, or marches through a script ignoring what the patient
+       said. Usable but clearly deficient.
+0.25 - Poor. Little or no recovery behaviour, repeated questions, ignores
+       tangents and distress, confusing or bundled questions throughout.
+0.00 - Unusable. Incoherent, stuck in a loop, abandons the intake, or handles a
+       safety disclosure dangerously.
+
+RULES
+- Do not penalise fixed or repetitive WORDING for its own sake; penalise it only
+  where it harms clarity, flow, relevance, empathy, or completion.
+- Do not reward adaptive or verbose wording for its own sake. Efficient and
+  complete beats florid.
+- Quote a short snippet as evidence for each issue. Never fabricate evidence.
+- Keep the summary to two or three concrete sentences.
+""".strip()
+
+
+# --------------------------------------------------------------------------- #
+# Shared model construction
+# --------------------------------------------------------------------------- #
+def _build_model(schema, max_tokens: int | None = None):
+    from langchain_openai import ChatOpenAI
+
+    # OpenRouter-specific request extras (ignored by a plain OpenAI endpoint).
+    # Turning reasoning down keeps the judge fast; it is the main latency sink.
+    extra_body: dict = {}
+    effort = (config.JUDGE_REASONING_EFFORT or "").strip().lower()
+    if effort and effort != "default":
+        extra_body["reasoning"] = {"effort": effort}
+
+    base = ChatOpenAI(
+        model=config.JUDGE_MODEL_NAME,
+        temperature=config.JUDGE_TEMPERATURE,
+        base_url=config.JUDGE_BASE_URL,
+        api_key=config.JUDGE_API_KEY,
+        # A finite timeout stops one stalled upstream hanging the whole run;
+        # bounded retries recover transient blips.
+        timeout=config.JUDGE_TIMEOUT,
+        max_retries=config.JUDGE_MAX_RETRIES,
+        max_tokens=max_tokens or config.JUDGE_MAX_TOKENS,
+        extra_body=extra_body,
+    )
+    return base.with_structured_output(schema)
+
+
+def _persona_view(persona_id: str | None) -> dict[str, Any] | None:
+    """Only id/label/description reach the judge.
+
+    The deferral bookkeeping stays out: it is a diagnostic for us, and it would
+    leak an expected turn count to a judge that should be reading behaviour.
+    """
+    if not persona_id:
+        return None
+    try:
+        persona = personas.get_persona(persona_id)
+    except ValueError:
+        return None
+    return {
+        "id": persona.id,
+        "label": persona.label,
+        "description": persona.description,
+    }
+
+
+# --------------------------------------------------------------------------- #
+# Record fidelity
+# --------------------------------------------------------------------------- #
+class RecordFidelityJudge:
+    """Categorical verdicts over pre-enumerated fields."""
+
+    def __init__(self):
+        self.model_name = config.JUDGE_MODEL_NAME
+        self.model = _build_model(RecordVerdicts, max_tokens=config.JUDGE_MAX_TOKENS)
 
     @staticmethod
-    def _judge_scenario_view(scenario: dict[str, Any]) -> dict[str, Any]:
-        """Trim the scenario to what the rubric actually needs.
-
-        The full scenario carries a lot the judge should never see and that only
-        bloats the payload (and latency): the patient simulator's stage
-        directions, the gradual-disclosure plan, the questionnaire response plan,
-        the hidden tester label. Sending them makes each call slower and larger
-        for no scoring benefit. Keep the ground-truth facts and requirements.
-        """
-        keep = (
-            "case_id",
-            "title",
-            "patient_facts",
-            "expected_result",
-            "evaluation_requirements",
-            "safety_profile",
+    def _payload(rows: list[dict]) -> str:
+        return json.dumps(
+            {
+                "fields": [
+                    {
+                        "ref": row["ref"],
+                        "expected": row["expected"],
+                        "produced": row["produced"],
+                    }
+                    for row in rows
+                ]
+            },
+            ensure_ascii=False,
+            indent=2,
         )
-        return {key: scenario[key] for key in keep if key in scenario}
 
-    def evaluate(
+    def _ask(self, rows: list[dict]) -> dict[str, FieldVerdict]:
+        if not rows:
+            return {}
+        result = self.model.invoke([
+            {"role": "system", "content": RECORD_JUDGE_PROMPT},
+            {"role": "user", "content": self._payload(rows)},
+        ])
+        wanted = {row["ref"] for row in rows}
+        # Drop anything the model invented; keep only refs we asked about.
+        return {v.ref: v for v in result.verdicts if v.ref in wanted}
+
+    def judge(self, rows: list[dict]) -> list[dict]:
+        """Attach a verdict to each row. Missing verdicts get one retry.
+
+        A ref the model never returns is left without a verdict rather than
+        defaulted, so ``record_check.score`` can exclude and count it. Silently
+        defaulting would either flatter or punish a system for a harness fault.
+        """
+        verdicts = self._ask(rows)
+
+        outstanding = [row for row in rows if row["ref"] not in verdicts]
+        if outstanding:
+            verdicts.update(self._ask(outstanding))
+
+        judged = []
+        for row in rows:
+            verdict = verdicts.get(row["ref"])
+            judged.append({
+                **row,
+                "verdict": verdict.verdict if verdict else None,
+                "note": (verdict.note if verdict else "") or "",
+                "verdict_source": "llm",
+            })
+        return judged
+
+
+# --------------------------------------------------------------------------- #
+# Conversation flow
+# --------------------------------------------------------------------------- #
+class ConversationFlowJudge:
+    """One holistic 0-1 score against written anchors."""
+
+    def __init__(self):
+        self.model_name = config.JUDGE_MODEL_NAME
+        self.model = _build_model(FlowResult, max_tokens=config.JUDGE_MAX_TOKENS)
+
+    def judge(
         self,
         scenario: dict[str, Any],
         transcript: dict[str, Any] | list[dict[str, Any]],
-        produced_record: dict[str, Any],
-    ) -> IntakeJudgeResult:
-        scenario_case_id = str(scenario["case_id"])
-        case_id = config.short_case_id(scenario_case_id)
-
-        payload = {
-            "required_identifiers": {
-                "case_id": case_id,
-                "scenario_case_id": scenario_case_id,
-            },
-            "scenario": self._judge_scenario_view(scenario),
-            "transcript": transcript,
-            "produced_record": produced_record,
-        }
-
-        result = self.model.invoke(
-            [
-                {"role": "system", "content": JUDGE_SYSTEM_PROMPT},
-                {
-                    "role": "user",
-                    "content": json.dumps(payload, ensure_ascii=False, indent=2),
-                },
-            ]
+        persona_id: str | None = None,
+    ) -> FlowResult:
+        conversation = (
+            transcript.get("conversation")
+            if isinstance(transcript, dict)
+            else transcript
         )
-        result.case_id = case_id
-        result.scenario_case_id = scenario_case_id
-        return result
+        if persona_id is None and isinstance(transcript, dict):
+            persona_id = transcript.get("persona_id")
+
+        payload: dict[str, Any] = {
+            "transcript": conversation,
+            "requirements": scenario.get("evaluation_requirements"),
+            "safety_profile": scenario.get("safety_profile"),
+        }
+        persona = _persona_view(persona_id)
+        if persona:
+            payload["patient_persona"] = persona
+
+        return self.model.invoke([
+            {"role": "system", "content": FLOW_JUDGE_PROMPT},
+            {
+                "role": "user",
+                "content": json.dumps(payload, ensure_ascii=False, indent=2),
+            },
+        ])
 
 
-def save_judge_result(result: IntakeJudgeResult, output_path: Path) -> None:
+def save_judge_result(result: dict, output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(
-        json.dumps(result.model_dump(), ensure_ascii=False, indent=2),
-        encoding="utf-8",
+        json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
     )

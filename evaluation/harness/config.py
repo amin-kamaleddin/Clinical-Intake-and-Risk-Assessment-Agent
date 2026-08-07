@@ -150,6 +150,10 @@ def deterministic_report_path(system: str) -> Path:
 
 JUDGE_REPORT_PATH = REPORTS_DIR / "judge_comparison.json"
 SUMMARY_REPORT_PATH = REPORTS_DIR / "summary.json"
+# Provenance for the seeded persona assignment: which patient style each case
+# was run against. Written once per run so a result set can always be traced
+# back to the patients that produced it.
+PERSONA_ASSIGNMENT_PATH = REPORTS_DIR / "persona_assignment.json"
 
 
 def ensure_output_dirs() -> None:
@@ -189,7 +193,31 @@ load_env()
 OPENROUTER_BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
 OPENROUTER_API_KEY = os.getenv("OPEN_ROUTER")
 PATIENT_MODEL_NAME = os.getenv("CIRA_PATIENT_MODEL", "openai/gpt-5.4-mini")
-PATIENT_TEMPERATURE = float(os.getenv("CIRA_EVAL_TEMPERATURE", "0"))
+
+# Each persona carries its own temperature (a confused patient needs looser
+# sampling than a crisp one). Setting CIRA_EVAL_TEMPERATURE explicitly pins one
+# temperature for every persona instead - useful when you want to isolate the
+# effect of the prompt from the effect of sampling.
+_PATIENT_TEMPERATURE_ENV = os.getenv("CIRA_EVAL_TEMPERATURE")
+PATIENT_TEMPERATURE_IS_PINNED = _PATIENT_TEMPERATURE_ENV is not None
+PATIENT_TEMPERATURE = float(_PATIENT_TEMPERATURE_ENV or "0")
+
+# --------------------------------------------------------------------------- #
+# Patient personas
+# --------------------------------------------------------------------------- #
+# One seed drives the whole persona assignment. Change it to re-randomise which
+# patient style each scenario faces; keep it to reproduce a previous run
+# exactly. The assignment is always computed over the full scenario file, so
+# --case runs agree with full runs and every system faces the same patient.
+PERSONA_SEED = int(os.getenv("CIRA_PERSONA_SEED", "20260804"))
+
+# "balanced" deals personas in equal counts then shuffles (12 cases -> 4/4/4).
+# "random" draws i.i.d. per case, so counts come out uneven.
+PERSONA_ASSIGNMENT_STRATEGY = os.getenv("CIRA_PERSONA_STRATEGY", "balanced")
+
+# Force every case onto one persona (e.g. "confused") for a stress ablation.
+# Empty/unset means use the seeded assignment.
+PERSONA_OVERRIDE = os.getenv("CIRA_PERSONA_OVERRIDE") or None
 
 # LLM-as-a-judge.
 # Defaults to Gemini 3.1 Flash Lite (GA) routed through OpenRouter. Override the

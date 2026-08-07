@@ -3,6 +3,32 @@
   "scenario_case_id": "04-01",
   "title": "Moody and Irritable",
   "system": "rule_based",
+  "persona_id": "confused",
+  "patient_behaviour": {
+    "persona": {
+      "id": "confused",
+      "label": "Unclear and disorganised",
+      "difficulty_rank": 3,
+      "description": "Hard to interview. Rambles, misreads questions, needs the frequency scale re-explained, discloses out of order. Tests whether the agent can actively guide rather than merely transcribe.",
+      "temperature": 0.8,
+      "questionnaire_deflection_probability": 0.8,
+      "max_deflections_per_item": 2,
+      "deflection_budget_per_instrument": 5,
+      "freetext_hedge_probability": 0.5,
+      "freetext_hedge_budget_per_section": 4
+    },
+    "temperature": 0.8,
+    "temperature_pinned": false,
+    "questionnaire_deflections": 0,
+    "freetext_hedges": 4,
+    "max_consecutive_hedges": 1,
+    "hedges_by_section": {
+      "(none)": 4
+    },
+    "deflections_by_instrument": {},
+    "deflections_by_item": {},
+    "deflection_log": []
+  },
   "conversation": [
     {
       "section": "general_information",
@@ -14,7 +40,7 @@
       "section": "general_information",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "WYATT MORGAN"
+      "message": "Uh, I think it’s Wyatt Morgan — that’s what it says, I’m pretty sure."
     },
     {
       "section": "general_information",
@@ -26,7 +52,7 @@
       "section": "general_information",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Male"
+      "message": "Male."
     },
     {
       "section": "general_information",
@@ -50,7 +76,7 @@
       "section": "general_information",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "88 Fairlawn Avenue, Toronto, Ontario"
+      "message": "Uh, sorry, do you mean the whole mailing address? I always mix up what goes first. It’s 88 Fairlawn Avenue… and then I’m blanking on the rest right now."
     },
     {
       "section": "general_information",
@@ -74,65 +100,101 @@
       "section": "general_information",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "wyatt.morgan.parent@example.com"
+      "message": "Uh, email… I always get that mixed up with the phone one. It’s the parent one, I think, but I’m not sure I should just say it from memory. Could you ask me that again?"
     },
     {
       "section": "general_information",
       "turn": 7,
+      "speaker": "CIRA",
+      "message": "Please repeat your email address."
+    },
+    {
+      "section": "general_information",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "wyatt.morgan.parent@example.com"
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
       "speaker": "CIRA",
       "message": "What is your phone number, including area code?"
     },
     {
       "section": "general_information",
-      "turn": 7,
+      "turn": 8,
       "speaker": "PATIENT",
       "message": "4165550142"
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 9,
       "speaker": "CIRA",
       "message": "Do you currently have a family doctor?"
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 9,
       "speaker": "PATIENT",
-      "message": "Yes, I do."
+      "message": "Uh—family doctor… you mean like the regular doctor we go to? I’m trying to remember how to say it right. We do have someone, I think, but I’m not sure if you want the name or just whether there is one."
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "Please answer yes or no."
+    },
+    {
+      "section": "general_information",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "Yes."
+    },
+    {
+      "section": "general_information",
+      "turn": 11,
       "speaker": "CIRA",
       "message": "What is your family doctor's full first and last name?"
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 11,
       "speaker": "PATIENT",
       "message": "DR. HELEN CHU"
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 12,
       "speaker": "CIRA",
       "message": "Do you currently have a psychiatrist?"
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 12,
       "speaker": "PATIENT",
-      "message": "Yes, I do."
+      "message": "Uh, psychiatrist… I’m thinking of the school doctor or the one we saw before? I’m not sure which one you mean. Could you say it a different way?"
     },
     {
       "section": "general_information",
-      "turn": 11,
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "Please answer yes or no."
+    },
+    {
+      "section": "general_information",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "Yes."
+    },
+    {
+      "section": "general_information",
+      "turn": 14,
       "speaker": "CIRA",
       "message": "What is your psychiatrist's full first and last name?"
     },
     {
       "section": "general_information",
-      "turn": 11,
+      "turn": 14,
       "speaker": "PATIENT",
       "message": "DR. RAJ PATEL"
     },
@@ -146,7 +208,7 @@
       "section": "current_concerns",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Temper outbursts, irritability, and conflicts at home and school."
+      "message": "Mostly I get these temper outbursts, and I’m irritable a lot, and then there’s trouble at home and at school… like arguments and I got suspended, which was stupid. I hate that part."
     },
     {
       "section": "current_concerns",
@@ -158,7 +220,7 @@
       "section": "current_concerns",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I want to make more friends, do better in school, and stop getting angry so much."
+      "message": "I want more friends, and to do better in school, and stop getting angry so much."
     },
     {
       "section": "past_psychiatric_history",
@@ -170,7 +232,7 @@
       "section": "past_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, at age 10 I was assessed by Dr. Raj Patel, a child psychiatrist, for school inattention and impulsivity."
+      "message": "Yeah, when I was 10 — Dr. Raj Patel, the child psychiatrist, because school stuff, like inattention and impulsivity."
     },
     {
       "section": "past_psychiatric_history",
@@ -182,7 +244,7 @@
       "section": "past_psychiatric_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "At age 10, by Dr. Raj Patel, a child psychiatrist."
+      "message": "When I was 10, by Dr. Raj Patel."
     },
     {
       "section": "past_psychiatric_history",
@@ -194,7 +256,7 @@
       "section": "past_psychiatric_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Yes, ADHD combined."
+      "message": "Yeah — ADHD, combined type."
     },
     {
       "section": "past_psychiatric_history",
@@ -206,7 +268,7 @@
       "section": "past_psychiatric_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, never."
     },
     {
       "section": "past_psychiatric_history",
@@ -218,7 +280,7 @@
       "section": "past_psychiatric_history",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "No, I have not."
+      "message": "No, I haven’t."
     },
     {
       "section": "past_psychiatric_history",
@@ -230,7 +292,7 @@
       "section": "past_psychiatric_history",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "Yes, behavioural therapy."
+      "message": "Yeah, I did behavioural therapy for a bit when I was younger... I think it was around age 10 to 11, at an outpatient clinic, and it was like a dozen sessions, maybe about 12."
     },
     {
       "section": "past_psychiatric_history",
@@ -266,7 +328,7 @@
       "section": "past_psychiatric_history",
       "turn": 9,
       "speaker": "PATIENT",
-      "message": "No, I have not."
+      "message": "No, I haven’t."
     },
     {
       "section": "medications",
@@ -278,7 +340,7 @@
       "section": "medications",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, methylphenidate short-acting."
+      "message": "Yes, I am."
     },
     {
       "section": "medications",
@@ -302,7 +364,7 @@
       "section": "medications",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "10 mg in the morning and 5 mg at noon."
+      "message": "Uh, it’s the one in the morning and then another smaller one at noon… I think it’s 10 mg in the morning and 5 mg at lunch."
     },
     {
       "section": "medications",
@@ -326,7 +388,7 @@
       "section": "medications",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "Reduced appetite at lunch."
+      "message": "It makes my lunch appetite go down."
     },
     {
       "section": "medications",
@@ -350,7 +412,7 @@
       "section": "medications",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "No, I have not."
+      "message": "No, I haven't."
     },
     {
       "section": "medical_history",
@@ -362,7 +424,7 @@
       "section": "medical_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I do not have any medical conditions."
+      "message": "No, I don't have any medical conditions that I know of."
     },
     {
       "section": "medical_history",
@@ -374,7 +436,7 @@
       "section": "medical_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "No, I have not had any surgeries."
+      "message": "No, none."
     },
     {
       "section": "medical_history",
@@ -386,7 +448,7 @@
       "section": "medical_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "152 cm"
+      "message": "152 cm."
     },
     {
       "section": "medical_history",
@@ -398,7 +460,7 @@
       "section": "medical_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "43 kg"
+      "message": "43 kg."
     },
     {
       "section": "medication_allergies",
@@ -410,7 +472,7 @@
       "section": "medication_allergies",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I do not have any medication allergies."
+      "message": "No, none that I know of."
     },
     {
       "section": "family_psychiatric_history",
@@ -422,7 +484,7 @@
       "section": "family_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, my father has anxiety and depression."
+      "message": "Yeah… my dad has anxiety and depression."
     },
     {
       "section": "family_psychiatric_history",
@@ -434,7 +496,7 @@
       "section": "family_psychiatric_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "My father."
+      "message": "My dad."
     },
     {
       "section": "family_psychiatric_history",
@@ -458,7 +520,7 @@
       "section": "family_psychiatric_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "My mother has ADHD."
+      "message": "Uh, my mom has ADHD too… and my maternal grandfather had alcohol use disorder. I guess that’s the rest of it."
     },
     {
       "section": "family_psychiatric_history",
@@ -469,42 +531,6 @@
     {
       "section": "family_psychiatric_history",
       "turn": 5,
-      "speaker": "PATIENT",
-      "message": "Yes, my maternal grandfather."
-    },
-    {
-      "section": "family_psychiatric_history",
-      "turn": 6,
-      "speaker": "CIRA",
-      "message": "What diagnosis or mental health condition did they have?"
-    },
-    {
-      "section": "family_psychiatric_history",
-      "turn": 6,
-      "speaker": "PATIENT",
-      "message": "Alcohol use disorder."
-    },
-    {
-      "section": "family_psychiatric_history",
-      "turn": 7,
-      "speaker": "CIRA",
-      "message": "Are there any additional details you wish to provide about that family member?"
-    },
-    {
-      "section": "family_psychiatric_history",
-      "turn": 7,
-      "speaker": "PATIENT",
-      "message": "No, those are all."
-    },
-    {
-      "section": "family_psychiatric_history",
-      "turn": 8,
-      "speaker": "CIRA",
-      "message": "Are there any other family members with a mental health condition? If yes, state their relationship to you."
-    },
-    {
-      "section": "family_psychiatric_history",
-      "turn": 8,
       "speaker": "PATIENT",
       "message": "No, those are all."
     },
@@ -626,7 +652,7 @@
       "section": "education_employment_legal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Grade 6; currently attending Northview Middle School."
+      "message": "Grade 6."
     },
     {
       "section": "education_employment_legal_history",
@@ -638,7 +664,7 @@
       "section": "education_employment_legal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "No, I don't have any employment history."
+      "message": "No, I’m just a student."
     },
     {
       "section": "personal_history",
@@ -650,7 +676,7 @@
       "section": "personal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "I was irritable as a young child and had outbursts."
+      "message": "I don’t really know where to start… I was irritable as a little kid, and I had outbursts early on. That’s the main thing."
     },
     {
       "section": "personal_history",
@@ -662,7 +688,7 @@
       "section": "personal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I'm in grade 6 and have been having school difficulties."
+      "message": "I’m in grade 6 now, and school’s been hard. That’s pretty much the big thing… I don’t have jobs or anything like that."
     },
     {
       "section": "personal_history",
@@ -674,7 +700,7 @@
       "section": "personal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "Uh, I don’t have any romantic relationship stuff to report."
     },
     {
       "section": "personal_history",
@@ -686,7 +712,7 @@
       "section": "personal_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "I want to make more friends, do better in school, and manage my anger better."
+      "message": "More friends, do better in school, and manage my anger better."
     },
     {
       "section": "phq9",
@@ -698,7 +724,7 @@
       "section": "phq9",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Not at all"
+      "message": "Not at all."
     },
     {
       "section": "phq9",
@@ -710,7 +736,7 @@
       "section": "phq9",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "phq9",
@@ -722,7 +748,7 @@
       "section": "phq9",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Not at all"
+      "message": "Not at all."
     },
     {
       "section": "phq9",
@@ -734,7 +760,7 @@
       "section": "phq9",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "Not at all"
+      "message": "Not at all."
     },
     {
       "section": "phq9",
@@ -746,7 +772,7 @@
       "section": "phq9",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "Not at all"
+      "message": "Not at all."
     },
     {
       "section": "phq9",
@@ -758,7 +784,7 @@
       "section": "phq9",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "phq9",
@@ -770,7 +796,7 @@
       "section": "phq9",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "Not at all"
+      "message": "Not at all."
     },
     {
       "section": "phq9",
@@ -782,7 +808,7 @@
       "section": "phq9",
       "turn": 8,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "phq9",
@@ -794,7 +820,7 @@
       "section": "phq9",
       "turn": 9,
       "speaker": "PATIENT",
-      "message": "Not at all"
+      "message": "Not at all."
     },
     {
       "section": "phq9",
@@ -818,7 +844,7 @@
       "section": "gad7",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "gad7",
@@ -830,7 +856,7 @@
       "section": "gad7",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "gad7",
@@ -842,7 +868,7 @@
       "section": "gad7",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "gad7",
@@ -854,7 +880,7 @@
       "section": "gad7",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "gad7",
@@ -866,7 +892,7 @@
       "section": "gad7",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "gad7",
@@ -890,7 +916,7 @@
       "section": "gad7",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Several days."
     },
     {
       "section": "gad7",

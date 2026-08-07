@@ -3,162 +3,352 @@
   "scenario_case_id": "04-07",
   "title": "Mood Swings",
   "system": "cira",
+  "persona_id": "confused",
+  "patient_behaviour": {
+    "persona": {
+      "id": "confused",
+      "label": "Unclear and disorganised",
+      "difficulty_rank": 3,
+      "description": "Hard to interview. Rambles, misreads questions, needs the frequency scale re-explained, discloses out of order. Tests whether the agent can actively guide rather than merely transcribe.",
+      "temperature": 0.8,
+      "questionnaire_deflection_probability": 0.8,
+      "max_deflections_per_item": 2,
+      "deflection_budget_per_instrument": 5,
+      "freetext_hedge_probability": 0.5,
+      "freetext_hedge_budget_per_section": 4
+    },
+    "temperature": 0.8,
+    "temperature_pinned": false,
+    "questionnaire_deflections": 10,
+    "freetext_hedges": 25,
+    "max_consecutive_hedges": 1,
+    "hedges_by_section": {
+      "general_information": 4,
+      "current_concerns": 2,
+      "past_psychiatric_history": 2,
+      "medications": 3,
+      "medical_history": 1,
+      "medication_allergies": 1,
+      "family_psychiatric_history": 1,
+      "substance_use": 4,
+      "education_employment_legal_history": 3,
+      "personal_history": 4
+    },
+    "deflections_by_instrument": {
+      "phq9": 5,
+      "gad7": 5
+    },
+    "deflections_by_item": {
+      "phq9_q1": 2,
+      "phq9_q2": 1,
+      "phq9_q3": 2,
+      "gad7_q1": 2,
+      "gad7_q2": 1,
+      "gad7_q3": 2
+    },
+    "deflection_log": [
+      {
+        "item": "phq9_q1",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "Uh... some weeks more than others, I suppose."
+      },
+      {
+        "item": "phq9_q1",
+        "instrument": "phq9",
+        "attempt": 2,
+        "response": "Hm. Hard to say. My days all run together lately."
+      },
+      {
+        "item": "phq9_q2",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "That depends. Are you asking about now or about back then?"
+      },
+      {
+        "item": "phq9_q3",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "Which of those was the middle one? I've forgotten the list."
+      },
+      {
+        "item": "phq9_q3",
+        "instrument": "phq9",
+        "attempt": 2,
+        "response": "Hm. Hard to say. My days all run together lately."
+      },
+      {
+        "item": "gad7_q1",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "Which of those was the middle one? I've forgotten the list."
+      },
+      {
+        "item": "gad7_q1",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "That depends. Are you asking about now or about back then?"
+      },
+      {
+        "item": "gad7_q2",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "That depends. Are you asking about now or about back then?"
+      },
+      {
+        "item": "gad7_q3",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "Which of those was the middle one? I've forgotten the list."
+      },
+      {
+        "item": "gad7_q3",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "Uh... some weeks more than others, I suppose."
+      }
+    ]
+  },
   "conversation": [
     {
       "section": "general_information",
       "turn": 1,
       "speaker": "CIRA",
-      "message": "Hello, I’m CIRA, the Clinical Intake and Risk Assessment assistant at St. Michael’s Hospital. I’ll collect some information before your appointment.\n\nWhat is your full legal name as it appears on your legal documents?"
+      "message": "Hello, I’m CIRA, the clinical intake assistant at St. Michael’s Hospital. I’ll collect some information before your appointment.\n\nWhat is your full legal name as it appears on your legal documents?"
     },
     {
       "section": "general_information",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Emily Wang"
+      "message": "Um… sorry, do you mean like the name on my ID? I always get this a bit mixed up when people ask it all at once. Could you repeat that, or maybe say which part you need first?"
     },
     {
       "section": "general_information",
       "turn": 2,
+      "speaker": "CIRA",
+      "message": "Yes—please provide your full name exactly as it appears on your government-issued ID or other legal document, including your first name, middle name(s), and last name, if applicable."
+    },
+    {
+      "section": "general_information",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "Emily Wang."
+    },
+    {
+      "section": "general_information",
+      "turn": 3,
       "speaker": "CIRA",
       "message": "How would you like your gender recorded?"
     },
     {
       "section": "general_information",
-      "turn": 2,
+      "turn": 3,
       "speaker": "PATIENT",
-      "message": "Female"
+      "message": "Female."
     },
     {
       "section": "general_information",
-      "turn": 3,
+      "turn": 4,
       "speaker": "CIRA",
       "message": "What is your date of birth? Please provide it in DD/MM/YYYY format."
     },
     {
       "section": "general_information",
-      "turn": 3,
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "Oh—right, the date of birth… I’m blanking on the exact format you want. Is it day first, then month? I always mix that up. Could you say it again?"
+    },
+    {
+      "section": "general_information",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "Yes—please tell me the day first, then the month, then the four-digit year; for example, 04/03/1990."
+    },
+    {
+      "section": "general_information",
+      "turn": 5,
       "speaker": "PATIENT",
       "message": "11/03/2000"
     },
     {
       "section": "general_information",
-      "turn": 4,
+      "turn": 6,
       "speaker": "CIRA",
       "message": "What is your full legal home address, including the street address, city, and province?"
     },
     {
       "section": "general_information",
-      "turn": 4,
+      "turn": 6,
       "speaker": "PATIENT",
-      "message": "500 Wellington Street West, Toronto, Ontario"
+      "message": "It’s 500 Wellington Street West… in Toronto, Ontario. I don’t remember if you want the postal code too, but that’s the main part."
     },
     {
       "section": "general_information",
-      "turn": 5,
+      "turn": 7,
       "speaker": "CIRA",
       "message": "What is your Canadian postal code?"
     },
     {
       "section": "general_information",
-      "turn": 5,
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "Oh, the postal code… I’m not sure I’m lining up what you want with the exact field. Is that the one after the address, like the last part? I can give it if you want me to read it out properly."
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "Yes, it is the six-character code that comes after your street address, city, and province—for example, M5V 2T6. What is your postal code?"
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
       "speaker": "PATIENT",
       "message": "M5V1E3"
     },
     {
       "section": "general_information",
-      "turn": 6,
+      "turn": 9,
       "speaker": "CIRA",
       "message": "What is your email address?"
     },
     {
       "section": "general_information",
-      "turn": 6,
+      "turn": 9,
       "speaker": "PATIENT",
       "message": "emily.wang@example.com"
     },
     {
       "section": "general_information",
-      "turn": 7,
+      "turn": 10,
       "speaker": "CIRA",
-      "message": "What is your phone number?"
+      "message": "What is your phone number? Please include the area code."
     },
     {
       "section": "general_information",
-      "turn": 7,
+      "turn": 10,
       "speaker": "PATIENT",
-      "message": "4165550137"
+      "message": "Four one six… five five five… zero one three seven."
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 11,
       "speaker": "CIRA",
       "message": "Do you currently have a family doctor?"
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "I think so? I mean, I’ve had someone I see for regular care, but I’m not sure if that’s exactly what you mean by family doctor or if you’re asking about, like, a specific clinic… could you say it a different way?"
+    },
+    {
+      "section": "general_information",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "Do you currently have a regular doctor who provides your ongoing primary care? Please answer yes or no."
+    },
+    {
+      "section": "general_information",
+      "turn": 12,
       "speaker": "PATIENT",
       "message": "Yes."
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 13,
       "speaker": "CIRA",
       "message": "What is your family doctor’s full name, including their first and last name?"
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 13,
       "speaker": "PATIENT",
-      "message": "Dr. Grace Lim"
+      "message": "Dr. Grace Lim."
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 14,
       "speaker": "CIRA",
-      "message": "Do you currently have a psychiatrist?"
+      "message": "Do you currently have a psychiatrist? Please answer yes or no."
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 14,
       "speaker": "PATIENT",
       "message": "Yes."
     },
     {
       "section": "general_information",
-      "turn": 11,
+      "turn": 15,
       "speaker": "CIRA",
       "message": "What is your psychiatrist’s full name, including their first and last name?"
     },
     {
       "section": "general_information",
-      "turn": 11,
+      "turn": 15,
       "speaker": "PATIENT",
-      "message": "Dr. Omar Haddad"
+      "message": "Dr. Omar Haddad."
     },
     {
       "section": "current_concerns",
       "turn": 1,
       "speaker": "CIRA",
-      "message": "What main problems or difficulties have you been experiencing lately?"
+      "message": "What main problems or difficulties have you been experiencing lately? Please include what happens, where it occurs—such as at home, school, work, or in relationships—and any specific consequences or events."
     },
     {
       "section": "current_concerns",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Mood swings, especially premenstrually, irritability, and relationship problems."
+      "message": "Uh… I’m not totally sure how much detail you want there, because it kind of feels like a few things all tangled together. It’s mostly been around my mood and… relationships, I think, but I might be missing what you’re asking. Could you maybe break it down a bit?"
     },
     {
       "section": "current_concerns",
       "turn": 2,
       "speaker": "CIRA",
-      "message": "What do you hope to get out of your appointment?"
+      "message": "Of course. Let’s take it one area at a time: when your mood is difficult, what specifically happens—for example, feeling low, irritable, anxious, or having sudden mood changes?"
     },
     {
       "section": "current_concerns",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I want better control of my mood swings and to save my relationships."
+      "message": "Yes — it’s more like mood swings, and irritability. It gets pretty intense before my period, and then it settles down again when my period starts."
+    },
+    {
+      "section": "current_concerns",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "Thank you. Are there any relationship difficulties or specific consequences connected with these mood changes that you would like to include?"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "Yes, it has caused problems in a relationship before. There was one significant relationship, about two years long, and it ended three months ago."
+    },
+    {
+      "section": "current_concerns",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "What do you hope to get out of your appointment? Please share everything you would like help with."
+    },
+    {
+      "section": "current_concerns",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "I mean… I think I want help with the mood side of it, but I’m not sure if you’re asking for like, a goal-goal or just what’s been bothering me most. It all feels a bit connected and then I start overthinking it. Could you maybe ask it another way?"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "That’s okay. What would you most like to be different or better after the appointment—for example, understanding the mood changes, finding ways to manage them, or improving their impact on your relationships?"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "Mostly I want the mood swings to be under control, and honestly I want to save relationships if I can."
     },
     {
       "section": "past_psychiatric_history",
@@ -170,31 +360,31 @@
       "section": "past_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "Um… assessed by a mental health professional… I’m not sure if you mean like a formal evaluation, or just speaking to someone about this generally. I’ve had things looked at, sort of, but I don’t know if that’s the same thing. Could you be a bit more specific?"
     },
     {
       "section": "past_psychiatric_history",
       "turn": 2,
+      "speaker": "CIRA",
+      "message": "By “assessed,” I mean either a formal mental health evaluation or an appointment where a mental health professional reviewed your symptoms or concerns. Has that ever happened?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "No, not before this."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 3,
       "speaker": "CIRA",
       "message": "Have you ever received a psychiatric diagnosis, such as depression, anxiety, OCD, or bipolar disorder?"
     },
     {
       "section": "past_psychiatric_history",
-      "turn": 2,
-      "speaker": "PATIENT",
-      "message": "I don’t know."
-    },
-    {
-      "section": "past_psychiatric_history",
-      "turn": 3,
-      "speaker": "CIRA",
-      "message": "That’s okay. Do you remember ever being told by a mental health professional that you had a psychiatric diagnosis, such as depression, anxiety, OCD, or bipolar disorder?"
-    },
-    {
-      "section": "past_psychiatric_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "I don’t remember."
+      "message": "No, I haven’t been given a diagnosis before."
     },
     {
       "section": "past_psychiatric_history",
@@ -218,67 +408,55 @@
       "section": "past_psychiatric_history",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "Yes — I have a history of non-suicidal self-injury since adolescence, and it used to reduce my anxiety."
+      "message": "Yes — there’s a history of non-suicidal self-injury since I was a teenager. It wasn’t about wanting to die; it was more that it helped with my anxiety. I don’t have current suicidal thoughts."
     },
     {
       "section": "past_psychiatric_history",
       "turn": 6,
       "speaker": "CIRA",
-      "message": "Is this something you are experiencing right now, and are you currently able to stay safe?"
+      "message": "Thank you for explaining. Could you briefly describe what happened historically, including roughly when it occurred and whether you have any current urge or intention to hurt yourself?"
     },
     {
       "section": "past_psychiatric_history",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "No, this is historical, and I’m not currently having suicidal thoughts."
+      "message": "It started in adolescence, and it was cutting. It helped me feel less anxious at the time. I don’t have any current urge or intention to hurt myself."
     },
     {
       "section": "past_psychiatric_history",
       "turn": 7,
       "speaker": "CIRA",
-      "message": "Have you ever received any therapy, such as CBT, DBT, Interpersonal Therapy, Mindfulness-Based Therapy, Psychodynamic Therapy, or another type?"
+      "message": "Have you ever received CBT, DBT, Interpersonal Therapy, Mindfulness-Based Therapy, Psychodynamic Therapy, or another type of therapy?"
     },
     {
       "section": "past_psychiatric_history",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "I don’t know."
+      "message": "No, I haven’t had therapy before."
     },
     {
       "section": "past_psychiatric_history",
       "turn": 8,
       "speaker": "CIRA",
-      "message": "Do you remember receiving any of those therapies?"
+      "message": "Have you ever received rTMS, ECT, deep brain stimulation, ketamine treatment, or another biological treatment?"
     },
     {
       "section": "past_psychiatric_history",
       "turn": 8,
       "speaker": "PATIENT",
-      "message": "I don’t remember."
+      "message": "Oh, um… that’s the kind of treatment question where I’m not totally sure what counts, because there are so many of them listed all together. Do you mean like electric shock treatment, or the other ones too? I don’t think I’ve had anything like that, but I’m a bit confused by the wording."
     },
     {
       "section": "past_psychiatric_history",
       "turn": 9,
       "speaker": "CIRA",
-      "message": "Have you ever received rTMS, ECT, Deep Brain Stimulation, ketamine treatment, or another biological treatment?"
+      "message": "I mean any of the following: ECT (electric-shock treatment), rTMS, deep brain stimulation, ketamine treatment, or another biological treatment. Do you remember receiving any of these?"
     },
     {
       "section": "past_psychiatric_history",
       "turn": 9,
       "speaker": "PATIENT",
-      "message": "I don’t know."
-    },
-    {
-      "section": "past_psychiatric_history",
-      "turn": 10,
-      "speaker": "CIRA",
-      "message": "Do you remember receiving any of these treatments?"
-    },
-    {
-      "section": "past_psychiatric_history",
-      "turn": 10,
-      "speaker": "PATIENT",
-      "message": "I don’t remember."
+      "message": "No, I haven’t had any of those treatments."
     },
     {
       "section": "medications",
@@ -290,25 +468,25 @@
       "section": "medications",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes — a combined oral contraceptive."
+      "message": "Yes — one of those combined birth control pills, one tablet daily."
     },
     {
       "section": "medications",
       "turn": 2,
       "speaker": "CIRA",
-      "message": "What is the name of the oral contraceptive?\n"
+      "message": "What is the name of the birth control pill?"
     },
     {
       "section": "medications",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I don’t know."
+      "message": "I’m sorry, I don’t know the exact name. It’s just the combined oral contraceptive."
     },
     {
       "section": "medications",
       "turn": 3,
       "speaker": "CIRA",
-      "message": "That’s okay. I’ll record the medication name as unknown. What dose are you taking?"
+      "message": "What dose is it?"
     },
     {
       "section": "medications",
@@ -320,61 +498,85 @@
       "section": "medications",
       "turn": 4,
       "speaker": "CIRA",
-      "message": "When did you start taking it, or approximately how long have you been taking it?"
+      "message": "Do you know the strength of the tablet, such as the amount in milligrams or micrograms?"
     },
     {
       "section": "medications",
       "turn": 4,
       "speaker": "PATIENT",
+      "message": "Mm, I’m not sure I’m following the strength part — you mean the number on the pill, right? I honestly can’t remember the amount off the top of my head. Could you ask it another way?"
+    },
+    {
+      "section": "medications",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "That’s okay. The strength is the amount of medication in each tablet, often written in mg or micrograms on the package. Is it 5, 10, or 20 mg, or a different amount?"
+    },
+    {
+      "section": "medications",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "I don’t know the strength."
+    },
+    {
+      "section": "medications",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "When did you start taking it, or approximately how long have you been taking it?"
+    },
+    {
+      "section": "medications",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "Oh—started when, um… I’m trying to think whether you mean the pill or just medications in general. I can tell you it’s the combined oral contraceptive, but the timing is slipping my mind right now. Could you ask that one again?"
+    },
+    {
+      "section": "medications",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "I mean the combined oral contraceptive specifically. About when did you start taking it—for example, this year, last year, or several years ago?"
+    },
+    {
+      "section": "medications",
+      "turn": 7,
+      "speaker": "PATIENT",
       "message": "Started in 2023."
     },
     {
       "section": "medications",
-      "turn": 5,
+      "turn": 8,
       "speaker": "CIRA",
-      "message": "Have you noticed any side effects from it?"
+      "message": "Have you noticed any side effects from this medication?"
     },
     {
       "section": "medications",
-      "turn": 5,
+      "turn": 8,
       "speaker": "PATIENT",
-      "message": "No known side effects."
+      "message": "Hmm… side effects from the pill, you mean? I’m not really sure what would count as a side effect versus just… normal life stuff. Could you ask it a bit more specifically?"
     },
     {
       "section": "medications",
-      "turn": 6,
+      "turn": 9,
       "speaker": "CIRA",
-      "message": "Are you taking any other prescribed medications?"
+      "message": "For the combined oral contraceptive, have you noticed anything such as nausea, headaches, mood changes, or other changes that you think may be related to it?"
     },
     {
       "section": "medications",
-      "turn": 6,
+      "turn": 9,
       "speaker": "PATIENT",
-      "message": "No, those are all."
-    },
-    {
-      "section": "medications",
-      "turn": 7,
-      "speaker": "CIRA",
-      "message": "Have you previously tried any psychiatric medications?"
-    },
-    {
-      "section": "medications",
-      "turn": 7,
-      "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, none that I know of."
     },
     {
       "section": "medical_history",
       "turn": 1,
       "speaker": "CIRA",
-      "message": "Have you ever been diagnosed with any medical conditions?"
+      "message": "Do you have any medical conditions that you have been diagnosed with?"
     },
     {
       "section": "medical_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, not that I know of."
     },
     {
       "section": "medical_history",
@@ -386,29 +588,41 @@
       "section": "medical_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, I haven’t had any surgeries."
     },
     {
       "section": "medical_history",
       "turn": 3,
       "speaker": "CIRA",
-      "message": "What is your height? Please provide it in centimetres or feet and inches."
+      "message": "What is your height?"
     },
     {
       "section": "medical_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "167 cm."
+      "message": "Sorry, do you mean like in feet and inches or the metric one? I always get mixed up when someone asks it like that all of a sudden."
     },
     {
       "section": "medical_history",
       "turn": 4,
       "speaker": "CIRA",
-      "message": "What is your weight? Please provide it in kilograms or pounds."
+      "message": "Either is fine—please provide your height in centimetres or in feet and inches."
     },
     {
       "section": "medical_history",
       "turn": 4,
+      "speaker": "PATIENT",
+      "message": "167 cm."
+    },
+    {
+      "section": "medical_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "What is your weight?"
+    },
+    {
+      "section": "medical_history",
+      "turn": 5,
       "speaker": "PATIENT",
       "message": "60 kg."
     },
@@ -422,13 +636,25 @@
       "section": "medication_allergies",
       "turn": 1,
       "speaker": "PATIENT",
+      "message": "Um… allergies to medications, right? I’m trying to think if that means the same as reactions to pills, or if you mean like something on record. I’m not sure I’m answering the right thing here—could you ask it a different way?"
+    },
+    {
+      "section": "medication_allergies",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "Have you ever had a reaction to a medication that you were told was an allergy or that is listed in your medical record? You can answer yes or no."
+    },
+    {
+      "section": "medication_allergies",
+      "turn": 2,
+      "speaker": "PATIENT",
       "message": "No."
     },
     {
       "section": "family_psychiatric_history",
       "turn": 1,
       "speaker": "CIRA",
-      "message": "Have any of your family members been diagnosed with a mental health condition?"
+      "message": "Have any of your family members been diagnosed with a mental health condition, such as depression, anxiety, OCD, bipolar disorder, or schizophrenia?"
     },
     {
       "section": "family_psychiatric_history",
@@ -446,7 +672,31 @@
       "section": "family_psychiatric_history",
       "turn": 2,
       "speaker": "PATIENT",
+      "message": "I’m not sure what kind of detail you mean there… like, whether you want when it started, or how it affected her, or if there was treatment? I might be mixing up the question. Could you be a bit more specific?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "Any additional information you wish to share is fine—for example, when it started, how it affected her, or whether she received treatment. What would you like to add about your mother’s condition?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 3,
+      "speaker": "PATIENT",
       "message": "She had one psychiatric admission in 2018."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "Are there any further family members with mental health conditions?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "No, those are all."
     },
     {
       "section": "substance_use",
@@ -494,13 +744,13 @@
       "section": "substance_use",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "Never."
+      "message": "Sorry, do you mean like, any of those party drugs or stimulants? I’m a bit muddled by the list all together. Could you ask it one more time in a simpler way?"
     },
     {
       "section": "substance_use",
       "turn": 5,
       "speaker": "CIRA",
-      "message": "Have you ever used opiates or narcotics: never, previously, or currently?"
+      "message": "That’s okay. Have you ever used cocaine, methamphetamine, MDMA, ecstasy, or another stimulant: never, previously, or currently?"
     },
     {
       "section": "substance_use",
@@ -511,36 +761,84 @@
     {
       "section": "substance_use",
       "turn": 6,
+      "speaker": "CIRA",
+      "message": "Have you ever used opiates or narcotics, such as prescription pain medications or heroin: never, previously, or currently?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "Never."
+    },
+    {
+      "section": "substance_use",
+      "turn": 7,
       "speaker": "CIRA",
       "message": "Have you ever used benzodiazepines, such as Valium, Ativan, or Xanax: never, previously, or currently?"
     },
     {
       "section": "substance_use",
-      "turn": 6,
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "Um… benzodiazepines, right? I think you’re asking about, like, sedatives and anxiety meds? I’m getting the list mixed up in my head a bit. Could you say it once more, maybe just the category without all the examples?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "Have you ever used benzodiazepines—sedative or anxiety medications—including prescription or non-prescription use: never, previously, or currently?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 8,
       "speaker": "PATIENT",
       "message": "Never."
     },
     {
       "section": "substance_use",
-      "turn": 7,
+      "turn": 9,
       "speaker": "CIRA",
       "message": "Have you ever used hallucinogens, such as LSD, PCP, or psilocybin: never, previously, or currently?"
     },
     {
       "section": "substance_use",
-      "turn": 7,
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "Hallucinogens… I think you mean like LSD and that kind of thing? I’m just trying to make sure I’m answering the right bucket because all the substance questions start to blur together in my head. Could you ask that one again, maybe a bit more simply?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "Of course. Have you ever used hallucinogens—psychedelic substances such as LSD or psilocybin—never, previously, or currently?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 10,
       "speaker": "PATIENT",
       "message": "Never."
     },
     {
       "section": "substance_use",
-      "turn": 8,
+      "turn": 11,
       "speaker": "CIRA",
-      "message": "Have you ever used any other substances not already discussed: never, previously, or currently?"
+      "message": "Have you used any other substances not already discussed: never, previously, or currently?"
     },
     {
       "section": "substance_use",
-      "turn": 8,
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "Other substances… um, I’m not sure if you mean anything outside the ones you just listed, or like supplements or something else entirely. I don’t think so, but I’m a bit thrown by how it’s phrased. Could you say it another way?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "To clarify, have you ever used any recreational or non-prescribed substances that we have not already discussed—not regular supplements: never, previously, or currently?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 12,
       "speaker": "PATIENT",
       "message": "Never."
     },
@@ -566,19 +864,91 @@
       "section": "education_employment_legal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Bachelor's degree."
+      "message": "Uh… do you mean like university, college, that sort of thing? I’m blanking a bit on the exact way to phrase it. Could you ask it more simply?"
     },
     {
       "section": "education_employment_legal_history",
       "turn": 3,
       "speaker": "CIRA",
-      "message": "Please tell me about your most recent job, including the employer or organization, job title, and start and end dates or approximate duration."
+      "message": "What is the highest school level or degree you finished—for example, high school, college diploma, bachelor’s, master’s, or doctorate?"
     },
     {
       "section": "education_employment_legal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "I’m an investment banking analyst at Harbour Capital, and I’ve been there since 2022."
+      "message": "Bachelor's degree."
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "Please tell me about one recent job: the employer or organization, your job title, and when you started and ended—or how long you worked there."
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "Sorry, I’m a bit tangled up by the “started and ended” part — do you mean the current job, or any recent one? I’m not sure if you want the employer first or the title first, and I don’t want to mix it up. Could you ask it a little more plainly?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "Let’s start with one recent job. What was the name of the employer or organization?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "Harbour Capital."
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "What was your job title at Harbour Capital?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "Investment banking analyst."
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "When did you work at Harbour Capital—what were the start and end dates, or approximately how long?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "2022 to present."
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "Are there any further recent jobs you would like to add?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "Um… maybe, but I’m not sure if you mean other jobs I’ve had or just, like, more detail about that one. I’m getting a bit mixed up with the wording. Could you say it another way?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "Do you have any other recent jobs besides your current role at Harbour Capital?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "No, those are all."
     },
     {
       "section": "personal_history",
@@ -590,185 +960,353 @@
       "section": "personal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "I was born and grew up in Toronto."
+      "message": "Hmm, early childhood… I’m not sure if you mean, like, the whole story or just where I was from. I get a bit mixed up with these life-history questions when they’re all together. Could you maybe split it up a bit?"
     },
     {
       "section": "personal_history",
       "turn": 2,
       "speaker": "CIRA",
-      "message": "How would you describe yourself as a young child—for example, shy, outgoing, sensitive, or energetic?"
+      "message": "Of course. Let’s start with just one part: where were you born, and where did you grow up?"
     },
     {
       "section": "personal_history",
       "turn": 2,
+      "speaker": "PATIENT",
+      "message": "Born and grew up."
+    },
+    {
+      "section": "personal_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "Could you tell me the place or places where you were born and grew up?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "I don’t know. It just says born; grew up, but not the actual place."
+    },
+    {
+      "section": "personal_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "I’m sorry, but that answer doesn’t provide the location. Where were you born, and where did you grow up? You may give a city, region, or country for each."
+    },
+    {
+      "section": "personal_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "Sorry—I'm a bit mixed up again. Do you mean where I was born versus where I lived as a kid? I can’t quite tell if you want a city, a country, or just the general area. Could you rephrase it one more time?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "Yes—please tell me **the city, region, or country where you were born**, and **the city, region, or country where you spent most of your childhood**."
+    },
+    {
+      "section": "personal_history",
+      "turn": 5,
       "speaker": "PATIENT",
       "message": "I don’t know."
     },
     {
       "section": "personal_history",
-      "turn": 3,
-      "speaker": "CIRA",
-      "message": "Could you describe your adolescence and early adulthood, including your experience in school, any difficulties, jobs or responsibilities, and other important experiences?"
-    },
-    {
-      "section": "personal_history",
-      "turn": 3,
-      "speaker": "PATIENT",
-      "message": "That’s when the cutting started, and I was in school."
-    },
-    {
-      "section": "personal_history",
-      "turn": 4,
-      "speaker": "CIRA",
-      "message": "Is the cutting something you are experiencing right now, and are you currently able to stay safe?"
-    },
-    {
-      "section": "personal_history",
-      "turn": 4,
-      "speaker": "PATIENT",
-      "message": "No, it’s historical, and I’m not currently having suicidal thoughts."
-    },
-    {
-      "section": "personal_history",
-      "turn": 5,
-      "speaker": "CIRA",
-      "message": "Could you describe any significant romantic relationships that feel relevant, including the type, approximate dates or duration, and whether each is current or ended?"
-    },
-    {
-      "section": "personal_history",
-      "turn": 5,
-      "speaker": "PATIENT",
-      "message": "I had one significant relationship that lasted two years and ended three months ago."
-    },
-    {
-      "section": "personal_history",
       "turn": 6,
       "speaker": "CIRA",
-      "message": "What goals do you have for the future, such as related to your health, education, work, relationships, family, or personal development?"
+      "message": "What were you like as a young child—for example, shy, outgoing, sensitive, or energetic?"
     },
     {
       "section": "personal_history",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "I want stable relationships and to keep building my career."
+      "message": "Hmm… I’m not sure I’m following which part you want there. Do you mean just personality, or like how I was at school too? I’m kind of blanking on how to answer that neatly. Could you say it a different way?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "I’m asking only about your personality as a young child. For example, were you generally shy, outgoing, sensitive, energetic, or something else?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "I don’t know."
+    },
+    {
+      "section": "personal_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "Could you describe your adolescence and early adulthood, including your experience in school, any difficulties you experienced, jobs or responsibilities you had, and other important experiences you would like to share?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "Hmm… adolescence and early adulthood — that’s a lot of ground all at once. I’m not sure if you want school stuff, work stuff, or personal stuff first, and I don’t want to jumble it up. Could you break it into one piece at a time?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "Of course. Let’s start with school: what was your experience like during adolescence and early adulthood?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "School was… fine, mostly. I don’t have much else to add there."
+    },
+    {
+      "section": "personal_history",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "What jobs or responsibilities did you have during adolescence and early adulthood?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "I don’t know."
+    },
+    {
+      "section": "personal_history",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "Were there any difficulties or other important experiences during that time that you would like to share?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "Well, there was cutting starting in adolescence, and school was part of that time too. Also, I’m currently single now — I had one significant two-year relationship that ended three months ago."
+    },
+    {
+      "section": "personal_history",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "Is the cutting something you are experiencing now, and are you currently able to stay safe?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "No, it’s historical. I’m able to stay safe, and I don’t have current suicidal thoughts."
+    },
+    {
+      "section": "personal_history",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "Could you describe any significant family or friendship relationships in your life, including whether they are current or ended?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "I’ve had one significant two-year relationship, but it ended three months ago, so I’m single now. That’s the main one that comes to mind."
+    },
+    {
+      "section": "personal_history",
+      "turn": 14,
+      "speaker": "CIRA",
+      "message": "Do you have any other significant family or friendship relationships you would like to mention?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 14,
+      "speaker": "PATIENT",
+      "message": "No, those are all."
+    },
+    {
+      "section": "personal_history",
+      "turn": 15,
+      "speaker": "CIRA",
+      "message": "What goals do you have for the future, such as health, education, employment, relationships, family, or personal development?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 15,
+      "speaker": "PATIENT",
+      "message": "Stable relationships… and career. That’s really what I’m aiming for."
     },
     {
       "section": "phq9",
       "turn": 1,
       "speaker": "CIRA",
-      "message": "These questions refer to the last two weeks.\n\nQuestion 1: Little interest or pleasure in doing things?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "PHQ-9 questions refer to the last two weeks.\n\n**PHQ-9 Question 1:** Little interest or pleasure in doing things?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "phq9",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "1 - Several days"
+      "message": "Uh... some weeks more than others, I suppose."
     },
     {
       "section": "phq9",
       "turn": 2,
       "speaker": "CIRA",
-      "message": "Question 2: Feeling down, depressed, or hopeless?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "**PHQ-9 Question 1:** Little interest or pleasure in doing things, over the last two weeks—was this:\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "phq9",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "1 - Several days"
+      "message": "Hm. Hard to say. My days all run together lately."
     },
     {
       "section": "phq9",
       "turn": 3,
       "speaker": "CIRA",
-      "message": "Question 3: Trouble falling or staying asleep, or sleeping too much?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "**PHQ-9 Question 1:** Little interest or pleasure in doing things over the last two weeks—would you say it was **0 - Not at all, 1 - Several days, 2 - More than half the days, or 3 - Nearly every day**?"
     },
     {
       "section": "phq9",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "0 - Not at all"
+      "message": "Several days"
     },
     {
       "section": "phq9",
       "turn": 4,
       "speaker": "CIRA",
-      "message": "Question 4: Feeling tired or having little energy?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "**PHQ-9 Question 2:** Feeling down, depressed, or hopeless?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "phq9",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "1 - Several days"
+      "message": "That depends. Are you asking about now or about back then?"
     },
     {
       "section": "phq9",
       "turn": 5,
       "speaker": "CIRA",
-      "message": "Question 5: Poor appetite or overeating?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "**PHQ-9 Question 2:** Feeling down, depressed, or hopeless **over the last two weeks**?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "phq9",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "1 - Several days"
+      "message": "Several days"
     },
     {
       "section": "phq9",
       "turn": 6,
       "speaker": "CIRA",
-      "message": "Question 6: Feeling bad about yourself—or that you are a failure or have let yourself or your family down?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "**PHQ-9 Question 3:** Trouble falling or staying asleep, or sleeping too much?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "phq9",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "1 - Several days"
+      "message": "Which of those was the middle one? I've forgotten the list."
     },
     {
       "section": "phq9",
       "turn": 7,
       "speaker": "CIRA",
-      "message": "Question 7: Trouble concentrating on things, such as reading the newspaper or watching television?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "**PHQ-9 Question 3:** Trouble falling or staying asleep, or sleeping too much, over the last two weeks?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "phq9",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "1 - Several days"
+      "message": "Hm. Hard to say. My days all run together lately."
     },
     {
       "section": "phq9",
       "turn": 8,
       "speaker": "CIRA",
-      "message": "Question 8: Moving or speaking so slowly that other people could have noticed? Or the opposite—being so fidgety or restless that you have been moving around a lot more than usual?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "**PHQ-9 Question 3:** Trouble falling or staying asleep, or sleeping too much, over the last two weeks—was this **0 - Not at all, 1 - Several days, 2 - More than half the days, or 3 - Nearly every day**?"
     },
     {
       "section": "phq9",
       "turn": 8,
       "speaker": "PATIENT",
-      "message": "0 - Not at all"
+      "message": "Not at all"
     },
     {
       "section": "phq9",
       "turn": 9,
       "speaker": "CIRA",
-      "message": "Question 9: Thoughts that you would be better off dead or of hurting yourself in some way?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "**PHQ-9 Question 4:** Feeling tired or having little energy?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "phq9",
       "turn": 9,
       "speaker": "PATIENT",
-      "message": "0 - Not at all"
+      "message": "Several days"
     },
     {
       "section": "phq9",
       "turn": 10,
       "speaker": "CIRA",
-      "message": "How difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?\n\n- Not difficult at all\n- Somewhat difficult\n- Very difficult\n- Extremely difficult"
+      "message": "**PHQ-9 Question 5:** Poor appetite or overeating?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "phq9",
       "turn": 10,
+      "speaker": "PATIENT",
+      "message": "Several days"
+    },
+    {
+      "section": "phq9",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 6:** Feeling bad about yourself—or that you are a failure or have let yourself or your family down?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+    },
+    {
+      "section": "phq9",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "Several days"
+    },
+    {
+      "section": "phq9",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 7:** Trouble concentrating on things, such as reading the newspaper or watching television?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+    },
+    {
+      "section": "phq9",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "Several days"
+    },
+    {
+      "section": "phq9",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 8:** Moving or speaking so slowly that other people could have noticed? Or the opposite—being so fidgety or restless that you have been moving around a lot more than usual?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+    },
+    {
+      "section": "phq9",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "Not at all"
+    },
+    {
+      "section": "phq9",
+      "turn": 14,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 9:** Thoughts that you would be better off dead or of hurting yourself in some way?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+    },
+    {
+      "section": "phq9",
+      "turn": 14,
+      "speaker": "PATIENT",
+      "message": "Not at all"
+    },
+    {
+      "section": "phq9",
+      "turn": 15,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 functional difficulty:** How difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?\n\n- Not difficult at all\n- Somewhat difficult\n- Very difficult\n- Extremely difficult"
+    },
+    {
+      "section": "phq9",
+      "turn": 15,
       "speaker": "PATIENT",
       "message": "Somewhat difficult"
     },
@@ -776,95 +1314,155 @@
       "section": "gad7",
       "turn": 1,
       "speaker": "CIRA",
-      "message": "For the last two weeks:\n\n**Question 1: Feeling nervous, anxious, or on edge**\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "GAD-7 Question 1: Over the last two weeks, how often have you been feeling nervous, anxious, or on edge?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "gad7",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "2 - More than half the days"
+      "message": "Which of those was the middle one? I've forgotten the list."
     },
     {
       "section": "gad7",
       "turn": 2,
       "speaker": "CIRA",
-      "message": "**Question 2: Having difficulty stopping or controlling worrying**\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "GAD-7 Question 1: Over the last two weeks, how often have you been feeling nervous, anxious, or on edge?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "gad7",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "1 - Several days"
+      "message": "That depends. Are you asking about now or about back then?"
     },
     {
       "section": "gad7",
       "turn": 3,
       "speaker": "CIRA",
-      "message": "**Question 3: Worrying too much about different things**\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "These questions refer to the last two weeks, including up to today.\n\nGAD-7 Question 1: Over the last two weeks, how often have you been feeling nervous, anxious, or on edge?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "gad7",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "2 - More than half the days"
+      "message": "More than half the days"
     },
     {
       "section": "gad7",
       "turn": 4,
       "speaker": "CIRA",
-      "message": "**Question 4: Having difficulty relaxing**\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "GAD-7 Question 2: Over the last two weeks, how often have you had difficulty stopping or controlling worrying?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "gad7",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "1 - Several days"
+      "message": "That depends. Are you asking about now or about back then?"
     },
     {
       "section": "gad7",
       "turn": 5,
       "speaker": "CIRA",
-      "message": "**Question 5: Being so restless that it is hard to sit still**\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "These questions refer to the last two weeks, including up to today.\n\nGAD-7 Question 2: Over the last two weeks, how often have you had difficulty stopping or controlling worrying?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "gad7",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "1 - Several days"
+      "message": "Several days"
     },
     {
       "section": "gad7",
       "turn": 6,
       "speaker": "CIRA",
-      "message": "**Question 6: Becoming easily annoyed or irritable**\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "GAD-7 Question 3: Over the last two weeks, how often have you been worrying too much about different things?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "gad7",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "2 - More than half the days"
+      "message": "Which of those was the middle one? I've forgotten the list."
     },
     {
       "section": "gad7",
       "turn": 7,
       "speaker": "CIRA",
-      "message": "**Question 7: Feeling afraid that something awful may happen**\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+      "message": "GAD-7 Question 3: Over the last two weeks, how often have you been worrying too much about different things?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "gad7",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "1 - Several days"
+      "message": "Uh... some weeks more than others, I suppose."
     },
     {
       "section": "gad7",
       "turn": 8,
       "speaker": "CIRA",
-      "message": "How difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?\n\n- Not difficult at all  \n- Somewhat difficult  \n- Very difficult  \n- Extremely difficult"
+      "message": "GAD-7 Question 3: Over the last two weeks, how often have you been worrying too much about different things?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
     },
     {
       "section": "gad7",
       "turn": 8,
+      "speaker": "PATIENT",
+      "message": "More than half the days"
+    },
+    {
+      "section": "gad7",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 4: Over the last two weeks, how often have you had difficulty relaxing?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+    },
+    {
+      "section": "gad7",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "Several days"
+    },
+    {
+      "section": "gad7",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 5: Over the last two weeks, how often have you been so restless that it is hard to sit still?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+    },
+    {
+      "section": "gad7",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "Several days"
+    },
+    {
+      "section": "gad7",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 6: Over the last two weeks, how often have you been becoming easily annoyed or irritable?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+    },
+    {
+      "section": "gad7",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "More than half the days"
+    },
+    {
+      "section": "gad7",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 7: Over the last two weeks, how often have you been feeling afraid that something awful may happen?\n\n0 - Not at all  \n1 - Several days  \n2 - More than half the days  \n3 - Nearly every day"
+    },
+    {
+      "section": "gad7",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "Several days"
+    },
+    {
+      "section": "gad7",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "GAD-7 functional difficulty: Over the last two weeks, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?\n\n- Not difficult at all\n- Somewhat difficult\n- Very difficult\n- Extremely difficult"
+    },
+    {
+      "section": "gad7",
+      "turn": 13,
       "speaker": "PATIENT",
       "message": "Somewhat difficult"
     }
@@ -877,7 +1475,6 @@
       "general_information",
       "current_concerns",
       "past_psychiatric_history",
-      "medications",
       "medical_history",
       "medication_allergies",
       "family_psychiatric_history",
@@ -889,8 +1486,8 @@
     ],
     "medications": {
       "has_current_medications": true,
-      "current_medications": "Combined oral contraceptive; name: Unknown; dose/frequency: one tablet daily; started: 2023; side effects: None known",
-      "has_past_medications": false,
+      "current_medications": "Combined oral contraceptive; name Unknown; one tablet daily; dose Unknown; started 2023; no known side effects",
+      "has_past_medications": null,
       "past_medication_details": null
     }
   }

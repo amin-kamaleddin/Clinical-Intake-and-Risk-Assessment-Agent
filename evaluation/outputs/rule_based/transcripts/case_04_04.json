@@ -3,6 +3,32 @@
   "scenario_case_id": "04-04",
   "title": "Lost Interest in Life",
   "system": "rule_based",
+  "persona_id": "confused",
+  "patient_behaviour": {
+    "persona": {
+      "id": "confused",
+      "label": "Unclear and disorganised",
+      "difficulty_rank": 3,
+      "description": "Hard to interview. Rambles, misreads questions, needs the frequency scale re-explained, discloses out of order. Tests whether the agent can actively guide rather than merely transcribe.",
+      "temperature": 0.8,
+      "questionnaire_deflection_probability": 0.8,
+      "max_deflections_per_item": 2,
+      "deflection_budget_per_instrument": 5,
+      "freetext_hedge_probability": 0.5,
+      "freetext_hedge_budget_per_section": 4
+    },
+    "temperature": 0.8,
+    "temperature_pinned": false,
+    "questionnaire_deflections": 0,
+    "freetext_hedges": 4,
+    "max_consecutive_hedges": 1,
+    "hedges_by_section": {
+      "(none)": 4
+    },
+    "deflections_by_instrument": {},
+    "deflections_by_item": {},
+    "deflection_log": []
+  },
   "conversation": [
     {
       "section": "general_information",
@@ -14,7 +40,7 @@
       "section": "general_information",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Susan Reiss."
+      "message": "Oh—my full name… it’s Susan Reiss. I think that’s how it appears, yes."
     },
     {
       "section": "general_information",
@@ -26,7 +52,7 @@
       "section": "general_information",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Female."
+      "message": "Um… recorded how exactly? I’m not sure what format you mean. I can’t quite tell if you want what’s on the form, or just, you know… what I’d put down. Could you say it a different way?"
     },
     {
       "section": "general_information",
@@ -38,109 +64,109 @@
       "section": "general_information",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "03/05/1975."
+      "message": "03/05/1975"
     },
     {
       "section": "general_information",
       "turn": 4,
-      "speaker": "CIRA",
-      "message": "Please repeat your date of birth in DD/MM/YYYY format."
-    },
-    {
-      "section": "general_information",
-      "turn": 4,
-      "speaker": "PATIENT",
-      "message": "03/05/1975."
-    },
-    {
-      "section": "general_information",
-      "turn": 5,
       "speaker": "CIRA",
       "message": "What is your full home address, including street address, city, and province?"
     },
     {
       "section": "general_information",
-      "turn": 5,
+      "turn": 4,
       "speaker": "PATIENT",
-      "message": "47 Bloorview Lane, Toronto, Ontario."
+      "message": "I’m… I’m not quite sure what you mean by full. It’s 47 Bloorview Lane — and then I’m blanking on the rest for a second. Could you ask it piece by piece?"
     },
     {
       "section": "general_information",
-      "turn": 6,
+      "turn": 5,
       "speaker": "CIRA",
       "message": "What is your Canadian postal code?"
     },
     {
       "section": "general_information",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "M6H2R4"
+    },
+    {
+      "section": "general_information",
       "turn": 6,
-      "speaker": "PATIENT",
-      "message": "M6H2R4."
-    },
-    {
-      "section": "general_information",
-      "turn": 7,
-      "speaker": "CIRA",
-      "message": "Please repeat the postal code using letters and numbers."
-    },
-    {
-      "section": "general_information",
-      "turn": 7,
-      "speaker": "PATIENT",
-      "message": "M6H2R4."
-    },
-    {
-      "section": "general_information",
-      "turn": 8,
       "speaker": "CIRA",
       "message": "What is your email address?"
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 6,
       "speaker": "PATIENT",
-      "message": "susan.reiss@example.com."
+      "message": "susan.reiss@example.com"
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 7,
       "speaker": "CIRA",
       "message": "What is your phone number, including area code?"
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 7,
       "speaker": "PATIENT",
-      "message": "4165550119."
+      "message": "Phone number… you mean the one they can reach me on? I’m drawing a blank for a second and I don’t want to mix it up. Could you ask it again, maybe just the area code or the first part?"
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "Please repeat your 10-digit phone number."
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "4165550119"
+    },
+    {
+      "section": "general_information",
+      "turn": 9,
       "speaker": "CIRA",
       "message": "Do you currently have a family doctor?"
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 9,
       "speaker": "PATIENT",
       "message": "Yes."
     },
     {
       "section": "general_information",
-      "turn": 11,
+      "turn": 10,
       "speaker": "CIRA",
       "message": "What is your family doctor's full first and last name?"
     },
     {
       "section": "general_information",
-      "turn": 11,
+      "turn": 10,
       "speaker": "PATIENT",
       "message": "Dr. Peter Hale."
     },
     {
       "section": "general_information",
-      "turn": 12,
+      "turn": 11,
       "speaker": "CIRA",
       "message": "Do you currently have a psychiatrist?"
+    },
+    {
+      "section": "general_information",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "A psychiatrist… do you mean someone I’m seeing now, or someone I’ve seen before? I’m not sure I’m following the wording. Could you ask it a different way?"
+    },
+    {
+      "section": "general_information",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "Please answer yes or no."
     },
     {
       "section": "general_information",
@@ -158,7 +184,7 @@
       "section": "current_concerns",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Depression and guilt."
+      "message": "It’s mostly the depression, and this awful guilt about a workplace mistake… and I want to die."
     },
     {
       "section": "current_concerns",
@@ -170,7 +196,7 @@
       "section": "current_concerns",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Relief and help."
+      "message": "Relief. Help."
     },
     {
       "section": "past_psychiatric_history",
@@ -194,7 +220,7 @@
       "section": "past_psychiatric_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "I don’t know."
     },
     {
       "section": "past_psychiatric_history",
@@ -218,7 +244,7 @@
       "section": "past_psychiatric_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "Yes, I have current suicidal thoughts with a plan and intent."
+      "message": "Yes. I have current suicidal thoughts, and I have a plan and intent."
     },
     {
       "section": "past_psychiatric_history",
@@ -230,7 +256,7 @@
       "section": "past_psychiatric_history",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "Yes. I have current suicidal thoughts, a plan, and intent."
+      "message": "I’ve been having suicidal thoughts, and I do have a plan and intent right now. It’s current, yes — immediate safety concern."
     },
     {
       "section": "past_psychiatric_history",
@@ -242,19 +268,43 @@
       "section": "past_psychiatric_history",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "I don’t know — nothing I can really report there."
     },
     {
       "section": "past_psychiatric_history",
       "turn": 7,
       "speaker": "CIRA",
-      "message": "Have you ever received rTMS, ECT, deep brain stimulation, ketamine treatment, or another biological treatment?"
+      "message": "When did you receive that therapy?"
     },
     {
       "section": "past_psychiatric_history",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "I don't know."
+      "message": "I don’t know."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "Approximately how many sessions did you attend?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "I don’t know."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "Have you ever received rTMS, ECT, deep brain stimulation, ketamine treatment, or another biological treatment?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "No."
     },
     {
       "section": "medications",
@@ -266,7 +316,7 @@
       "section": "medications",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, sertraline."
+      "message": "Yes. Sertraline."
     },
     {
       "section": "medications",
@@ -302,7 +352,7 @@
       "section": "medications",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "One week ago."
+      "message": "Started one week ago."
     },
     {
       "section": "medications",
@@ -350,41 +400,53 @@
       "section": "medical_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "I don’t have any medical conditions to report."
     },
     {
       "section": "medical_history",
       "turn": 2,
+      "speaker": "CIRA",
+      "message": "Please answer yes or no."
+    },
+    {
+      "section": "medical_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "No."
+    },
+    {
+      "section": "medical_history",
+      "turn": 3,
       "speaker": "CIRA",
       "message": "Have you ever had any surgical procedures?"
     },
     {
       "section": "medical_history",
-      "turn": 2,
+      "turn": 3,
       "speaker": "PATIENT",
       "message": "No."
     },
     {
       "section": "medical_history",
-      "turn": 3,
+      "turn": 4,
       "speaker": "CIRA",
       "message": "What is your height? You may answer in centimetres or feet and inches."
     },
     {
       "section": "medical_history",
-      "turn": 3,
+      "turn": 4,
       "speaker": "PATIENT",
       "message": "165 cm."
     },
     {
       "section": "medical_history",
-      "turn": 4,
+      "turn": 5,
       "speaker": "CIRA",
       "message": "What is your weight? You may answer in kilograms or pounds."
     },
     {
       "section": "medical_history",
-      "turn": 4,
+      "turn": 5,
       "speaker": "PATIENT",
       "message": "61 kg."
     },
@@ -410,7 +472,7 @@
       "section": "family_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, my older sister has recurrent depression and was treated with medication."
+      "message": "Yes. My older sister has recurrent depression and she was treated with medication."
     },
     {
       "section": "family_psychiatric_history",
@@ -626,65 +688,53 @@
       "section": "education_employment_legal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Administrative coordinator at Lakeshore Pet Nutrition since 2013."
+      "message": "Yes. I work at Lakeshore Pet Nutrition as an administrative coordinator."
     },
     {
       "section": "education_employment_legal_history",
       "turn": 4,
-      "speaker": "CIRA",
-      "message": "Please answer yes or no."
-    },
-    {
-      "section": "education_employment_legal_history",
-      "turn": 4,
-      "speaker": "PATIENT",
-      "message": "Yes."
-    },
-    {
-      "section": "education_employment_legal_history",
-      "turn": 5,
       "speaker": "CIRA",
       "message": "What was the employer or organization for your most recent job?"
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 5,
+      "turn": 4,
       "speaker": "PATIENT",
       "message": "Lakeshore Pet Nutrition."
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 6,
+      "turn": 5,
       "speaker": "CIRA",
       "message": "What was your job title?"
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 6,
+      "turn": 5,
       "speaker": "PATIENT",
       "message": "Administrative coordinator."
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 7,
+      "turn": 6,
       "speaker": "CIRA",
       "message": "What were the start and end dates, or approximate duration? Say Present if you still work there."
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 7,
+      "turn": 6,
       "speaker": "PATIENT",
       "message": "2013 to present."
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 8,
+      "turn": 7,
       "speaker": "CIRA",
       "message": "Are there any other recent jobs? If yes, give the employer or organization."
     },
     {
       "section": "education_employment_legal_history",
-      "turn": 8,
+      "turn": 7,
       "speaker": "PATIENT",
       "message": "No, those are all."
     },
@@ -698,7 +748,7 @@
       "section": "personal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Born and grew up."
+      "message": "Born, grew up… that’s about all I’ve got there. I don’t really know what else to say about being a young child."
     },
     {
       "section": "personal_history",
@@ -710,7 +760,7 @@
       "section": "personal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "School and started working."
+      "message": "School, and then I started working. That’s… pretty much it."
     },
     {
       "section": "personal_history",
@@ -722,7 +772,7 @@
       "section": "personal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Married for 20 years."
+      "message": "Married, for 20 years. We have three children."
     },
     {
       "section": "personal_history",
@@ -734,7 +784,7 @@
       "section": "personal_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "Recover and family."
+      "message": "Recover. Be there for my family."
     },
     {
       "section": "phq9",
@@ -972,6 +1022,7 @@
       "gad7"
     ],
     "safety_reasons": [
+      "Current safety concern disclosed during self-harm history",
       "PHQ-9 question 9 score greater than zero"
     ]
   }

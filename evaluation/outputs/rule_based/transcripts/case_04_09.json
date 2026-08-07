@@ -3,6 +3,32 @@
   "scenario_case_id": "04-09",
   "title": "Anhedonia and Restless Sleep",
   "system": "rule_based",
+  "persona_id": "confused",
+  "patient_behaviour": {
+    "persona": {
+      "id": "confused",
+      "label": "Unclear and disorganised",
+      "difficulty_rank": 3,
+      "description": "Hard to interview. Rambles, misreads questions, needs the frequency scale re-explained, discloses out of order. Tests whether the agent can actively guide rather than merely transcribe.",
+      "temperature": 0.8,
+      "questionnaire_deflection_probability": 0.8,
+      "max_deflections_per_item": 2,
+      "deflection_budget_per_instrument": 5,
+      "freetext_hedge_probability": 0.5,
+      "freetext_hedge_budget_per_section": 4
+    },
+    "temperature": 0.8,
+    "temperature_pinned": false,
+    "questionnaire_deflections": 0,
+    "freetext_hedges": 4,
+    "max_consecutive_hedges": 1,
+    "hedges_by_section": {
+      "(none)": 4
+    },
+    "deflections_by_instrument": {},
+    "deflections_by_item": {},
+    "deflection_log": []
+  },
   "conversation": [
     {
       "section": "general_information",
@@ -14,7 +40,7 @@
       "section": "general_information",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Robert Miller"
+      "message": "Oh—my full legal name? I’m not sure if you want the name on my papers or just the name I go by. It’s Robert… and then Miller, I think that’s the one you mean. If you need it written exactly as on the documents, you may have to ask me again a bit more simply."
     },
     {
       "section": "general_information",
@@ -26,7 +52,7 @@
       "section": "general_information",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Male"
+      "message": "Male."
     },
     {
       "section": "general_information",
@@ -50,7 +76,7 @@
       "section": "general_information",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "76 Lakeshore Road East, Oakville, Ontario"
+      "message": "It’s 76 Lakeshore Road East… in Oakville, Ontario."
     },
     {
       "section": "general_information",
@@ -62,65 +88,77 @@
       "section": "general_information",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "L6J1H8"
+      "message": "Sorry, postal code—I’m blanking on that just now. Is that the little code they use for mail? If you want, ask me again and I’ll try to pull it together."
     },
     {
       "section": "general_information",
       "turn": 6,
+      "speaker": "CIRA",
+      "message": "Please repeat the postal code using letters and numbers."
+    },
+    {
+      "section": "general_information",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "L6J1H8"
+    },
+    {
+      "section": "general_information",
+      "turn": 7,
       "speaker": "CIRA",
       "message": "What is your email address?"
     },
     {
       "section": "general_information",
-      "turn": 6,
+      "turn": 7,
       "speaker": "PATIENT",
       "message": "robert.miller@example.com"
     },
     {
       "section": "general_information",
-      "turn": 7,
+      "turn": 8,
       "speaker": "CIRA",
       "message": "What is your phone number, including area code?"
     },
     {
       "section": "general_information",
-      "turn": 7,
+      "turn": 8,
       "speaker": "PATIENT",
       "message": "9055550172"
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 9,
       "speaker": "CIRA",
       "message": "Do you currently have a family doctor?"
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 9,
       "speaker": "PATIENT",
       "message": "Yes, I do."
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 10,
       "speaker": "CIRA",
       "message": "What is your family doctor's full first and last name?"
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 10,
       "speaker": "PATIENT",
-      "message": "Dr. Susan Park"
+      "message": "Hmm… full name, right. I know I have one, yes, and I’m pretty sure it’s Dr. Susan, but the last name—I'm drawing a blank for the moment. Could you ask it a different way?"
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 11,
       "speaker": "CIRA",
       "message": "Do you currently have a psychiatrist?"
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 11,
       "speaker": "PATIENT",
       "message": "No, I don't."
     },
@@ -134,7 +172,7 @@
       "section": "current_concerns",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "I’ve lost interest in things, been fatigued, and a bit more withdrawn. Sleep has been a problem too."
+      "message": "Well, lately it’s been a bit of a mix, I suppose. I’ve been feeling more tired than usual, and sleep has been… not great, sort of starting off badly and then I’m awake thinking. There’s also just this general, I don’t know, slowing down feeling. If you mean something specific by “problems,” you might need to say it a different way."
     },
     {
       "section": "current_concerns",
@@ -146,7 +184,7 @@
       "section": "current_concerns",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I’d like to enjoy life again and stay active."
+      "message": "Mostly I’d like to enjoy life again and stay active."
     },
     {
       "section": "past_psychiatric_history",
@@ -158,7 +196,7 @@
       "section": "past_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I haven’t."
+      "message": "No, I haven’t been assessed before."
     },
     {
       "section": "past_psychiatric_history",
@@ -170,7 +208,7 @@
       "section": "past_psychiatric_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "No, I haven’t."
+      "message": "No, nothing like that before."
     },
     {
       "section": "past_psychiatric_history",
@@ -182,7 +220,7 @@
       "section": "past_psychiatric_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "No, I haven’t."
+      "message": "No."
     },
     {
       "section": "past_psychiatric_history",
@@ -206,7 +244,7 @@
       "section": "past_psychiatric_history",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "No, I haven’t had any previous therapy."
+      "message": "No, I haven’t had any therapy like that before."
     },
     {
       "section": "past_psychiatric_history",
@@ -218,7 +256,7 @@
       "section": "past_psychiatric_history",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "No, I haven’t received any of those treatments."
+      "message": "No, none of those."
     },
     {
       "section": "medications",
@@ -230,7 +268,7 @@
       "section": "medications",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, I am taking one."
+      "message": "Yes—just one of the Parkinson’s medicines, the carbidopa-levodopa."
     },
     {
       "section": "medications",
@@ -242,7 +280,7 @@
       "section": "medications",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Carbidopa-levodopa."
+      "message": "It’s carbidopa-levodopa."
     },
     {
       "section": "medications",
@@ -266,7 +304,7 @@
       "section": "medications",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "I started it in 2024."
+      "message": "2024."
     },
     {
       "section": "medications",
@@ -278,7 +316,7 @@
       "section": "medications",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "Occasional nausea."
+      "message": "Just occasional nausea, really."
     },
     {
       "section": "medications",
@@ -290,7 +328,7 @@
       "section": "medications",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "Yes, latanoprost eye drops."
+      "message": "Yes—there are others, but I’m not sure which one you want first."
     },
     {
       "section": "medications",
@@ -301,104 +339,152 @@
     {
       "section": "medications",
       "turn": 7,
+      "speaker": "PATIENT",
+      "message": "Well, for the one I just mentioned… I don’t think I gave the name yet, sorry. Maybe ask me the medication name first and then I can tell you the dose."
+    },
+    {
+      "section": "medications",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "When did you start it, or approximately how long have you taken it?"
+    },
+    {
+      "section": "medications",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "I’m not sure which medicine you mean. Could you say the name first?"
+    },
+    {
+      "section": "medications",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "What side effects have you experienced, if any?"
+    },
+    {
+      "section": "medications",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "No known side effects."
+    },
+    {
+      "section": "medications",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "Are you taking any other prescribed medications? If yes, please give the medication name."
+    },
+    {
+      "section": "medications",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "Yes — latanoprost eye drops."
+    },
+    {
+      "section": "medications",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "What dose do you take?"
+    },
+    {
+      "section": "medications",
+      "turn": 11,
       "speaker": "PATIENT",
       "message": "One drop in each eye nightly."
     },
     {
       "section": "medications",
-      "turn": 8,
+      "turn": 12,
       "speaker": "CIRA",
       "message": "When did you start it, or approximately how long have you taken it?"
     },
     {
       "section": "medications",
-      "turn": 8,
+      "turn": 12,
       "speaker": "PATIENT",
-      "message": "I started it in 2021."
+      "message": "2021."
     },
     {
       "section": "medications",
-      "turn": 9,
+      "turn": 13,
       "speaker": "CIRA",
       "message": "What side effects have you experienced, if any?"
     },
     {
       "section": "medications",
-      "turn": 9,
+      "turn": 13,
       "speaker": "PATIENT",
       "message": "None known."
     },
     {
       "section": "medications",
-      "turn": 10,
+      "turn": 14,
       "speaker": "CIRA",
       "message": "Are you taking any other prescribed medications? If yes, please give the medication name."
     },
     {
       "section": "medications",
-      "turn": 10,
+      "turn": 14,
       "speaker": "PATIENT",
-      "message": "Yes, allopurinol."
+      "message": "Yes — allopurinol."
     },
     {
       "section": "medications",
-      "turn": 11,
+      "turn": 15,
       "speaker": "CIRA",
       "message": "What dose do you take?"
     },
     {
       "section": "medications",
-      "turn": 11,
+      "turn": 15,
       "speaker": "PATIENT",
       "message": "100 mg daily."
     },
     {
       "section": "medications",
-      "turn": 12,
+      "turn": 16,
       "speaker": "CIRA",
       "message": "When did you start it, or approximately how long have you taken it?"
     },
     {
       "section": "medications",
-      "turn": 12,
+      "turn": 16,
       "speaker": "PATIENT",
-      "message": "I started it in 2019."
+      "message": "2019."
     },
     {
       "section": "medications",
-      "turn": 13,
+      "turn": 17,
       "speaker": "CIRA",
       "message": "What side effects have you experienced, if any?"
     },
     {
       "section": "medications",
-      "turn": 13,
+      "turn": 17,
       "speaker": "PATIENT",
-      "message": "None known."
+      "message": "No known side effects."
     },
     {
       "section": "medications",
-      "turn": 14,
+      "turn": 18,
       "speaker": "CIRA",
       "message": "Are you taking any other prescribed medications? If yes, please give the medication name."
     },
     {
       "section": "medications",
-      "turn": 14,
+      "turn": 18,
       "speaker": "PATIENT",
       "message": "No, those are all."
     },
     {
       "section": "medications",
-      "turn": 15,
+      "turn": 19,
       "speaker": "CIRA",
       "message": "Have you previously tried any psychiatric medications?"
     },
     {
       "section": "medications",
-      "turn": 15,
+      "turn": 19,
       "speaker": "PATIENT",
-      "message": "No, I haven’t."
+      "message": "No, I haven’t taken any psychiatric medications before."
     },
     {
       "section": "medical_history",
@@ -410,7 +496,7 @@
       "section": "medical_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, I have Parkinson’s disease."
+      "message": "Yes—Parkinson’s disease."
     },
     {
       "section": "medical_history",
@@ -422,7 +508,7 @@
       "section": "medical_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Parkinson’s disease."
+      "message": "Parkinson’s disease… and I think there are a few other things, but if you want the next one I can do it one at a time."
     },
     {
       "section": "medical_history",
@@ -434,7 +520,7 @@
       "section": "medical_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "No, I haven’t."
+      "message": "No, I haven’t had any surgeries."
     },
     {
       "section": "medical_history",
@@ -446,7 +532,7 @@
       "section": "medical_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "175 cm"
+      "message": "175 cm."
     },
     {
       "section": "medical_history",
@@ -458,7 +544,7 @@
       "section": "medical_history",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "74 kg"
+      "message": "74 kg."
     },
     {
       "section": "medication_allergies",
@@ -482,7 +568,7 @@
       "section": "family_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, my granddaughter has ADHD."
+      "message": "Yes—my granddaughter was diagnosed with ADHD when she was 9."
     },
     {
       "section": "family_psychiatric_history",
@@ -578,7 +664,7 @@
       "section": "substance_use",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "Minimal."
+      "message": "I don’t know — just minimal, really."
     },
     {
       "section": "substance_use",
@@ -674,7 +760,7 @@
       "section": "education_employment_legal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I’m not."
+      "message": "No."
     },
     {
       "section": "education_employment_legal_history",
@@ -686,7 +772,7 @@
       "section": "education_employment_legal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I have a bachelor’s degree."
+      "message": "I have a bachelor’s degree… I was a teacher."
     },
     {
       "section": "education_employment_legal_history",
@@ -698,7 +784,7 @@
       "section": "education_employment_legal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "I was a high school science teacher at the Oakville District School Board from 1978 to 2013, and I’m retired."
+      "message": "I worked as a high school science teacher with the Oakville District School Board, from 1978 to 2013, and I’m retired now."
     },
     {
       "section": "education_employment_legal_history",
@@ -770,7 +856,7 @@
       "section": "personal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "I was born and grew up."
+      "message": "Born and grew up, that’s about all I really have from then. I don’t have much else to report about childhood."
     },
     {
       "section": "personal_history",
@@ -782,7 +868,7 @@
       "section": "personal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I went to school and became a teacher."
+      "message": "School, mostly — and then I became a teacher. That’s the main thing I remember there."
     },
     {
       "section": "personal_history",
@@ -794,7 +880,7 @@
       "section": "personal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "I’m married, and we’ve been together for 49 years."
+      "message": "I’ve been married for 49 years, and my wife is supportive."
     },
     {
       "section": "personal_history",
@@ -806,7 +892,7 @@
       "section": "personal_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "I want to enjoy life and manage my illness."
+      "message": "I’d like to enjoy life and manage the illness."
     },
     {
       "section": "phq9",
