@@ -32,6 +32,7 @@ from pathlib import Path
 
 from harness import config
 from harness import personas
+from harness import provenance
 from harness.patient_simulator import PatientSimulator
 
 
@@ -117,17 +118,31 @@ def run_case(
     # forty-minute run could produce zero scoreable output. Partial artifacts
     # are far more useful than none: the scorer reports the sections that did
     # complete and flags the rest.
+    # graph.invoke() RETURNS a new state rather than mutating the one passed in,
+    # so _run_sections must hand the latest state back out. A plain parameter
+    # cannot: rebinding the name inside the function leaves this frame pointing
+    # at the pre-run dict, and the finally block below would then save it.
+    #
+    # That is not a hypothetical. Nested section dicts survived it because
+    # LangGraph passes them by reference and the node mutates them in place, and
+    # sections_completed survived because it is appended in place - so records
+    # looked complete. Top-level SCALARS did not: safety_flag was set to True on
+    # LangGraph's copy and the saved record kept the initial False. Every real
+    # risk case was written out unflagged while the transcript showed the safety
+    # message being delivered.
+    state_box = {"state": cira_state}
     try:
         _run_sections(
-            scenario, transcript, cira_state, graph,
+            scenario, transcript, state_box, graph,
             get_pending_fields, section_order, patient, safety_reported,
         )
     finally:
-        _save_artifacts(scenario, transcript, cira_state, patient)
+        _save_artifacts(scenario, transcript, state_box["state"], patient)
 
 
-def _run_sections(scenario, transcript, cira_state, graph, get_pending_fields,
+def _run_sections(scenario, transcript, state_box, graph, get_pending_fields,
                   section_order, patient, safety_reported) -> None:
+    cira_state = state_box["state"]
     for section in section_order:
         print(f"\n{'-' * 70}\nSection: {section}\n{'-' * 70}")
         # Refresh the persona's per-section hedge budget.
@@ -135,6 +150,7 @@ def _run_sections(scenario, transcript, cira_state, graph, get_pending_fields,
         cira_state["current_section"] = section
         cira_state["messages"] = []
         cira_state = graph.invoke(cira_state)
+        state_box["state"] = cira_state
 
         pending_fields = get_pending_fields(cira_state, section)
         if not pending_fields:
@@ -151,11 +167,27 @@ def _run_sections(scenario, transcript, cira_state, graph, get_pending_fields,
         # names the field responsible so the cause is visible.
         stalled_turns = 0
         previous_pending = set(pending_fields)
+        # Snapshot the section's VALUES too. The pending set alone is not a
+        # progress signal: collecting dose, start date and side effects all
+        # writes into the same repeatable field, so the set stays frozen while
+        # the interview is working perfectly. Counting those as stalled turns
+        # killed the medications section one turn before it asked about past
+        # medications.
+        previous_values = dict(cira_state.get(section) or {})
 
         for turn_number in range(1, config.MAX_TURNS_PER_SECTION + 1):
             if not cira_question.strip():
-                print(f"ERROR: empty question in '{section}' (pending {pending_fields})")
-                break
+                # Don't abandon the section on one empty turn - nudge and let the
+                # stall counter decide. Abandoning immediately cost a whole
+                # section (and self_harm_details) on the active-risk case.
+                print(f"WARNING: empty question in '{section}' "
+                      f"(pending {pending_fields}); nudging")
+                cira_question = (
+                    f"Could you tell me about "
+                    f"{pending_fields[0].replace('_', ' ')}?"
+                    if pending_fields
+                    else "Is there anything else you would like to add?"
+                )
 
             print("\nCIRA:", cira_question)
             transcript.append({
@@ -174,6 +206,7 @@ def _run_sections(scenario, transcript, cira_state, graph, get_pending_fields,
                 {"role": "user", "content": patient_answer}
             ]
             cira_state = graph.invoke(cira_state)
+            state_box["state"] = cira_state
 
             if cira_state.get("safety_flag") and not safety_reported:
                 print("Safety flag raised. Continuing the intake.")
@@ -184,11 +217,17 @@ def _run_sections(scenario, transcript, cira_state, graph, get_pending_fields,
                 print(section, "completed.")
                 break
 
-            if set(pending_fields) == previous_pending:
-                stalled_turns += 1
-            else:
+            current_values = dict(cira_state.get(section) or {})
+            made_progress = (
+                set(pending_fields) != previous_pending
+                or current_values != previous_values
+            )
+            if made_progress:
                 stalled_turns = 0
                 previous_pending = set(pending_fields)
+                previous_values = current_values
+            else:
+                stalled_turns += 1
 
             if stalled_turns >= STALL_LIMIT:
                 print(
@@ -224,6 +263,7 @@ def _build_record(scenario: dict, cira_state: dict, patient=None) -> dict:
         # partial record is never mistaken for a clean one.
         "intake_complete": set(config.CANONICAL_SECTIONS)
         <= set(cira_state.get("sections_completed", [])),
+        "run_id": provenance.current_run_id(),
         # Which patient style produced this record. Stamped here (not just in
         # the report) so a record file is self-describing and can be stratified
         # by persona long after the run.
@@ -259,6 +299,7 @@ def _save_artifacts(
         "scenario_case_id": case_id,
         "title": scenario["title"],
         "system": SYSTEM,
+        "run_id": provenance.current_run_id(),
         "persona_id": patient.persona.id if patient else None,
         "patient_behaviour": patient.behaviour_summary() if patient else None,
         "conversation": _clean_conversation(transcript),

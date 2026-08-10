@@ -191,6 +191,7 @@ def handle_safety(state: AliceState) -> AliceState:
 def apply_tool_calls(state: AliceState, section: str, response):
     """Process tool calls. Returns (tool_results, safety_raised, touched_sections)."""
     tool_results     = {}
+    values_saved     = set()
     safety_raised    = False
     touched_sections = {section}
 
@@ -244,6 +245,7 @@ def apply_tool_calls(state: AliceState, section: str, response):
                 tool_results[tc["id"]] = "saved"
 
             if saved_value is not None:
+                values_saved.add(field)
                 _implicitly_confirm_earlier_fields(state, target_section, field)
                 if field in REPEATABLE_TEXT_FIELDS and _reports_absence(saved_value):
                     _confirm_entries(state, field)
@@ -290,7 +292,7 @@ def apply_tool_calls(state: AliceState, section: str, response):
             else:
                 tool_results[tc["id"]] = "flag_already_raised"
 
-    return tool_results, safety_raised, touched_sections
+    return tool_results, safety_raised, touched_sections, values_saved
 
 
 def update_completion(state: AliceState, section: str):
@@ -342,7 +344,7 @@ def section_node(state: AliceState) -> AliceState:
     }
 
     # ── Stage 3: process tool calls ──
-    tool_results, safety_raised, touched_sections = apply_tool_calls(
+    tool_results, safety_raised, touched_sections, values_saved = apply_tool_calls(
         state, section, response
     )
 
@@ -351,6 +353,20 @@ def section_node(state: AliceState) -> AliceState:
         state["phq9"]["phq9_total"] = calculate_phq9_total(state)
     if "gad7" in touched_sections:
         state["gad7"]["gad7_total"] = calculate_gad7_total(state)
+
+    # ── Stage 4b: remember that a self-harm history was cleared ──
+    #
+    # Saving self_harm_details without raising the flag on the same turn means
+    # the disclosure was assessed and found to be historical. Recording that
+    # lets later sections know it has already been adjudicated, which the
+    # per-section message reset would otherwise erase.
+    if (
+        "self_harm_details" in values_saved
+        and not safety_raised
+        and not deterministic_safety
+        and not state.get("safety_flag")
+    ):
+        state["safety_history_cleared"] = True
 
     # ── Stage 5: bound the "any more entries?" follow-ups ──
     _auto_confirm_exhausted_followups(state, section, values_before)
@@ -374,6 +390,16 @@ def section_node(state: AliceState) -> AliceState:
         state["safety_flag"] = True
         reply = SAFETY_REPLY + "\n\n" + (reply or "")
         state["safety_text_sent"] = True
+
+    # An empty assistant turn stalls the driver, which reads the last message as
+    # the next question. Rather than emit nothing, fall back to the pending field.
+    if not (reply or "").strip():
+        pending = get_pending_fields(state, section)
+        reply = (
+            f"Could you tell me about {pending[0].replace('_', ' ')}?"
+            if pending
+            else "Is there anything else you would like to add or change?"
+        )
 
     # ── Stage 7: completion for every section this turn touched ──
     for touched in touched_sections:

@@ -3,11 +3,11 @@
   "case_id": "02",
   "scenario_case_id": "04-02",
   "persona_id": "clear",
-  "record_score": 0.9773,
+  "record_score": 0.9545,
   "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9773,
-    "record_score_contested": 0.9545,
+    "record_score": 0.9545,
+    "record_score_contested": 0.9091,
     "fields_contested": 22,
     "fields_auto_resolved": 22,
     "fields_confirmed_absent": 10,
@@ -15,8 +15,8 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 42,
-      "partial": 2,
+      "match": 40,
+      "partial": 4,
       "missing": 0,
       "contradicted": 0,
       "fabricated": 0
@@ -26,8 +26,8 @@
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 10.0,
-        "score": 1.0
+        "credit": 9.5,
+        "score": 0.95
       },
       "past_psychiatric_history": {
         "fields": 3,
@@ -56,8 +56,8 @@
       },
       "education_employment_legal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.5,
+        "score": 0.875
       },
       "current_concerns": {
         "fields": 2,
@@ -76,12 +76,12 @@
       }
     }
   },
-  "flow_summary": "The system conducted a thorough and efficient intake, maintaining a clear, one-question-at-a-time structure. It handled the patient's disclosures appropriately and followed up on necessary details, though it struggled slightly with the patient's vague responses regarding early childhood.",
+  "flow_summary": "The system conducted a thorough and efficient intake, adhering to the required structure and questionnaire formats. It maintained a professional tone and successfully navigated the patient's disclosures, though it missed an opportunity to provide a brief, empathetic acknowledgement regarding the patient's difficult marital situation.",
   "issues": [
     {
       "severity": "minor",
-      "category": "follow_up",
-      "evidence": "When the patient gave a vague answer to 'Could you tell me about your early childhood', the system asked 'Where were you born and where did you grow up?' and then 'What was your family environment like...'. While it attempted to break down the question, it did not acknowledge the patient's 'I do not know' responses effectively before moving to the next, resulting in a slightly mechanical feel."
+      "category": "empathy",
+      "evidence": "The patient disclosed that her husband is 'unsupportive and mostly absent,' but the interviewer immediately moved to the next question without any acknowledgement of this significant personal challenge."
     }
   ],
   "field_verdicts": [
@@ -108,14 +108,6 @@
       "note": "",
       "expected": "09/02/2003",
       "produced": "09/02/2003"
-    },
-    {
-      "ref": "general_information.address",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "14 Cedarvale Court, Mississauga, Ontario",
-      "produced": "14 Cedarvale Court, Mississauga, Ontario"
     },
     {
       "ref": "general_information.postal_code",
@@ -262,6 +254,22 @@
       "produced": false
     },
     {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "high school",
+      "produced": "High school"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "City and province are missing.",
+      "expected": "14 Cedarvale Court, Mississauga, Ontario",
+      "produced": "14 Cedarvale Court"
+    },
+    {
       "ref": "current_concerns.primary_problems",
       "verdict": "match",
       "source": "llm",
@@ -283,13 +291,13 @@
       "source": "llm",
       "note": "",
       "expected": "Prenatal multivitamin with iron; one tablet daily; started during pregnancy; no side effects known",
-      "produced": "Prenatal multivitamin with iron, one tablet daily; started during pregnancy; no side effects."
+      "produced": "Prenatal multivitamin with iron, one tablet daily, started during pregnancy; patient does not know of any side effects."
     },
     {
       "ref": "medical_history.medical_conditions",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing childhood diagnosis and inhaler usage details.",
+      "note": "Missing diagnosis timing and current management details.",
       "expected": "Asthma; diagnosed in childhood; uses salbutamol inhaler as needed",
       "produced": "Asthma."
     },
@@ -297,7 +305,7 @@
       "ref": "medical_history.surgical_history",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing information regarding lack of ongoing complications.",
+      "note": "Missing information regarding ongoing complications.",
       "expected": "Emergency caesarean section; February 2026; no ongoing complications",
       "produced": "Emergency caesarean section in February 2026."
     },
@@ -323,7 +331,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Does not use alcohol."
+      "produced": "Never."
     },
     {
       "ref": "substance_use.nicotine_use",
@@ -331,7 +339,7 @@
       "source": "llm",
       "note": "",
       "expected": "Previous; cigarettes; about 5 per day; used for 4 years; stopped when pregnancy was confirmed",
-      "produced": "Former cigarette smoker: about 5 cigarettes per day for 4 years; stopped when pregnancy was confirmed."
+      "produced": "No current use; stopped when pregnancy was confirmed. Previously smoked about 5 cigarettes per day for 4 years."
     },
     {
       "ref": "substance_use.marijuana_use",
@@ -339,7 +347,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Does not use marijuana."
+      "produced": "Never."
     },
     {
       "ref": "substance_use.stimulant_use",
@@ -347,7 +355,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Does not use stimulants."
+      "produced": "Never."
     },
     {
       "ref": "substance_use.opioid_use",
@@ -355,7 +363,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Does not use opioids."
+      "produced": "Never."
     },
     {
       "ref": "substance_use.benzodiazepine_use",
@@ -363,7 +371,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Does not use benzodiazepines."
+      "produced": "Never."
     },
     {
       "ref": "substance_use.hallucinogen_use",
@@ -371,7 +379,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Does not use hallucinogens."
+      "produced": "Never."
     },
     {
       "ref": "substance_use.other_substance_use",
@@ -379,23 +387,15 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Does not use other substances."
-    },
-    {
-      "ref": "education_employment_legal_history.highest_education",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "high school",
-      "produced": "High school."
+      "produced": "Never."
     },
     {
       "ref": "education_employment_legal_history.employment_history[0]",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the detail that she stopped during pregnancy.",
       "expected": "Barista at Lakeside Coffee; 2021 to 2025; stopped during pregnancy",
-      "produced": "Worked as a barista at Lakeside Coffee from 2021 to 2025; currently a homemaker."
+      "produced": "Currently a homemaker. Previously worked as a barista at Lakeside Coffee from 2021 to 2025."
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
@@ -403,7 +403,7 @@
       "source": "llm",
       "note": "",
       "expected": "Currently homemaker.",
-      "produced": "Worked as a barista at Lakeside Coffee from 2021 to 2025; currently a homemaker."
+      "produced": "Currently a homemaker. Previously worked as a barista at Lakeside Coffee from 2021 to 2025."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -411,7 +411,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Patient stated, \"I was born and grew up,\" and did not know where she was born or grew up or describe the family environment/significant experiences."
+      "produced": "Patient was born and grew up there; city or region unknown."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -419,7 +419,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; coffee shop work",
-      "produced": "School and coffee shop work."
+      "produced": "It was school and working at the coffee shop."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -427,7 +427,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; husband; unsupportive; absent",
-      "produced": "Married; husband has been unsupportive and absent."
+      "produced": "Married. Her husband has been unsupportive and mostly absent."
     },
     {
       "ref": "personal_history.future_goals",
@@ -435,7 +435,7 @@
       "source": "llm",
       "note": "",
       "expected": "care for children; return to work",
-      "produced": "To care for my children and return to work."
+      "produced": "Wants to care for her children and return to work."
     }
   ],
   "fabricated": []

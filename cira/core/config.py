@@ -2,6 +2,12 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+ENV_FILE = PROJECT_ROOT / ".env"
+
+load_dotenv(dotenv_path=ENV_FILE)
+
 # Model names — overridable via environment for reproducible eval runs.
 MODEL_NAME       = os.getenv("CIRA_MODEL", "gpt-5.6-luna")
 
@@ -11,9 +17,3 @@ TTS_VOICE        = os.getenv("CIRA_TTS_VOICE", "shimmer")
 
 SUPPORTED_TEST_LANGUAGES = ["English", "French", "Hindi"]
 
-
-
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-ENV_FILE = PROJECT_ROOT / ".env"
-
-load_dotenv(dotenv_path=ENV_FILE)

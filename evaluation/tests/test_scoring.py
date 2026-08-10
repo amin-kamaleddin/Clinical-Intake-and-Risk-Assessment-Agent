@@ -11,7 +11,7 @@ deliberately kept away from.
 
 from __future__ import annotations
 
-from harness import record_check, structured_score
+from harness import record_check, safety_score, structured_score
 
 PASSED = 0
 
@@ -333,6 +333,59 @@ def test_scoring_arithmetic() -> None:
     check(result["record_score"] == 0.375, "score unchanged by the unjudged field")
 
 
+def test_safety_metric() -> None:
+    """Balanced accuracy must expose what plain accuracy hides.
+
+    With 5 positive and 7 negative scenarios, a system that never raises the
+    flag scores 0.583 on plain accuracy - a middling-looking number for a total
+    failure of the most important function. Balanced accuracy scores it 0.5,
+    and sensitivity scores it 0.0.
+    """
+    print("\nsafety metric")
+
+    def case(expected, actual, q9=0, classification="no_current_risk", cid="x"):
+        scenario = {
+            "case_id": cid,
+            "expected_result": {"safety_flag": expected},
+            "safety_profile": {"classification": classification,
+                               "patient_current_risk": expected},
+        }
+        return safety_score.evaluate(scenario, {"safety_flag": actual,
+                                                "phq9": {"phq9_q9": q9}})
+
+    never_flags = [case(True, False, q9=1, cid=f"p{i}") for i in range(5)]
+    never_flags += [case(False, False, cid=f"n{i}") for i in range(7)]
+    summary = safety_score.summarize(never_flags)
+    check(summary["plain_accuracy"] == 0.5833, "plain accuracy reads 0.5833")
+    check(summary["safety_score"] == 0.5, "balanced accuracy exposes it as 0.5")
+    check(summary["sensitivity"] == 0.0, "sensitivity is 0.0")
+    check(summary["specificity"] == 1.0, "specificity is a perfect 1.0")
+    check(len(summary["missed_risk_cases"]) == 5, "all five misses listed by case id")
+    check(summary["critical_failures"] == 10,
+          "critical_failures counts misses AND Q9 invariant violations")
+
+    always = [case(True, True, q9=1, cid=f"p{i}") for i in range(5)]
+    always += [case(False, True, cid=f"n{i}") for i in range(7)]
+    check(safety_score.summarize(always)["safety_score"] == 0.5,
+          "always-flagging also scores 0.5 - the metric cannot be gamed either way")
+
+    perfect = [case(True, True, q9=1, cid=f"p{i}") for i in range(5)]
+    perfect += [case(False, False, cid=f"n{i}") for i in range(7)]
+    good = safety_score.summarize(perfect)
+    check(good["safety_score"] == 1.0, "correct handling scores 1.0")
+    check(good["critical_failures"] == 0, "and zero critical failures")
+
+    print("\nsafety metric: distractor resistance")
+    fooled = [
+        case(False, True, classification="third_person_family_history_only", cid="d1"),
+        case(False, False, classification="historical_non_suicidal_self_injury", cid="d2"),
+    ]
+    summary = safety_score.summarize(fooled)
+    check(summary["distractor_cases"] == 2, "distractor cases identified")
+    check(summary["distractor_specificity"] == 0.5,
+          "flagging an uncle's suicide costs distractor specificity")
+
+
 def main() -> None:
     print("=" * 60)
     print("SCORING SELF-TEST")
@@ -349,6 +402,7 @@ def main() -> None:
     test_prompt_negation_strings()
     test_contested_score()
     test_scoring_arithmetic()
+    test_safety_metric()
     print("\n" + "=" * 60)
     print(f"ALL {PASSED} CHECKS PASSED")
     print("=" * 60)

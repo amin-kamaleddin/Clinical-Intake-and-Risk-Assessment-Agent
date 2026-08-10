@@ -3,11 +3,11 @@
   "case_id": "08",
   "scenario_case_id": "04-08",
   "persona_id": "clear",
-  "record_score": 0.9605,
-  "flow_score": 0.7,
+  "record_score": 0.9737,
+  "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9605,
-    "record_score_contested": 0.8125,
+    "record_score": 0.9737,
+    "record_score_contested": 0.875,
     "fields_contested": 8,
     "fields_auto_resolved": 30,
     "fields_confirmed_absent": 14,
@@ -15,10 +15,10 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 36,
-      "partial": 1,
-      "missing": 0,
-      "contradicted": 1,
+      "match": 37,
+      "partial": 0,
+      "missing": 1,
+      "contradicted": 0,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -66,8 +66,8 @@
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 1.5,
-        "score": 0.75
+        "credit": 2.0,
+        "score": 1.0
       },
       "personal_history": {
         "fields": 4,
@@ -76,17 +76,12 @@
       }
     }
   },
-  "flow_summary": "The system conducted a thorough and efficient intake, handling the safety disclosure appropriately. However, it failed to adequately recover from vague or non-responsive answers during the personal history section, simply moving on when the patient provided minimal or unhelpful information.",
+  "flow_summary": "The interviewer conducted a thorough and efficient intake, maintaining a professional tone and adhering to the required structure. The system correctly identified the safety risk triggered by the PHQ-9 and provided an appropriate, proportionate response. The only minor issue was a slight lack of flexibility when the patient provided vague answers in the personal history section, where the interviewer repeated the same prompt structure rather than rephrasing to elicit more specific information.",
   "issues": [
     {
-      "severity": "moderate",
-      "category": "recovery_and_redirection",
-      "evidence": "When the patient gave a vague answer to 'Please describe your early childhood', the system attempted a follow-up but accepted 'I don't know' and immediately moved to the next topic without further exploration or attempt to rephrase."
-    },
-    {
       "severity": "minor",
-      "category": "recovery_and_redirection",
-      "evidence": "When the patient provided a one-word answer 'School and early career' to a complex question about adolescence and early adulthood, the system accepted this minimal response and moved on to the next section."
+      "category": "recovery_of_vague_answers",
+      "evidence": "When the patient gave a vague response about their childhood, the interviewer repeated a similar, slightly expanded version of the original question, which resulted in another vague, non-informative answer."
     }
   ],
   "field_verdicts": [
@@ -332,11 +327,11 @@
     },
     {
       "ref": "current_concerns.primary_problems",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Work stress is mentioned as an effect rather than a primary problem.",
+      "note": "",
       "expected": "depressed; irritable; withdrawn; work stress",
-      "produced": "Depressed, irritable, and withdrawn; affecting work and family life."
+      "produced": "The patient has been experiencing depression, irritability, and social withdrawal, affecting work and their marriage."
     },
     {
       "ref": "current_concerns.goals",
@@ -344,7 +339,7 @@
       "source": "llm",
       "note": "",
       "expected": "feel better; save marriage",
-      "produced": "Feel better and save my marriage."
+      "produced": "The patient hopes to feel better and save their marriage."
     },
     {
       "ref": "substance_use.alcohol_use",
@@ -352,7 +347,7 @@
       "source": "llm",
       "note": "",
       "expected": "Current; whisky and beer; 5 to 7 drinks nightly; about 9 months",
-      "produced": "Status: Current\nSubstance or product: Whisky and beer\nQuantity or frequency: About 5 to 7 drinks nightly\nDuration: About 9 months"
+      "produced": "Status: Current\nSubstance or product: Whisky and beer\nQuantity or frequency: Approximately 5 to 7 drinks nightly\nDuration: Approximately 9 months"
     },
     {
       "ref": "substance_use.stimulant_use",
@@ -360,15 +355,15 @@
       "source": "llm",
       "note": "",
       "expected": "Current; cocaine; approximately 0.5 gram per use; 3 to 4 times per week; about 9 months",
-      "produced": "Status: Current\nSubstance or product: Cocaine\nQuantity or frequency: About 0.5 gram per use, 3 to 4 times weekly\nDuration: About 9 months"
+      "produced": "Status: Current\nSubstance or product: Cocaine\nQuantity or frequency: Approximately 0.5 gram per use, 3 to 4 times weekly\nDuration: Approximately 9 months"
     },
     {
       "ref": "personal_history.early_childhood",
-      "verdict": "contradicted",
+      "verdict": "missing",
       "source": "llm",
-      "note": "The produced value states the patient does not know, whereas the expected value implies the facts were provided.",
+      "note": "The system explicitly stated it did not know this information.",
       "expected": "born; grew up",
-      "produced": "Patient does not know where they were born or grew up, or how they would describe themselves as a young child."
+      "produced": "Unknown regarding where the patient was born, where they grew up, and how they described themselves as a young child."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -376,7 +371,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; early career",
-      "produced": "School and early career."
+      "produced": "The patient went through school and began an early career but has no additional details to report."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -384,7 +379,7 @@
       "source": "llm",
       "note": "",
       "expected": "Married for 14 years; two children; significant marital tension during the past 6 months",
-      "produced": "Marriage; 14 years to present; current. Two children. Significant marital tension over the past 6 months."
+      "produced": "Marriage; 14 years to present; current, with significant tension over the past 6 months. Two children."
     },
     {
       "ref": "personal_history.future_goals",
@@ -392,7 +387,7 @@
       "source": "llm",
       "note": "",
       "expected": "recover; repair family",
-      "produced": "Recover and repair my family."
+      "produced": "The patient wants to recover and repair their family."
     }
   ],
   "fabricated": []

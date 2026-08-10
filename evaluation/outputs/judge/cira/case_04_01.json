@@ -3,11 +3,11 @@
   "case_id": "01",
   "scenario_case_id": "04-01",
   "persona_id": "confused",
-  "record_score": 0.9783,
+  "record_score": 0.9674,
   "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9783,
-    "record_score_contested": 0.9167,
+    "record_score": 0.9674,
+    "record_score_contested": 0.875,
     "fields_contested": 12,
     "fields_auto_resolved": 34,
     "fields_confirmed_absent": 8,
@@ -15,8 +15,8 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 44,
-      "partial": 2,
+      "match": 43,
+      "partial": 3,
       "missing": 0,
       "contradicted": 0,
       "fabricated": 0
@@ -71,22 +71,27 @@
       },
       "personal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.5,
+        "score": 0.875
       }
     }
   },
-  "flow_summary": "The system performed well in managing a difficult, disorganized patient, consistently using redirection and breaking down complex questions to ensure clarity. However, the system struggled with the standardized questionnaires (PHQ-9 and GAD-7), frequently repeating questions due to the patient's confusion rather than efficiently guiding them through the scale, which led to a repetitive and somewhat mechanical interaction during those sections.",
+  "flow_summary": "The system successfully navigated a challenging, confused patient persona by consistently breaking down complex questions and re-explaining tasks when prompted. While the system was patient and effective at gathering information, it suffered from significant redundancy, particularly in the PHQ-9 and GAD-7 sections where it frequently repeated the full question text and scale after the patient expressed confusion, and in one instance, it duplicated the entire question text within a single turn.",
   "issues": [
     {
+      "severity": "minor",
+      "category": "redundancy",
+      "evidence": "In medications turn 3, the interviewer repeated the entire question text verbatim within the same message."
+    },
+    {
       "severity": "moderate",
-      "category": "questionnaire_management",
-      "evidence": "The system repeatedly re-asked PHQ-9 and GAD-7 items when the patient expressed confusion, rather than providing a more concise or supportive way to keep the patient on track. For example: 'PHQ-9 Question 1: Over the last two weeks, how often have you been bothered by little interest or pleasure in doing things?' was asked three times."
+      "category": "flow",
+      "evidence": "The system struggled with the PHQ-9 and GAD-7, often repeating the full list of options multiple times per question when the patient was confused, rather than simplifying the delivery or confirming the patient's understanding of the scale."
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "In the GAD-7 section, the system asked 'GAD-7 Question 2: Over the last two weeks, how often have you had difficulty stopping or controlling worrying?' three times before receiving a valid answer."
+      "evidence": "The system occasionally failed to adapt its phrasing for a confused patient, leading to repetitive loops where the patient had to ask for clarification multiple times on the same item."
     }
   ],
   "field_verdicts": [
@@ -272,7 +277,7 @@
       "source": "auto",
       "note": "",
       "expected": "Father; anxiety and depression",
-      "produced": "Father; anxiety and depression. Mother; ADHD. Maternal grandfather; alcohol use disorder."
+      "produced": "Father; anxiety and depression; no additional details provided. Mother; ADHD. Maternal grandfather; alcohol use disorder."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -280,7 +285,7 @@
       "source": "auto",
       "note": "",
       "expected": "Mother; ADHD",
-      "produced": "Father; anxiety and depression. Mother; ADHD. Maternal grandfather; alcohol use disorder."
+      "produced": "Father; anxiety and depression; no additional details provided. Mother; ADHD. Maternal grandfather; alcohol use disorder."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[2]",
@@ -288,7 +293,7 @@
       "source": "auto",
       "note": "",
       "expected": "Maternal grandfather; alcohol use disorder.",
-      "produced": "Father; anxiety and depression. Mother; ADHD. Maternal grandfather; alcohol use disorder."
+      "produced": "Father; anxiety and depression; no additional details provided. Mother; ADHD. Maternal grandfather; alcohol use disorder."
     },
     {
       "ref": "substance_use.alcohol_use",
@@ -368,7 +373,7 @@
       "source": "llm",
       "note": "",
       "expected": "temper outbursts; irritable; conflicts at home and school; suspension",
-      "produced": "Temper outbursts and significant irritability at home, with conflicts escalating quickly. At school, irritability and outbursts have led to trouble, including a suspension after punching a classmate following a lost chess match; the patient continues to feel bad about this."
+      "produced": "Temper outbursts with significant irritability, followed by feeling bad afterward. Occur at home and school, sometimes involving others when tensions are high. A school suspension followed punching a classmate after losing a chess match; patient felt awful afterward."
     },
     {
       "ref": "current_concerns.goals",
@@ -376,7 +381,7 @@
       "source": "llm",
       "note": "",
       "expected": "more friends; do better in school; stop getting angry",
-      "produced": "Reduce frequent anger, build more friendships, and improve school performance."
+      "produced": "Make more friends, do better in school, and reduce frequent anger."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -384,7 +389,7 @@
       "source": "llm",
       "note": "",
       "expected": "Assessed at age 10 by DR. RAJ PATEL, child psychiatrist, for school inattention and impulsivity",
-      "produced": "Age 10; assessed by Dr. Raj Patel; referred because of school inattention and impulsivity; difficulty sitting still; findings otherwise unclear."
+      "produced": "Around age 10; for school inattention and impulsivity; possibly by Dr. Raj Patel."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -400,7 +405,7 @@
       "source": "llm",
       "note": "",
       "expected": "Behavioural therapy; age 10 to 11; approximately 12 sessions; outpatient clinic",
-      "produced": "Behavioural therapy; age 10 to 11; approximately 12 sessions; outpatient clinic (name unknown)"
+      "produced": "Behavioural therapy; age 10 to 11; approximately 12 sessions; outpatient clinic."
     },
     {
       "ref": "medications.current_medications",
@@ -408,7 +413,7 @@
       "source": "llm",
       "note": "Missing start date and side effect information.",
       "expected": "Methylphenidate short-acting; 10 mg each morning and 5 mg at noon; started September 2024; reduced appetite at lunch",
-      "produced": "Methylphenidate; 10 mg in the morning and 5 mg at noon; start date: Unknown; side effects: Unknown"
+      "produced": "Methylphenidate, short-acting; 10 mg in the morning and 5 mg at noon"
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -432,7 +437,7 @@
       "source": "llm",
       "note": "",
       "expected": "irritability; early childhood; outbursts",
-      "produced": "Birthplace: Unknown. Grew up at home. Described himself as irritable, with outbursts, even as a young child."
+      "produced": "Birthplace: Unknown. Grew up with limited recollection; described as irritable with outbursts as a young child."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -440,7 +445,7 @@
       "source": "llm",
       "note": "",
       "expected": "grade 6; school difficulties",
-      "produced": "Currently in Grade 6. School has been difficult, with inattention, impulsivity, and conflicts."
+      "produced": "Currently in Grade 6 at Northview Middle School. School has been difficult, with trouble related to schoolwork and attention and impulsivity problems. At home, siblings sometimes avoid the patient; the patient reports having outbursts since early childhood."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -448,15 +453,15 @@
       "source": "llm",
       "note": "",
       "expected": "siblings avoid; few friends",
-      "produced": "Siblings; current; significant relationship, though they often avoid him. Few friendships; no romantic relationships."
+      "produced": "Family relationships are difficult; siblings sometimes avoid the patient. Has few friends. No romantic relationships reported."
     },
     {
       "ref": "personal_history.future_goals",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing goals regarding friends and school.",
       "expected": "more friends; school; manage anger",
-      "produced": "Make more friends, do better in school, and manage anger."
+      "produced": "Manage anger more effectively."
     }
   ],
   "fabricated": []

@@ -138,7 +138,15 @@ class RuleBasedCIRA:
         lower = RuleBasedCIRA.clean(answer).lower()
         return any(marker in lower for marker in NO_MORE_MARKERS) or RuleBasedCIRA.canonical_yes_no(answer) == "no"
 
+    #: Answers that mean the same as a JSON boolean. Storing "yes"/"no" while
+    #: CIRA, the naive arm and the scenario ground truth all store true/false
+    #: made every boolean field look wrong to the record judge - a schema
+    #: mismatch scored as an intake failure.
+    _BOOL_WORDS = {"yes": True, "no": False}
+
     def save(self, section: str, field_name: str, value: Any) -> None:
+        if isinstance(value, str) and value.strip().lower() in self._BOOL_WORDS:
+            value = self._BOOL_WORDS[value.strip().lower()]
         self.record[section][field_name] = value
 
     def complete(self, section: str) -> None:
@@ -307,8 +315,22 @@ class RuleBasedCIRA:
             detail = self.ask(s, "Please briefly describe what happened. Is there any current or immediate safety concern?", answer_fn)
             self.save(s, "self_harm_details", self.unknown_or_text(detail))
             lower = detail.lower()
-            current_signal = any(x in lower for x in ("currently", "right now", "today", "immediate", "not safe", "can't stay safe", "cannot stay safe"))
-            denied = any(x in lower for x in ("no current", "not current", "not anymore", "safe now", "historical", "in the past"))
+            # Denial is checked FIRST and with wider coverage. The old order
+            # let the bare word "immediate" in "no current suicidal thoughts or
+            # immediate safety concern" register as a current signal, producing
+            # a false alarm on the historical-self-injury scenario.
+            denied = any(x in lower for x in (
+                "no current", "not current", "no immediate", "not immediate",
+                "don't have any current", "do not have any current",
+                "not anymore", "no longer", "safe now", "able to stay safe",
+                "historical", "in the past", "not having any urge",
+                "no urge", "wasn't about wanting to die",
+                "not about wanting to die",
+            ))
+            current_signal = any(x in lower for x in (
+                "currently", "right now", "today", "immediate",
+                "not safe", "can't stay safe", "cannot stay safe",
+            ))
             if current_signal and not denied:
                 self.raise_safety("Current safety concern disclosed during self-harm history")
         else:

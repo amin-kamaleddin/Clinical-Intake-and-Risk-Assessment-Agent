@@ -21,6 +21,7 @@ import json
 
 from harness import config
 from harness import personas
+from harness import provenance
 from harness.patient_simulator import PatientSimulator
 
 
@@ -39,16 +40,35 @@ def load_scenarios(case_filter: str | None = None) -> list[dict]:
 
 
 def derive_sections_completed(record: dict) -> list[str]:
-    """A section counts as completed if it holds any non-null value.
+    """A section is complete when every APPLICABLE field is filled.
 
-    This is bookkeeping, not intake behaviour, so deriving it mechanically keeps
-    the comparison fair: a section the naive intake never touched stays empty and
-    is not marked complete.
+    "Any non-null value" was not the same rule CIRA is held to. CIRA requires
+    every applicable field before a section closes; marking a naive section
+    complete on one filled field out of eleven inflated its completion rate and
+    made the comparison unfair in the naive arm's favour.
+
+    Applicable means: skip fields hidden by their controlling boolean, exactly
+    as ``prompts.builder.get_pending_fields`` does for CIRA.
     """
     completed = []
     for section in config.CANONICAL_SECTIONS:
         data = record.get(section)
-        if isinstance(data, dict) and any(v is not None for v in data.values()):
+        if not isinstance(data, dict) or not data:
+            continue
+
+        pending = False
+        for field, value in data.items():
+            if value is not None:
+                continue
+            dependency = config.CONDITIONAL_FIELDS.get(field)
+            if dependency:
+                parent, hidden_value = dependency
+                if data.get(parent) is hidden_value:
+                    continue      # correctly skipped, not missing
+            pending = True
+            break
+
+        if not pending:
             completed.append(section)
     return completed
 
@@ -69,6 +89,7 @@ def run_case(scenario: dict, persona=None) -> None:
     record["scenario_case_id"] = case_id
     record["system"] = SYSTEM
     record["persona_id"] = persona.id
+    record["run_id"] = provenance.current_run_id()
     record["sections_completed"] = derive_sections_completed(record)
 
     transcript_payload = {
@@ -76,6 +97,7 @@ def run_case(scenario: dict, persona=None) -> None:
         "scenario_case_id": case_id,
         "title": scenario.get("title", ""),
         "system": SYSTEM,
+        "run_id": provenance.current_run_id(),
         "persona_id": persona.id,
         "patient_behaviour": patient.behaviour_summary(),
         "conversation": transcript,

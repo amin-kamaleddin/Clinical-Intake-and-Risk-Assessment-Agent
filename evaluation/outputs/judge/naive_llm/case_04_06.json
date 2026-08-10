@@ -10,7 +10,7 @@
     "record_score_contested": 0.9783,
     "fields_contested": 23,
     "fields_auto_resolved": 23,
-    "fields_confirmed_absent": 8,
+    "fields_confirmed_absent": 7,
     "fields_scored": 46,
     "fields_unjudged": 0,
     "unjudged_refs": [],
@@ -19,10 +19,12 @@
       "partial": 1,
       "missing": 0,
       "contradicted": 0,
-      "fabricated": 0
+      "fabricated": 1
     },
-    "fabricated_fields": 0,
-    "fabricated_refs": [],
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_treatments"
+    ],
     "by_section": {
       "general_information": {
         "fields": 11,
@@ -76,7 +78,7 @@
       }
     }
   },
-  "flow_summary": "The system conducted a highly efficient and thorough intake. It followed a logical structure, asked one question at a time, and correctly managed the repeatable medication section by prompting for additional entries until the patient confirmed there were no more.",
+  "flow_summary": "The interviewer conducted a highly efficient and structured intake. It followed a logical progression, adhered to all requirements, and handled the questionnaire sections accurately without any unnecessary repetition or confusion.",
   "issues": [],
   "field_verdicts": [
     {
@@ -299,9 +301,9 @@
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the detail that the patient found the therapy helpful.",
+      "note": "Missing the number of sessions and the patient's assessment of the therapy.",
       "expected": "Individual psychotherapy; age 16 to 17; about 20 sessions; found it helpful",
-      "produced": "Individual psychotherapy at age 16 to 17, approximately 20 sessions."
+      "produced": "Individual psychotherapy from age 16 to 17."
     },
     {
       "ref": "medications.current_medications[0]",
@@ -309,7 +311,7 @@
       "source": "llm",
       "note": "",
       "expected": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth",
-      "produced": "Citalopram 20 mg each morning, started March 2025, mild dry mouth; multivitamin, one tablet daily, start date unknown, no side effects; oral contraceptive, one tablet daily, started 2022, no side effects."
+      "produced": "Citalopram 20 mg each morning, started March 2025; mild dry mouth. Multivitamin, one tablet daily; start date unknown; no side effects. Oral contraceptive, one tablet daily, started 2022; no side effects."
     },
     {
       "ref": "medications.current_medications[1]",
@@ -317,7 +319,7 @@
       "source": "llm",
       "note": "",
       "expected": "Multivitamin; one tablet daily; start date unknown; no side effects",
-      "produced": "Citalopram 20 mg each morning, started March 2025, mild dry mouth; multivitamin, one tablet daily, start date unknown, no side effects; oral contraceptive, one tablet daily, started 2022, no side effects."
+      "produced": "Citalopram 20 mg each morning, started March 2025; mild dry mouth. Multivitamin, one tablet daily; start date unknown; no side effects. Oral contraceptive, one tablet daily, started 2022; no side effects."
     },
     {
       "ref": "medications.current_medications[2]",
@@ -325,7 +327,7 @@
       "source": "llm",
       "note": "",
       "expected": "Oral contraceptive; one tablet daily; started 2022; no side effects.",
-      "produced": "Citalopram 20 mg each morning, started March 2025, mild dry mouth; multivitamin, one tablet daily, start date unknown, no side effects; oral contraceptive, one tablet daily, started 2022, no side effects."
+      "produced": "Citalopram 20 mg each morning, started March 2025; mild dry mouth. Multivitamin, one tablet daily; start date unknown; no side effects. Oral contraceptive, one tablet daily, started 2022; no side effects."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -421,7 +423,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up; shy",
-      "produced": "Born and grew up there; was shy."
+      "produced": "Born and grew up shy."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -437,7 +439,7 @@
       "source": "llm",
       "note": "",
       "expected": "single; dysfunctional relationships",
-      "produced": "Single; relationships have been dysfunctional."
+      "produced": "Single and has had dysfunctional relationships."
     },
     {
       "ref": "personal_history.future_goals",
@@ -448,5 +450,16 @@
       "produced": "More satisfying work and healthier relationships."
     }
   ],
-  "fabricated": []
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_treatments",
+      "section": "past_psychiatric_history",
+      "field": "previous_treatments",
+      "entry_index": null,
+      "expected": null,
+      "produced": "Patient does not know.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
 }

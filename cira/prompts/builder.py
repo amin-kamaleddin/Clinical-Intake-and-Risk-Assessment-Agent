@@ -124,12 +124,64 @@ def build_voice_context(state: AliceState) -> str:
     )
 
 
+SAFETY_HANDLED_DIRECTIVE = """
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SAFETY ALREADY HANDLED - RESUME THE INTAKE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+The safety flag is raised and the crisis message has ALREADY been delivered to
+this patient. That part of your job is done.
+
+- Do NOT send the crisis message again.
+- Do NOT keep issuing safety instructions ("tell the nurse", "stay with staff",
+  "show them this message"). Repeating them does not increase safety; it stops
+  the intake, and the clinician who receives this record needs the rest of it.
+- Your next message MUST be the pending intake question named above.
+- You may acknowledge what the patient said in one short sentence first, then
+  ask the question. One sentence, not a paragraph.
+- Record the safety disclosure in the appropriate history field - for a current
+  disclosure of suicidal thoughts, save the description in self_harm_details -
+  and then continue.
+- If the patient discloses again later, acknowledge briefly and keep going. The
+  flag is already raised; nothing further is triggered by repetition.
+""".strip()
+
+
+SAFETY_HISTORY_CLEARED_DIRECTIVE = """
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SELF-HARM HISTORY ALREADY ASSESSED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Earlier in this intake the patient disclosed a history of self-harm, you asked a
+safety clarification, and they confirmed the concern is HISTORICAL with no
+current risk. That assessment is recorded and stands.
+
+- Do NOT raise the safety flag, and do NOT repeat the crisis message, if the
+  patient mentions that same history again. Referring back to a past event is
+  not a new disclosure. Acknowledge it briefly and continue the intake.
+- Do NOT ask the safety clarification about that history a second time.
+- This does NOT apply to anything new. If the patient describes CURRENT
+  suicidal thoughts, a current intent or plan, current self-harm urges, or says
+  they cannot stay safe now, raise the flag immediately as normal. A prior
+  historical assessment NEVER suppresses a current disclosure.
+""".strip()
+
+
 def build_system_prompt(state: AliceState) -> str:
-    """Combine static prompt + voice context + dynamic section prompt."""
-    return (
-        STATIC_PROMPT
-        + "\n\n"
-        + build_voice_context(state)
-        + "\n\n"
-        + build_section_prompt(state)
-    )
+    """Combine static prompt + voice context + dynamic section prompt.
+
+    Once the safety message has been delivered, an explicit resume directive is
+    appended. Without it the conversation fills with safety text and the model
+    keeps generating more of it: on the active-risk scenario CIRA issued seven
+    consecutive safety instructions, never returned to the pending question, and
+    two sections were abandoned - including self_harm_details, the field the
+    disclosure was supposed to populate.
+    """
+    parts = [
+        STATIC_PROMPT,
+        build_voice_context(state),
+        build_section_prompt(state),
+    ]
+    if state.get("safety_text_sent"):
+        parts.append(SAFETY_HANDLED_DIRECTIVE)
+    elif state.get("safety_history_cleared"):
+        parts.append(SAFETY_HISTORY_CLEARED_DIRECTIVE)
+    return "\n\n".join(parts)

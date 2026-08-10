@@ -251,3 +251,23 @@ NAIVE_API_KEY = os.getenv("CIRA_NAIVE_API_KEY")     # None -> default key
 NAIVE_REASONING_EFFORT = os.getenv("CIRA_NAIVE_REASONING_EFFORT", "none")
 NAIVE_TEMPERATURE = float(os.getenv("CIRA_NAIVE_TEMPERATURE", "0"))
 NAIVE_MAX_TURNS = int(os.getenv("CIRA_NAIVE_MAX_TURNS", "90"))
+
+
+# ── Conditional fields ──────────────────────────────────────────────────
+# Mirrors cira/prompts/builder.py. A field listed here is not required
+# when its controlling boolean holds the hidden value, so "complete"
+# means the same thing for every system being compared.
+CONDITIONAL_FIELDS = {
+    "family_doctor_name":                 ("has_family_doctor", False),
+    "psychiatrist_name":                  ("has_psychiatrist", False),
+    "assessment_details":                 ("previously_assessed", False),
+    "hospital_details":                   ("hospital_admission", False),
+    "self_harm_details":                  ("self_harm_history", False),
+    "current_medications":                ("has_current_medications", False),
+    "past_medication_details":            ("has_past_medications", False),
+    "medical_conditions":                 ("has_medical_conditions", False),
+    "surgical_history":                   ("has_surgical_history", False),
+    "medication_allergies":               ("has_medication_allergies", False),
+    "family_psychiatric_history_details": ("has_family_psychiatric_history", False),
+    "legal_case_details":                 ("active_legal_cases", False),
+}

@@ -1,28 +1,3 @@
-"""Run the whole CIRA evaluation with one command.
-
-Pipeline
---------
-1. cira        - drive the live CIRA agent          -> outputs/cira/{transcripts,records}
-2. rule_based  - run the rule-based baseline        -> outputs/rule_based/{transcripts,records}
-3. score       - deterministic checks for BOTH      -> outputs/reports/<system>_deterministic.json
-4. judge       - blinded LLM judge for BOTH         -> outputs/judge/... + reports/judge_comparison.json
-5. summary     - combine everything                 -> outputs/reports/summary.json
-
-Usage
------
-    python run_all.py                      # everything
-    python run_all.py --case 04-01         # one scenario end-to-end
-    python run_all.py --skip cira          # e.g. no live agent available
-    python run_all.py --only rule_based score
-    python run_all.py --systems rule_based # limit scoring/judging to one system
-
-Notes
------
-* Stages that need external services (the live CIRA package, LLM API keys for the
-  patient simulator and judge) fail gracefully: the failure is reported and the
-  run continues, so a partial environment still produces whatever it can.
-* Deterministic scoring and judging only run for systems whose artifacts exist.
-"""
 
 from __future__ import annotations
 
@@ -32,6 +7,7 @@ import time
 
 from harness import config
 from harness import personas
+from harness import provenance
 from harness.stages import run_cira, run_rule_based, run_naive, run_judge, score_records
 
 
@@ -89,6 +65,13 @@ def stage_summary(systems):
     """Combine the deterministic and judge reports into one file."""
     summary = {"generated_at": time.strftime("%Y-%m-%d %H:%M:%S"), "systems": {}}
 
+    # Provenance: which models, prompts, scenarios and code produced this.
+    summary["provenance"] = provenance.load_manifest()
+    freshness = provenance.check_artifact_freshness(systems)
+    summary["artifact_freshness"] = freshness
+    if not freshness["clean"]:
+        print(provenance.format_freshness(freshness))
+
     # Record which patients produced these numbers. Without it a summary is not
     # reproducible: the seed is what makes two runs comparable.
     if config.PERSONA_ASSIGNMENT_PATH.exists():
@@ -111,6 +94,7 @@ def stage_summary(systems):
             entry["deterministic"] = det.get("summary")
             entry["by_persona"] = (det.get("summary") or {}).get("by_persona")
             entry["structured"] = (det.get("summary") or {}).get("structured")
+            entry["safety"] = (det.get("summary") or {}).get("safety")
         summary["systems"][system] = entry
 
     if config.JUDGE_REPORT_PATH.exists():
@@ -133,26 +117,51 @@ def stage_summary(systems):
     print("\n" + "=" * 72)
     print("COMBINED SUMMARY")
     print("=" * 72)
-    print(f"{'system':>12} | {'structured':>10} {'record':>8} {'flow':>8} "
-          f"{'fabricated/case':>16}")
-    print("-" * 72)
+    # Four metrics, each with a defensible definition. Everything else in the
+    # reports is a diagnostic and is deliberately not printed here: a reviewer
+    # reading this table should see only numbers that can be defended.
+    print("PRIMARY METRICS")
+    print(f"{'system':>12} | {'safety':>7} {'structured':>10} "
+          f"{'record*':>8} {'flow':>7} {'fabricated/case':>16}")
+    print("-" * 74)
     for system, entry in summary["systems"].items():
         struct = (entry.get("structured") or {}).get("mean_score")
         jdg = entry.get("judge") or {}
-        print(f"{system:>12} | {str(struct):>10} "
-              f"{str(jdg.get('mean_record_score')):>8} "
-              f"{str(jdg.get('mean_flow_score')):>8} "
+        safety = entry.get("safety") or {}
+        print(f"{system:>12} | {str(safety.get('safety_score')):>7} "
+              f"{str(struct):>10} "
+              f"{str(jdg.get('mean_record_score_contested')):>8} "
+              f"{str(jdg.get('mean_flow_score')):>7} "
               f"{str(jdg.get('fabricated_fields_per_case')):>16}")
+        if safety.get("missed_risk_cases"):
+            print(f"{system:>12} |   *** MISSED RISK on "
+                  f"{', '.join(safety['missed_risk_cases'])} ***")
+        if safety.get("false_alarm_cases"):
+            print(f"{system:>12} |   false alarm on "
+                  f"{', '.join(safety['false_alarm_cases'])} "
+                  f"(distractor specificity "
+                  f"{safety.get('distractor_specificity')})")
+    # Degradation across patient difficulty - the result the personas exist for.
+    print()
+    print("BY PATIENT DIFFICULTY (easiest -> hardest)")
+    print(f"{'system':>12} | {'persona':>9} | {'structured':>10} {'record':>8} {'flow':>7}")
+    print("-" * 62)
+    for system, entry in summary["systems"].items():
         for persona_id, stats in (entry.get("by_persona") or {}).items():
             judge_persona = (
                 (summary.get("judge", {}).get("by_persona", {}) or {})
                 .get(system, {})
                 .get(persona_id, {})
             )
-            print(f"{system:>12} |   {persona_id:>8}: "
-                  f"structured={stats['mean_structured_score']} "
-                  f"record={judge_persona.get('mean_record_score')} "
-                  f"flow={judge_persona.get('mean_flow_score')}")
+            print(f"{system:>12} | {persona_id:>9} | "
+                  f"{str(stats['mean_structured_score']):>10} "
+                  f"{str(judge_persona.get('mean_record_score')):>8} "
+                  f"{str(judge_persona.get('mean_flow_score')):>7}")
+
+    print()
+    print("* record = shared contested field set (same fields scored for every")
+    print("  system). Overall record score and per-system contested sets are in")
+    print("  summary.json; process checks are diagnostics and are not scored.")
     print("Summary saved to:", config.SUMMARY_REPORT_PATH)
     print("=" * 72)
 
@@ -191,6 +200,9 @@ def main() -> None:
     # Resolve and persist the assignment ONCE, before any system runs, so all
     # three systems provably face the same patient on the same case and the
     # mapping survives in outputs/reports/persona_assignment.json.
+    # Written before anything runs, so every artifact can be stamped with it.
+    manifest = provenance.write_manifest()
+
     persona_report = personas.write_assignment(
         seed=args.persona_seed,
         strategy=args.persona_strategy,
@@ -203,6 +215,10 @@ def main() -> None:
     print("Systems:", ", ".join(systems))
     if args.case:
         print("Case filter:", args.case)
+    print(f"Run id: {manifest['run_id']}   code: {manifest['code_revision']}")
+    print(f"Models: cira={manifest['models']['cira']} "
+          f"patient={manifest['models']['patient_simulator']} "
+          f"judge={manifest['models']['judge']}")
     print("=" * 72)
     print(personas.format_assignment_table(persona_report))
 

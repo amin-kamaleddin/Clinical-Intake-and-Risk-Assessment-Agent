@@ -76,12 +76,12 @@
       }
     }
   },
-  "flow_summary": "The system conducted a thorough and efficient intake, maintaining a clear and logical structure throughout. It handled the patient's responses well, though it occasionally relied on redundant 'Please answer yes or no' prompts when the patient had already provided a clear answer.",
+  "flow_summary": "The system conducted a thorough and efficient intake, maintaining a professional tone and adhering to the required structure. While the flow was generally excellent, there was a minor redundancy in the family psychiatric history section where the system prompted for a 'yes/no' confirmation after the patient had already provided a detailed answer.",
   "issues": [
     {
       "severity": "minor",
-      "category": "redundant_questioning",
-      "evidence": "In the medications section, the patient answered 'Prenatal multivitamin with iron.' The system then asked 'Please answer yes or no.' Similarly, in the medical history section, the patient answered 'Asthma.' and the system followed with 'Please answer yes or no.'"
+      "category": "redundancy",
+      "evidence": "The interviewer asked 'Please answer yes or no' immediately after the patient had already provided a detailed description of her family's mental health history."
     }
   ],
   "field_verdicts": [
@@ -147,7 +147,7 @@
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": "yes"
+      "produced": true
     },
     {
       "ref": "general_information.family_doctor_name",
@@ -163,7 +163,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "past_psychiatric_history.previously_assessed",
@@ -171,7 +171,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "past_psychiatric_history.hospital_admission",
@@ -179,7 +179,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "past_psychiatric_history.self_harm_history",
@@ -187,7 +187,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "medications.has_current_medications",
@@ -195,7 +195,7 @@
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": "yes"
+      "produced": true
     },
     {
       "ref": "medications.has_past_medications",
@@ -203,7 +203,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "medical_history.has_medical_conditions",
@@ -211,7 +211,7 @@
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": "yes"
+      "produced": true
     },
     {
       "ref": "medical_history.has_surgical_history",
@@ -219,7 +219,7 @@
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": "yes"
+      "produced": true
     },
     {
       "ref": "medical_history.height",
@@ -243,7 +243,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "family_psychiatric_history.has_family_psychiatric_history",
@@ -251,7 +251,7 @@
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": "yes"
+      "produced": true
     },
     {
       "ref": "substance_use.alcohol_use",
@@ -315,7 +315,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -323,7 +323,7 @@
       "source": "llm",
       "note": "",
       "expected": "low mood; fatigue; postpartum; overwhelmed",
-      "produced": "Low mood, fatigue, postpartum, and feeling overwhelmed."
+      "produced": "Low mood, fatigue, and feeling overwhelmed postpartum."
     },
     {
       "ref": "current_concerns.goals",
@@ -331,7 +331,7 @@
       "source": "llm",
       "note": "",
       "expected": "feel like herself; cope; care for children",
-      "produced": "I want to feel like myself again, cope better, and take care of my children."
+      "produced": "To feel like myself again and cope better so I can care for my children."
     },
     {
       "ref": "medications.current_medications",
@@ -339,15 +339,15 @@
       "source": "llm",
       "note": "",
       "expected": "Prenatal multivitamin with iron; one tablet daily; started during pregnancy; no side effects known",
-      "produced": "Medication 1: Name Or Description: Prenatal multivitamin with iron.; Dose: One tablet daily.; Start Or Duration: During pregnancy.; Side Effects: None known."
+      "produced": "Medication 1: Name Or Description: Prenatal multivitamin with iron.; Dose: One tablet daily.; Start Or Duration: During pregnancy.; Side Effects: No side effects that I know of."
     },
     {
       "ref": "medical_history.medical_conditions",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing details regarding childhood diagnosis and inhaler use.",
+      "note": "Missing details regarding childhood diagnosis and current use of salbutamol inhaler.",
       "expected": "Asthma; diagnosed in childhood; uses salbutamol inhaler as needed",
-      "produced": "Asthma."
+      "produced": "I have asthma."
     },
     {
       "ref": "medical_history.surgical_history",
@@ -363,7 +363,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; depression after the birth of her second child",
-      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Depression after the birth of her second child.; Additional Details: My maternal aunt has anxiety."
+      "produced": "Family member 1: Name Or Description: My mother and my maternal aunt.; Diagnosis Or Condition: My mother had depression after the birth of her second child, and my maternal aunt has anxiety.; Additional Details: No, those are all."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -371,7 +371,7 @@
       "source": "llm",
       "note": "",
       "expected": "Maternal aunt; anxiety.",
-      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Depression after the birth of her second child.; Additional Details: My maternal aunt has anxiety."
+      "produced": "Family member 1: Name Or Description: My mother and my maternal aunt.; Diagnosis Or Condition: My mother had depression after the birth of her second child, and my maternal aunt has anxiety.; Additional Details: No, those are all."
     },
     {
       "ref": "substance_use.nicotine_use",
@@ -379,7 +379,7 @@
       "source": "llm",
       "note": "Missing the detail about stopping when pregnancy was confirmed.",
       "expected": "Previous; cigarettes; about 5 per day; used for 4 years; stopped when pregnancy was confirmed",
-      "produced": "Status: Previous; Substance or product: Cigarettes.; Quantity or frequency: About 5 per day.; Duration: For 4 years."
+      "produced": "Status: Previous; Substance or product: Cigarettes.; Quantity or frequency: About 5 per day.; Duration: I used them for 4 years."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -393,9 +393,9 @@
       "ref": "education_employment_legal_history.employment_history[0]",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the detail that she stopped working during pregnancy.",
+      "note": "Missing the detail that employment stopped during pregnancy.",
       "expected": "Barista at Lakeside Coffee; 2021 to 2025; stopped during pregnancy",
-      "produced": "Job 1: Name Or Description: Lakeside Coffee.; Job Title: Barista.; Dates: 2021 to 2025.\nJob 2: Name Or Description: Yes.; Job Title: Homemaker.; Dates: 2025 to present."
+      "produced": "Job 1: Name Or Description: Lakeside Coffee.; Job Title: Barista.; Dates: 2021 to 2025.\nJob 2: Name Or Description: Yes, I’m currently a homemaker at home.; Job Title: Homemaker.; Dates: 2025 to present."
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
@@ -403,7 +403,7 @@
       "source": "llm",
       "note": "",
       "expected": "Currently homemaker.",
-      "produced": "Job 1: Name Or Description: Lakeside Coffee.; Job Title: Barista.; Dates: 2021 to 2025.\nJob 2: Name Or Description: Yes.; Job Title: Homemaker.; Dates: 2025 to present."
+      "produced": "Job 1: Name Or Description: Lakeside Coffee.; Job Title: Barista.; Dates: 2021 to 2025.\nJob 2: Name Or Description: Yes, I’m currently a homemaker at home.; Job Title: Homemaker.; Dates: 2025 to present."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -411,7 +411,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born and grew up there."
+      "produced": "I was born and grew up here."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -419,7 +419,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; coffee shop work",
-      "produced": "School and coffee shop work."
+      "produced": "I went to school and worked at a coffee shop."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -427,7 +427,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; husband; unsupportive; absent",
-      "produced": "I’m married, and my husband is absent and unsupportive."
+      "produced": "I’m married, and my husband has been unsupportive and absent."
     },
     {
       "ref": "personal_history.future_goals",
@@ -435,7 +435,7 @@
       "source": "llm",
       "note": "",
       "expected": "care for children; return to work",
-      "produced": "Care for my children and return to work."
+      "produced": "I want to care for my children and return to work."
     }
   ],
   "fabricated": []

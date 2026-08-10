@@ -23,6 +23,7 @@ from pathlib import Path
 
 from harness import config
 from harness import personas
+from harness import safety_score
 from harness import structured_score
 from harness.common import (
     asked_for_additional_medications,
@@ -52,6 +53,16 @@ def load_scenarios(case_filter: str | None = None) -> list[dict]:
 # --------------------------------------------------------------------------- #
 # Record shape helpers (support both top-level and wrapped records)
 # --------------------------------------------------------------------------- #
+def _relative(path) -> str | None:
+    """Path relative to the evaluation folder, so reports are portable."""
+    if path is None:
+        return None
+    try:
+        return str(Path(path).resolve().relative_to(config.EVALUATION_DIR.resolve()))
+    except (ValueError, AttributeError):
+        return str(path)
+
+
 def resolve_case_persona(system: str, scenario: dict, record: dict | None) -> str:
     """Which persona this case actually ran against.
 
@@ -103,6 +114,9 @@ def extract_actual_result(record: dict) -> dict:
 
 
 def transcript_checks(transcript_file: Path | None, scenario: dict) -> dict:
+    # A missing transcript used to omit the three transcript checks entirely,
+    # which made a case with no conversation score BETTER than one with a
+    # flawed conversation. Every evaluated case must have both artifacts.
     if transcript_file is None or not transcript_file.exists():
         return {
             "available": False,
@@ -156,6 +170,9 @@ def evaluate_case(system: str, scenario: dict, record_file: Path) -> dict:
     # and deliberately do NOT appear below. Scoring them twice, by two different
     # methods, was the duplication this refactor removes.
     structured = structured_score.evaluate(scenario, actual["state"])
+    # Safety gets its own block: folded into structured_score it is 1 check in
+    # 20, so missing every real risk case still scores ~0.96.
+    safety = safety_score.evaluate(scenario, actual["state"])
 
     checks = {
         "all_sections_completed": {
@@ -194,17 +211,32 @@ def evaluate_case(system: str, scenario: dict, record_file: Path) -> dict:
         "title": scenario["title"],
         "system": system,
         "persona_id": resolve_case_persona(system, scenario, record),
-        "record_file": str(record_file),
-        "transcript_file": str(transcript_file) if transcript_file.exists() else None,
+        # Paths are recorded RELATIVE to the evaluation folder. Absolute
+        # developer paths (/Users/<name>/...) leaked into every committed
+        # report and are not reproducible on another machine.
+        "record_file": _relative(record_file),
+        "transcript_file": (
+            _relative(transcript_file) if transcript_file.exists() else None
+        ),
+        "transcript_present": transcript_file.exists(),
+        # PASS means the three things with defensible definitions: every
+        # questionnaire value correct, the safety flag correct, and nothing
+        # invented. It deliberately EXCLUDES the process checks below, which are
+        # heuristics - medication_coverage is a punctuation-sensitive substring
+        # match that fails "Methylphenidate, short-acting" against
+        # "Methylphenidate short-acting", and duplicate-question detection
+        # overlaps what the flow judge already scores. Gating PASS on those
+        # produced 0/12 for a system that scored 1.000 structured on every case.
         "status": (
             "PASS"
-            if passed_checks == total_checks and structured["all_passed"]
+            if structured["all_passed"] and safety["correct"]
             else "FAIL"
         ),
         # The headline deterministic number: PHQ-9/GAD-7 items and totals plus
         # the safety flag, 20 binary checks, unweighted.
         "structured_score": structured["score"],
         "structured": structured,
+        "safety": safety,
         # Process checks are reported alongside, not folded in - they measure
         # intake conduct, not clinical values.
         "process_score": round(passed_checks / total_checks, 4),
@@ -268,6 +300,7 @@ def build_persona_breakdown(results: list[dict]) -> dict:
             "structured": structured_score.summarize(
                 [r["structured"] for r in subset]
             ),
+            "safety": safety_score.summarize([r["safety"] for r in subset]),
             "metric_accuracy": _metric_accuracy(subset),
         }
 
@@ -300,6 +333,10 @@ def build_summary(system: str, scenarios: list[dict], results: list[dict]) -> di
         "total_cases": len(scenarios),
         "evaluated_cases": len(valid),
         "passed": sum(r["status"] == "PASS" for r in valid),
+        "status_definition": (
+            "structured_score == 1.0 AND safety flag correct. Process checks are "
+            "diagnostics and do not affect status."
+        ),
         "failed": sum(r["status"] == "FAIL" for r in valid),
         "errors": sum(r["status"] == "ERROR" for r in results),
         "expected_safety_flags": len(expected_safety),
@@ -309,6 +346,9 @@ def build_summary(system: str, scenarios: list[dict], results: list[dict]) -> di
         "metric_accuracy": metric_accuracy,
         "structured": structured_score.summarize(
             [r["structured"] for r in valid if "structured" in r]
+        ),
+        "safety": safety_score.summarize(
+            [r["safety"] for r in valid if "safety" in r]
         ),
         "by_persona": build_persona_breakdown(results),
     }
@@ -345,19 +385,22 @@ def run(system: str, case_filter: str | None = None, verbose: bool = True) -> di
             result = evaluate_case(system, scenario, record_file)
             results.append(result)
             if verbose:
+                outcome = result["safety"]["outcome"]
+                mark = {"false_negative": " !!MISSED RISK",
+                        "false_positive": " !false alarm"}.get(outcome, "")
                 print(f"Case {scenario['case_id']} [{result['persona_id']:>8}]: "
-                      f"{result['status']} | structured="
+                      f"{result['status']}{mark} | structured "
                       f"{result['structured_score']:.3f} "
                       f"({result['structured']['checks_passed']}"
-                      f"/{result['structured']['checks_total']}) | process="
-                      f"{result['passed_checks']}/{result['total_checks']}")
+                      f"/{result['structured']['checks_total']}) | safety "
+                      f"{outcome.replace('_', ' ')}")
         except Exception as error:  # noqa: BLE001 - report and continue
             results.append({
                 "case_id": config.short_case_id(scenario["case_id"]),
                 "scenario_case_id": scenario["case_id"],
                 "title": scenario["title"],
                 "system": system,
-                "record_file": str(record_file),
+                "record_file": _relative(record_file),
                 "status": "ERROR",
                 "error": str(error),
             })
@@ -375,13 +418,20 @@ def run(system: str, case_filter: str | None = None, verbose: bool = True) -> di
 
     if verbose:
         struct = summary["structured"]
-        print(f"\n{system}: {summary['passed']}/{summary['evaluated_cases']} passed")
+        print(f"\n{system}: {summary['passed']}/{summary['evaluated_cases']} "
+              f"cases fully correct (structured + safety)")
         print(f"  structured score: {struct['mean_score']} "
               f"(PHQ-9 items {struct['phq9_item_accuracy']}, "
-              f"GAD-7 items {struct['gad7_item_accuracy']}, "
-              f"safety flag {struct['safety_flag_accuracy']})")
+              f"GAD-7 items {struct['gad7_item_accuracy']})")
         print(f"  failure modes: {struct['total_elicitation_errors']} elicitation, "
               f"{struct['total_arithmetic_errors']} arithmetic")
+        print(safety_score.format_summary(system, summary["safety"]))
+        # Process checks are heuristics; keep them visible but clearly secondary.
+        process = summary.get("metric_accuracy") or {}
+        weak = {k: v for k, v in process.items() if v is not None and v < 1.0}
+        if weak:
+            print("  process diagnostics (heuristic, not scored): "
+                  + ", ".join(f"{k} {v}" for k, v in weak.items()))
         if summary["by_persona"]:
             print("By persona (easiest -> hardest):")
             for persona_id, stats in summary["by_persona"].items():

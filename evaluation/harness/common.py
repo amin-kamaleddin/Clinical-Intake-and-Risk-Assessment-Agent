@@ -25,6 +25,22 @@ import re
 # --------------------------------------------------------------------------- #
 # Text / id primitives
 # --------------------------------------------------------------------------- #
+# Punctuation is stripped for MATCHING only. Ground truth writes
+# "Methylphenidate short-acting" while a record may write "Methylphenidate,
+# short-acting" - identical drugs, and the comma alone was failing the
+# medication-coverage check.
+_PUNCTUATION_FOR_MATCHING = str.maketrans("", "", ",;:.'\"()[]{}")
+
+
+def normalize_for_matching(value) -> str:
+    """Normalisation used for substring coverage checks, not for display."""
+    return " ".join(
+        str(value if value is not None else "").translate(
+            _PUNCTUATION_FOR_MATCHING
+        ).lower().split()
+    )
+
+
 def normalize_text(value) -> str:
     return re.sub(r"\s+", " ", str(value or "")).strip().lower()
 
@@ -81,12 +97,12 @@ def medication_capture_check(scenario: dict, medications_state: dict | None) -> 
     for field in ("current_medications", "past_medication_details"):
         entries = split_medication_entries(expected_meds.get(field))
         expected_names = [medication_name(entry) for entry in entries]
-        actual_text = normalize_text(actual_meds.get(field))
+        actual_text = normalize_for_matching(actual_meds.get(field))
 
         missing = [
             name
             for name in expected_names
-            if normalize_text(name) not in actual_text
+            if normalize_for_matching(name) not in actual_text
         ]
         passed = not missing
         all_passed = all_passed and passed

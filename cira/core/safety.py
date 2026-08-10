@@ -1,10 +1,3 @@
-"""High-precision deterministic safety detection utilities.
-
-This module intentionally handles only clear, current, first-person safety
-statements. Ambiguous, historical, negated, hypothetical, and third-person
-statements should be evaluated by CIRA's LLM safety instructions instead of
-being forced through a keyword-only rule.
-"""
 
 from __future__ import annotations
 
@@ -18,14 +11,12 @@ SAFETY_REPLY = (
 )
 
 
-# These patterns are intentionally narrow. They require a first-person,
-# present-tense statement that clearly expresses current risk.
 _CURRENT_FIRST_PERSON_PATTERNS = [
     # English
-    r"\bi\s+(?:am|'m)\s+(?:currently\s+)?(?:thinking about|considering)\s+(?:suicide|killing myself|hurting myself)\b",
+    r"\bi(?:\s+am|'m)\s+(?:currently\s+)?(?:thinking about|considering)\s+(?:suicide|killing myself|hurting myself)\b",
     r"\bi\s+(?:currently\s+)?want\s+to\s+(?:die|kill myself|hurt myself|end my life)\b",
     r"\bi\s+(?:currently\s+)?(?:plan|intend)\s+to\s+(?:kill myself|hurt myself|end my life|hurt someone|kill someone)\b",
-    r"\bi\s+(?:am|'m)\s+(?:currently\s+)?afraid\s+i\s+(?:may|might|will)\s+(?:hurt|kill)\s+(?:myself|someone)\b",
+    r"\bi(?:\s+am|'m)\s+(?:currently\s+)?afraid\s+i\s+(?:may|might|will)\s+(?:hurt|kill)\s+(?:myself|someone)\b",
     r"\bi\s+(?:may|might|will)\s+(?:hurt|kill)\s+(?:myself|someone)\s+(?:today|tonight|now|soon)\b",
     r"\bi\s+(?:feel|think)\s+i\s+would\s+be\s+better\s+off\s+dead\b",
     r"\bi\s+(?:sometimes\s+|still\s+sometimes\s+)?(?:feel|think)\s+(?:that\s+)?i\s+would\s+be\s+better\s+off\s+dead\b",
@@ -33,6 +24,28 @@ _CURRENT_FIRST_PERSON_PATTERNS = [
     r"\bi\s+(?:sometimes\s+)?wish\s+to\s+die\b",
     r"\bi\s+(?:do not|don't)\s+want\s+to\s+be\s+alive\b",
     r"\bi\s+(?:feel|think)\s+there\s+is\s+no\s+reason\s+to\s+live\b",
+
+    # Direct statements of current risk. These were absent, so "I am not safe
+    # right now" and "I am suicidal" fell through the deterministic gate
+    # entirely and depended on the model choosing to call raise_safety_flag.
+    # Negation is handled by requiring the words to be adjacent: "i am not
+    # suicidal" cannot match r"i am suicidal".
+    r"\bi(?:\s+am|'m)\s+(?:currently\s+|actively\s+)?suicidal\b",
+    r"\bi\s+feel\s+(?:currently\s+)?suicidal\b",
+    r"\bi(?:\s+am|'m)\s+feeling\s+(?:currently\s+)?suicidal\b",
+    r"\bi(?:\s+am|'m)\s+not\s+safe\b",
+    r"\bi\s+(?:can'?t|cannot|am unable to)\s+(?:keep|stay|remain|feel)\s+(?:myself\s+)?safe\b",
+    r"\bi\s+(?:do not|don't)\s+(?:feel|think i am)\s+safe\b",
+    r"\bi\s+(?:have|'ve\s+got)\s+(?:current\s+|active\s+)?"
+    r"(?:suicidal\s+thoughts|thoughts\s+of\s+(?:suicide|killing myself|hurting myself))\b",
+    r"\bi(?:\s+am|'m)\s+having\s+(?:current\s+|active\s+)?"
+    r"(?:suicidal\s+thoughts|thoughts\s+of\s+(?:suicide|killing myself|hurting myself))\b",
+    r"\bi\s+(?:have|'ve got)\s+(?:a\s+)?plan\s+(?:and\s+intent\s+)?"
+    r"(?:to\s+)?(?:kill|hurt|end)\b",
+    r"\bi(?:\s+am|'m)\s+going\s+to\s+(?:kill|hurt)\s+myself\b",
+    r"\bi(?:\s+am|'m)\s+going\s+to\s+end\s+my\s+life\b",
+    r"\bi\s+mean\s+to\s+(?:do it|kill myself|end my life)\b",
+    r"\bi\s+(?:want|need)\s+to\s+end\s+it\s+all\b",
 
     # French
     r"\bje\s+(?:pense|songe)\s+(?:actuellement\s+)?(?:au suicide|à me suicider|à me faire du mal)\b",
@@ -77,6 +90,20 @@ _COMPILED_EXCLUSIONS = [
 ]
 
 
+# Clause boundaries: sentence punctuation, and the conjunctions that join an
+# unrelated historical statement to a current one.
+_CLAUSE_SPLIT = re.compile(
+    r"(?:[.!?;]+\s+)|(?:,?\s+\b(?:and|but|however|although|though|while)\b\s+)",
+    flags=re.IGNORECASE,
+)
+
+
+def _split_clauses(text: str) -> list[str]:
+    """Split a message into independently assessable clauses."""
+    parts = [part.strip() for part in _CLAUSE_SPLIT.split(text)]
+    return [part for part in parts if part]
+
+
 def explicit_safety_trigger(text: str) -> bool:
     """Return ``True`` only for clear current first-person safety risk.
 
@@ -91,6 +118,24 @@ def explicit_safety_trigger(text: str) -> bool:
     normalized_text = " ".join(text.strip().split())
     if not normalized_text:
         return False
+
+    # Evaluate CLAUSE BY CLAUSE, not over the whole message.
+    #
+    # Applying the exclusions to the entire message first meant one historical
+    # or third-person phrase suppressed a current disclosure sitting beside it:
+    # "My brother died by suicide and I currently want to die" was silently
+    # dropped, because the family-history exclusion matched the first half.
+    # A false negative here is the worst outcome the system can produce.
+    #
+    # Each clause is judged on its own. If ANY clause states current
+    # first-person risk and is not itself excluded, the gate fires. Whole-message
+    # evaluation is kept as an additional path so nothing that previously
+    # triggered can stop triggering.
+    for clause in _split_clauses(normalized_text):
+        if any(p.search(clause) for p in _COMPILED_EXCLUSIONS):
+            continue
+        if any(p.search(clause) for p in _COMPILED_CURRENT_PATTERNS):
+            return True
 
     if any(pattern.search(normalized_text) for pattern in _COMPILED_EXCLUSIONS):
         return False

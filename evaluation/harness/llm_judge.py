@@ -26,6 +26,7 @@ Both stay blinded: the system's identity is never in either prompt.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any, Literal
 
@@ -210,6 +211,52 @@ def _build_model(schema, max_tokens: int | None = None):
     return base.with_structured_output(schema)
 
 
+# Blinding. The system key was already excluded from the payload, but the
+# transcript still identified the system twice over: every assistant turn is
+# labelled "CIRA", and CIRA introduces itself by name in its opening message.
+# A judge told the identity is hidden could still read it off the first line.
+_IDENTITY_PATTERNS = [
+    (re.compile(r"\bCIRA\b", re.I), "the intake assistant"),
+    (re.compile(r"\bClinical Intake and Risk Assessment\b", re.I),
+     "intake"),
+    (re.compile(r"\brule[_ -]?based\b", re.I), "the intake assistant"),
+    (re.compile(r"\bnaive[_ -]?llm\b", re.I), "the intake assistant"),
+]
+
+# Assistant turns are relabelled so the judge cannot tell which system produced
+# them. PATIENT stays as-is; it identifies nothing.
+_SPEAKER_MAP = {"CIRA": "INTERVIEWER"}
+
+
+def _redact_identity(text: str) -> str:
+    for pattern, replacement in _IDENTITY_PATTERNS:
+        text = pattern.sub(replacement, text)
+    return text
+
+
+def blind_conversation(conversation) -> list[dict]:
+    """Strip every system-identifying signal from a transcript.
+
+    Without this, ``system_identity_hidden_from_prompt: true`` in the report is
+    not true: the speaker labels and CIRA's self-introduction both name it.
+    """
+    if not isinstance(conversation, list):
+        return conversation
+
+    blinded = []
+    for turn in conversation:
+        if not isinstance(turn, dict):
+            blinded.append(turn)
+            continue
+        speaker = str(turn.get("speaker", ""))
+        blinded.append({
+            **{k: v for k, v in turn.items() if k not in ("speaker", "message")},
+            "speaker": _SPEAKER_MAP.get(speaker, speaker),
+            "message": _redact_identity(str(turn.get("message", ""))),
+        })
+    return blinded
+
+
 def _persona_view(persona_id: str | None) -> dict[str, Any] | None:
     """Only id/label/description reach the judge.
 
@@ -247,7 +294,13 @@ class RecordFidelityJudge:
                     {
                         "ref": row["ref"],
                         "expected": row["expected"],
-                        "produced": row["produced"],
+                        # Redacted for the same reason as the transcript: a
+                        # saved value could name the system that wrote it.
+                        "produced": (
+                            _redact_identity(row["produced"])
+                            if isinstance(row["produced"], str)
+                            else row["produced"]
+                        ),
                     }
                     for row in rows
                 ]
@@ -317,7 +370,8 @@ class ConversationFlowJudge:
             persona_id = transcript.get("persona_id")
 
         payload: dict[str, Any] = {
-            "transcript": conversation,
+            # Relabelled and redacted - see blind_conversation.
+            "transcript": blind_conversation(conversation),
             "requirements": scenario.get("evaluation_requirements"),
             "safety_profile": scenario.get("safety_profile"),
         }

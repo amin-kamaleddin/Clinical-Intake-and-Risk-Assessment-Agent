@@ -7,9 +7,9 @@
   "flow_score": 0.7,
   "record_detail": {
     "record_score": 0.9891,
-    "record_score_contested": 0.9792,
-    "fields_contested": 24,
-    "fields_auto_resolved": 22,
+    "record_score_contested": 0.98,
+    "fields_contested": 25,
+    "fields_auto_resolved": 21,
     "fields_confirmed_absent": 7,
     "fields_scored": 46,
     "fields_unjudged": 0,
@@ -78,17 +78,17 @@
       }
     }
   },
-  "flow_summary": "The system successfully navigated a challenging, disorganized patient persona, demonstrating good persistence in clarifying vague answers and re-explaining the questionnaire scales. However, the system struggled with efficiency during the PHQ-9 and GAD-7 sections, frequently repeating the full question text and scale options when the patient expressed confusion, rather than simplifying the delivery.",
+  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona by consistently re-explaining the rating scales and breaking down complex questions. While the interviewer was patient and persistent, the process became somewhat repetitive due to the patient's confusion, and the interviewer occasionally struggled to maintain a smooth flow when the patient deflected or misunderstood the questionnaire format.",
   "issues": [
     {
-      "severity": "moderate",
-      "category": "efficiency",
-      "evidence": "The system repeatedly re-stated the entire PHQ-9/GAD-7 question and the full list of options when the patient was confused, rather than adapting the phrasing to be more conversational or concise."
+      "severity": "minor",
+      "category": "clarity",
+      "evidence": "The interviewer had to re-explain the PHQ-9 and GAD-7 scales multiple times because the patient repeatedly asked for clarification on whether the questions referred to frequency or severity."
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "The system occasionally looped on the same question phrasing when the patient was confused (e.g., PHQ-9 question 2), which contributed to the patient's frustration."
+      "evidence": "The interaction felt somewhat mechanical during the questionnaire section, as the interviewer had to repeatedly re-state the options to keep the patient on track, which, while necessary, made the conversation feel slightly disjointed."
     }
   ],
   "field_verdicts": [
@@ -107,14 +107,6 @@
       "note": "",
       "expected": "Male",
       "produced": "Male"
-    },
-    {
-      "ref": "general_information.date_of_birth",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "14/03/2014",
-      "produced": "14/03/2014"
     },
     {
       "ref": "general_information.postal_code",
@@ -269,12 +261,20 @@
       "produced": false
     },
     {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "14/03/2014",
+      "produced": "14 March 2014"
+    },
+    {
       "ref": "general_information.address",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing province information.",
+      "note": "City and province information is missing.",
       "expected": "88 Fairlawn Avenue, Toronto, Ontario",
-      "produced": "88 Fairlawn Avenue, Toronto"
+      "produced": "88 Fairlawn Avenue"
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -282,7 +282,7 @@
       "source": "llm",
       "note": "",
       "expected": "temper outbursts; irritable; conflicts at home and school; suspension",
-      "produced": "Temper outbursts, frequent irritability and anger causing problems at home and school; suspended from school."
+      "produced": "Anger and rapid temper outbursts, irritability, conflict at home and school, and suspension from school."
     },
     {
       "ref": "current_concerns.goals",
@@ -290,7 +290,7 @@
       "source": "llm",
       "note": "",
       "expected": "more friends; do better in school; stop getting angry",
-      "produced": "Stop getting so angry, do better in school, and have more friends."
+      "produced": "Stop getting angry all the time, make more friends, and do better in school."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -298,7 +298,7 @@
       "source": "llm",
       "note": "",
       "expected": "Assessed at age 10 by DR. RAJ PATEL, child psychiatrist, for school inattention and impulsivity",
-      "produced": "Previously assessed by child psychiatrist Dr. Raj Patel at around age 10 for school inattention and impulsivity; diagnosed with ADHD, combined type."
+      "produced": "Assessed at age 10 by Dr. Raj Patel, child psychiatrist, due to school inattention and impulsivity; patient does not know further findings."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -306,7 +306,7 @@
       "source": "llm",
       "note": "",
       "expected": "ADHD; combined",
-      "produced": "ADHD, combined type; no other diagnoses reported."
+      "produced": "ADHD, combined type."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
@@ -314,7 +314,7 @@
       "source": "llm",
       "note": "",
       "expected": "Behavioural therapy; age 10 to 11; approximately 12 sessions; outpatient clinic",
-      "produced": "Behavioral therapy at an outpatient clinic around age 10–11, approximately 12 sessions; no other therapy recalled."
+      "produced": "Behavioural therapy at an outpatient clinic from approximately age 10 to 11, about 12 sessions."
     },
     {
       "ref": "medications.current_medications",
@@ -322,7 +322,7 @@
       "source": "llm",
       "note": "",
       "expected": "Methylphenidate short-acting; 10 mg each morning and 5 mg at noon; started September 2024; reduced appetite at lunch",
-      "produced": "Short-acting methylphenidate: 10 mg in the morning and 5 mg at noon; started September 2024. Reported side effect: worsened appetite at lunch."
+      "produced": "Methylphenidate short-acting: 10 mg in the morning and 5 mg at noon; started September 2024; worsens appetite at lunch."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -330,7 +330,7 @@
       "source": "llm",
       "note": "",
       "expected": "Father; anxiety and depression",
-      "produced": "Father has anxiety and depression; mother has ADHD; maternal grandfather had alcohol use disorder. No other conditions, treatments, or suicide deaths reported."
+      "produced": "Father has anxiety and depression; mother has ADHD; maternal grandfather had alcohol use disorder."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -338,7 +338,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; ADHD",
-      "produced": "Father has anxiety and depression; mother has ADHD; maternal grandfather had alcohol use disorder. No other conditions, treatments, or suicide deaths reported."
+      "produced": "Father has anxiety and depression; mother has ADHD; maternal grandfather had alcohol use disorder."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[2]",
@@ -346,7 +346,7 @@
       "source": "llm",
       "note": "",
       "expected": "Maternal grandfather; alcohol use disorder.",
-      "produced": "Father has anxiety and depression; mother has ADHD; maternal grandfather had alcohol use disorder. No other conditions, treatments, or suicide deaths reported."
+      "produced": "Father has anxiety and depression; mother has ADHD; maternal grandfather had alcohol use disorder."
     },
     {
       "ref": "substance_use.alcohol_use",
@@ -354,7 +354,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never; does not drink."
+      "produced": "Never."
     },
     {
       "ref": "substance_use.nicotine_use",
@@ -378,7 +378,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No stimulant use other than prescribed methylphenidate."
+      "produced": "Never, other than prescribed methylphenidate."
     },
     {
       "ref": "substance_use.opioid_use",
@@ -410,7 +410,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never; no other substances, inhalants, or misused prescription medications."
+      "produced": "Never."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -418,7 +418,7 @@
       "source": "llm",
       "note": "",
       "expected": "Grade 6; currently attending Northview Middle School",
-      "produced": "Grade 6 at Northview Middle School."
+      "produced": "Grade 6; currently attending Northview Middle School."
     },
     {
       "ref": "education_employment_legal_history.employment_history",
@@ -426,7 +426,7 @@
       "source": "llm",
       "note": "",
       "expected": "Student; no employment history",
-      "produced": "Student; no jobs."
+      "produced": "Student; no job history."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -434,7 +434,7 @@
       "source": "llm",
       "note": "",
       "expected": "irritability; early childhood; outbursts",
-      "produced": "Irritable from an early age, with outbursts when little."
+      "produced": "Irritable from an early age with outbursts when young."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -442,7 +442,7 @@
       "source": "llm",
       "note": "",
       "expected": "grade 6; school difficulties",
-      "produced": "Grade 6 has been difficult, with anger frequently showing up at school."
+      "produced": "Still in grade 6; currently experiencing school difficulties."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -450,7 +450,7 @@
       "source": "llm",
       "note": "",
       "expected": "siblings avoid; few friends",
-      "produced": "Siblings tend to avoid him; has only a few friends."
+      "produced": "Siblings sort of avoid him; does not have many friends currently."
     },
     {
       "ref": "personal_history.future_goals",
@@ -458,7 +458,7 @@
       "source": "llm",
       "note": "",
       "expected": "more friends; school; manage anger",
-      "produced": "Have more friends, do better in school, and not be angry all the time."
+      "produced": "Have more friends, do better at school, and better manage anger."
     }
   ],
   "fabricated": [
@@ -468,7 +468,7 @@
       "field": "previous_treatments",
       "entry_index": null,
       "expected": null,
-      "produced": "Methylphenidate, behavioral therapy.",
+      "produced": "Behavioural therapy; no other mental-health treatments recalled.",
       "verdict": "fabricated",
       "reason": "scenario provides no value for this field"
     }

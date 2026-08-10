@@ -182,6 +182,57 @@ def _mean(values) -> float | None:
     return round(mean(values), 4) if values else None
 
 
+def build_shared_contested_refs(all_cases: dict[str, list[dict]]) -> dict[str, set]:
+    """Per case, the UNION of field refs any system needed the judge for.
+
+    ``record_detail.record_score_contested`` is computed per system, over that
+    system's own judged rows. That makes it uncomparable: a row is auto-resolved
+    in code when the produced value matches ground truth exactly, so a system
+    that writes verbatim-correct values removes its own easy wins from its own
+    denominator and is left being scored on the hard residue.
+
+    On this run that skew was severe - 12.1 contested fields per case for one
+    system against 21.8 for another, from an identical 44-field pool. The
+    resulting "contested" ranking was an artifact of which fields each system
+    happened to ace, not of capture quality.
+
+    Scoring every system over the union fixes it: if ANY system needed a
+    judgement on a field, ALL systems are scored on that field, using whatever
+    verdict they got (including auto-resolved ones). Same exam for everyone.
+    """
+    refs_by_case: dict[str, set] = {}
+    for cases in all_cases.values():
+        for case in cases:
+            if case.get("status") != "OK":
+                continue
+            case_refs = refs_by_case.setdefault(case["scenario_case_id"], set())
+            for row in case.get("field_verdicts", []):
+                if row.get("source") == "llm":
+                    case_refs.add(row["ref"])
+    return refs_by_case
+
+
+def score_over_shared_refs(case: dict, refs: set) -> dict | None:
+    """Re-score one case restricted to the shared contested field set."""
+    if not refs:
+        return None
+    rows = [
+        row for row in case.get("field_verdicts", [])
+        if row["ref"] in refs and row.get("verdict") in record_check.VERDICT_CREDIT
+    ]
+    if not rows:
+        return None
+    credit = sum(record_check.VERDICT_CREDIT[row["verdict"]] for row in rows)
+    counts: dict[str, int] = {}
+    for row in rows:
+        counts[row["verdict"]] = counts.get(row["verdict"], 0) + 1
+    return {
+        "score": round(credit / len(rows), 4),
+        "fields": len(rows),
+        "verdict_counts": counts,
+    }
+
+
 def summarize_system(system: str, cases: list[dict]) -> dict:
     ok = [c for c in cases if c.get("status") == "OK"]
 
@@ -199,10 +250,19 @@ def summarize_system(system: str, cases: list[dict]) -> dict:
         "error_cases": len(cases) - len(ok),
         "mean_record_score": _mean(c["record_score"] for c in ok),
         # The number that actually separates systems; see record_check.score.
+        # Per-system contested set - NOT comparable across systems. Kept for
+        # diagnostics only; use mean_record_score_contested_shared to rank.
+        # The headline contested number: same field set for every system.
         "mean_record_score_contested": _mean(
-            c["record_detail"]["record_score_contested"] for c in ok
+            (c.get("contested_shared") or {}).get("score") for c in ok
         ),
         "mean_fields_contested": _mean(
+            (c.get("contested_shared") or {}).get("fields") for c in ok
+        ),
+        "mean_record_score_contested_own": _mean(
+            c["record_detail"]["record_score_contested"] for c in ok
+        ),
+        "mean_fields_contested_own": _mean(
             c["record_detail"]["fields_contested"] for c in ok
         ),
         "mean_flow_score": _mean(c["flow_score"] for c in ok),
@@ -229,7 +289,7 @@ def summarize_by_persona(cases: list[dict]) -> dict:
             "cases": len(subset),
             "mean_record_score": _mean(c["record_score"] for c in subset),
             "mean_record_score_contested": _mean(
-                c["record_detail"]["record_score_contested"] for c in subset
+                (c.get("contested_shared") or {}).get("score") for c in subset
             ),
             "mean_flow_score": _mean(c["flow_score"] for c in subset),
             "fabricated_fields_per_case": round(
@@ -285,6 +345,17 @@ def run(systems=None, case_filter: str | None = None) -> dict:
         for system in systems
     }
 
+    # Score every system over the SAME contested field set (see
+    # build_shared_contested_refs) so the comparison is like-for-like.
+    shared_refs = build_shared_contested_refs(all_cases)
+    for cases in all_cases.values():
+        for case in cases:
+            if case.get("status") != "OK":
+                continue
+            case["contested_shared"] = score_over_shared_refs(
+                case, shared_refs.get(case["scenario_case_id"], set())
+            )
+
     report = {
         "judge_model": config.JUDGE_MODEL_NAME,
         "judge_temperature": config.JUDGE_TEMPERATURE,
@@ -314,6 +385,7 @@ def run(systems=None, case_filter: str | None = None) -> dict:
     for system, summary in report["systems"].items():
         print(f"{system:>12} | record={summary['mean_record_score']} "
               f"contested={summary['mean_record_score_contested']} "
+              f"({summary['mean_fields_contested']} shared fields) "
               f"flow={summary['mean_flow_score']} "
               f"fabricated/case={summary['fabricated_fields_per_case']}")
         for persona_id, stats in report["by_persona"].get(system, {}).items():

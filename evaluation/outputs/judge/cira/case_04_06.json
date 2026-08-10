@@ -3,21 +3,21 @@
   "case_id": "06",
   "scenario_case_id": "04-06",
   "persona_id": "clear",
-  "record_score": 0.9457,
+  "record_score": 0.9783,
   "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9457,
-    "record_score_contested": 0.875,
-    "fields_contested": 12,
-    "fields_auto_resolved": 34,
+    "record_score": 0.9783,
+    "record_score_contested": 0.9091,
+    "fields_contested": 11,
+    "fields_auto_resolved": 35,
     "fields_confirmed_absent": 8,
     "fields_scored": 46,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 43,
-      "partial": 1,
-      "missing": 2,
+      "match": 44,
+      "partial": 2,
+      "missing": 0,
       "contradicted": 0,
       "fabricated": 0
     },
@@ -36,8 +36,8 @@
       },
       "medications": {
         "fields": 5,
-        "credit": 3.0,
-        "score": 0.6
+        "credit": 4.5,
+        "score": 0.9
       },
       "medical_history": {
         "fields": 4,
@@ -76,12 +76,17 @@
       }
     }
   },
-  "flow_summary": "The system conducted a thorough and efficient intake. It generally followed a logical structure and handled the patient's responses well. However, it failed to accept the patient's 'I don't know' response regarding their childhood, leading to a redundant and slightly awkward follow-up question.",
+  "flow_summary": "The interviewer conducted a thorough and efficient intake, maintaining a professional tone and adhering to the required structure. The system handled the patient's responses well, though it occasionally struggled to navigate vague answers in the personal history section, leading to slightly repetitive questioning.",
   "issues": [
     {
       "severity": "minor",
-      "category": "redundant_questioning",
-      "evidence": "After the patient stated 'I do not know' regarding where they were born and grew up, the system immediately asked: 'Thank you. Could you tell me where you were born and where you grew up?'"
+      "category": "follow_up",
+      "evidence": "When the patient stated they did not know their place of birth or where they grew up, the interviewer re-asked the question in the next turn, which was unnecessary given the patient's clear 'I don't know' response."
+    },
+    {
+      "severity": "minor",
+      "category": "follow_up",
+      "evidence": "In the medications section, the interviewer asked about the multivitamin prescription status twice after the patient had already indicated uncertainty."
     }
   ],
   "field_verdicts": [
@@ -211,15 +216,15 @@
       "source": "auto",
       "note": "",
       "expected": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth",
-      "produced": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth. Multivitamin; one tablet daily; start date unknown; side effects unknown."
+      "produced": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth. Multivitamin; prescribed status Unknown. Oral contraceptive; one tablet daily; started 2022; no side effects"
     },
     {
       "ref": "medications.has_past_medications",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": null
+      "produced": false
     },
     {
       "ref": "medical_history.has_medical_conditions",
@@ -268,6 +273,14 @@
       "note": "",
       "expected": true,
       "produced": true
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Mother; depression; treated intermittently with antidepressants",
+      "produced": "Mother; depression; treated intermittently with antidepressants"
     },
     {
       "ref": "substance_use.alcohol_use",
@@ -355,7 +368,7 @@
       "source": "auto",
       "note": "",
       "expected": "Laboratory technician, Northstar Pharmaceuticals; 2018 to present",
-      "produced": "Laboratory technician, Northstar Pharmaceuticals; 2018 to present"
+      "produced": "Laboratory technician, Northstar Pharmaceuticals; 2018 to Present"
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -363,7 +376,7 @@
       "source": "llm",
       "note": "",
       "expected": "feeling low for years; guilt; underachievement",
-      "produced": "Feeling low for years, with guilt and a sense of underachievement. These difficulties have been affecting feelings about work."
+      "produced": "Feeling low for years, with persistent guilt and a sense of underachievement."
     },
     {
       "ref": "current_concerns.goals",
@@ -379,7 +392,7 @@
       "source": "llm",
       "note": "",
       "expected": "Assessed by a school counsellor and family physician at age 16",
-      "produced": "Assessed by a school counsellor and family physician at age 16."
+      "produced": "Age 16; assessed by a school counsellor and family physician."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -387,7 +400,7 @@
       "source": "llm",
       "note": "",
       "expected": "depression; high school",
-      "produced": "Depression; high school; no specific subtype known."
+      "produced": "Depression; high school."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
@@ -395,37 +408,29 @@
       "source": "llm",
       "note": "",
       "expected": "Individual psychotherapy; age 16 to 17; about 20 sessions; found it helpful",
-      "produced": "Individual psychotherapy (specific type unknown); age 16 to 17; approximately 20 sessions; location unknown."
+      "produced": "General individual psychotherapy; age 16 to 17; approximately 20 sessions; location Unknown."
     },
     {
       "ref": "medications.current_medications[1]",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "The system failed to capture the dosage and side effect information for the multivitamin.",
       "expected": "Multivitamin; one tablet daily; start date unknown; no side effects",
-      "produced": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth. Multivitamin; one tablet daily; start date unknown; side effects unknown."
+      "produced": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth. Multivitamin; prescribed status Unknown. Oral contraceptive; one tablet daily; started 2022; no side effects"
     },
     {
       "ref": "medications.current_medications[2]",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "The oral contraceptive is not listed in the produced medications.",
-      "expected": "Oral contraceptive; one tablet daily; started 2022; no side effects.",
-      "produced": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth. Multivitamin; one tablet daily; start date unknown; side effects unknown."
-    },
-    {
-      "ref": "family_psychiatric_history.family_psychiatric_history_details",
       "verdict": "match",
       "source": "llm",
       "note": "",
-      "expected": "Mother; depression; treated intermittently with antidepressants",
-      "produced": "Mother; depression; treated intermittently with antidepressants; no additional details provided."
+      "expected": "Oral contraceptive; one tablet daily; started 2022; no side effects.",
+      "produced": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth. Multivitamin; prescribed status Unknown. Oral contraceptive; one tablet daily; started 2022; no side effects"
     },
     {
       "ref": "personal_history.early_childhood",
       "verdict": "partial",
       "source": "llm",
-      "note": "The system failed to capture the birth and upbringing details, only the personality trait.",
+      "note": "The system failed to capture the birth and upbringing location/context, marking them as unknown.",
       "expected": "born; grew up; shy",
       "produced": "Born: Unknown. Grew up: Unknown. Described herself as shy as a young child."
     },
@@ -435,7 +440,7 @@
       "source": "llm",
       "note": "",
       "expected": "father hospitalised; leukemia; school",
-      "produced": "Was in school. Her father was hospitalized with leukemia during this period."
+      "produced": "Was in school. Her father was hospitalized for leukemia during this period."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -443,7 +448,7 @@
       "source": "llm",
       "note": "",
       "expected": "single; dysfunctional relationships",
-      "produced": "Romantic relationships; dates and duration: Unknown; ended or current status: Unknown; described as dysfunctional. Current relationship status: Single."
+      "produced": "Romantic relationships; dates and duration unknown; ended or not specified; patient describes them as dysfunctional. Currently single."
     },
     {
       "ref": "personal_history.future_goals",
@@ -451,7 +456,7 @@
       "source": "llm",
       "note": "",
       "expected": "satisfying work; healthier relationships",
-      "produced": "More satisfying work and healthier relationships."
+      "produced": "To find more satisfying work and develop healthier relationships."
     }
   ],
   "fabricated": []

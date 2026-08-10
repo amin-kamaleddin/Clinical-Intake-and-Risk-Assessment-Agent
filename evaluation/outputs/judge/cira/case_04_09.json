@@ -3,22 +3,22 @@
   "case_id": "09",
   "scenario_case_id": "04-09",
   "persona_id": "confused",
-  "record_score": 0.7766,
+  "record_score": 0.9681,
   "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.7766,
-    "record_score_contested": 0.5938,
-    "fields_contested": 16,
-    "fields_auto_resolved": 31,
+    "record_score": 0.9681,
+    "record_score_contested": 0.8846,
+    "fields_contested": 13,
+    "fields_auto_resolved": 34,
     "fields_confirmed_absent": 11,
     "fields_scored": 47,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 35,
+      "match": 44,
       "partial": 3,
-      "missing": 7,
-      "contradicted": 2,
+      "missing": 0,
+      "contradicted": 0,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -36,13 +36,13 @@
       },
       "medications": {
         "fields": 5,
-        "credit": 2.0,
-        "score": 0.4
+        "credit": 5.0,
+        "score": 1.0
       },
       "medical_history": {
         "fields": 9,
-        "credit": 2.5,
-        "score": 0.2778
+        "credit": 8.5,
+        "score": 0.9444
       },
       "medication_allergies": {
         "fields": 1,
@@ -76,17 +76,17 @@
       }
     }
   },
-  "flow_summary": "The system successfully navigated a challenging, confused patient persona by consistently rephrasing questions and providing necessary guidance. While the system was effective at managing the patient's confusion, it frequently relied on repeating the entire questionnaire item text, which became repetitive and occasionally hindered the flow during the PHQ-9 and GAD-7 sections.",
+  "flow_summary": "The interviewer successfully navigated a challenging, confused patient persona by consistently breaking down complex questions and maintaining a patient, structured approach. However, the system struggled significantly with the PHQ-9 and GAD-7 sections, where it repeatedly allowed the patient to derail the standardized format, leading to redundant questioning and a failure to maintain the required flow for these specific instruments.",
   "issues": [
     {
-      "severity": "minor",
-      "category": "repetitive_questioning",
-      "evidence": "During the PHQ-9 and GAD-7, the system repeatedly re-stated the full list of options and the question text when the patient expressed confusion, rather than simplifying the delivery."
+      "severity": "moderate",
+      "category": "questionnaire_adherence",
+      "evidence": "The interviewer allowed the patient to repeatedly question the timeframe and format of the PHQ-9 and GAD-7 items, resulting in the interviewer having to re-ask the same questions multiple times (e.g., PHQ-9 Q3, GAD-7 Q4, GAD-7 Q5)."
     },
     {
       "severity": "minor",
-      "category": "mechanical_flow",
-      "evidence": "The transition into the PHQ-9 and GAD-7 sections felt rigid, with the system struggling to adapt its communication style to the patient's stated difficulty in following the questionnaire format."
+      "category": "flow_efficiency",
+      "evidence": "In the personal history section, the interviewer asked about childhood, adolescence, and relationships in a way that caused the patient to become confused, requiring the interviewer to break these down into smaller, more manageable segments."
     }
   ],
   "field_verdicts": [
@@ -208,15 +208,23 @@
       "source": "auto",
       "note": "",
       "expected": "Carbidopa-levodopa; 25/100 mg, one tablet three times daily; started 2024; occasional nausea",
-      "produced": "Carbidopa-levodopa; 25/100 mg, one tablet three times daily; started 2024; occasional nausea"
+      "produced": "Carbidopa-levodopa; 25/100 mg, one tablet three times daily; started 2024; occasional nausea. Latanoprost eye drops; one drop in each eye nightly; started 2021; no known side effects. Allopurinol; 100 mg daily; started 2019; no known side effects"
+    },
+    {
+      "ref": "medications.current_medications[1]",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Latanoprost eye drops; one drop in each eye nightly; started 2021; no known side effects",
+      "produced": "Carbidopa-levodopa; 25/100 mg, one tablet three times daily; started 2024; occasional nausea. Latanoprost eye drops; one drop in each eye nightly; started 2021; no known side effects. Allopurinol; 100 mg daily; started 2019; no known side effects"
     },
     {
       "ref": "medications.has_past_medications",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": null
+      "produced": false
     },
     {
       "ref": "medical_history.has_medical_conditions",
@@ -232,31 +240,47 @@
       "source": "auto",
       "note": "",
       "expected": "Parkinson's disease; diagnosed 2024",
-      "produced": "Parkinson's disease; diagnosed 2024. Prostate cancer; diagnosed 2018"
+      "produced": "Parkinson's disease; diagnosed 2024. Prostate cancer; diagnosed 2018. Glaucoma; diagnosed 2021. Gout; diagnosed 2019. REM sleep behaviour disorder; diagnosed 2025"
+    },
+    {
+      "ref": "medical_history.medical_conditions[2]",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Glaucoma; diagnosed 2021",
+      "produced": "Parkinson's disease; diagnosed 2024. Prostate cancer; diagnosed 2018. Glaucoma; diagnosed 2021. Gout; diagnosed 2019. REM sleep behaviour disorder; diagnosed 2025"
+    },
+    {
+      "ref": "medical_history.medical_conditions[3]",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Gout; diagnosed 2019",
+      "produced": "Parkinson's disease; diagnosed 2024. Prostate cancer; diagnosed 2018. Glaucoma; diagnosed 2021. Gout; diagnosed 2019. REM sleep behaviour disorder; diagnosed 2025"
     },
     {
       "ref": "medical_history.has_surgical_history",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": null
+      "produced": false
     },
     {
       "ref": "medical_history.height",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "auto",
       "note": "",
       "expected": "175 cm",
-      "produced": null
+      "produced": "175 cm"
     },
     {
       "ref": "medical_history.weight",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "auto",
       "note": "",
       "expected": "74 kg",
-      "produced": null
+      "produced": "74 kg"
     },
     {
       "ref": "medication_allergies.has_medication_allergies",
@@ -344,7 +368,7 @@
       "source": "llm",
       "note": "",
       "expected": "lost interest; fatigue; social withdrawal; sleep",
-      "produced": "For about three months, the patient has experienced a persistent “blah” feeling and reduced enjoyment of activities, increased tiredness, social withdrawal, difficulty falling asleep at night, and minor memory slips that feel frustrating."
+      "produced": "Recently, I have lost interest in things, become tired much more easily, withdrawn from people, and had difficulty falling asleep. I am still trying to stay active."
     },
     {
       "ref": "current_concerns.goals",
@@ -352,55 +376,31 @@
       "source": "llm",
       "note": "",
       "expected": "enjoy life; stay active",
-      "produced": "The patient hopes to enjoy life again and remain active."
-    },
-    {
-      "ref": "medications.current_medications[1]",
-      "verdict": "contradicted",
-      "source": "llm",
-      "note": "The system captured a different medication than the one requested.",
-      "expected": "Latanoprost eye drops; one drop in each eye nightly; started 2021; no known side effects",
-      "produced": "Carbidopa-levodopa; 25/100 mg, one tablet three times daily; started 2024; occasional nausea"
+      "produced": "I would like to enjoy life again and stay active rather than sitting around feeling low."
     },
     {
       "ref": "medications.current_medications[2]",
-      "verdict": "contradicted",
+      "verdict": "match",
       "source": "llm",
-      "note": "The system captured a different medication than the one requested.",
+      "note": "",
       "expected": "Allopurinol; 100 mg daily; started 2019; no known side effects.",
-      "produced": "Carbidopa-levodopa; 25/100 mg, one tablet three times daily; started 2024; occasional nausea"
+      "produced": "Carbidopa-levodopa; 25/100 mg, one tablet three times daily; started 2024; occasional nausea. Latanoprost eye drops; one drop in each eye nightly; started 2021; no known side effects. Allopurinol; 100 mg daily; started 2019; no known side effects"
     },
     {
       "ref": "medical_history.medical_conditions[1]",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the remission status.",
+      "note": "The remission status of the prostate cancer is missing.",
       "expected": "Prostate cancer; treated in 2018 and currently in remission",
-      "produced": "Parkinson's disease; diagnosed 2024. Prostate cancer; diagnosed 2018"
-    },
-    {
-      "ref": "medical_history.medical_conditions[2]",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "Glaucoma is not listed in the produced field.",
-      "expected": "Glaucoma; diagnosed 2021",
-      "produced": "Parkinson's disease; diagnosed 2024. Prostate cancer; diagnosed 2018"
-    },
-    {
-      "ref": "medical_history.medical_conditions[3]",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "Gout is not listed in the produced field.",
-      "expected": "Gout; diagnosed 2019",
-      "produced": "Parkinson's disease; diagnosed 2024. Prostate cancer; diagnosed 2018"
+      "produced": "Parkinson's disease; diagnosed 2024. Prostate cancer; diagnosed 2018. Glaucoma; diagnosed 2021. Gout; diagnosed 2019. REM sleep behaviour disorder; diagnosed 2025"
     },
     {
       "ref": "medical_history.medical_conditions[4]",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "llm",
-      "note": "REM sleep behaviour disorder is not listed in the produced field.",
+      "note": "",
       "expected": "REM sleep behaviour disorder; diagnosed 2025.",
-      "produced": "Parkinson's disease; diagnosed 2024. Prostate cancer; diagnosed 2018"
+      "produced": "Parkinson's disease; diagnosed 2024. Prostate cancer; diagnosed 2018. Glaucoma; diagnosed 2021. Gout; diagnosed 2019. REM sleep behaviour disorder; diagnosed 2025"
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -408,7 +408,7 @@
       "source": "llm",
       "note": "",
       "expected": "Granddaughter; ADHD; diagnosed at age 9",
-      "produced": "Granddaughter; ADHD; diagnosed at age 9."
+      "produced": "Granddaughter; ADHD, diagnosed at age 9; no additional details reported."
     },
     {
       "ref": "substance_use.alcohol_use",
@@ -416,13 +416,13 @@
       "source": "llm",
       "note": "",
       "expected": "current; wine; monthly; minimal",
-      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: Minimal, approximately monthly; Duration: Unknown"
+      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: Minimal amount, approximately monthly; Duration: Unknown"
     },
     {
       "ref": "education_employment_legal_history.highest_education",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the occupation (teacher).",
+      "note": "The occupation 'teacher' is missing.",
       "expected": "bachelor's degree; teacher",
       "produced": "Bachelor's degree"
     },
@@ -430,9 +430,9 @@
       "ref": "education_employment_legal_history.employment_history",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the retirement status.",
+      "note": "The job title, dates, and retirement status are missing.",
       "expected": "High school science teacher, Oakville District School Board; 1978 to 2013; retired",
-      "produced": "High school science teacher, Oakville District School Board; 1978 to 2013"
+      "produced": "Oakville District School Board"
     },
     {
       "ref": "personal_history.early_childhood",
@@ -440,7 +440,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Patient was born and grew up; no further details provided."
+      "produced": "Born and raised in the Toronto area. Patient did not identify specific childhood characteristics."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -448,7 +448,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; became a teacher",
-      "produced": "The patient described a typical path through school and then became a teacher. No major difficulties or other significant experiences were reported."
+      "produced": "Attended school and later became a teacher. Patient did not report additional experiences or difficulties from this period."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -456,7 +456,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; 49 years; supportive wife",
-      "produced": "Marriage; 1977 to present; current; wife is supportive."
+      "produced": "Marriage; 49 years to present; current. Wife is very supportive."
     },
     {
       "ref": "personal_history.future_goals",
@@ -464,7 +464,7 @@
       "source": "llm",
       "note": "",
       "expected": "enjoy life; manage illness",
-      "produced": "The patient would like to enjoy life and manage their illness."
+      "produced": "To enjoy life, manage the illness, and remain active if possible."
     }
   ],
   "fabricated": []

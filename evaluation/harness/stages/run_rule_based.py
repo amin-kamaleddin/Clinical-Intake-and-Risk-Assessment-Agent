@@ -20,6 +20,7 @@ import json
 
 from harness import config
 from harness import personas
+from harness import provenance
 from harness.patient_simulator import PatientSimulator
 from harness.rule_based_cira import RuleBasedCIRA
 
@@ -60,6 +61,7 @@ def run_case(scenario: dict, persona=None) -> None:
         "scenario_case_id": case_id,
         "title": scenario.get("title", ""),
         "system": SYSTEM,
+        "run_id": provenance.current_run_id(),
         "persona_id": persona.id,
         "patient_behaviour": patient.behaviour_summary(),
         "conversation": result.transcript,
@@ -77,6 +79,7 @@ def run_case(scenario: dict, persona=None) -> None:
         "case_id": config.short_case_id(case_id),
         "scenario_case_id": case_id,
         "system": SYSTEM,
+        "run_id": provenance.current_run_id(),
         "persona_id": persona.id,
         "safety_reasons": result.safety_reasons,
         "issues": result.issues,

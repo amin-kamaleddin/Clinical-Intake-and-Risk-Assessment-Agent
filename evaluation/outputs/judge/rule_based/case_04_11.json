@@ -3,20 +3,20 @@
   "case_id": "11",
   "scenario_case_id": "04-11",
   "persona_id": "moderate",
-  "record_score": 0.9318,
-  "flow_score": 0.7,
+  "record_score": 0.9091,
+  "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9318,
-    "record_score_contested": 0.8696,
-    "fields_contested": 23,
-    "fields_auto_resolved": 21,
+    "record_score": 0.9091,
+    "record_score_contested": 0.8,
+    "fields_contested": 20,
+    "fields_auto_resolved": 24,
     "fields_confirmed_absent": 10,
     "fields_scored": 44,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 41,
-      "partial": 0,
+      "match": 39,
+      "partial": 2,
       "missing": 3,
       "contradicted": 0,
       "fabricated": 0
@@ -26,13 +26,13 @@
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 7.0,
-        "score": 0.7
+        "credit": 10.0,
+        "score": 1.0
       },
       "past_psychiatric_history": {
         "fields": 5,
-        "credit": 5.0,
-        "score": 1.0
+        "credit": 3.0,
+        "score": 0.6
       },
       "medications": {
         "fields": 3,
@@ -51,8 +51,8 @@
       },
       "family_psychiatric_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 2.5,
+        "score": 0.625
       },
       "substance_use": {
         "fields": 8,
@@ -71,25 +71,49 @@
       },
       "personal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.5,
+        "score": 0.875
       }
     }
   },
-  "flow_summary": "The system conducted a thorough intake but struggled with the patient's imprecision, leading to a rigid and occasionally confrontational interaction style. While it successfully gathered all necessary clinical data, it failed to handle the patient's initial hesitation with empathy, opting for a blunt command instead of a clarifying question.",
+  "flow_summary": "The interviewer conducted a thorough and structured intake, effectively managing a patient who was occasionally imprecise. The system successfully navigated the patient's vague responses regarding medication and personal history, though it missed an opportunity to probe the patient's mention of 'taking time off' after his father's death, which was a significant life event.",
   "issues": [
     {
-      "severity": "moderate",
-      "category": "communication_style",
-      "evidence": "When the patient expressed uncertainty about their history, the system responded with 'Please answer yes or no.' instead of rephrasing or acknowledging the patient's confusion."
+      "severity": "minor",
+      "category": "follow-up",
+      "evidence": "The patient mentioned 'I did take some time off after my father died' in response to a therapy question, but the interviewer did not follow up on this significant life event or its impact."
     },
     {
       "severity": "minor",
-      "category": "flow",
-      "evidence": "The system asked for the patient's date of birth and postal code twice, despite the patient providing the information clearly in the first instance."
+      "category": "clarity",
+      "evidence": "The interviewer asked 'What diagnosis or mental health condition did they have?' in the family history section, which was slightly confusing as the patient had already listed depression for the mother and sister, and the question seemed to be prompted by the uncle's suicide mention."
     }
   ],
   "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "15/06/1994",
+      "produced": "15/06/1994"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M5R1B2",
+      "produced": "M5R1B2"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "james.campbell@example.com",
+      "produced": "james.campbell@example.com"
+    },
     {
       "ref": "general_information.phone",
       "verdict": "match",
@@ -104,7 +128,7 @@
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": "yes"
+      "produced": true
     },
     {
       "ref": "general_information.has_psychiatrist",
@@ -112,7 +136,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "past_psychiatric_history.previously_assessed",
@@ -120,7 +144,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "past_psychiatric_history.hospital_admission",
@@ -128,7 +152,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "past_psychiatric_history.self_harm_history",
@@ -136,7 +160,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "medications.has_current_medications",
@@ -144,7 +168,7 @@
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": "yes"
+      "produced": true
     },
     {
       "ref": "medications.has_past_medications",
@@ -152,7 +176,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "medical_history.has_medical_conditions",
@@ -160,7 +184,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "medical_history.has_surgical_history",
@@ -168,7 +192,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "medication_allergies.has_medication_allergies",
@@ -176,7 +200,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "family_psychiatric_history.has_family_psychiatric_history",
@@ -184,7 +208,7 @@
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": "yes"
+      "produced": true
     },
     {
       "ref": "substance_use.alcohol_use",
@@ -256,7 +280,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "general_information.name",
@@ -272,39 +296,15 @@
       "source": "llm",
       "note": "",
       "expected": "Male",
-      "produced": "Male, I believe."
-    },
-    {
-      "ref": "general_information.date_of_birth",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "The system failed to capture the date of birth.",
-      "expected": "15/06/1994",
-      "produced": "Unknown"
+      "produced": "Male."
     },
     {
       "ref": "general_information.address",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "The system failed to capture the address.",
-      "expected": "9 Prince Arthur Avenue, Toronto, Ontario",
-      "produced": "Unknown"
-    },
-    {
-      "ref": "general_information.postal_code",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "The system failed to capture the postal code.",
-      "expected": "M5R1B2",
-      "produced": "Unknown"
-    },
-    {
-      "ref": "general_information.email",
       "verdict": "match",
       "source": "llm",
       "note": "",
-      "expected": "james.campbell@example.com",
-      "produced": "james.campbell@example.com."
+      "expected": "9 Prince Arthur Avenue, Toronto, Ontario",
+      "produced": "9 Prince Arthur Avenue, Toronto, Ontario."
     },
     {
       "ref": "general_information.family_doctor_name",
@@ -320,7 +320,7 @@
       "source": "llm",
       "note": "",
       "expected": "floundering at work; cannot concentrate; no future orientation",
-      "produced": "Mostly I’m floundering at work — like I can’t really get a simple project moving. I’m also having a hard time concentrating, and I don’t really feel like I can picture much of a future right now."
+      "produced": "Mostly I’ve been floundering at work — I can’t seem to get a simple project moving, and my concentration has been pretty bad. I’m also not really thinking about the future much."
     },
     {
       "ref": "current_concerns.goals",
@@ -328,23 +328,23 @@
       "source": "llm",
       "note": "",
       "expected": "function at work; move forward",
-      "produced": "Mostly to function better at work and start moving forward again."
+      "produced": "Mostly I want to be able to function better at work and just move forward again."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "System recorded unknown instead of the expected history.",
       "expected": "depression; college; recurrent",
-      "produced": "Yes — depression, back in college, and it seemed to come up more than once."
+      "produced": "Unknown"
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "System recorded none reported instead of the expected history.",
       "expected": "time off after father's death",
-      "produced": "Not really one of those formal therapies — I mainly took some time off after my father died.; I don’t know the exact time, just that it was after my father died.; I don’t know, I’m afraid."
+      "produced": "None reported."
     },
     {
       "ref": "medications.current_medications",
@@ -352,7 +352,7 @@
       "source": "llm",
       "note": "",
       "expected": "Antidepressant; patient does not remember the name or dose; takes one tablet each morning; started about 4 months ago; no side effects recalled",
-      "produced": "Medication 1: Name Or Description: I can’t remember the name exactly — it’s an antidepressant, I think.; Dose: I don’t know the dose.; Start Or Duration: About 4 months ago, roughly.; Side Effects: None that I can really recall."
+      "produced": "Medication 1: Name Or Description: It’s an antidepressant, but I don’t remember the exact name.; Dose: I don’t know the dose.; Start Or Duration: Maybe about 4 months ago, something like that.; Side Effects: None that I can really think of. Maybe nothing."
     },
     {
       "ref": "medical_history.height",
@@ -360,7 +360,7 @@
       "source": "llm",
       "note": "",
       "expected": "183 cm",
-      "produced": "About 183 cm, I think."
+      "produced": "I’m about 183 cm tall."
     },
     {
       "ref": "medical_history.weight",
@@ -368,15 +368,15 @@
       "source": "llm",
       "note": "",
       "expected": "79 kg",
-      "produced": "Around 79 kg."
+      "produced": "About 79 kg."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "Mother's history is not present in the produced list.",
       "expected": "Mother; major depressive disorder",
-      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Major depressive disorder, I think.; Additional Details: My sister has depression too.\nFamily member 2: Name Or Description: I think there was also an uncle on my mother’s side, but I’m fuzzy on the details.; Diagnosis Or Condition: He died by suicide, I believe.; Additional Details: No, that’s all I know."
+      "produced": "Family member 1: Name Or Description: My sister has depression too.; Diagnosis Or Condition: And my maternal uncle died by suicide.; Additional Details: No, those are all."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -384,15 +384,15 @@
       "source": "llm",
       "note": "",
       "expected": "Sister; depression",
-      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Major depressive disorder, I think.; Additional Details: My sister has depression too.\nFamily member 2: Name Or Description: I think there was also an uncle on my mother’s side, but I’m fuzzy on the details.; Diagnosis Or Condition: He died by suicide, I believe.; Additional Details: No, that’s all I know."
+      "produced": "Family member 1: Name Or Description: My sister has depression too.; Diagnosis Or Condition: And my maternal uncle died by suicide.; Additional Details: No, those are all."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[2]",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the year 2008.",
       "expected": "Maternal uncle; died by suicide in 2008.",
-      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Major depressive disorder, I think.; Additional Details: My sister has depression too.\nFamily member 2: Name Or Description: I think there was also an uncle on my mother’s side, but I’m fuzzy on the details.; Diagnosis Or Condition: He died by suicide, I believe.; Additional Details: No, that’s all I know."
+      "produced": "Family member 1: Name Or Description: My sister has depression too.; Diagnosis Or Condition: And my maternal uncle died by suicide.; Additional Details: No, those are all."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -416,7 +416,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "I was born and grew up, mostly. I don’t really have much more to add there."
+      "produced": "I was born and grew up, that’s about all I really remember to say."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -424,15 +424,15 @@
       "source": "llm",
       "note": "",
       "expected": "college; father died; leukemia",
-      "produced": "College, and my father died of leukemia when I was younger. That was a big thing."
+      "produced": "College, and my father died of leukemia around then."
     },
     {
       "ref": "personal_history.significant_relationships",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the detail about being interested in a coworker.",
       "expected": "Separated from spouse after 6 years of marriage; divorce in progress; interested in a coworker",
-      "produced": "I was married for about 6 years, but that’s ending now — we’re separated and the divorce is in progress. There’s also a coworker I’m interested in, though nothing’s really happened there."
+      "produced": "I’ve been separated from my spouse after about 6 years of marriage — the divorce is in progress."
     },
     {
       "ref": "personal_history.future_goals",
@@ -440,7 +440,7 @@
       "source": "llm",
       "note": "",
       "expected": "rebuild; career",
-      "produced": "I want to rebuild things, especially my career."
+      "produced": "I’d like to rebuild, and get my career back on track."
     }
   ],
   "fabricated": []

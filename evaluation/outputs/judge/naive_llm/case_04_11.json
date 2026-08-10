@@ -3,29 +3,26 @@
   "case_id": "11",
   "scenario_case_id": "04-11",
   "persona_id": "moderate",
-  "record_score": 0.9545,
-  "flow_score": 0.85,
+  "record_score": 0.9659,
+  "flow_score": 0.95,
   "record_detail": {
-    "record_score": 0.9545,
-    "record_score_contested": 0.9286,
-    "fields_contested": 28,
-    "fields_auto_resolved": 16,
-    "fields_confirmed_absent": 8,
+    "record_score": 0.9659,
+    "record_score_contested": 0.94,
+    "fields_contested": 25,
+    "fields_auto_resolved": 19,
+    "fields_confirmed_absent": 10,
     "fields_scored": 44,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
       "match": 41,
-      "partial": 2,
-      "missing": 1,
+      "partial": 3,
+      "missing": 0,
       "contradicted": 0,
-      "fabricated": 2
+      "fabricated": 0
     },
-    "fabricated_fields": 2,
-    "fabricated_refs": [
-      "past_psychiatric_history.assessment_details",
-      "past_psychiatric_history.previous_treatments"
-    ],
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
     "by_section": {
       "general_information": {
         "fields": 10,
@@ -54,8 +51,13 @@
       },
       "family_psychiatric_history": {
         "fields": 4,
-        "credit": 3.0,
-        "score": 0.75
+        "credit": 3.5,
+        "score": 0.875
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
       },
       "education_employment_legal_history": {
         "fields": 3,
@@ -67,11 +69,6 @@
         "credit": 2.0,
         "score": 1.0
       },
-      "substance_use": {
-        "fields": 8,
-        "credit": 8.0,
-        "score": 1.0
-      },
       "personal_history": {
         "fields": 4,
         "credit": 3.5,
@@ -79,17 +76,12 @@
       }
     }
   },
-  "flow_summary": "The system conducted a thorough and professional intake. It handled the patient's occasional imprecision well by rephrasing questions to be more specific, particularly during the PHQ-9 and GAD-7 sections. The transition between topics was logical, and the system successfully navigated the patient's uncertainty regarding medical history.",
+  "flow_summary": "The interviewer conducted a thorough and professional intake. They effectively managed the patient's occasional imprecision by rephrasing questions to elicit clear, actionable responses without becoming repetitive or brusque.",
   "issues": [
     {
       "severity": "minor",
       "category": "clarification",
-      "evidence": "The system accepted a vague answer regarding early childhood ('I was born and grew up, but I don’t really have much else to add there') without attempting to probe for any specific developmental or environmental context, though this was a minor missed opportunity."
-    },
-    {
-      "severity": "minor",
-      "category": "follow-up",
-      "evidence": "When the patient gave a vague answer to the GAD-7 difficulty question ('Sort of, I guess? It really depends on the week.'), the system did not attempt to clarify or guide the patient toward one of the provided options, simply ending the intake."
+      "evidence": "The patient was initially confused by the PHQ-9 and GAD-7 difficulty questions, requiring the interviewer to restate the options to obtain a definitive answer."
     }
   ],
   "field_verdicts": [
@@ -108,6 +100,22 @@
       "note": "",
       "expected": "Male",
       "produced": "Male"
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "15/06/1994",
+      "produced": "15/06/1994"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M5R1B2",
+      "produced": "M5R1B2"
     },
     {
       "ref": "general_information.email",
@@ -214,6 +222,14 @@
       "produced": true
     },
     {
+      "ref": "substance_use.alcohol_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
       "ref": "education_employment_legal_history.active_legal_cases",
       "verdict": "match",
       "source": "auto",
@@ -222,28 +238,12 @@
       "produced": false
     },
     {
-      "ref": "general_information.date_of_birth",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "15/06/1994",
-      "produced": "15 June 1994"
-    },
-    {
       "ref": "general_information.address",
       "verdict": "partial",
       "source": "llm",
       "note": "City and province are missing.",
       "expected": "9 Prince Arthur Avenue, Toronto, Ontario",
       "produced": "9 Prince Arthur Avenue"
-    },
-    {
-      "ref": "general_information.postal_code",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "M5R1B2",
-      "produced": "M5R 1B2"
     },
     {
       "ref": "general_information.phone",
@@ -259,7 +259,7 @@
       "source": "llm",
       "note": "",
       "expected": "floundering at work; cannot concentrate; no future orientation",
-      "produced": "Floundering at work, unable to get moving on a simple project, and impaired concentration."
+      "produced": "Floundering at work, unable to get moving on a simple project, difficulty concentrating, and unable to picture what comes next."
     },
     {
       "ref": "current_concerns.goals",
@@ -267,7 +267,7 @@
       "source": "llm",
       "note": "",
       "expected": "function at work; move forward",
-      "produced": "Function better at work and be able to move forward again."
+      "produced": "Mostly I’d like to function better at work and just be able to move forward again."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -283,7 +283,7 @@
       "source": "llm",
       "note": "",
       "expected": "time off after father's death",
-      "produced": "Therapy or counseling after father died; exact details not remembered. No other therapy reported."
+      "produced": "Took some time off after father died; patient described this as sort of related to getting help but does not remember exact therapy details."
     },
     {
       "ref": "medications.current_medications",
@@ -291,7 +291,7 @@
       "source": "llm",
       "note": "",
       "expected": "Antidepressant; patient does not remember the name or dose; takes one tablet each morning; started about 4 months ago; no side effects recalled",
-      "produced": "One unidentified mood medication, one tablet each morning, started about 4 months ago; name and dose unknown. No recalled side effects."
+      "produced": "An antidepressant for mood; name and dose unknown; one tablet each morning; started about 4 months ago; no recalled side effects."
     },
     {
       "ref": "medical_history.height",
@@ -307,7 +307,7 @@
       "source": "llm",
       "note": "",
       "expected": "79 kg",
-      "produced": "Around 79 kg"
+      "produced": "About 79 kg"
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -315,7 +315,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; major depressive disorder",
-      "produced": "Mother has depression; sister has depression."
+      "produced": "Mother has major depressive disorder; sister has depression; maternal uncle died by suicide."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -323,23 +323,15 @@
       "source": "llm",
       "note": "",
       "expected": "Sister; depression",
-      "produced": "Mother has depression; sister has depression."
+      "produced": "Mother has major depressive disorder; sister has depression; maternal uncle died by suicide."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[2]",
-      "verdict": "missing",
+      "verdict": "partial",
       "source": "llm",
-      "note": "The maternal uncle's history is not included in the produced text.",
+      "note": "The year 2008 is missing.",
       "expected": "Maternal uncle; died by suicide in 2008.",
-      "produced": "Mother has depression; sister has depression."
-    },
-    {
-      "ref": "substance_use.alcohol_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "Never."
+      "produced": "Mother has major depressive disorder; sister has depression; maternal uncle died by suicide."
     },
     {
       "ref": "substance_use.nicotine_use",
@@ -347,7 +339,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No, never"
     },
     {
       "ref": "substance_use.marijuana_use",
@@ -355,7 +347,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No, never"
     },
     {
       "ref": "substance_use.stimulant_use",
@@ -363,7 +355,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No, never"
     },
     {
       "ref": "substance_use.opioid_use",
@@ -371,7 +363,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No, never"
     },
     {
       "ref": "substance_use.benzodiazepine_use",
@@ -379,7 +371,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No, never"
     },
     {
       "ref": "substance_use.hallucinogen_use",
@@ -387,7 +379,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No, never"
     },
     {
       "ref": "substance_use.other_substance_use",
@@ -395,7 +387,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No, never"
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -411,7 +403,7 @@
       "source": "llm",
       "note": "",
       "expected": "Architect, Northline Studio; 2020 to present",
-      "produced": "Currently an architect at Northline Studio; employed there since around 2020."
+      "produced": "Architect at Northline Studio since 2020."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -427,7 +419,7 @@
       "source": "llm",
       "note": "",
       "expected": "college; father died; leukemia",
-      "produced": "In college, father died of leukemia; described as a significant experience."
+      "produced": "College; father died of leukemia, which was a significant experience."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -435,7 +427,7 @@
       "source": "llm",
       "note": "The interest in a coworker is missing.",
       "expected": "Separated from spouse after 6 years of marriage; divorce in progress; interested in a coworker",
-      "produced": "Separated from spouse after about 6 years of marriage; divorce is in progress."
+      "produced": "Separated from spouse after 6 years of marriage; divorce is in progress."
     },
     {
       "ref": "personal_history.future_goals",
@@ -443,29 +435,8 @@
       "source": "llm",
       "note": "",
       "expected": "rebuild; career",
-      "produced": "Rebuild and get career back on track."
+      "produced": "Wants to rebuild and get career back on track."
     }
   ],
-  "fabricated": [
-    {
-      "ref": "past_psychiatric_history.assessment_details",
-      "section": "past_psychiatric_history",
-      "field": "assessment_details",
-      "entry_index": null,
-      "expected": null,
-      "produced": "Has not previously been assessed by a mental-health professional.",
-      "verdict": "fabricated",
-      "reason": "scenario provides no value for this field"
-    },
-    {
-      "ref": "past_psychiatric_history.previous_treatments",
-      "section": "past_psychiatric_history",
-      "field": "previous_treatments",
-      "entry_index": null,
-      "expected": null,
-      "produced": "Currently taking an unidentified mood medication, started about 4 months ago; no other previous psychiatric medications remembered.",
-      "verdict": "fabricated",
-      "reason": "scenario provides no value for this field"
-    }
-  ]
+  "fabricated": []
 }

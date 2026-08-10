@@ -4,13 +4,13 @@
   "scenario_case_id": "04-06",
   "persona_id": "clear",
   "record_score": 0.9891,
-  "flow_score": 0.85,
+  "flow_score": 0.7,
   "record_detail": {
     "record_score": 0.9891,
-    "record_score_contested": 0.9667,
-    "fields_contested": 15,
-    "fields_auto_resolved": 31,
-    "fields_confirmed_absent": 8,
+    "record_score_contested": 0.9706,
+    "fields_contested": 17,
+    "fields_auto_resolved": 29,
+    "fields_confirmed_absent": 7,
     "fields_scored": 46,
     "fields_unjudged": 0,
     "unjudged_refs": [],
@@ -19,10 +19,12 @@
       "partial": 1,
       "missing": 0,
       "contradicted": 0,
-      "fabricated": 0
+      "fabricated": 1
     },
-    "fabricated_fields": 0,
-    "fabricated_refs": [],
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_treatments"
+    ],
     "by_section": {
       "general_information": {
         "fields": 11,
@@ -76,17 +78,17 @@
       }
     }
   },
-  "flow_summary": "The system conducted a thorough and efficient intake. It followed the required structure well, though it occasionally asked redundant questions when the patient had already provided the information in a previous turn.",
+  "flow_summary": "The interviewer conducted a thorough intake but struggled with redundant questioning and failing to recognize when a patient had already provided 'I don't know' responses. The flow was otherwise logical and adhered to the required structure.",
   "issues": [
     {
-      "severity": "minor",
-      "category": "redundant_question",
-      "evidence": "In the general information section, the system asked for the psychiatrist's name in turn 11, despite the patient having already provided the full name in turn 10."
+      "severity": "moderate",
+      "category": "redundant_questioning",
+      "evidence": "The interviewer asked 'When were you assessed, and by whom?' immediately after the patient had already provided that exact information in the previous turn."
     },
     {
-      "severity": "minor",
-      "category": "redundant_question",
-      "evidence": "In the past psychiatric history section, the system asked 'When were you assessed, and by whom?' in turn 2, even though the patient had already provided this exact information in turn 1."
+      "severity": "moderate",
+      "category": "looping_on_unknown",
+      "evidence": "After the patient stated 'I do not know' regarding biological treatments, the interviewer continued to ask four consecutive questions about the details of that treatment (when, where, how many sessions, duration) despite the patient having no information to provide."
     }
   ],
   "field_verdicts": [
@@ -152,7 +154,7 @@
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": "yes"
+      "produced": true
     },
     {
       "ref": "general_information.family_doctor_name",
@@ -168,7 +170,7 @@
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": "yes"
+      "produced": true
     },
     {
       "ref": "general_information.psychiatrist_name",
@@ -184,7 +186,7 @@
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": "yes"
+      "produced": true
     },
     {
       "ref": "past_psychiatric_history.hospital_admission",
@@ -192,7 +194,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "past_psychiatric_history.self_harm_history",
@@ -200,7 +202,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "medications.has_current_medications",
@@ -208,7 +210,7 @@
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": "yes"
+      "produced": true
     },
     {
       "ref": "medications.has_past_medications",
@@ -216,7 +218,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "medical_history.has_medical_conditions",
@@ -224,7 +226,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "medical_history.has_surgical_history",
@@ -232,23 +234,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
-    },
-    {
-      "ref": "medical_history.height",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "170 cm",
-      "produced": "170 cm"
-    },
-    {
-      "ref": "medical_history.weight",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "65 kg",
-      "produced": "65 kg"
+      "produced": false
     },
     {
       "ref": "medication_allergies.has_medication_allergies",
@@ -256,7 +242,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "family_psychiatric_history.has_family_psychiatric_history",
@@ -264,7 +250,7 @@
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": "yes"
+      "produced": true
     },
     {
       "ref": "substance_use.alcohol_use",
@@ -336,7 +322,7 @@
       "source": "auto",
       "note": "",
       "expected": false,
-      "produced": "no"
+      "produced": false
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -344,7 +330,7 @@
       "source": "llm",
       "note": "",
       "expected": "feeling low for years; guilt; underachievement",
-      "produced": "Feeling low for years, guilt, and underachievement."
+      "produced": "I’ve been feeling low for years, and I’ve had a lot of guilt about underachievement."
     },
     {
       "ref": "current_concerns.goals",
@@ -352,7 +338,7 @@
       "source": "llm",
       "note": "",
       "expected": "more satisfying work; feel better",
-      "produced": "More satisfying work and to feel better."
+      "produced": "To feel better and have more satisfying work."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -360,7 +346,7 @@
       "source": "llm",
       "note": "",
       "expected": "Assessed by a school counsellor and family physician at age 16",
-      "produced": "At age 16, by a school counsellor and my family physician."
+      "produced": "I was assessed at age 16 by a school counsellor and my family physician."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -374,9 +360,9 @@
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "partial",
       "source": "llm",
-      "note": "The fact that the patient found the therapy helpful was omitted.",
+      "note": "Missing the fact that the patient found the therapy helpful.",
       "expected": "Individual psychotherapy; age 16 to 17; about 20 sessions; found it helpful",
-      "produced": "Yes. Individual psychotherapy.; Age 16 to 17.; About 20 sessions."
+      "produced": "Yes. Individual psychotherapy.; When I was 16 to 17.; About 20 sessions."
     },
     {
       "ref": "medications.current_medications[0]",
@@ -401,6 +387,22 @@
       "note": "",
       "expected": "Oral contraceptive; one tablet daily; started 2022; no side effects.",
       "produced": "Medication 1: Name Or Description: Citalopram.; Dose: 20 mg each morning.; Start Or Duration: March 2025.; Side Effects: Mild dry mouth.\nMedication 2: Name Or Description: Yes. Multivitamin.; Dose: One tablet daily.; Start Or Duration: Unknown; Side Effects: None.\nMedication 3: Name Or Description: Yes. Oral contraceptive.; Dose: One tablet daily.; Start Or Duration: 2022.; Side Effects: None."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "170 cm",
+      "produced": "170 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "65 kg",
+      "produced": "65 kg."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -432,7 +434,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up; shy",
-      "produced": "I was born and grew up here, and I was shy."
+      "produced": "I was born and grew up there, and I was shy."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -440,7 +442,7 @@
       "source": "llm",
       "note": "",
       "expected": "father hospitalised; leukemia; school",
-      "produced": "My father was hospitalised with leukemia, and I was in school."
+      "produced": "My father was hospitalised for leukemia, and I was in school."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -456,8 +458,19 @@
       "source": "llm",
       "note": "",
       "expected": "satisfying work; healthier relationships",
-      "produced": "More satisfying work and healthier relationships."
+      "produced": "I want more satisfying work and healthier relationships."
     }
   ],
-  "fabricated": []
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_treatments",
+      "section": "past_psychiatric_history",
+      "field": "previous_treatments",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I have nothing to report.; Unknown; Unknown; Unknown; Unknown",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
 }

@@ -3,11 +3,11 @@
   "case_id": "04",
   "scenario_case_id": "04-04",
   "persona_id": "confused",
-  "record_score": 0.2439,
+  "record_score": 0.2683,
   "flow_score": 0.25,
   "record_detail": {
-    "record_score": 0.2439,
-    "record_score_contested": 1.0,
+    "record_score": 0.2683,
+    "record_score_contested": 0.6667,
     "fields_contested": 3,
     "fields_auto_resolved": 38,
     "fields_confirmed_absent": 11,
@@ -15,9 +15,9 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 10,
+      "match": 11,
       "partial": 0,
-      "missing": 31,
+      "missing": 30,
       "contradicted": 0,
       "fabricated": 0
     },
@@ -26,8 +26,8 @@
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 9.0,
-        "score": 0.9
+        "credit": 10.0,
+        "score": 1.0
       },
       "current_concerns": {
         "fields": 2,
@@ -76,17 +76,17 @@
       }
     }
   },
-  "flow_summary": "The system performed well during the initial intake, effectively managing the patient's confusion and need for clarification. However, once the safety crisis was identified, the system entered an infinite, repetitive loop of the same instructions, failing to recognize that the patient was unable to comply with the repeated requests to call 911.",
+  "flow_summary": "The system performed well during the initial intake phase, effectively managing a confused patient. However, upon the disclosure of active suicidal risk, the system entered a catastrophic loop, repeatedly asking the same question about the arrival of emergency responders for over 30 turns without variation or escalation.",
   "issues": [
     {
-      "severity": "major",
-      "category": "repetitive_loop",
-      "evidence": "The system repeated the exact same instructions to call 911, shout for help, and move away from the item for over 40 consecutive turns without adapting its strategy or acknowledging the patient's repeated inability to comply."
+      "severity": "critical",
+      "category": "looping",
+      "evidence": "The system asked 'Are emergency responders with you now?' or a variation thereof over 30 times in a row, ignoring the patient's consistent 'I don't know' response."
     },
     {
-      "severity": "minor",
-      "category": "mechanical_interaction",
-      "evidence": "The system's response to the safety crisis became purely mechanical, ignoring the patient's distress and the fact that the instructions were clearly not working."
+      "severity": "major",
+      "category": "repetitive_questioning",
+      "evidence": "The system failed to recognize that the patient was unable to provide new information and continued to cycle through the same redundant safety check."
     }
   ],
   "field_verdicts": [
@@ -97,6 +97,14 @@
       "note": "",
       "expected": "SUSAN REISS",
       "produced": "Susan Reiss"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female"
     },
     {
       "ref": "general_information.date_of_birth",
@@ -116,11 +124,11 @@
     },
     {
       "ref": "general_information.postal_code",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "auto",
       "note": "",
       "expected": "M6H2R4",
-      "produced": null
+      "produced": "M6H2R4"
     },
     {
       "ref": "general_information.email",
@@ -355,14 +363,6 @@
       "produced": null
     },
     {
-      "ref": "education_employment_legal_history.employment_history",
-      "verdict": "missing",
-      "source": "auto",
-      "note": "",
-      "expected": "Administrative coordinator, Lakeshore Pet Nutrition; 2013 to present",
-      "produced": null
-    },
-    {
       "ref": "personal_history.early_childhood",
       "verdict": "missing",
       "source": "auto",
@@ -395,20 +395,12 @@
       "produced": null
     },
     {
-      "ref": "general_information.gender",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Female",
-      "produced": "Woman"
-    },
-    {
       "ref": "general_information.phone",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "4165550119",
-      "produced": "416-5550119"
+      "produced": "416-555-0119"
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -416,7 +408,15 @@
       "source": "llm",
       "note": "",
       "expected": "depression; guilt; workplace error; wants to die",
-      "produced": "Depression, awful guilt about something at work, and wanting to die; patient reports current suicide plan and intent."
+      "produced": "Depression, guilt, persistent thoughts that she has done something terrible, and suicidal thoughts with a current plan and intent to act."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The specific job title, employer, and dates of employment were not captured.",
+      "expected": "Administrative coordinator, Lakeshore Pet Nutrition; 2013 to present",
+      "produced": "Reports a problem at work; details not provided."
     }
   ],
   "fabricated": []

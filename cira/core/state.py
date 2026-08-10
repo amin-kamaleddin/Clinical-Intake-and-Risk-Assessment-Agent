@@ -166,6 +166,13 @@ class AliceState(TypedDict):
     # field pending again, and the same "anything else?" exchange repeated
     # forever.
     safety_text_sent: bool
+    # Set once a self-harm history has been disclosed AND clarified as
+    # historical with no current risk. The per-section message reset wipes the
+    # conversation, so without this the model re-encounters the same history in
+    # a later section with no memory of having already cleared it, and raises
+    # the flag a second time. That produced the only safety false positive in
+    # the benchmark, on the historical-self-injury distractor case.
+    safety_history_cleared: bool
     entries_confirmed: List[str]
     repeatable_followups: Dict[str, int]
 
@@ -354,6 +361,7 @@ initial_state: AliceState = {
     # once. Tracked separately from safety_flag, which is now raised before the
     # reply is built and would otherwise suppress its own message.
     "safety_text_sent": False,
+    "safety_history_cleared": False,
     # Repeatable fields the patient has confirmed hold no further entries.
     "entries_confirmed": [],
     # field -> how many times we have already asked "any more?" for it.

@@ -7,10 +7,10 @@
   "flow_score": 0.7,
   "record_detail": {
     "record_score": 0.9881,
-    "record_score_contested": 0.9773,
-    "fields_contested": 22,
-    "fields_auto_resolved": 20,
-    "fields_confirmed_absent": 10,
+    "record_score_contested": 0.9762,
+    "fields_contested": 21,
+    "fields_auto_resolved": 21,
+    "fields_confirmed_absent": 9,
     "fields_scored": 42,
     "fields_unjudged": 0,
     "unjudged_refs": [],
@@ -19,10 +19,12 @@
       "partial": 1,
       "missing": 0,
       "contradicted": 0,
-      "fabricated": 0
+      "fabricated": 1
     },
-    "fabricated_fields": 0,
-    "fabricated_refs": [],
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.assessment_details"
+    ],
     "by_section": {
       "general_information": {
         "fields": 11,
@@ -76,17 +78,17 @@
       }
     }
   },
-  "flow_summary": "The system successfully navigated a challenging, disorganized patient persona. It demonstrated strong recovery skills by re-explaining scales and clarifying questions when the patient became confused. However, the flow was occasionally hampered by the patient's difficulty with the standardized questionnaires, leading to some repetitive interactions.",
+  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona, demonstrating patience and persistence in re-explaining the questionnaire scales. While the interviewer was effective at redirecting and clarifying, the process became somewhat mechanical during the PHQ-9 and GAD-7 sections, where the patient's confusion led to repetitive, slightly clunky interactions.",
   "issues": [
     {
       "severity": "minor",
       "category": "clarity",
-      "evidence": "The system had to re-explain the PHQ-9 and GAD-7 scales multiple times because the patient struggled to retain the options, which, while necessary for this persona, made the questionnaire section feel somewhat disjointed."
+      "evidence": "The interviewer had to re-explain the GAD-7 scale multiple times because the patient struggled to retain the options, which, while necessary, made the flow feel repetitive."
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "The system occasionally had to re-ask questions due to the patient's confusion, such as: 'Can you say that again? I lost the thread.'"
+      "evidence": "The transition into the PHQ-9 and GAD-7 sections was very rigid, which contributed to the patient's confusion and difficulty in responding to the standardized questions."
     }
   ],
   "field_verdicts": [
@@ -107,6 +109,14 @@
       "produced": "Female"
     },
     {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "11/03/2000",
+      "produced": "11/03/2000"
+    },
+    {
       "ref": "general_information.postal_code",
       "verdict": "match",
       "source": "auto",
@@ -121,14 +131,6 @@
       "note": "",
       "expected": "emily.wang@example.com",
       "produced": "emily.wang@example.com"
-    },
-    {
-      "ref": "general_information.phone",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "4165550137",
-      "produced": "4165550137"
     },
     {
       "ref": "general_information.has_family_doctor",
@@ -227,6 +229,14 @@
       "produced": "167 cm"
     },
     {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "60 kg",
+      "produced": "60 kg"
+    },
+    {
       "ref": "medication_allergies.has_medication_allergies",
       "verdict": "match",
       "source": "auto",
@@ -251,20 +261,20 @@
       "produced": false
     },
     {
-      "ref": "general_information.date_of_birth",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "11/03/2000",
-      "produced": "November 3, 2000"
-    },
-    {
       "ref": "general_information.address",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the province (Ontario).",
+      "note": "Missing province.",
       "expected": "500 Wellington Street West, Toronto, Ontario",
       "produced": "500 Wellington Street West, Toronto"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "4165550137",
+      "produced": "416-555-0137"
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -272,7 +282,7 @@
       "source": "llm",
       "note": "",
       "expected": "mood swings; premenstrual; irritability; relationship",
-      "produced": "Mood is up and down, tied to menstrual period, with irritability affecting relationships."
+      "produced": "Mood swings tied to her period, irritability, and effects on relationships."
     },
     {
       "ref": "current_concerns.goals",
@@ -280,7 +290,7 @@
       "source": "llm",
       "note": "",
       "expected": "control mood swings; save relationships",
-      "produced": "Get mood swings under control and save relationships."
+      "produced": "Control the mood swings and save her relationships."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
@@ -288,7 +298,7 @@
       "source": "llm",
       "note": "",
       "expected": "History of non-suicidal self-injury since adolescence, used to reduce anxiety.",
-      "produced": "Historical non-suicidal self-injury, mostly cutting, since adolescence; used to calm anxiety. Most recent timing not disclosed. No current thoughts or urges to harm self or die."
+      "produced": "History of cutting since adolescence; described as non-suicidal and used to calm anxiety."
     },
     {
       "ref": "medications.current_medications",
@@ -299,20 +309,12 @@
       "produced": "Combined oral contraceptive, one tablet daily; started in 2023; name and strength unknown; no known side effects."
     },
     {
-      "ref": "medical_history.weight",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "60 kg",
-      "produced": "About 60 kg"
-    },
-    {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "Mother; major depressive disorder; one psychiatric admission in 2018",
-      "produced": "Mother has major depressive disorder and one psychiatric admission in 2018."
+      "produced": "Mother has major depressive disorder and had one psychiatric admission in 2018. No other family psychiatric or substance-use history reported."
     },
     {
       "ref": "substance_use.alcohol_use",
@@ -328,7 +330,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "No, never."
     },
     {
       "ref": "substance_use.marijuana_use",
@@ -336,7 +338,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "No, never."
     },
     {
       "ref": "substance_use.stimulant_use",
@@ -344,7 +346,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "No, never."
     },
     {
       "ref": "substance_use.opioid_use",
@@ -352,7 +354,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "No, never."
     },
     {
       "ref": "substance_use.benzodiazepine_use",
@@ -360,7 +362,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "No, never."
     },
     {
       "ref": "substance_use.hallucinogen_use",
@@ -368,7 +370,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "No, never."
     },
     {
       "ref": "substance_use.other_substance_use",
@@ -376,7 +378,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "None."
+      "produced": "No, never."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -392,7 +394,7 @@
       "source": "llm",
       "note": "",
       "expected": "Investment banking analyst, Harbour Capital; 2022 to present",
-      "produced": "Investment banking analyst at Harbour Capital since 2022."
+      "produced": "Working as an investment banking analyst at Harbour Capital since 2022, approximately."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -400,7 +402,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Grew up without any specific significant experiences or difficulties identified."
+      "produced": "Born and grew up there; described childhood as fairly ordinary. Specific location/details not provided."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -408,7 +410,7 @@
       "source": "llm",
       "note": "",
       "expected": "cutting began; school",
-      "produced": "Cutting began during the teenage years; other details described as somewhat fuzzy."
+      "produced": "Cutting began during adolescence while attending school; patient described it as related mostly to anxiety."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -416,7 +418,7 @@
       "source": "llm",
       "note": "",
       "expected": "One significant two-year relationship; ended three months ago; currently single",
-      "produced": "One significant relationship lasted about two years and ended three months ago. Currently single; mood swings have made relationships harder."
+      "produced": "One significant romantic relationship lasting about two years; ended three months ago. Currently single."
     },
     {
       "ref": "personal_history.future_goals",
@@ -424,8 +426,19 @@
       "source": "llm",
       "note": "",
       "expected": "stable relationships; career",
-      "produced": "Have stable relationships and continue progressing in career."
+      "produced": "Mostly stable relationships and career goals."
     }
   ],
-  "fabricated": []
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "section": "past_psychiatric_history",
+      "field": "assessment_details",
+      "entry_index": null,
+      "expected": null,
+      "produced": "Patient does not think she has previously had a formal mental-health assessment and does not recall being told an assessment result.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
 }
