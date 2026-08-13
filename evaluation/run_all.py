@@ -108,6 +108,10 @@ def stage_summary(systems):
             "by_persona": judge.get("by_persona"),
             "paired_cases": judge.get("paired_cases"),
         }
+        # Uncertainty travels with the summary, so a reader of summary.json
+        # alone can tell which differences are claimable.
+        summary["uncertainty"] = judge.get("uncertainty")
+        summary["pairwise_differences"] = judge.get("pairwise_differences")
         for system, judge_summary in judge.get("systems", {}).items():
             summary["systems"].setdefault(system, {})["judge"] = judge_summary
 
@@ -149,14 +153,14 @@ def stage_summary(systems):
     print(f"{'system':>12} | {'persona':>9} | {'structured':>10} {'record':>8} {'flow':>7}")
     print("-" * 62)
     for system, entry in summary["systems"].items():
-        for persona_id, stats in (entry.get("by_persona") or {}).items():
+        for persona_id, persona_stats in (entry.get("by_persona") or {}).items():
             judge_persona = (
                 (summary.get("judge", {}).get("by_persona", {}) or {})
                 .get(system, {})
                 .get(persona_id, {})
             )
             print(f"{system:>12} | {persona_id:>9} | "
-                  f"{str(stats['mean_structured_score']):>10} "
+                  f"{str(persona_stats['mean_structured_score']):>10} "
                   f"{str(judge_persona.get('mean_record_score')):>8} "
                   f"{str(judge_persona.get('mean_flow_score')):>7}")
 
@@ -166,6 +170,19 @@ def stage_summary(systems):
     print("  summary.json; process checks are diagnostics and are not scored.")
     print("Summary saved to:", config.SUMMARY_REPORT_PATH)
     print("=" * 72)
+
+    # Confidence intervals and paired differences. Printed here because the
+    # point estimates above are not, on their own, a basis for comparing
+    # systems: a gap smaller than its own interval is not a result. The data
+    # already lives in the reports, so this only formats it - and the same
+    # block can be re-printed later with `python -m tools.show_intervals`
+    # without re-running anything.
+    try:
+        from tools.show_intervals import print_intervals
+        print()
+        print_intervals()
+    except Exception as error:  # noqa: BLE001 - never let formatting kill a run
+        print(f"(intervals unavailable: {error})")
 
 
 def main() -> None:

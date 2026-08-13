@@ -489,9 +489,9 @@ def run(system: str, case_filter: str | None = None, verbose: bool = True) -> di
                   + ", ".join(f"{k} {v}" for k, v in weak.items()))
         if summary["by_persona"]:
             print("By persona (easiest -> hardest):")
-            for persona_id, stats in summary["by_persona"].items():
-                print(f"  {persona_id:>8}: {stats['passed']}/{stats['cases']} passed "
-                      f"| structured {stats['mean_structured_score']}")
+            for persona_id, persona_stats in summary["by_persona"].items():
+                print(f"  {persona_id:>8}: {persona_stats['passed']}/{persona_stats['cases']} passed "
+                      f"| structured {persona_stats['mean_structured_score']}")
         print("Report saved to:", report_path)
     return report
 

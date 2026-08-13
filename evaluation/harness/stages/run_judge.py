@@ -449,10 +449,10 @@ def run(systems=None, case_filter: str | None = None) -> dict:
               f"({summary['mean_fields_contested']} shared fields) "
               f"flow={summary['mean_flow_score']} "
               f"fabricated/case={summary['fabricated_fields_per_case']}")
-        for persona_id, stats in report["by_persona"].get(system, {}).items():
+        for persona_id, persona_stats in report["by_persona"].get(system, {}).items():
             print(f"{system:>12} |   {persona_id:>8}: "
-                  f"record={stats['mean_record_score']} "
-                  f"flow={stats['mean_flow_score']}")
+                  f"record={persona_stats['mean_record_score']} "
+                  f"flow={persona_stats['mean_flow_score']}")
     # Only meaningful with repetitions; with one run per scenario the interval
     # is wide and every pair comes back not-significant, which is the honest
     # answer rather than a defect.
