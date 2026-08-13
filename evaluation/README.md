@@ -37,6 +37,31 @@ They do not overlap. The record judge never sees `phq9`/`gad7` — those section
 are stripped before its payload is built — and the flow judge never sees the
 record.
 
+### Reading the output
+
+`run_all.py` prints three blocks, in increasing order of what they let you claim:
+
+1. **PRIMARY METRICS** — point estimates per system.
+2. **BY PATIENT DIFFICULTY** — the same metrics split clear / moderate / confused.
+3. **95% CIs and PAIRED DIFFERENCES** — printed automatically at the end of the
+   summary stage.
+
+**Read the paired row, not the point estimates.** A gap smaller than its own
+interval is not a result, and two overlapping individual intervals do *not* mean
+the difference is zero. `*` marks a difference whose 95% CI excludes zero; that
+is the only basis for claiming one system beats another.
+
+To re-print the intervals later from saved reports, with no API calls and no
+re-running:
+
+```bash
+python -m tools.show_intervals
+```
+
+The numbers are computed when the reports are built, so they already live in
+`judge_comparison.json`, `<system>_deterministic.json` and `summary.json` — this
+only formats them.
+
 ### `safety_score` — reported separately, on purpose
 
 Safety is one check in twenty inside `structured_score`, so a system that
@@ -301,6 +326,15 @@ Cost scales linearly: 20 repetitions is 20× the API calls and wall-clock time
 (720 intakes plus ~1,440 judge calls for three systems over twelve scenarios).
 Validate the pipeline with `--repetitions 3` before committing to a full run.
 
+**There is no resume.** Artifacts are written per section and survive a crash,
+but re-running starts from scenario 1, repetition 0 and overwrites everything.
+The loop is `for repetition: for scenario:`, so a run that dies part-way leaves
+whole completed repetitions on disk — back up `outputs/` between batches, or run
+repetitions as separate invocations, if a 20-hour run is at risk of interruption.
+
+Scoring and judging are cheap and re-runnable: if the run fails during those
+stages, `--only score judge summary` costs no intakes.
+
 ---
 
 ## Statistical caveats
@@ -315,6 +349,13 @@ the entire difference between 0.857 and 1.0, and no number of repetitions
 changes that — repetitions reduce sampling variance, not scenario coverage.
 There is also one judge model and one judge pass; sensitivity to the choice of
 judge is not measured.
+
+`flow_score` is the noisiest metric. In practice the same system on the same
+scenario has varied by ~0.15 between repetitions, which is larger than some
+between-system gaps. Check `flow_variability` before quoting a flow comparison;
+that variance is in the judge, not the systems (record variability on the same
+data is roughly an order of magnitude smaller), so repeated *judge passes* on
+existing transcripts are a cheaper fix than repeated intakes.
 
 What the design does support well: exact deterministic scores, a fabrication
 count, the degradation curve across patient difficulty, and — with repetitions —
@@ -345,7 +386,8 @@ evaluation/
 │       ├── run_naive.py           ├── score_records.py
 │       └── run_judge.py
 ├── tools/
-│   └── rescore_contested.py   ← re-aggregate contested over the shared set
+│   ├── rescore_contested.py   ← re-aggregate contested over the shared set
+│   └── show_intervals.py      ← re-print CIs and paired differences
 ├── tests/                     ← offline, no API keys
 │   ├── test_scoring.py            └── test_personas.py
 └── outputs/
@@ -356,7 +398,7 @@ evaluation/
         ├── judge_comparison.json
         ├── run_manifest.json
         ├── persona_assignment.json
-        └── summary.json
+        └── summary.json           ← includes uncertainty + pairwise_differences
 ```
 
 Every per-case file is `case_<id>.json`; the folder names its type and system.
@@ -374,7 +416,10 @@ python run_all.py --only score judge summary
 python run_all.py --skip cira
 python run_all.py --systems rule_based
 
+python run_all.py --repetitions 20     # repeated interactions -> usable CIs
+
 python -m tools.rescore_contested      # shared contested set, no API calls
+python -m tools.show_intervals         # re-print CIs, no API calls
 ```
 
 Individual stages:

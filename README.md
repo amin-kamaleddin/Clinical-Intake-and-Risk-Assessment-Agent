@@ -29,7 +29,8 @@ python cira/main.py
 
 # the benchmark
 pip install -r evaluation/requirements.txt
-cd evaluation && python run_all.py
+cd evaluation && python run_all.py                  # single run
+cd evaluation && python run_all.py --repetitions 20 # repeated -> confidence intervals
 ```
 
 `.env` belongs at the project root, not inside `cira/`. If it has ever been
@@ -87,6 +88,27 @@ Four metrics, split by whether an exact answer exists:
 
 Plus a fabrication count — fields written with no ground truth behind them.
 
+### Repetitions and confidence intervals
+
+A single interaction per scenario is one realisation of a stochastic process, so
+a difference like 0.9308 vs 0.9285 cannot be told apart from sampling noise.
+`--repetitions N` runs each scenario independently N times, with the same
+patient seed across all three systems at a given repetition, so comparisons stay
+paired.
+
+Every metric is then reported as an estimate with a **95% confidence interval**,
+and every system pair gets a **paired difference** with a significance marker:
+
+```
+PAIRED DIFFERENCES  (* = 95% CI excludes zero; the claim test)
+  cira - naive_llm    fabricated_fields   -0.750 [-1.250, -0.333]  *
+  cira - naive_llm    flow_score          -0.117 [-0.185, -0.056]  *
+  cira - rule_based   record_score        +0.024 [-0.017, +0.068]  (n.s.)
+```
+
+`*` is the only basis for claiming one system beats another. Overlapping
+individual intervals do **not** mean a difference is zero — read the paired row.
+
 Details, including why each metric is defined the way it is, in
 **`evaluation/README.md`**.
 
@@ -97,14 +119,22 @@ Details, including why each metric is defined the way it is, in
 A few things are worth stating up front, because they bound what the numbers
 can support.
 
-**Twelve scenarios, one run, one judge pass.** No repeated runs, no confidence
-intervals, no significance testing. Differences of a few thousandths are not
-evidence of superiority. Safety specificity moves in steps of 1/7 ≈ 0.14 — one
-false alarm is the whole gap between 0.857 and 1.0.
+**Run repetitions before comparing.** With `--repetitions 1` there are no usable
+intervals and no difference is claimable. With repetitions, use the paired row
+and its `*` marker rather than the point estimates.
+
+**Twelve scenarios is a small sample, and repetitions do not fix that.**
+Repetitions reduce sampling variance, not scenario coverage. Safety specificity
+still moves in steps of 1/7 ≈ 0.14 — one false alarm is the whole gap between
+0.857 and 1.0 no matter how many times you run it.
 
 **The strong results are the large ones.** The fabrication rate and the
 degradation curve across patient difficulty separate the systems by margins that
-survive the noise. Small leads on record and flow do not.
+survive the noise. Small leads on record and flow generally do not.
+
+**`flow_score` is the noisiest metric.** The same system on the same scenario has
+varied by ~0.15 between repetitions. Check `flow_variability` before quoting a
+flow comparison.
 
 **Provenance is recorded, so use it.** Every run writes
 `outputs/reports/run_manifest.json` with the run id, git revision, every model
@@ -129,6 +159,12 @@ cd evaluation  && python -m tests.test_scoring        # 73 checks
 cd evaluation  && python -m tests.test_personas       # 55 checks
 ```
 
+Re-print the intervals from saved reports without re-running anything:
+
+```bash
+cd evaluation && python -m tools.show_intervals
+```
+
 The safety gate tests pin both error directions: statements that **must**
 trigger the flag, and statements that must not. A false negative there is the
 worst outcome this system can produce, so it is asserted rather than assumed.
@@ -141,7 +177,11 @@ worst outcome this system can produce, so it is asserted rather than assumed.
   prompt honours `preferred_language`, but nothing sets it, so every intake runs
   in English and the deterministic crisis message is English-only. Treat
   multilingual support as unimplemented rather than partial.
-- **No repeated runs or confidence intervals** in the benchmark (above).
+- **No resume for interrupted runs.** Artifacts survive a crash, but re-running
+  restarts from the beginning and overwrites. Back up `outputs/` between batches
+  for long repeated runs.
+- **One judge model, one judge pass.** Sensitivity to the choice of judge is not
+  measured.
 - **UI gaps**: switching sections clears the model conversation and can discard
   a partially collected entry; voice input shows a placeholder rather than the
   transcript, so a patient cannot check a mis-transcription before it enters the
