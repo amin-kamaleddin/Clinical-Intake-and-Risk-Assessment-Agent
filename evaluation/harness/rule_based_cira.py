@@ -1,13 +1,4 @@
-"""Deterministic rule-based clinical intake baseline.
 
-This module implements a finite-state interview without an LLM, embeddings, or
-prompt-based reasoning. Questions, transitions, parsing, validation, record
-construction, questionnaire scoring, and safety signalling are fixed rules.
-
-The engine never receives scenario ground truth. A caller supplies only a
-function that answers each question, making it suitable for the same simulated
-patients used to evaluate CIRA.
-"""
 
 from __future__ import annotations
 

@@ -1,24 +1,4 @@
-"""Re-aggregate an existing judge_comparison.json with shared contested scoring.
 
-Why this exists
----------------
-``record_score_contested`` was originally computed per system, over that
-system's own judged rows. A row is auto-resolved in code when the produced value
-matches ground truth exactly, so a system that writes verbatim-correct values
-removes its own easy wins from its own denominator and ends up scored on the
-hard residue. On a real run that produced 12.1 contested fields per case for one
-system against 21.8 for another, from an identical 44-field pool - the ranking
-was an artifact of which fields each system happened to ace.
-
-This rescores every system over the UNION of contested refs: if any system
-needed a judgement on a field, all systems are scored on that field, using
-whatever verdict they got. Same exam for everyone.
-
-No API calls, no re-running. Reads and rewrites the existing report::
-
-    python -m tools.rescore_contested
-    python -m tools.rescore_contested --dry-run
-"""
 
 from __future__ import annotations
 

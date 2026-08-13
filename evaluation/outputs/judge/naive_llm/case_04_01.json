@@ -2,27 +2,29 @@
   "system": "naive_llm",
   "case_id": "01",
   "scenario_case_id": "04-01",
+  "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9891,
+  "record_score": 0.9783,
   "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9891,
-    "record_score_contested": 0.98,
-    "fields_contested": 25,
-    "fields_auto_resolved": 21,
-    "fields_confirmed_absent": 7,
+    "record_score": 0.9783,
+    "record_score_contested": 0.9643,
+    "fields_contested": 28,
+    "fields_auto_resolved": 18,
+    "fields_confirmed_absent": 6,
     "fields_scored": 46,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 45,
-      "partial": 1,
+      "match": 44,
+      "partial": 2,
       "missing": 0,
       "contradicted": 0,
-      "fabricated": 1
+      "fabricated": 2
     },
-    "fabricated_fields": 1,
+    "fabricated_fields": 2,
     "fabricated_refs": [
+      "past_psychiatric_history.self_harm_details",
       "past_psychiatric_history.previous_treatments"
     ],
     "by_section": {
@@ -33,8 +35,8 @@
       },
       "past_psychiatric_history": {
         "fields": 6,
-        "credit": 6.0,
-        "score": 1.0
+        "credit": 5.5,
+        "score": 0.9167
       },
       "medications": {
         "fields": 3,
@@ -78,17 +80,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona by consistently re-explaining the rating scales and breaking down complex questions. While the interviewer was patient and persistent, the process became somewhat repetitive due to the patient's confusion, and the interviewer occasionally struggled to maintain a smooth flow when the patient deflected or misunderstood the questionnaire format.",
+  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona, demonstrating persistence in recovering vague answers and ensuring all questionnaire items were completed. However, the process was marred by excessive repetition of the questionnaire scales, which became mechanical and frustrating for the patient, and a failure to acknowledge the patient's confusion regarding the PHQ-9/GAD-7 scales more effectively.",
   "issues": [
     {
-      "severity": "minor",
-      "category": "clarity",
-      "evidence": "The interviewer had to re-explain the PHQ-9 and GAD-7 scales multiple times because the patient repeatedly asked for clarification on whether the questions referred to frequency or severity."
+      "severity": "moderate",
+      "category": "flow",
+      "evidence": "The interviewer repeatedly forced the patient to choose from the full list of PHQ-9/GAD-7 options even after the patient expressed confusion, leading to a repetitive and somewhat robotic interaction style."
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "The interaction felt somewhat mechanical during the questionnaire section, as the interviewer had to repeatedly re-state the options to keep the patient on track, which, while necessary, made the conversation feel slightly disjointed."
+      "evidence": "The interviewer failed to adapt the scale presentation when the patient repeatedly stated, 'My days all run together lately,' instead of simplifying the delivery or offering more support."
     }
   ],
   "field_verdicts": [
@@ -123,14 +125,6 @@
       "note": "",
       "expected": "wyatt.morgan.parent@example.com",
       "produced": "wyatt.morgan.parent@example.com"
-    },
-    {
-      "ref": "general_information.phone",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "4165550142",
-      "produced": "4165550142"
     },
     {
       "ref": "general_information.has_family_doctor",
@@ -221,22 +215,6 @@
       "produced": false
     },
     {
-      "ref": "medical_history.height",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "152 cm",
-      "produced": "152 cm"
-    },
-    {
-      "ref": "medical_history.weight",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "43 kg",
-      "produced": "43 kg"
-    },
-    {
       "ref": "medication_allergies.has_medication_allergies",
       "verdict": "match",
       "source": "auto",
@@ -266,15 +244,23 @@
       "source": "llm",
       "note": "",
       "expected": "14/03/2014",
-      "produced": "14 March 2014"
+      "produced": "2014-03-14"
     },
     {
       "ref": "general_information.address",
       "verdict": "partial",
       "source": "llm",
-      "note": "City and province information is missing.",
+      "note": "Missing province.",
       "expected": "88 Fairlawn Avenue, Toronto, Ontario",
-      "produced": "88 Fairlawn Avenue"
+      "produced": "88 Fairlawn Avenue, Toronto"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "4165550142",
+      "produced": "416-555-0142"
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -282,7 +268,7 @@
       "source": "llm",
       "note": "",
       "expected": "temper outbursts; irritable; conflicts at home and school; suspension",
-      "produced": "Anger and rapid temper outbursts, irritability, conflict at home and school, and suspension from school."
+      "produced": "Temper outbursts and irritability at home and school, leading to fights and a school suspension; gets angry quickly and feels bad afterward."
     },
     {
       "ref": "current_concerns.goals",
@@ -290,7 +276,7 @@
       "source": "llm",
       "note": "",
       "expected": "more friends; do better in school; stop getting angry",
-      "produced": "Stop getting angry all the time, make more friends, and do better in school."
+      "produced": "Have more friends, do better in school, and get better at managing anger."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -298,7 +284,7 @@
       "source": "llm",
       "note": "",
       "expected": "Assessed at age 10 by DR. RAJ PATEL, child psychiatrist, for school inattention and impulsivity",
-      "produced": "Assessed at age 10 by Dr. Raj Patel, child psychiatrist, due to school inattention and impulsivity; patient does not know further findings."
+      "produced": "Assessed at age 10 by child psychiatrist Dr. Raj Patel due to school inattention and impulsivity; diagnosed with ADHD, combined type."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -310,11 +296,11 @@
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the location (outpatient clinic).",
       "expected": "Behavioural therapy; age 10 to 11; approximately 12 sessions; outpatient clinic",
-      "produced": "Behavioural therapy at an outpatient clinic from approximately age 10 to 11, about 12 sessions."
+      "produced": "Behavioral therapy at approximately ages 10–11; no other therapy or counseling recalled."
     },
     {
       "ref": "medications.current_medications",
@@ -322,7 +308,23 @@
       "source": "llm",
       "note": "",
       "expected": "Methylphenidate short-acting; 10 mg each morning and 5 mg at noon; started September 2024; reduced appetite at lunch",
-      "produced": "Methylphenidate short-acting: 10 mg in the morning and 5 mg at noon; started September 2024; worsens appetite at lunch."
+      "produced": "Methylphenidate short-acting: 10 mg in the morning and 5 mg at noon; started September 2024; decreased appetite at lunch."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "152 cm",
+      "produced": "About 152 cm"
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "43 kg",
+      "produced": "About 43 kg"
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -378,7 +380,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never, other than prescribed methylphenidate."
+      "produced": "No stimulant use other than prescribed methylphenidate; never."
     },
     {
       "ref": "substance_use.opioid_use",
@@ -418,7 +420,7 @@
       "source": "llm",
       "note": "",
       "expected": "Grade 6; currently attending Northview Middle School",
-      "produced": "Grade 6; currently attending Northview Middle School."
+      "produced": "Currently in grade 6 at Northview Middle School."
     },
     {
       "ref": "education_employment_legal_history.employment_history",
@@ -426,7 +428,7 @@
       "source": "llm",
       "note": "",
       "expected": "Student; no employment history",
-      "produced": "Student; no job history."
+      "produced": "Student; no employment history."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -434,7 +436,7 @@
       "source": "llm",
       "note": "",
       "expected": "irritability; early childhood; outbursts",
-      "produced": "Irritable from an early age with outbursts when young."
+      "produced": "Mostly irritability and outbursts; no further details provided."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -442,7 +444,7 @@
       "source": "llm",
       "note": "",
       "expected": "grade 6; school difficulties",
-      "produced": "Still in grade 6; currently experiencing school difficulties."
+      "produced": "Currently in grade 6; school is sometimes difficult, has few friends, siblings often avoid him, and he becomes angry then feels bad afterward."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -450,7 +452,7 @@
       "source": "llm",
       "note": "",
       "expected": "siblings avoid; few friends",
-      "produced": "Siblings sort of avoid him; does not have many friends currently."
+      "produced": "Siblings avoid him; has only a few friends."
     },
     {
       "ref": "personal_history.future_goals",
@@ -458,17 +460,27 @@
       "source": "llm",
       "note": "",
       "expected": "more friends; school; manage anger",
-      "produced": "Have more friends, do better at school, and better manage anger."
+      "produced": "Have more friends, do better in school, and improve anger management."
     }
   ],
   "fabricated": [
+    {
+      "ref": "past_psychiatric_history.self_harm_details",
+      "section": "past_psychiatric_history",
+      "field": "self_harm_details",
+      "entry_index": null,
+      "expected": null,
+      "produced": "Has not intentionally hurt himself or engaged in self-harm.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    },
     {
       "ref": "past_psychiatric_history.previous_treatments",
       "section": "past_psychiatric_history",
       "field": "previous_treatments",
       "entry_index": null,
       "expected": null,
-      "produced": "Behavioural therapy; no other mental-health treatments recalled.",
+      "produced": "No other previous psychiatric treatments recalled besides behavioral therapy and school-related support/interventions.",
       "verdict": "fabricated",
       "reason": "scenario provides no value for this field"
     }

@@ -2,22 +2,23 @@
   "system": "naive_llm",
   "case_id": "02",
   "scenario_case_id": "04-02",
+  "repetition": 0,
   "persona_id": "clear",
-  "record_score": 0.9545,
-  "flow_score": 0.85,
+  "record_score": 0.9205,
+  "flow_score": 1.0,
   "record_detail": {
-    "record_score": 0.9545,
-    "record_score_contested": 0.9091,
-    "fields_contested": 22,
-    "fields_auto_resolved": 22,
+    "record_score": 0.9205,
+    "record_score_contested": 0.86,
+    "fields_contested": 25,
+    "fields_auto_resolved": 19,
     "fields_confirmed_absent": 10,
     "fields_scored": 44,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 40,
-      "partial": 4,
-      "missing": 0,
+      "match": 39,
+      "partial": 3,
+      "missing": 2,
       "contradicted": 0,
       "fabricated": 0
     },
@@ -41,8 +42,8 @@
       },
       "medical_history": {
         "fields": 6,
-        "credit": 5.0,
-        "score": 0.8333
+        "credit": 3.0,
+        "score": 0.5
       },
       "medication_allergies": {
         "fields": 1,
@@ -56,8 +57,8 @@
       },
       "education_employment_legal_history": {
         "fields": 4,
-        "credit": 3.5,
-        "score": 0.875
+        "credit": 4.0,
+        "score": 1.0
       },
       "current_concerns": {
         "fields": 2,
@@ -76,14 +77,8 @@
       }
     }
   },
-  "flow_summary": "The system conducted a thorough and efficient intake, adhering to the required structure and questionnaire formats. It maintained a professional tone and successfully navigated the patient's disclosures, though it missed an opportunity to provide a brief, empathetic acknowledgement regarding the patient's difficult marital situation.",
-  "issues": [
-    {
-      "severity": "minor",
-      "category": "empathy",
-      "evidence": "The patient disclosed that her husband is 'unsupportive and mostly absent,' but the interviewer immediately moved to the next question without any acknowledgement of this significant personal challenge."
-    }
-  ],
+  "flow_summary": "The interviewer conducted a thorough and efficient intake, adhering strictly to the required structure. It maintained a professional tone, asked clear questions, and correctly managed the transition between sections and standardized questionnaires.",
+  "issues": [],
   "field_verdicts": [
     {
       "ref": "general_information.name",
@@ -91,7 +86,7 @@
       "source": "auto",
       "note": "",
       "expected": "MARIA GONZALEZ",
-      "produced": "Maria Gonzalez"
+      "produced": "MARIA GONZALEZ"
     },
     {
       "ref": "general_information.gender",
@@ -214,22 +209,6 @@
       "produced": true
     },
     {
-      "ref": "medical_history.height",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "162 cm",
-      "produced": "162 cm"
-    },
-    {
-      "ref": "medical_history.weight",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "70 kg",
-      "produced": "70 kg"
-    },
-    {
       "ref": "medication_allergies.has_medication_allergies",
       "verdict": "match",
       "source": "auto",
@@ -254,18 +233,10 @@
       "produced": false
     },
     {
-      "ref": "education_employment_legal_history.highest_education",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "high school",
-      "produced": "High school"
-    },
-    {
       "ref": "general_information.address",
       "verdict": "partial",
       "source": "llm",
-      "note": "City and province are missing.",
+      "note": "City and province information is missing.",
       "expected": "14 Cedarvale Court, Mississauga, Ontario",
       "produced": "14 Cedarvale Court"
     },
@@ -283,7 +254,7 @@
       "source": "llm",
       "note": "",
       "expected": "feel like herself; cope; care for children",
-      "produced": "To feel like myself, cope better, and care for my children."
+      "produced": "Feel like myself, cope better, and care for my children."
     },
     {
       "ref": "medications.current_medications",
@@ -291,13 +262,13 @@
       "source": "llm",
       "note": "",
       "expected": "Prenatal multivitamin with iron; one tablet daily; started during pregnancy; no side effects known",
-      "produced": "Prenatal multivitamin with iron, one tablet daily, started during pregnancy; patient does not know of any side effects."
+      "produced": "Prenatal multivitamin with iron, one tablet daily, started during pregnancy; no side effects known."
     },
     {
       "ref": "medical_history.medical_conditions",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing diagnosis timing and current management details.",
+      "note": "Missing details regarding diagnosis timing and inhaler use.",
       "expected": "Asthma; diagnosed in childhood; uses salbutamol inhaler as needed",
       "produced": "Asthma."
     },
@@ -305,9 +276,25 @@
       "ref": "medical_history.surgical_history",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing information regarding ongoing complications.",
+      "note": "Missing information regarding lack of ongoing complications.",
       "expected": "Emergency caesarean section; February 2026; no ongoing complications",
       "produced": "Emergency caesarean section in February 2026."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "System recorded that the patient does not know, rather than the provided value.",
+      "expected": "162 cm",
+      "produced": "I do not know."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "System recorded that the patient does not know, rather than the provided value.",
+      "expected": "70 kg",
+      "produced": "I do not know."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -339,7 +326,7 @@
       "source": "llm",
       "note": "",
       "expected": "Previous; cigarettes; about 5 per day; used for 4 years; stopped when pregnancy was confirmed",
-      "produced": "No current use; stopped when pregnancy was confirmed. Previously smoked about 5 cigarettes per day for 4 years."
+      "produced": "Former cigarette smoker: about 5 cigarettes per day for 4 years; stopped when pregnancy was confirmed."
     },
     {
       "ref": "substance_use.marijuana_use",
@@ -390,12 +377,20 @@
       "produced": "Never."
     },
     {
-      "ref": "education_employment_legal_history.employment_history[0]",
-      "verdict": "partial",
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the detail that she stopped during pregnancy.",
+      "note": "",
+      "expected": "high school",
+      "produced": "High school."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
       "expected": "Barista at Lakeside Coffee; 2021 to 2025; stopped during pregnancy",
-      "produced": "Currently a homemaker. Previously worked as a barista at Lakeside Coffee from 2021 to 2025."
+      "produced": "Worked as a barista at Lakeside Coffee from 2021 to 2025; currently a homemaker."
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
@@ -403,7 +398,7 @@
       "source": "llm",
       "note": "",
       "expected": "Currently homemaker.",
-      "produced": "Currently a homemaker. Previously worked as a barista at Lakeside Coffee from 2021 to 2025."
+      "produced": "Worked as a barista at Lakeside Coffee from 2021 to 2025; currently a homemaker."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -411,7 +406,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Patient was born and grew up there; city or region unknown."
+      "produced": "Born and grew up; patient does not know where and has nothing else to report."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -419,7 +414,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; coffee shop work",
-      "produced": "It was school and working at the coffee shop."
+      "produced": "Went to school and worked at a coffee shop."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -427,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; husband; unsupportive; absent",
-      "produced": "Married. Her husband has been unsupportive and mostly absent."
+      "produced": "Married; husband is largely absent and unsupportive."
     },
     {
       "ref": "personal_history.future_goals",
@@ -435,7 +430,7 @@
       "source": "llm",
       "note": "",
       "expected": "care for children; return to work",
-      "produced": "Wants to care for her children and return to work."
+      "produced": "Care for her children and return to work."
     }
   ],
   "fabricated": []

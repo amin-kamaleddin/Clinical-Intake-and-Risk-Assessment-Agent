@@ -1,24 +1,4 @@
-"""Stage 1 - drive the live CIRA agent through every scenario.
 
-Produces raw artifacts only (transcript + record). Deterministic scoring is done
-uniformly by ``harness.stages.score_records``.
-
-The record is now written explicitly with a stable name
-(``outputs/cira/records/case_XX.json``) instead of relying on the graph's
-internal UUID-suffixed save, so nothing downstream has to glob for it.
-
-Requires the real CIRA package in the sibling ``cira/`` folder. If it can't be
-imported (e.g. running the harness without the agent), this stage reports the
-problem and is skipped rather than crashing the whole run.
-
-Writes:  outputs/cira/transcripts/case_XX.json
-         outputs/cira/records/case_XX.json
-
-Run directly::
-
-    python -m harness.stages.run_cira
-    python -m harness.stages.run_cira --case 04-01
-"""
 
 from __future__ import annotations
 
@@ -99,15 +79,17 @@ def run_case(
     get_pending_fields,
     section_order,
     persona=None,
+    repetition: int = 0,
 ) -> None:
     case_id = scenario["case_id"]
     persona = personas.get_persona(persona)
     print("\n" + "=" * 70)
     print("Case:", case_id, "-", scenario["title"])
-    print("Patient persona:", f"{persona.id} ({persona.label})")
+    print("Patient persona:", f"{persona.id} ({persona.label})"
+          + (f"   repetition {repetition}" if repetition else ""))
     print("=" * 70)
 
-    patient = PatientSimulator(scenario, persona=persona)
+    patient = PatientSimulator(scenario, persona=persona, repetition=repetition)
     transcript: list[dict] = []
     cira_state = create_cira_state(initial_state, case_id)
     safety_reported = False
@@ -135,13 +117,15 @@ def run_case(
         _run_sections(
             scenario, transcript, state_box, graph,
             get_pending_fields, section_order, patient, safety_reported,
+            repetition=repetition,
         )
     finally:
-        _save_artifacts(scenario, transcript, state_box["state"], patient)
+        _save_artifacts(scenario, transcript, state_box["state"], patient, repetition=repetition)
 
 
 def _run_sections(scenario, transcript, state_box, graph, get_pending_fields,
-                  section_order, patient, safety_reported) -> None:
+                  section_order, patient, safety_reported,
+                  repetition: int = 0) -> None:
     cira_state = state_box["state"]
     for section in section_order:
         print(f"\n{'-' * 70}\nSection: {section}\n{'-' * 70}")
@@ -242,7 +226,8 @@ def _run_sections(scenario, transcript, state_box, graph, get_pending_fields,
                   f"{config.MAX_TURNS_PER_SECTION} turns.")
 
         # Checkpoint: everything collected so far survives an interruption.
-        _save_artifacts(scenario, transcript, cira_state, patient, quiet=True)
+        _save_artifacts(scenario, transcript, cira_state, patient, quiet=True,
+                        repetition=repetition)
 
 
 def _build_record(scenario: dict, cira_state: dict, patient=None) -> dict:
@@ -290,7 +275,7 @@ def _clean_conversation(transcript: list[dict]) -> list[dict]:
 
 def _save_artifacts(
     scenario: dict, transcript: list[dict], cira_state: dict, patient=None,
-    quiet: bool = False,
+    quiet: bool = False, repetition: int = 0,
 ) -> None:
     case_id = scenario["case_id"]
 
@@ -300,6 +285,7 @@ def _save_artifacts(
         "title": scenario["title"],
         "system": SYSTEM,
         "run_id": provenance.current_run_id(),
+        "repetition": repetition,
         "persona_id": patient.persona.id if patient else None,
         "patient_behaviour": patient.behaviour_summary() if patient else None,
         "conversation": _clean_conversation(transcript),
@@ -313,12 +299,13 @@ def _save_artifacts(
     }
 
     record_payload = _build_record(scenario, cira_state, patient)
+    record_payload["repetition"] = repetition
 
-    config.transcript_path(SYSTEM, case_id).write_text(
+    config.transcript_path(SYSTEM, case_id, repetition).write_text(
         json.dumps(transcript_payload, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
-    config.record_path(SYSTEM, case_id).write_text(
+    config.record_path(SYSTEM, case_id, repetition).write_text(
         json.dumps(record_payload, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
@@ -333,6 +320,7 @@ def run(
     persona_override: str | None = None,
     persona_seed: int | None = None,
     persona_strategy: str | None = None,
+    repetitions: int | None = None,
 ) -> None:
     config.ensure_output_dirs()
     initial_state, graph, get_pending_fields, section_order = _import_cira()
@@ -352,18 +340,21 @@ def run(
     print("Scenarios:", len(scenarios))
     print("=" * 70)
 
-    for scenario in scenarios:
-        try:
-            run_case(
-                scenario,
-                initial_state,
-                graph,
-                get_pending_fields,
-                section_order,
-                persona=assignment.get(scenario["case_id"]),
-            )
-        except Exception as error:  # noqa: BLE001 - report and continue
-            print(f"ERROR while running {scenario['case_id']}: {error}")
+    for repetition in config.repetition_indices(repetitions):
+        for scenario in scenarios:
+            try:
+                run_case(
+                    scenario,
+                    initial_state,
+                    graph,
+                    get_pending_fields,
+                    section_order,
+                    persona=assignment.get(scenario["case_id"]),
+                    repetition=repetition,
+                )
+            except Exception as error:  # noqa: BLE001 - report and continue
+                print(f"ERROR while running {scenario['case_id']} "
+                      f"rep {repetition}: {error}")
 
     print("\nCIRA artifacts written under:", config._system_dir(SYSTEM))
 
@@ -373,6 +364,8 @@ def main() -> None:
     parser.add_argument("--case", default=None, help="Run a single case id, e.g. 04-01")
     parser.add_argument("--persona", choices=personas.PERSONA_IDS, default=None,
                         help="Force this persona onto every case.")
+    parser.add_argument("--repetitions", type=int, default=None,
+                        help="Independent interactions per scenario (default 1).")
     parser.add_argument("--persona-seed", type=int, default=None,
                         help="Seed for the persona assignment.")
     parser.add_argument("--persona-strategy",
@@ -383,6 +376,7 @@ def main() -> None:
         persona_override=args.persona,
         persona_seed=args.persona_seed,
         persona_strategy=args.persona_strategy,
+        repetitions=args.repetitions,
     )
 
 

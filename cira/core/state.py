@@ -390,3 +390,33 @@ FIELD_TO_SECTION = {
 # Derived fields that are written but never "collected".
 FIELD_TO_SECTION["phq9_total"] = "phq9"
 FIELD_TO_SECTION["gad7_total"] = "gad7"
+
+
+# ── Conditional fields ─────────────────────────────────────────────────────
+#
+# field -> (controlling boolean, value that HIDES the field)
+#
+# A conditional field is only meaningful when its controlling boolean says the
+# thing exists. Writing current_medications while has_current_medications is
+# False records a medication the patient does not take: in case 04-05 the
+# patient's only antidepressant was one she had STOPPED, and it was filed as
+# both current and past. The agent's own text said "stopped taking it", so the
+# stop was understood and the field was still wrong.
+#
+# prompts/builder.py has its own copy for deciding which fields are pending.
+# This one is for rejecting writes, which is a different job: pending-field
+# logic can be talked around by the model, a rejected tool call cannot.
+CONDITIONAL_FIELDS = {
+    "family_doctor_name": ("has_family_doctor", False),
+    "psychiatrist_name": ("has_psychiatrist", False),
+    "assessment_details": ("previously_assessed", False),
+    "hospital_details": ("hospital_admission", False),
+    "self_harm_details": ("self_harm_history", False),
+    "current_medications": ("has_current_medications", False),
+    "past_medication_details": ("has_past_medications", False),
+    "medical_conditions": ("has_medical_conditions", False),
+    "surgical_history": ("has_surgical_history", False),
+    "medication_allergies": ("has_medication_allergies", False),
+    "family_psychiatric_history_details": ("has_family_psychiatric_history", False),
+    "legal_case_details": ("active_legal_cases", False),
+}

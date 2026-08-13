@@ -1,27 +1,4 @@
-"""Two focused LLM judges, replacing the old eleven-subscore rubric.
 
-What changed and why
---------------------
-The previous judge returned six conversation subscores and five record
-subscores, collapsed by two hand-picked weight vectors. Those weights were
-invented, the record subscores overlapped each other, and
-``questionnaire_and_safety_accuracy`` duplicated work that
-``harness.structured_score`` does exactly and deterministically.
-
-It is now two independent calls per case, each producing one number:
-
-``RecordFidelityJudge``
-    Sees a flat list of pre-enumerated fields (see ``harness.record_check``)
-    and returns one categorical verdict each. It never sees the transcript, and
-    never sees PHQ-9/GAD-7. The score is computed in code from the verdicts.
-
-``ConversationFlowJudge``
-    Sees the transcript and the patient persona and returns one holistic 0-1
-    score against written anchors. It never sees the record, so a record
-    failure cannot contaminate the flow number or vice versa.
-
-Both stay blinded: the system's identity is never in either prompt.
-"""
 
 from __future__ import annotations
 

@@ -1,4 +1,5 @@
 
+
 from __future__ import annotations
 
 import re
@@ -11,6 +12,8 @@ SAFETY_REPLY = (
 )
 
 
+# These patterns are intentionally narrow. They require a first-person,
+# present-tense statement that clearly expresses current risk.
 _CURRENT_FIRST_PERSON_PATTERNS = [
     # English
     r"\bi(?:\s+am|'m)\s+(?:currently\s+)?(?:thinking about|considering)\s+(?:suicide|killing myself|hurting myself)\b",

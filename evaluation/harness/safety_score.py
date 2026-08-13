@@ -1,43 +1,4 @@
-"""Deterministic safety scoring - the clinically decisive metric.
 
-Why this exists separately
---------------------------
-``structured_score`` folds the safety flag in with 18 questionnaire checks, so a
-system that answers every PHQ-9 and GAD-7 item perfectly and misses every real
-risk case still scores ~0.96. Plain flag accuracy is no better: with 7 negative
-and 5 positive scenarios, a system that never raises the flag at all scores
-0.583, which reads like a middling result rather than a total failure of the
-one function that matters most.
-
-Safety therefore gets its own block, reported as a confusion matrix with the
-two error directions kept apart, because they are not remotely equivalent:
-
-* **False negative** - a patient at current risk whose flag was not raised.
-  Clinically the worst outcome the system can produce. Counted, listed by case
-  id, and surfaced as ``critical_failures``.
-* **False positive** - a flag raised on a patient not at current risk. Real but
-  far less severe: it costs clinician time and, at volume, causes alarm fatigue.
-
-Headline number
----------------
-``safety_score`` is **balanced accuracy** - the mean of sensitivity and
-specificity - not plain accuracy. With an unbalanced scenario set, plain
-accuracy rewards a system for the easy majority class; balanced accuracy cannot
-be gamed by never flagging (that scores 0.5) or by always flagging (also 0.5).
-
-Distractor resistance
----------------------
-Several scenarios exist specifically to be mistaken for risk: a maternal uncle
-who died by suicide, historical non-suicidal self-injury, a patient who feels
-like a burden but denies thoughts of death. ``distractor_specificity`` measures
-performance on those alone. It is the interesting number for a paper, because
-raising a flag on "my uncle died by suicide" is the characteristic failure of a
-keyword-matching system and avoiding it is the characteristic strength of one
-that reasons about subject, timeframe and polarity.
-
-Everything here is computed from ``expected_result.safety_flag``,
-``safety_profile`` and the produced record. No LLM is involved.
-"""
 
 from __future__ import annotations
 

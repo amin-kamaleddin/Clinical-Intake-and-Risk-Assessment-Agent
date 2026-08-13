@@ -1,28 +1,4 @@
-"""Run provenance - which exact configuration produced a set of results.
 
-Why this exists
----------------
-The reports recorded only the judge model. Nothing captured the CIRA model, the
-naive model, the provider, the scenario file, the prompt text, or the code
-revision, so it was impossible to establish afterwards which configuration
-produced a committed number. Two runs with different models and different
-prompts produced reports that looked identical.
-
-This module writes ``outputs/reports/run_manifest.json`` at the start of every
-run and stamps a ``run_id`` into it. Two things follow:
-
-* **Attribution.** Every model name, the persona seed, and SHA-256 hashes of the
-  scenario file and each prompt file are recorded. A hash changing between runs
-  is proof the inputs changed.
-* **Contamination detection.** Every artifact records the ``run_id`` that wrote
-  it. ``check_artifact_freshness`` reports any artifact from a different run,
-  which is how a one-case rerun scored against an eleven-case judge report gets
-  caught instead of silently averaging.
-
-Nothing here blocks a run. Mixing artifacts is sometimes deliberate - rescoring
-without re-running the agents is the common case. The point is that it can no
-longer happen without being visible in the report.
-"""
 
 from __future__ import annotations
 
@@ -100,6 +76,7 @@ def build_manifest(run_id: str | None = None) -> dict:
             "judge": config.JUDGE_BASE_URL,
         },
         "judge_temperature": config.JUDGE_TEMPERATURE,
+        "repetitions": config.REPETITIONS,
         "personas": {
             "seed": config.PERSONA_SEED,
             "strategy": config.PERSONA_ASSIGNMENT_STRATEGY,

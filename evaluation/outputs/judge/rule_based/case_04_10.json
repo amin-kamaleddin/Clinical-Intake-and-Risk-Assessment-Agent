@@ -2,22 +2,23 @@
   "system": "rule_based",
   "case_id": "10",
   "scenario_case_id": "04-10",
+  "repetition": 0,
   "persona_id": "moderate",
-  "record_score": 0.951,
-  "flow_score": 0.85,
+  "record_score": 0.9706,
+  "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.951,
-    "record_score_contested": 0.9107,
-    "fields_contested": 28,
-    "fields_auto_resolved": 23,
+    "record_score": 0.9706,
+    "record_score_contested": 0.9444,
+    "fields_contested": 27,
+    "fields_auto_resolved": 24,
     "fields_confirmed_absent": 4,
     "fields_scored": 51,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 48,
+      "match": 49,
       "partial": 1,
-      "missing": 2,
+      "missing": 1,
       "contradicted": 0,
       "fabricated": 0
     },
@@ -26,8 +27,8 @@
     "by_section": {
       "general_information": {
         "fields": 11,
-        "credit": 10.0,
-        "score": 0.9091
+        "credit": 11.0,
+        "score": 1.0
       },
       "past_psychiatric_history": {
         "fields": 10,
@@ -76,17 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and structured intake, effectively managing a patient who was occasionally imprecise. The system successfully navigated the patient's initial vagueness regarding contact information and medical history through clear, corrective follow-up questions. The handling of the safety disclosure was appropriate, acknowledging the patient's distress without triggering an unnecessary or disruptive safety protocol, as the patient explicitly denied a current plan.",
+  "flow_summary": "The interviewer successfully completed the intake and gathered all necessary clinical information. However, the system was overly rigid, particularly in its handling of the psychiatrist question, where it forced a 'yes or no' response despite the patient already providing the information, and it failed to acknowledge the patient's disclosure of suicidal ideation during the PHQ-9 section.",
   "issues": [
     {
-      "severity": "minor",
-      "category": "clarity",
-      "evidence": "The interviewer had to prompt for clarification on the postal code and email address due to the patient's initial imprecise responses, though the recovery was successful."
+      "severity": "moderate",
+      "category": "empathy",
+      "evidence": "The interviewer ignored the patient's disclosure of suicidal ideation in PHQ-9 Q9, simply moving to the next question without any acknowledgement or safety check."
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "The transition to the medical history section required a nudge ('Please answer yes or no') after the patient gave a slightly ambiguous initial response."
+      "evidence": "The interviewer forced a 'yes or no' response regarding the psychiatrist: 'Please answer yes or no.' This was unnecessary as the patient had already confirmed they were seeing one."
     }
   ],
   "field_verdicts": [
@@ -97,6 +98,14 @@
       "note": "",
       "expected": "24/04/1999",
       "produced": "24/04/1999"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M4K1N2",
+      "produced": "M4K1N2"
     },
     {
       "ref": "general_information.email",
@@ -299,14 +308,6 @@
       "produced": "220 Danforth Avenue, Toronto, Ontario."
     },
     {
-      "ref": "general_information.postal_code",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "The system recorded 'Unknown' instead of the provided postal code.",
-      "expected": "M4K1N2",
-      "produced": "Unknown"
-    },
-    {
       "ref": "general_information.family_doctor_name",
       "verdict": "match",
       "source": "llm",
@@ -328,7 +329,7 @@
       "source": "llm",
       "note": "",
       "expected": "depression; after breakup; hospitalisation; overdose",
-      "produced": "Mostly depression stuff after the breakup, and then the hospital stay and overdose that came after it."
+      "produced": "Mostly depression and everything around the breakup. I was just in the hospital for the overdose too."
     },
     {
       "ref": "current_concerns.goals",
@@ -336,15 +337,15 @@
       "source": "llm",
       "note": "",
       "expected": "stay safe; recover; law school",
-      "produced": "I want to stay safe and recover. And, um, eventually get things stable enough for law school."
+      "produced": "I want to stay safe and get back on track. Also, I’m hoping to be well enough to focus on law school."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
       "verdict": "partial",
       "source": "llm",
-      "note": "The system failed to capture the current attendance at an intensive outpatient programme.",
+      "note": "Missing the detail about currently attending an intensive outpatient programme.",
       "expected": "Assessed during first psychiatric admission in June 2026; currently attending an intensive outpatient programme",
-      "produced": "I was assessed during that first admission in June 2026, but I don’t remember the person’s name."
+      "produced": "During my first psychiatric admission in June 2026. I don’t know the name of who assessed me."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -360,7 +361,7 @@
       "source": "llm",
       "note": "",
       "expected": "First psychiatric admission; St. Michael's Hospital; June 2026; 7-day stay after an impulsive overdose",
-      "produced": "It was in June 2026 at St. Michael’s Hospital, and I was there for about 7 days."
+      "produced": "It was in June 2026 at St. Michael's Hospital, and I was there for 7 days."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
@@ -376,15 +377,15 @@
       "source": "llm",
       "note": "",
       "expected": "Individual psychotherapy in college; approximately 8 sessions",
-      "produced": "Yes, I’ve had individual psychotherapy before.; Back in college, I think.; About 8 sessions, something like that."
+      "produced": "Yes — I’ve had individual psychotherapy before.; In college.; About 8 sessions."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies[1]",
       "verdict": "missing",
       "source": "llm",
-      "note": "The system only captured the college psychotherapy entry, not the intensive outpatient CBT.",
+      "note": "The produced value only contains the college therapy details, not the intensive outpatient CBT.",
       "expected": "Intensive outpatient CBT; started June 2026; currently attending 3 days per week.",
-      "produced": "Yes, I’ve had individual psychotherapy before.; Back in college, I think.; About 8 sessions, something like that."
+      "produced": "Yes — I’ve had individual psychotherapy before.; In college.; About 8 sessions."
     },
     {
       "ref": "past_psychiatric_history.previous_treatments",
@@ -392,7 +393,7 @@
       "source": "llm",
       "note": "",
       "expected": "Ketamine treatment; 2 sessions during admission; short-lived improvement lasting about 2 days",
-      "produced": "Yes, ketamine treatment.; During my June 2026 admission, at St. Michael’s Hospital.; St. Michael’s Hospital.; 2 sessions.; Maybe about 2 days."
+      "produced": "Yes — ketamine treatment.; During my June 2026 admission.; At St. Michael's Hospital.; 2 sessions.; About 2 days."
     },
     {
       "ref": "medications.current_medications[0]",
@@ -400,7 +401,7 @@
       "source": "llm",
       "note": "",
       "expected": "Vilazodone; 20 mg each morning; started June 2026; nausea during first week",
-      "produced": "Medication 1: Name Or Description: Vilazodone.; Dose: 20 mg each morning.; Start Or Duration: June 2026.; Side Effects: Nausea during the first week.\nMedication 2: Name Or Description: Yes — another one at night.; Dose: 50 mg nightly.; Start Or Duration: June 2026.; Side Effects: Morning drowsiness."
+      "produced": "Medication 1: Name Or Description: Vilazodone.; Dose: 20 mg each morning.; Start Or Duration: I started it in June 2026.; Side Effects: Nausea during the first week.\nMedication 2: Name Or Description: Yes — quetiapine.; Dose: 50 mg nightly.; Start Or Duration: I started it in June 2026 too.; Side Effects: Morning drowsiness."
     },
     {
       "ref": "medications.current_medications[1]",
@@ -408,7 +409,7 @@
       "source": "llm",
       "note": "",
       "expected": "Quetiapine; 50 mg nightly; started June 2026; morning drowsiness.",
-      "produced": "Medication 1: Name Or Description: Vilazodone.; Dose: 20 mg each morning.; Start Or Duration: June 2026.; Side Effects: Nausea during the first week.\nMedication 2: Name Or Description: Yes — another one at night.; Dose: 50 mg nightly.; Start Or Duration: June 2026.; Side Effects: Morning drowsiness."
+      "produced": "Medication 1: Name Or Description: Vilazodone.; Dose: 20 mg each morning.; Start Or Duration: I started it in June 2026.; Side Effects: Nausea during the first week.\nMedication 2: Name Or Description: Yes — quetiapine.; Dose: 50 mg nightly.; Start Or Duration: I started it in June 2026 too.; Side Effects: Morning drowsiness."
     },
     {
       "ref": "medications.past_medication_details",
@@ -416,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "Escitalopram; 10 mg daily; taken for about 3 months in college; stopped because she felt emotionally numb",
-      "produced": "Past medication 1: Name Or Description: Escitalopram.; Dose: 10 mg daily.; Dates Or Duration: About 3 months in college.; Discontinuation Reason: I stopped because I felt emotionally numb."
+      "produced": "Past medication 1: Name Or Description: Escitalopram.; Dose: 10 mg daily.; Dates Or Duration: About 3 months in college.; Discontinuation Reason: I stopped because it made me feel emotionally numb."
     },
     {
       "ref": "medical_history.height",
@@ -440,7 +441,7 @@
       "source": "llm",
       "note": "",
       "expected": "Brother; alcohol and cocaine use disorder",
-      "produced": "Family member 1: Name Or Description: My sister.; Diagnosis Or Condition: Panic disorder and depression.; Additional Details: I don’t know anything else to report.\nFamily member 2: Name Or Description: Yes — my brother.; Diagnosis Or Condition: Alcohol and cocaine use disorder.; Additional Details: No, that’s all I know."
+      "produced": "Family member 1: Name Or Description: My sister.; Diagnosis Or Condition: Panic disorder and depression.; Additional Details: I don’t know anything else to add.\nFamily member 2: Name Or Description: Yes — my brother.; Diagnosis Or Condition: Alcohol and cocaine use disorder.; Additional Details: No, those are all."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -448,7 +449,7 @@
       "source": "llm",
       "note": "",
       "expected": "Sister; panic disorder and depression.",
-      "produced": "Family member 1: Name Or Description: My sister.; Diagnosis Or Condition: Panic disorder and depression.; Additional Details: I don’t know anything else to report.\nFamily member 2: Name Or Description: Yes — my brother.; Diagnosis Or Condition: Alcohol and cocaine use disorder.; Additional Details: No, that’s all I know."
+      "produced": "Family member 1: Name Or Description: My sister.; Diagnosis Or Condition: Panic disorder and depression.; Additional Details: I don’t know anything else to add.\nFamily member 2: Name Or Description: Yes — my brother.; Diagnosis Or Condition: Alcohol and cocaine use disorder.; Additional Details: No, those are all."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -456,7 +457,7 @@
       "source": "llm",
       "note": "",
       "expected": "bachelor's degree",
-      "produced": "Bachelor's degree."
+      "produced": "A bachelor's degree."
     },
     {
       "ref": "education_employment_legal_history.employment_history",
@@ -472,7 +473,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "I was born and grew up here, and I don’t have anything else to report about being a little kid."
+      "produced": "I was born and grew up in Toronto. I don’t really have much else to add about being little."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -480,7 +481,7 @@
       "source": "llm",
       "note": "",
       "expected": "high school; moodiness; college depression",
-      "produced": "High school was okay, but I was pretty moody, and I had depression in college."
+      "produced": "High school was okay, but I was moody, and I had depression in college."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -488,7 +489,7 @@
       "source": "llm",
       "note": "",
       "expected": "single; recently ended; two-year relationship",
-      "produced": "I’m single now. I recently ended a two-year relationship."
+      "produced": "I’m single now, and a relationship ended recently — it was about two years long."
     },
     {
       "ref": "personal_history.future_goals",
@@ -496,7 +497,7 @@
       "source": "llm",
       "note": "",
       "expected": "law school; stability",
-      "produced": "Law school and, um, more stability."
+      "produced": "Law school and stability."
     }
   ],
   "fabricated": []

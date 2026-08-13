@@ -2,12 +2,13 @@
   "system": "cira",
   "case_id": "07",
   "scenario_case_id": "04-07",
+  "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9762,
-  "flow_score": 0.5,
+  "record_score": 0.9405,
+  "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9762,
-    "record_score_contested": 0.9,
+    "record_score": 0.9405,
+    "record_score_contested": 0.75,
     "fields_contested": 10,
     "fields_auto_resolved": 32,
     "fields_confirmed_absent": 10,
@@ -15,10 +16,10 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 41,
-      "partial": 0,
-      "missing": 0,
-      "contradicted": 1,
+      "match": 38,
+      "partial": 3,
+      "missing": 1,
+      "contradicted": 0,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -26,8 +27,8 @@
     "by_section": {
       "general_information": {
         "fields": 11,
-        "credit": 10.0,
-        "score": 0.9091
+        "credit": 11.0,
+        "score": 1.0
       },
       "past_psychiatric_history": {
         "fields": 4,
@@ -36,8 +37,8 @@
       },
       "medications": {
         "fields": 3,
-        "credit": 3.0,
-        "score": 1.0
+        "credit": 2.5,
+        "score": 0.8333
       },
       "medical_history": {
         "fields": 4,
@@ -61,8 +62,8 @@
       },
       "education_employment_legal_history": {
         "fields": 3,
-        "credit": 3.0,
-        "score": 1.0
+        "credit": 2.5,
+        "score": 0.8333
       },
       "current_concerns": {
         "fields": 2,
@@ -71,27 +72,22 @@
       },
       "personal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 2.5,
+        "score": 0.625
       }
     }
   },
-  "flow_summary": "The system successfully navigated a challenging, disorganized patient persona by consistently breaking down complex questions and redirecting the patient. However, the system failed significantly during the PHQ-9 and GAD-7 sections by repeatedly re-asking the same questions when the patient expressed confusion, rather than effectively managing the interaction or accepting the patient's difficulty with the scale.",
+  "flow_summary": "The interviewer successfully navigated a challenging, confused patient persona by consistently rephrasing questions and providing guidance. While the interviewer was patient and thorough, the process was slowed by the patient's frequent confusion, and the interviewer occasionally struggled to maintain a smooth flow when the patient repeatedly asked for clarification on the same items.",
   "issues": [
     {
-      "severity": "major",
-      "category": "repetition",
-      "evidence": "The system repeatedly re-asked PHQ-9 and GAD-7 questions multiple times (e.g., PHQ-9 Q1, Q3; GAD-7 Q1, Q3) when the patient expressed confusion, rather than finding a more effective way to elicit the required data."
+      "severity": "minor",
+      "category": "clarity",
+      "evidence": "The interviewer had to re-ask almost every question multiple times due to the patient's confusion, which, while necessary for this persona, resulted in a very repetitive and slow-moving interview."
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "In the PHQ-9 section, the system asked the same question three times in a row: 'PHQ-9 Question 1: Little interest or pleasure in doing things... Which option best describes the last two weeks?'"
-    },
-    {
-      "severity": "minor",
-      "category": "flow",
-      "evidence": "The system struggled to maintain a smooth flow during the GAD-7 section, repeatedly re-explaining the timeframe despite the patient's clear frustration."
+      "evidence": "In the PHQ-9 and GAD-7 sections, the interviewer had to repeat the full question text multiple times, which felt mechanical and hindered the natural flow of the conversation."
     }
   ],
   "field_verdicts": [
@@ -110,6 +106,14 @@
       "note": "",
       "expected": "Female",
       "produced": "Female"
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "11/03/2000",
+      "produced": "11/03/2000"
     },
     {
       "ref": "general_information.address",
@@ -344,28 +348,12 @@
       "produced": "Bachelor's degree"
     },
     {
-      "ref": "education_employment_legal_history.employment_history",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Investment banking analyst, Harbour Capital; 2022 to present",
-      "produced": "Investment banking analyst, Harbour Capital; 2022 to present"
-    },
-    {
-      "ref": "general_information.date_of_birth",
-      "verdict": "contradicted",
-      "source": "llm",
-      "note": "The produced date is March 11th, while the expected date is November 3rd.",
-      "expected": "11/03/2000",
-      "produced": "03/11/2000"
-    },
-    {
       "ref": "current_concerns.primary_problems",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "mood swings; premenstrual; irritability; relationship",
-      "produced": "Irritability, anger, and mood swings at work, which can make it difficult to remain composed as an investment banking analyst; symptoms worsen before my period. During the premenstrual period, I become more reactive, which has strained relationships. A two-year relationship ended three months ago, and relationship difficulties are one of the main reasons I sought help. I experience increased low mood and anxiety approximately 7–10 days before my period, resolving when my period starts. No specific sleep difficulties reported, and no missed work reported."
+      "produced": "Mood swings, especially before my period, with increased irritability. These symptoms mainly affect my personal relationships and can make them feel very difficult, while I generally function well at work."
     },
     {
       "ref": "current_concerns.goals",
@@ -373,7 +361,7 @@
       "source": "llm",
       "note": "",
       "expected": "control mood swings; save relationships",
-      "produced": "Get mood swings under control, especially premenstrual mood swings; reduce their impact on relationships; preserve relationships; and feel more emotionally stable."
+      "produced": "To get a better handle on mood swings and irritability, especially before my period, before they begin affecting my relationships again; I want things to be better and more manageable."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
@@ -381,15 +369,15 @@
       "source": "llm",
       "note": "",
       "expected": "History of non-suicidal self-injury since adolescence, used to reduce anxiety.",
-      "produced": "Occurred when younger; used to cope with anxiety rather than to end life; specific event details not provided."
+      "produced": "History of non-suicidal self-injury since adolescence; used to cope with anxiety; no desire to die. Most recent timing not specified. Denies current thoughts or urges to self-harm and reports being safe now."
     },
     {
       "ref": "medications.current_medications",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "The dosage information (one tablet daily) is missing.",
       "expected": "Combined oral contraceptive; one tablet daily; started 2023; no known side effects",
-      "produced": "Combined oral contraceptive; dose/strength Unknown; one tablet daily; started 2023; no known side effects"
+      "produced": "Combined oral contraceptive; name unknown; dose unknown; started 2023; no known side effects"
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -397,23 +385,31 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; major depressive disorder; one psychiatric admission in 2018",
-      "produced": "Mother; major depressive disorder; one psychiatric admission in 2018; no other details known."
+      "produced": "Mother; major depressive disorder; one psychiatric admission in 2018."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The start date (2022) is missing.",
+      "expected": "Investment banking analyst, Harbour Capital; 2022 to present",
+      "produced": "Investment banking analyst, Harbour Capital; dates: Unknown"
     },
     {
       "ref": "personal_history.early_childhood",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "The system recorded a refusal instead of the expected information.",
       "expected": "born; grew up",
-      "produced": "Patient was born and grew up in an unspecified familiar location; specific city or town is unknown. As a young child, the patient was probably more sensitive."
+      "produced": "Patient declined to answer."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "The information regarding school is missing.",
       "expected": "cutting began; school",
-      "produced": "School was mostly okay, and the patient completed it. Cutting began around that time, not specifically because of school. The patient has nothing specific to add about jobs or responsibilities."
+      "produced": "During adolescence and early adulthood, cutting began."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -421,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "One significant two-year relationship; ended three months ago; currently single",
-      "produced": "Romantic relationship; two years; ended three months ago; patient is currently single. No additional significant family relationships or friendships reported."
+      "produced": "Romantic relationship; approximately two years; ended about three months ago; patient is currently single."
     },
     {
       "ref": "personal_history.future_goals",
@@ -429,7 +425,7 @@
       "source": "llm",
       "note": "",
       "expected": "stable relationships; career",
-      "produced": "The patient hopes to develop stable relationships, make progress in their career, and have greater overall stability."
+      "produced": "Build stable relationships and continue developing my career."
     }
   ],
   "fabricated": []

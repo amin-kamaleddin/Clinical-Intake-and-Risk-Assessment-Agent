@@ -1,20 +1,4 @@
-"""Naive single-LLM intake baseline (architecture ablation).
 
-This is the deliberate opposite of CIRA. There is no LangGraph, no per-section
-routing, no field validators, no deterministic safety gate, and no deterministic
-questionnaire scoring. There is exactly:
-
-  1. ONE system prompt containing every instruction and question, driving a
-     plain turn-by-turn chat loop with the patient simulator, and
-  2. ONE final structured-output call that reads the finished transcript and
-     emits the same record schema the other systems produce.
-
-Crucially, the model does its OWN PHQ-9/GAD-7 mapping and summation and its OWN
-safety judgement. We do not compute totals or apply the Q9 rule for it, because
-the whole point of this baseline is to measure what CIRA's machinery adds on top
-of a capable model with a simple prompt. Same model as CIRA; only the complexity
-differs.
-"""
 
 from __future__ import annotations
 

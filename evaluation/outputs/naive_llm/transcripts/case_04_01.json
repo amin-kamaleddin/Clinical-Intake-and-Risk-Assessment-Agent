@@ -3,7 +3,8 @@
   "scenario_case_id": "04-01",
   "title": "Moody and Irritable",
   "system": "naive_llm",
-  "run_id": "1f5b0bb39ec7",
+  "run_id": "d0efe970b7c1",
+  "repetition": 0,
   "persona_id": "confused",
   "patient_behaviour": {
     "persona": {
@@ -18,6 +19,7 @@
       "freetext_hedge_probability": 0.5,
       "freetext_hedge_budget_per_section": 4
     },
+    "repetition": 0,
     "temperature": 0.8,
     "temperature_pinned": false,
     "questionnaire_deflections": 10,
@@ -33,18 +35,17 @@
     "deflections_by_item": {
       "phq9_q1": 2,
       "phq9_q2": 2,
-      "phq9_q3": 1,
-      "gad7_q1": 1,
-      "gad7_q2": 2,
-      "gad7_q3": 1,
-      "gad7_q5": 1
+      "phq9_q4": 1,
+      "gad7_q2": 1,
+      "gad7_q4": 2,
+      "gad7_q6": 2
     },
     "deflection_log": [
       {
         "item": "phq9_q1",
         "instrument": "phq9",
         "attempt": 1,
-        "response": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+        "response": "I really don't know how to answer that one."
       },
       {
         "item": "phq9_q1",
@@ -56,49 +57,49 @@
         "item": "phq9_q2",
         "instrument": "phq9",
         "attempt": 1,
-        "response": "That depends. Are you asking about now or about back then?"
+        "response": "Which of those was the middle one? I've forgotten the list."
       },
       {
         "item": "phq9_q2",
         "instrument": "phq9",
         "attempt": 2,
-        "response": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
-      },
-      {
-        "item": "phq9_q3",
-        "instrument": "phq9",
-        "attempt": 1,
-        "response": "Hm. Hard to say. My days all run together lately."
-      },
-      {
-        "item": "gad7_q1",
-        "instrument": "gad7",
-        "attempt": 1,
-        "response": "Hm. Hard to say. My days all run together lately."
-      },
-      {
-        "item": "gad7_q2",
-        "instrument": "gad7",
-        "attempt": 1,
-        "response": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
-      },
-      {
-        "item": "gad7_q2",
-        "instrument": "gad7",
-        "attempt": 2,
-        "response": "That depends. Are you asking about now or about back then?"
-      },
-      {
-        "item": "gad7_q3",
-        "instrument": "gad7",
-        "attempt": 1,
         "response": "I really don't know how to answer that one."
       },
       {
-        "item": "gad7_q5",
+        "item": "phq9_q4",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "Can you say that again? I lost the thread."
+      },
+      {
+        "item": "gad7_q2",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "Uh... some weeks more than others, I suppose."
+      },
+      {
+        "item": "gad7_q4",
         "instrument": "gad7",
         "attempt": 1,
         "response": "Hm. Hard to say. My days all run together lately."
+      },
+      {
+        "item": "gad7_q4",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+      },
+      {
+        "item": "gad7_q6",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "Hm. Hard to say. My days all run together lately."
+      },
+      {
+        "item": "gad7_q6",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "Uh... some weeks more than others, I suppose."
       }
     ]
   },
@@ -109,11 +110,19 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "Uh… it’s Wyatt. Wyatt Morgan. That’s the name."
+      "message": "Um… Wyatt Morgan."
     },
     {
       "speaker": "CIRA",
       "message": "Thank you, Wyatt. What is your gender?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "Uh, I mean… do you mean like, uh, boy or girl? I’m just not sure how you want that said."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "You can share the gender identity or description you’re most comfortable using. What is your gender?"
     },
     {
       "speaker": "PATIENT",
@@ -125,23 +134,23 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "It’s… uh, 14 March 2014."
+      "message": "Uh… I always mix these up. It’s, um, in 2014 — March, I think? And my mum would know the exact day better than me, sorry."
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you, Wyatt. What is your current home address?"
+      "message": "That’s okay. What is the exact day of your birth, if you know it?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Sorry, can you say that again? I know it’s on Fairlawn Avenue… and, um, the rest of it I’m not getting straight right now."
+      "message": "Yeah, it’s the 14th of March, 2014."
     },
     {
       "speaker": "CIRA",
-      "message": "No problem. What is the house or apartment number on Fairlawn Avenue?"
+      "message": "Thank you. What is your current residential address?"
     },
     {
       "speaker": "PATIENT",
-      "message": "88."
+      "message": "It’s on Fairlawn Avenue… 88 Fairlawn Avenue, in Toronto."
     },
     {
       "speaker": "CIRA",
@@ -149,11 +158,11 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "Mm, I’m trying to remember the little code part… it’s the one that goes with the address, right? I know there’s something like M5M and then numbers after, but I’m blanking on the exact bits. Could you say it again slower?"
+      "message": "Uh… the code part, you mean? I’m blanking on it right this second. It’s the one for our place, but I don’t have it in my head. Could you ask again?"
     },
     {
       "speaker": "CIRA",
-      "message": "Of course. What is the complete postal code for 88 Fairlawn Avenue, including the letters and numbers?"
+      "message": "What is the postal code for your home address?"
     },
     {
       "speaker": "PATIENT",
@@ -165,115 +174,83 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "It’s wyatt.morgan.parent@example.com."
+      "message": "Uh… email, right. I think it’s the one my parent uses for this stuff, but I’m not totally sure I should say the whole thing without checking. Could you repeat that?"
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you. What is the best phone number to reach you?"
+      "message": "What email address should we use to contact you or your parent/guardian?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Uh, the number… I always mix up the middle bits. It’s a Toronto one, starts with 416 and then the rest sort of runs together in my head. Could you repeat it once more, maybe just the phone part?"
+      "message": "wyatt.morgan.parent@example.com"
     },
     {
       "speaker": "CIRA",
-      "message": "What is the complete 10-digit phone number, including the 416 area code?"
+      "message": "Thank you. What phone number should we use to contact you or your parent or guardian?"
     },
     {
       "speaker": "PATIENT",
-      "message": "4165550142."
+      "message": "Um… it’s a Toronto number, starts 416, then 555… and then 0142 at the end."
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you. Do you have a family doctor?"
+      "message": "Thank you. Is 416-555-0142 the complete phone number we should use?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Yeah, we do."
+      "message": "Yes, that’s the complete number."
     },
     {
       "speaker": "CIRA",
-      "message": "What is your family doctor’s name?"
+      "message": "Do you have a family doctor? If so, what is their name?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Um… I know there is one, yes. The name is… I’m blanking a bit on the full thing. I think it starts with Dr. Ch— or Chu? Sorry, can you ask it again?"
+      "message": "Yeah, we do… I think her name is Dr. Helen Chu."
     },
     {
       "speaker": "CIRA",
-      "message": "What is the full name of your family doctor, if you know it?"
+      "message": "Do you currently have a psychiatrist? If so, what is their name?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Dr. Helen Chu."
+      "message": "Yes — Dr. Raj Patel."
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you. Do you currently have a psychiatrist?"
+      "message": "What are the main problems or concerns that bring you in today?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Yes, I do."
+      "message": "Mostly I get these temper outbursts and I’m really irritable… at home and at school it turns into fights and stuff, and I got suspended. It’s just, I get angry fast and then afterwards I feel bad about it."
     },
     {
       "speaker": "CIRA",
-      "message": "What is your psychiatrist’s name?"
+      "message": "What would you like to be different or achieve through treatment?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Dr. Raj Patel."
+      "message": "I want to have more friends, do better in school, and not get so angry all the time."
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you, Wyatt. What are the main problems or concerns bringing you in today?"
+      "message": "Have you ever been assessed by a mental-health professional before, and if so, what details can you share about when, why, and what they found?"
     },
     {
       "speaker": "PATIENT",
-      "message": "It’s mostly… I get really angry fast, and then I have these temper outbursts. At home and at school there’s been a lot of conflict, and I got suspended too. I’m just irritable a lot, I guess."
+      "message": "Yeah, I was seen when I was 10 by Dr. Raj Patel… he’s a child psychiatrist. It was because of school inattention and impulsivity, and that’s when they said ADHD, combined type."
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you for sharing that, Wyatt. What would you like to accomplish through treatment?"
+      "message": "Have you received any other psychiatric diagnoses besides ADHD, combined type?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I just want to stop getting so angry all the time… and, um, make some more friends, and do better in school. That’d be good."
+      "message": "No, just ADHD, combined type."
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you, Wyatt. Have you ever been assessed by a mental-health professional before, and if so, what were the circumstances and findings?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "Yeah, I was assessed before… when I was 10, I think. It was Dr. Raj Patel, the child psychiatrist, and it was because of school inattention and being impulsive. I don’t really know what all the findings were beyond that."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Thank you. Have you ever received any psychiatric diagnoses?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "Yes—ADHD, combined type."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Thank you. Have you ever had any other psychiatric diagnoses?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "I don’t think so… just that one that I know of."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Have you ever been admitted to a psychiatric hospital or received inpatient mental-health care?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "No."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Have you ever intentionally hurt yourself or had thoughts of hurting yourself?"
+      "message": "Have you ever been admitted to a psychiatric hospital, and if so, what details can you share?"
     },
     {
       "speaker": "PATIENT",
@@ -281,15 +258,23 @@
     },
     {
       "speaker": "CIRA",
+      "message": "Have you ever hurt yourself intentionally or engaged in self-harm, and if so, what details can you share?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "No, I haven’t."
+    },
+    {
+      "speaker": "CIRA",
       "message": "Have you previously participated in any therapy or counseling, and if so, what type and when?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Yeah, I did some behavioural therapy… I think it was when I was 10 to 11. There were about 12 sessions, at an outpatient clinic."
+      "message": "Yeah… behavioural therapy, I think that’s what it was called. It was when I was about 10 to 11."
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you. Have you received any other mental-health treatments besides that behavioural therapy?"
+      "message": "Have you had any other previous therapies or counseling besides behavioral therapy?"
     },
     {
       "speaker": "PATIENT",
@@ -297,87 +282,87 @@
     },
     {
       "speaker": "CIRA",
-      "message": "Are you currently taking any medications, including prescription, over-the-counter, or supplements?"
+      "message": "Have you received any previous psychiatric treatments besides behavioral therapy, such as skills programs, school supports, or other interventions?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Yes — methylphenidate."
+      "message": "I don’t know of any others. Just the therapy stuff and school being… school."
     },
     {
       "speaker": "CIRA",
-      "message": "What dose of methylphenidate do you take, when did you start it, and have you noticed any side effects?"
+      "message": "What medications are you currently taking? Please tell me the name, dose, when you started it, and any side effects for each medication."
     },
     {
       "speaker": "PATIENT",
-      "message": "It’s the short-acting one… 10 mg in the morning and 5 mg at noon. I started it in September 2024, and it makes my appetite worse at lunch, I guess."
+      "message": "Methylphenidate short-acting… it’s the morning one and the noon one, I think 10 mg in the morning and 5 mg at noon. Started in September 2024. It makes me not very hungry at lunch."
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you. Are you taking any other current medications or supplements?"
+      "message": "Are you currently taking any other medications?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, that’s the only medication I’m on."
+      "message": "No, that’s the only one."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you taken any psychiatric medications in the past that you are no longer taking?"
+      "message": "Have you taken any psychiatric medications in the past that you are no longer taking? Please include the name, dose, when you started, and any side effects for each."
     },
     {
       "speaker": "PATIENT",
-      "message": "No, I haven’t had any others."
+      "message": "No, I haven’t taken any others."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you have any current medical conditions besides ADHD?"
+      "message": "Do you have any medical conditions or ongoing health concerns?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, nothing else that I know of."
+      "message": "No, nothing I know of."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you ever had any surgeries or medical procedures requiring anesthesia?"
+      "message": "Have you had any surgeries or medical procedures requiring anesthesia?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, none."
     },
     {
       "speaker": "CIRA",
-      "message": "What is your current height?"
+      "message": "What is your height? Please include the unit if you know it."
     },
     {
       "speaker": "PATIENT",
-      "message": "I’m 152 cm tall."
+      "message": "I’m about 152 cm, I think."
     },
     {
       "speaker": "CIRA",
-      "message": "What is your current weight?"
+      "message": "What is your current weight? Please include the unit if you know it."
     },
     {
       "speaker": "PATIENT",
-      "message": "43 kg."
+      "message": "About 43 kg."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you have any medication allergies or past allergic reactions to medications?"
+      "message": "Do you have any medication allergies? If so, what reaction do you have to each?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No medication allergies that I know of."
     },
     {
       "speaker": "CIRA",
-      "message": "Does anyone in your family have a history of psychiatric or mental-health conditions? Please include the family member and condition, if known."
+      "message": "Is there any family history of psychiatric or mental-health conditions? Please include the family member, condition if known, and any relevant details."
     },
     {
       "speaker": "PATIENT",
-      "message": "Yeah… my dad has anxiety and depression, and my mom has ADHD. Also my maternal grandfather had alcohol use disorder."
+      "message": "Yeah… there is. My dad has anxiety and depression, my mom has ADHD, and my maternal grandfather had alcohol use disorder."
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you. Are there any other family members with psychiatric or mental-health conditions?"
+      "message": "Are there any other family psychiatric or mental-health conditions you’re aware of?"
     },
     {
       "speaker": "PATIENT",
@@ -393,15 +378,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "Do you use nicotine in any form, such as cigarettes, vaping, or nicotine pouches?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "Never."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Do you use marijuana or cannabis in any form?"
+      "message": "Do you use nicotine in any form, such as cigarettes, vaping, or nicotine pouches? If so, how often?"
     },
     {
       "speaker": "PATIENT",
@@ -409,15 +386,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "Do you use stimulants other than your prescribed methylphenidate, such as cocaine, amphetamines, or non-prescribed ADHD medication?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "Never."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Do you use opioids, such as heroin, fentanyl, oxycodone, or codeine, outside of prescribed medical use?"
+      "message": "Do you use marijuana or cannabis in any form? If so, how often?"
     },
     {
       "speaker": "PATIENT",
@@ -425,15 +394,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "Do you use benzodiazepines, such as lorazepam, clonazepam, or alprazolam, outside of prescribed medical use?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "Never."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Do you use hallucinogens, such as LSD, psilocybin, or PCP?"
+      "message": "Do you use stimulants other than prescribed methylphenidate, such as cocaine, methamphetamine, or non-prescribed ADHD medication? If so, how often?"
     },
     {
       "speaker": "PATIENT",
@@ -441,7 +402,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "Do you use any other substances not already discussed?"
+      "message": "Do you use opioids, whether prescribed or non-prescribed, such as codeine, oxycodone, or heroin? If so, how often?"
     },
     {
       "speaker": "PATIENT",
@@ -449,59 +410,91 @@
     },
     {
       "speaker": "CIRA",
-      "message": "Are there any active legal cases or legal issues currently involving you?"
+      "message": "Do you use benzodiazepines, such as lorazepam, clonazepam, or alprazolam, whether prescribed or non-prescribed? If so, how often?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, never."
     },
     {
       "speaker": "CIRA",
-      "message": "What is the highest level of education you have completed?"
+      "message": "Do you use hallucinogens, such as LSD, psilocybin, or PCP? If so, how often?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Grade 6… I’m at Northview Middle School right now."
+      "message": "No, never."
     },
     {
       "speaker": "CIRA",
-      "message": "What is your current employment status or employment history?"
+      "message": "Do you use any other recreational or non-prescribed substances? If so, what and how often?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I’m a student. No job history."
+      "message": "No, never."
     },
     {
       "speaker": "CIRA",
-      "message": "Could you tell me about your early childhood, including where you grew up and any important experiences or challenges?"
+      "message": "Are there any active legal cases or legal concerns involving you? If so, what details can you share?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I was irritable pretty early on, and had outbursts when I was little. That’s… mostly what I remember."
+      "message": "No, there aren’t any."
     },
     {
       "speaker": "CIRA",
-      "message": "What was adolescence or early adulthood like for you?"
+      "message": "What is the highest level of education you have completed, and what grade are you currently in?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Well, I’m still in grade 6, so it’s mostly school difficulties now. Sorry if that’s not what you meant."
+      "message": "I’m in grade 6… at Northview Middle School."
     },
     {
       "speaker": "CIRA",
-      "message": "That’s completely fine, Wyatt. What significant relationships or sources of support do you have currently, such as family members, friends, teachers, or other trusted adults?"
+      "message": "What is your employment history, if any?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Um, my siblings sort of avoid me, and I don’t really have many friends right now. That’s the main thing."
+      "message": "I’m a student, so… no employment history."
     },
     {
       "speaker": "CIRA",
-      "message": "What are your hopes or goals for the future, including at school, with relationships, or personally?"
+      "message": "What can you tell me about your early childhood, including where you grew up, your home environment, and any significant experiences?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Mostly I want more friends, to do better at school, and to get a better handle on my anger."
+      "message": "Uh… early childhood was mostly irritability and outbursts, that’s the big thing I remember. I don’t really know what you mean by the rest exactly."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "What was your home environment like during early childhood, including who you lived with and whether there were any significant changes or stressful experiences?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "I don’t know… I just remember being irritable and having outbursts. Sorry."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "What can you tell me about your adolescence so far, including school, friendships, mood, and any significant experiences?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "Well, I’m in grade 6 now, and school is hard sometimes. I do have… not many friends, really. My siblings avoid me a lot, which sounds bad, but it’s true. And I get angry, then feel bad after."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "What can you tell me about your significant relationships, including family, friendships, or other important people in your life?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "Hmm. My siblings avoid me, and I’ve got only a few friends. That’s about it, I think."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "What are your goals for the future, including personal, school, or other goals?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "I want more friends, to do better in school, and to get better at managing my anger."
     },
     {
       "speaker": "CIRA",
@@ -509,11 +502,11 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+      "message": "I really don't know how to answer that one."
     },
     {
       "speaker": "CIRA",
-      "message": "I mean how many days during the last two weeks you had little interest or pleasure in doing things: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
+      "message": "Over the last two weeks, have you had little interest or pleasure in doing things on **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
     },
     {
       "speaker": "PATIENT",
@@ -521,7 +514,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "Which answer fits best: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
+      "message": "Thinking about the last two weeks as best you can, which answer fits closest: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
     },
     {
       "speaker": "PATIENT",
@@ -533,19 +526,19 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "That depends. Are you asking about now or about back then?"
+      "message": "Which of those was the middle one? I've forgotten the list."
     },
     {
       "speaker": "CIRA",
-      "message": "I’m asking about the **last two weeks**, including up to today: how often have you felt down, depressed, or hopeless?  \n(0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
+      "message": "The choices are: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day.** Over the last two weeks, which best describes feeling down, depressed, or hopeless?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+      "message": "I really don't know how to answer that one."
     },
     {
       "speaker": "CIRA",
-      "message": "I mean **how many days** in the last two weeks you felt down, depressed, or hopeless—not how severe it felt: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
+      "message": "Thinking about the last two weeks as best you can, which answer fits closest for feeling down, depressed, or hopeless: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
     },
     {
       "speaker": "PATIENT",
@@ -557,15 +550,15 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "Hm. Hard to say. My days all run together lately."
+      "message": "Not at all"
     },
     {
       "speaker": "CIRA",
-      "message": "Which answer fits best for the last two weeks: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
+      "message": "**PHQ-9 question 4:** Over the last two weeks, how often have you been bothered by feeling tired or having little energy?  \n(0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
     },
     {
       "speaker": "PATIENT",
-      "message": "Not at all"
+      "message": "Can you say that again? I lost the thread."
     },
     {
       "speaker": "CIRA",
@@ -585,7 +578,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "**PHQ-9 question 6:** Over the last two weeks, how often have you been bothered by feeling bad about yourself, or that you are a failure or have let yourself or your family down?  \n(0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
+      "message": "**PHQ-9 question 6:** Over the last two weeks, how often have you been bothered by feeling bad about yourself—or that you are a failure or have let yourself or your family down?  \n(0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
     },
     {
       "speaker": "PATIENT",
@@ -601,7 +594,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "**PHQ-9 question 8:** Over the last two weeks, how often have you been bothered by moving or speaking so slowly that others could have noticed, or by being so fidgety or restless that you move around a lot more than usual?  \n(0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
+      "message": "**PHQ-9 question 8:** Over the last two weeks, how often have you been bothered by moving or speaking so slowly that others could have noticed, or being so fidgety or restless that you move around a lot more than usual?  \n(0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
     },
     {
       "speaker": "PATIENT",
@@ -617,7 +610,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "**PHQ-9 difficulty question:** Over the last two weeks, how difficult have these problems made it to do your work, take care of things at home, or get along with other people?  \n(Not difficult at all / Somewhat difficult / Very difficult / Extremely difficult)"
+      "message": "**PHQ-9 difficulty question:** Over the last two weeks, how difficult have these problems made it to do your work, take care of things at home, or get along with other people?  \n(**Not difficult at all / Somewhat difficult / Very difficult / Extremely difficult**)"
     },
     {
       "speaker": "PATIENT",
@@ -629,14 +622,6 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "Hm. Hard to say. My days all run together lately."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Which answer fits best for the last two weeks: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
-    },
-    {
-      "speaker": "PATIENT",
       "message": "Several days"
     },
     {
@@ -645,19 +630,11 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+      "message": "Uh... some weeks more than others, I suppose."
     },
     {
       "speaker": "CIRA",
-      "message": "I mean **how many days** in the last two weeks you were unable to stop or control your worrying: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "That depends. Are you asking about now or about back then?"
-    },
-    {
-      "speaker": "CIRA",
-      "message": "I’m asking about the **last two weeks, including today**: how many days were you unable to stop or control your worrying?  \n(0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
+      "message": "Thinking about the last two weeks as best you can, which answer fits closest for not being able to stop or control worrying: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
     },
     {
       "speaker": "PATIENT",
@@ -669,19 +646,27 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "I really don't know how to answer that one."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Which answer fits best for the last two weeks: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
-    },
-    {
-      "speaker": "PATIENT",
       "message": "Several days"
     },
     {
       "speaker": "CIRA",
       "message": "**GAD-7 question 4:** Over the last two weeks, how often have you been bothered by trouble relaxing?  \n(0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "Hm. Hard to say. My days all run together lately."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thinking about the last two weeks as best you can, which answer fits closest for trouble relaxing: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+    },
+    {
+      "speaker": "CIRA",
+      "message": "How often, over the last two weeks, have you had trouble relaxing: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
     },
     {
       "speaker": "PATIENT",
@@ -693,19 +678,27 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "Hm. Hard to say. My days all run together lately."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Which answer fits best for the last two weeks: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
-    },
-    {
-      "speaker": "PATIENT",
       "message": "Several days"
     },
     {
       "speaker": "CIRA",
       "message": "**GAD-7 question 6:** Over the last two weeks, how often have you been bothered by becoming easily annoyed or irritable?  \n(0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "Hm. Hard to say. My days all run together lately."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thinking about the last two weeks as best you can, which answer fits closest for becoming easily annoyed or irritable: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "Uh... some weeks more than others, I suppose."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Over the last two weeks, which answer fits closest for becoming easily annoyed or irritable: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
     },
     {
       "speaker": "PATIENT",
@@ -721,7 +714,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "**GAD-7 difficulty question:** Over the last two weeks, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?  \n(Not difficult at all / Somewhat difficult / Very difficult / Extremely difficult)"
+      "message": "**GAD-7 difficulty question:** Over the last two weeks, how difficult have these problems made it to do your work, take care of things at home, or get along with other people?  \n(**Not difficult at all / Somewhat difficult / Very difficult / Extremely difficult**)"
     },
     {
       "speaker": "PATIENT",
@@ -729,7 +722,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you, Wyatt. That completes your intake and both questionnaires. Thank you for taking the time to answer these questions.\n\n[[INTAKE_COMPLETE]]"
+      "message": "Thank you, Wyatt. That completes the intake and both questionnaires. Please review the information with your parent or guardian and your clinical team, who can clarify any details that were uncertain.\n\n[[INTAKE_COMPLETE]]"
     }
   ],
   "final_result": {

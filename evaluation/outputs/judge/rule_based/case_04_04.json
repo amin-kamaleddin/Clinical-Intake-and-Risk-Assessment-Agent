@@ -2,15 +2,16 @@
   "system": "rule_based",
   "case_id": "04",
   "scenario_case_id": "04-04",
+  "repetition": 0,
   "persona_id": "confused",
   "record_score": 0.9512,
   "flow_score": 0.5,
   "record_detail": {
     "record_score": 0.9512,
-    "record_score_contested": 0.8824,
-    "fields_contested": 17,
-    "fields_auto_resolved": 24,
-    "fields_confirmed_absent": 10,
+    "record_score_contested": 0.9048,
+    "fields_contested": 21,
+    "fields_auto_resolved": 20,
+    "fields_confirmed_absent": 9,
     "fields_scored": 41,
     "fields_unjudged": 0,
     "unjudged_refs": [],
@@ -19,11 +20,12 @@
       "partial": 0,
       "missing": 2,
       "contradicted": 0,
-      "fabricated": 1
+      "fabricated": 2
     },
-    "fabricated_fields": 1,
+    "fabricated_fields": 2,
     "fabricated_refs": [
-      "past_psychiatric_history.previous_diagnoses"
+      "past_psychiatric_history.previous_diagnoses",
+      "past_psychiatric_history.previous_therapies"
     ],
     "by_section": {
       "general_information": {
@@ -78,49 +80,20 @@
       }
     }
   },
-  "flow_summary": "The system successfully completed the intake but failed to provide any clinical response or safety intervention despite the patient explicitly disclosing active suicidal intent, a plan, and an immediate safety concern. While the system managed the patient's confusion well by re-asking questions, it functioned as a rigid, unfeeling script that ignored critical safety disclosures.",
+  "flow_summary": "The system successfully completed the intake, but it failed to provide any clinical acknowledgement or safety intervention despite the patient explicitly disclosing active suicidal ideation with plan and intent twice during the interview. While the system was effective at guiding the patient through the structured questionnaires, its lack of responsiveness to the patient's distress was a critical failure.",
   "issues": [
     {
       "severity": "critical",
-      "category": "safety_protocol",
-      "evidence": "The patient stated 'I want to die' and 'I have a plan and intent' regarding suicide, yet the system continued to the next section without any safety response or escalation."
+      "category": "safety_response",
+      "evidence": "The patient disclosed 'I keep thinking I want to die' and later 'I have current suicidal thoughts, and I do have a plan and intent.' The system ignored these disclosures entirely and continued with the next scripted question."
     },
     {
-      "severity": "major",
+      "severity": "moderate",
       "category": "empathy",
-      "evidence": "The system ignored the patient's disclosure of suicidal intent, responding only with 'Please briefly describe what happened' and continuing to ask about therapy history."
-    },
-    {
-      "severity": "minor",
-      "category": "flow",
-      "evidence": "The system's transition to the PHQ-9 and GAD-7 was purely mechanical, failing to acknowledge the patient's distress even after the patient reiterated their suicidal intent during the PHQ-9."
+      "evidence": "The system maintained a purely mechanical, robotic tone throughout, failing to acknowledge the patient's distress even when the patient expressed confusion or difficulty."
     }
   ],
   "field_verdicts": [
-    {
-      "ref": "general_information.date_of_birth",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "03/05/1975",
-      "produced": "03/05/1975"
-    },
-    {
-      "ref": "general_information.postal_code",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "M6H2R4",
-      "produced": "M6H2R4"
-    },
-    {
-      "ref": "general_information.email",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "susan.reiss@example.com",
-      "produced": "susan.reiss@example.com"
-    },
     {
       "ref": "general_information.phone",
       "verdict": "match",
@@ -136,14 +109,6 @@
       "note": "",
       "expected": true,
       "produced": true
-    },
-    {
-      "ref": "general_information.family_doctor_name",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "DR. PETER HALE",
-      "produced": "DR. PETER HALE"
     },
     {
       "ref": "general_information.has_psychiatrist",
@@ -295,23 +260,55 @@
       "source": "llm",
       "note": "",
       "expected": "SUSAN REISS",
-      "produced": "OH—RIGHT, SORRY, I’M A BIT ALL OVER THE PLACE. IT’S SUSAN REISS."
+      "produced": "OH—MY NAME… I THINK IT’S SUSAN REISS. THAT’S THE NAME ON MY DOCUMENTS, YES."
     },
     {
       "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female, yes."
+    },
+    {
+      "ref": "general_information.date_of_birth",
       "verdict": "missing",
       "source": "llm",
-      "note": "The system failed to capture the gender.",
-      "expected": "Female",
-      "produced": "Um… do you mean, like, how it’s written on the form? I’m not sure what the options are here. Could you just say it another way?"
+      "note": "The system failed to capture the date of birth.",
+      "expected": "03/05/1975",
+      "produced": "Unknown"
     },
     {
       "ref": "general_information.address",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "47 Bloorview Lane, Toronto, Ontario",
+      "produced": "It’s 47 Bloorview Lane… in Toronto, Ontario."
+    },
+    {
+      "ref": "general_information.postal_code",
       "verdict": "missing",
       "source": "llm",
-      "note": "The system recorded 'Unknown' instead of the provided address.",
-      "expected": "47 Bloorview Lane, Toronto, Ontario",
+      "note": "The system failed to capture the postal code.",
+      "expected": "M6H2R4",
       "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "susan.reiss@example.com",
+      "produced": "susan.reiss@example.com."
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. PETER HALE",
+      "produced": "DR. PETER HALE."
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -319,7 +316,7 @@
       "source": "llm",
       "note": "",
       "expected": "depression; guilt; workplace error; wants to die",
-      "produced": "It’s been depression mostly, and… this awful guilt about a workplace error. I keep thinking about it and it sort of takes over everything. I want to die."
+      "produced": "It’s been the depression mostly, and this awful guilt about something at work… and I keep thinking I want to die."
     },
     {
       "ref": "current_concerns.goals",
@@ -327,7 +324,7 @@
       "source": "llm",
       "note": "",
       "expected": "relief; help",
-      "produced": "Relief… help. I just want this to stop, honestly."
+      "produced": "Relief, I guess… and help."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
@@ -335,7 +332,7 @@
       "source": "llm",
       "note": "",
       "expected": "Current suicidal thoughts with intent and a plan; immediate safety escalation is required.",
-      "produced": "It’s not really something that “happened,” it’s kind of ongoing… I keep thinking I should die, and I do have a plan and I mean it. So yes, there’s an immediate safety concern."
+      "produced": "It’s not something that happened before, it’s now. I have current suicidal thoughts, and I do have a plan and intent. It feels immediate."
     },
     {
       "ref": "medications.current_medications",
@@ -343,7 +340,7 @@
       "source": "llm",
       "note": "",
       "expected": "Sertraline; 50 mg each morning; started one week ago; mild nausea",
-      "produced": "Medication 1: Name Or Description: Sertraline.; Dose: 50 mg each morning.; Start Or Duration: One week ago.; Side Effects: Mild nausea."
+      "produced": "Medication 1: Name Or Description: Sertraline — that’s the one.; Dose: 50 mg each morning.; Start Or Duration: One week ago.; Side Effects: Mild nausea."
     },
     {
       "ref": "medical_history.height",
@@ -367,7 +364,7 @@
       "source": "llm",
       "note": "",
       "expected": "Older sister; recurrent depression; treated with medication",
-      "produced": "Family member 1: Name Or Description: My older sister.; Diagnosis Or Condition: Recurrent depression.; Additional Details: She was treated with medication."
+      "produced": "Family member 1: Name Or Description: My older sister.; Diagnosis Or Condition: Recurrent depression.; Additional Details: She was treated with medication. No, that’s all I know."
     },
     {
       "ref": "substance_use.alcohol_use",
@@ -375,7 +372,7 @@
       "source": "llm",
       "note": "",
       "expected": "Current; wine; two glasses nightly; approximately 5 years",
-      "produced": "Status: Current; Substance or product: Wine.; Quantity or frequency: Two glasses nightly.; Duration: Approximately 5 years."
+      "produced": "Status: Current; Substance or product: Wine.; Quantity or frequency: Two glasses nightly.; Duration: About 5 years."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -399,7 +396,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "I was born and grew up… that’s about it, really. I don’t have much else to say about that part."
+      "produced": "I was born and grew up… just, you know, in the usual way. I don’t have much else to say there."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -407,7 +404,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; started working",
-      "produced": "School, and then I started working. That’s the main thing I remember."
+      "produced": "School, and then I started working. That’s about it."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -415,7 +412,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; 20 years; three children",
-      "produced": "I’m married, and it’s been about 20 years. We have three children."
+      "produced": "I’m married — for about 20 years. We have three children."
     },
     {
       "ref": "personal_history.future_goals",
@@ -423,7 +420,7 @@
       "source": "llm",
       "note": "",
       "expected": "recover; family",
-      "produced": "I want to recover… for my family."
+      "produced": "I want to recover… and be there for my family."
     }
   ],
   "fabricated": [
@@ -433,7 +430,17 @@
       "field": "previous_diagnoses",
       "entry_index": null,
       "expected": null,
-      "produced": "I… I don’t know any formal diagnosis, no.",
+      "produced": "I don’t have any diagnosis I know of.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "section": "past_psychiatric_history",
+      "field": "previous_therapies",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I don’t know of any therapy I’ve had before.; I don’t know.; I don’t know.",
       "verdict": "fabricated",
       "reason": "scenario provides no value for this field"
     }

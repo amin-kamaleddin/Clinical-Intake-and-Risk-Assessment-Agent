@@ -2,9 +2,10 @@
   "system": "rule_based",
   "case_id": "02",
   "scenario_case_id": "04-02",
+  "repetition": 0,
   "persona_id": "clear",
   "record_score": 0.9659,
-  "flow_score": 0.85,
+  "flow_score": 0.95,
   "record_detail": {
     "record_score": 0.9659,
     "record_score_contested": 0.9,
@@ -76,12 +77,12 @@
       }
     }
   },
-  "flow_summary": "The system conducted a thorough and efficient intake, maintaining a professional tone and adhering to the required structure. While the flow was generally excellent, there was a minor redundancy in the family psychiatric history section where the system prompted for a 'yes/no' confirmation after the patient had already provided a detailed answer.",
+  "flow_summary": "The system conducted a highly efficient and thorough intake. It followed a logical structure, adhered to all questionnaire requirements, and maintained a professional, clear tone throughout.",
   "issues": [
     {
       "severity": "minor",
       "category": "redundancy",
-      "evidence": "The interviewer asked 'Please answer yes or no' immediately after the patient had already provided a detailed description of her family's mental health history."
+      "evidence": "The system asked for the family doctor's name twice: 'Do you currently have a family doctor?' followed by 'What is your family doctor's full first and last name?' after the patient had already provided the name in the previous turn."
     }
   ],
   "field_verdicts": [
@@ -331,7 +332,7 @@
       "source": "llm",
       "note": "",
       "expected": "feel like herself; cope; care for children",
-      "produced": "To feel like myself again and cope better so I can care for my children."
+      "produced": "I want to feel like myself again, cope better, and care for my children."
     },
     {
       "ref": "medications.current_medications",
@@ -339,13 +340,13 @@
       "source": "llm",
       "note": "",
       "expected": "Prenatal multivitamin with iron; one tablet daily; started during pregnancy; no side effects known",
-      "produced": "Medication 1: Name Or Description: Prenatal multivitamin with iron.; Dose: One tablet daily.; Start Or Duration: During pregnancy.; Side Effects: No side effects that I know of."
+      "produced": "Medication 1: Name Or Description: Prenatal multivitamin with iron.; Dose: One tablet daily.; Start Or Duration: I started it during pregnancy.; Side Effects: No side effects that I know of."
     },
     {
       "ref": "medical_history.medical_conditions",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing details regarding childhood diagnosis and current use of salbutamol inhaler.",
+      "note": "Missing diagnosis date and current management details.",
       "expected": "Asthma; diagnosed in childhood; uses salbutamol inhaler as needed",
       "produced": "I have asthma."
     },
@@ -363,7 +364,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; depression after the birth of her second child",
-      "produced": "Family member 1: Name Or Description: My mother and my maternal aunt.; Diagnosis Or Condition: My mother had depression after the birth of her second child, and my maternal aunt has anxiety.; Additional Details: No, those are all."
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Depression after the birth of her second child.; Additional Details: I have a maternal aunt with anxiety."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -371,7 +372,7 @@
       "source": "llm",
       "note": "",
       "expected": "Maternal aunt; anxiety.",
-      "produced": "Family member 1: Name Or Description: My mother and my maternal aunt.; Diagnosis Or Condition: My mother had depression after the birth of her second child, and my maternal aunt has anxiety.; Additional Details: No, those are all."
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Depression after the birth of her second child.; Additional Details: I have a maternal aunt with anxiety."
     },
     {
       "ref": "substance_use.nicotine_use",
@@ -393,9 +394,9 @@
       "ref": "education_employment_legal_history.employment_history[0]",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the detail that employment stopped during pregnancy.",
+      "note": "Missing the detail that she stopped working during pregnancy.",
       "expected": "Barista at Lakeside Coffee; 2021 to 2025; stopped during pregnancy",
-      "produced": "Job 1: Name Or Description: Lakeside Coffee.; Job Title: Barista.; Dates: 2021 to 2025.\nJob 2: Name Or Description: Yes, I’m currently a homemaker at home.; Job Title: Homemaker.; Dates: 2025 to present."
+      "produced": "Job 1: Name Or Description: Lakeside Coffee.; Job Title: Barista.; Dates: 2021 to 2025.\nJob 2: Name Or Description: Yes, I’m currently a homemaker.; Job Title: Homemaker.; Dates: 2025 to present."
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
@@ -403,7 +404,7 @@
       "source": "llm",
       "note": "",
       "expected": "Currently homemaker.",
-      "produced": "Job 1: Name Or Description: Lakeside Coffee.; Job Title: Barista.; Dates: 2021 to 2025.\nJob 2: Name Or Description: Yes, I’m currently a homemaker at home.; Job Title: Homemaker.; Dates: 2025 to present."
+      "produced": "Job 1: Name Or Description: Lakeside Coffee.; Job Title: Barista.; Dates: 2021 to 2025.\nJob 2: Name Or Description: Yes, I’m currently a homemaker.; Job Title: Homemaker.; Dates: 2025 to present."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -419,7 +420,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; coffee shop work",
-      "produced": "I went to school and worked at a coffee shop."
+      "produced": "I went to school and later worked at a coffee shop."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -427,7 +428,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; husband; unsupportive; absent",
-      "produced": "I’m married, and my husband has been unsupportive and absent."
+      "produced": "I’m married, and my husband has been largely absent and unsupportive."
     },
     {
       "ref": "personal_history.future_goals",

@@ -2,14 +2,15 @@
   "system": "rule_based",
   "case_id": "11",
   "scenario_case_id": "04-11",
+  "repetition": 0,
   "persona_id": "moderate",
   "record_score": 0.9091,
   "flow_score": 0.85,
   "record_detail": {
     "record_score": 0.9091,
-    "record_score_contested": 0.8,
-    "fields_contested": 20,
-    "fields_auto_resolved": 24,
+    "record_score_contested": 0.8261,
+    "fields_contested": 23,
+    "fields_auto_resolved": 21,
     "fields_confirmed_absent": 10,
     "fields_scored": 44,
     "fields_unjudged": 0,
@@ -26,18 +27,18 @@
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 10.0,
-        "score": 1.0
+        "credit": 8.0,
+        "score": 0.8
       },
       "past_psychiatric_history": {
         "fields": 5,
-        "credit": 3.0,
-        "score": 0.6
+        "credit": 5.0,
+        "score": 1.0
       },
       "medications": {
         "fields": 3,
-        "credit": 3.0,
-        "score": 1.0
+        "credit": 2.5,
+        "score": 0.8333
       },
       "medical_history": {
         "fields": 4,
@@ -51,8 +52,8 @@
       },
       "family_psychiatric_history": {
         "fields": 4,
-        "credit": 2.5,
-        "score": 0.625
+        "credit": 3.5,
+        "score": 0.875
       },
       "substance_use": {
         "fields": 8,
@@ -66,54 +67,30 @@
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 2.0,
-        "score": 1.0
+        "credit": 1.0,
+        "score": 0.5
       },
       "personal_history": {
         "fields": 4,
-        "credit": 3.5,
-        "score": 0.875
+        "credit": 4.0,
+        "score": 1.0
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and structured intake, effectively managing a patient who was occasionally imprecise. The system successfully navigated the patient's vague responses regarding medication and personal history, though it missed an opportunity to probe the patient's mention of 'taking time off' after his father's death, which was a significant life event.",
+  "flow_summary": "The system conducted a thorough and professional intake, successfully navigating a patient who was occasionally imprecise. It handled the patient's vague responses well by re-asking for specific formats or details without being overly repetitive, and it correctly identified that the family history of suicide did not require a safety intervention.",
   "issues": [
     {
       "severity": "minor",
-      "category": "follow-up",
-      "evidence": "The patient mentioned 'I did take some time off after my father died' in response to a therapy question, but the interviewer did not follow up on this significant life event or its impact."
+      "category": "clarity",
+      "evidence": "The interviewer asked for the phone number twice in immediate succession (Turn 9 and 10) because the patient expressed confusion about the format, though this was a reasonable recovery step."
     },
     {
       "severity": "minor",
-      "category": "clarity",
-      "evidence": "The interviewer asked 'What diagnosis or mental health condition did they have?' in the family history section, which was slightly confusing as the patient had already listed depression for the mother and sister, and the question seemed to be prompted by the uncle's suicide mention."
+      "category": "efficiency",
+      "evidence": "The interviewer asked for the postal code twice (Turn 6 and 7) despite the patient providing it clearly in the first instance."
     }
   ],
   "field_verdicts": [
-    {
-      "ref": "general_information.date_of_birth",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "15/06/1994",
-      "produced": "15/06/1994"
-    },
-    {
-      "ref": "general_information.postal_code",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "M5R1B2",
-      "produced": "M5R1B2"
-    },
-    {
-      "ref": "general_information.email",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "james.campbell@example.com",
-      "produced": "james.campbell@example.com"
-    },
     {
       "ref": "general_information.phone",
       "verdict": "match",
@@ -288,7 +265,7 @@
       "source": "llm",
       "note": "",
       "expected": "JAMES CAMPBELL",
-      "produced": "I THINK IT’S JAMES CAMPBELL."
+      "produced": "IT’S JAMES CAMPBELL, I THINK THAT’S THE LEGAL NAME ON THE DOCUMENTS."
     },
     {
       "ref": "general_information.gender",
@@ -299,12 +276,36 @@
       "produced": "Male."
     },
     {
+      "ref": "general_information.date_of_birth",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "Date of birth was not captured.",
+      "expected": "15/06/1994",
+      "produced": "Unknown"
+    },
+    {
       "ref": "general_information.address",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "9 Prince Arthur Avenue, Toronto, Ontario",
       "produced": "9 Prince Arthur Avenue, Toronto, Ontario."
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "Postal code was not captured.",
+      "expected": "M5R1B2",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "james.campbell@example.com",
+      "produced": "james.campbell@example.com."
     },
     {
       "ref": "general_information.family_doctor_name",
@@ -316,11 +317,11 @@
     },
     {
       "ref": "current_concerns.primary_problems",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "Primary problems were not captured.",
       "expected": "floundering at work; cannot concentrate; no future orientation",
-      "produced": "Mostly I’ve been floundering at work — I can’t seem to get a simple project moving, and my concentration has been pretty bad. I’m also not really thinking about the future much."
+      "produced": "Unknown"
     },
     {
       "ref": "current_concerns.goals",
@@ -328,31 +329,31 @@
       "source": "llm",
       "note": "",
       "expected": "function at work; move forward",
-      "produced": "Mostly I want to be able to function better at work and just move forward again."
+      "produced": "Mostly to get functioning at work again and be able to move forward."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "System recorded unknown instead of the expected history.",
-      "expected": "depression; college; recurrent",
-      "produced": "Unknown"
-    },
-    {
-      "ref": "past_psychiatric_history.previous_therapies",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "System recorded none reported instead of the expected history.",
-      "expected": "time off after father's death",
-      "produced": "None reported."
-    },
-    {
-      "ref": "medications.current_medications",
       "verdict": "match",
       "source": "llm",
       "note": "",
+      "expected": "depression; college; recurrent",
+      "produced": "Yes — depression. I had it back in college, and it’s been recurrent, I think."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "time off after father's death",
+      "produced": "I had some time off after my father's death. That was more of a break than a formal therapy, I think.; Unknown; I don’t know — it wasn’t really a session-based thing, as far as I remember."
+    },
+    {
+      "ref": "medications.current_medications",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing the frequency of 'one tablet each morning'.",
       "expected": "Antidepressant; patient does not remember the name or dose; takes one tablet each morning; started about 4 months ago; no side effects recalled",
-      "produced": "Medication 1: Name Or Description: It’s an antidepressant, but I don’t remember the exact name.; Dose: I don’t know the dose.; Start Or Duration: Maybe about 4 months ago, something like that.; Side Effects: None that I can really think of. Maybe nothing."
+      "produced": "Medication 1: Name Or Description: It’s an antidepressant — I don’t remember the exact name.; Dose: I don’t know the dose, sorry.; Start Or Duration: About 4 months ago, give or take.; Side Effects: None that I can recall."
     },
     {
       "ref": "medical_history.height",
@@ -368,15 +369,15 @@
       "source": "llm",
       "note": "",
       "expected": "79 kg",
-      "produced": "About 79 kg."
+      "produced": "About 79 kg, I think."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "llm",
-      "note": "Mother's history is not present in the produced list.",
+      "note": "",
       "expected": "Mother; major depressive disorder",
-      "produced": "Family member 1: Name Or Description: My sister has depression too.; Diagnosis Or Condition: And my maternal uncle died by suicide.; Additional Details: No, those are all."
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Major depressive disorder.; Additional Details: Yes — my sister has depression too.\nFamily member 2: Name Or Description: Yes, one more — my maternal uncle.; Diagnosis Or Condition: He died by suicide.; Additional Details: I don’t know anything else to add."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -384,7 +385,7 @@
       "source": "llm",
       "note": "",
       "expected": "Sister; depression",
-      "produced": "Family member 1: Name Or Description: My sister has depression too.; Diagnosis Or Condition: And my maternal uncle died by suicide.; Additional Details: No, those are all."
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Major depressive disorder.; Additional Details: Yes — my sister has depression too.\nFamily member 2: Name Or Description: Yes, one more — my maternal uncle.; Diagnosis Or Condition: He died by suicide.; Additional Details: I don’t know anything else to add."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[2]",
@@ -392,7 +393,7 @@
       "source": "llm",
       "note": "Missing the year 2008.",
       "expected": "Maternal uncle; died by suicide in 2008.",
-      "produced": "Family member 1: Name Or Description: My sister has depression too.; Diagnosis Or Condition: And my maternal uncle died by suicide.; Additional Details: No, those are all."
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Major depressive disorder.; Additional Details: Yes — my sister has depression too.\nFamily member 2: Name Or Description: Yes, one more — my maternal uncle.; Diagnosis Or Condition: He died by suicide.; Additional Details: I don’t know anything else to add."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -416,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "I was born and grew up, that’s about all I really remember to say."
+      "produced": "I was born and grew up there, just a pretty ordinary childhood, I think. Nothing much else comes to mind."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -424,15 +425,15 @@
       "source": "llm",
       "note": "",
       "expected": "college; father died; leukemia",
-      "produced": "College, and my father died of leukemia around then."
+      "produced": "College was a big part of it, and my father died of leukemia around then. That stands out more than anything else from that period."
     },
     {
       "ref": "personal_history.significant_relationships",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the detail about being interested in a coworker.",
+      "note": "",
       "expected": "Separated from spouse after 6 years of marriage; divorce in progress; interested in a coworker",
-      "produced": "I’ve been separated from my spouse after about 6 years of marriage — the divorce is in progress."
+      "produced": "I’m separated from my spouse — we were married about 6 years, and the divorce is in progress. There’s also a coworker I’m interested in, but that’s not really a relationship yet."
     },
     {
       "ref": "personal_history.future_goals",
@@ -440,7 +441,7 @@
       "source": "llm",
       "note": "",
       "expected": "rebuild; career",
-      "produced": "I’d like to rebuild, and get my career back on track."
+      "produced": "I’d like to rebuild things and get my career back on track, more or less."
     }
   ],
   "fabricated": []

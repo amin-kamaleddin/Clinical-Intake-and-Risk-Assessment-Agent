@@ -2,12 +2,13 @@
   "system": "cira",
   "case_id": "03",
   "scenario_case_id": "04-03",
+  "repetition": 0,
   "persona_id": "clear",
-  "record_score": 0.9,
-  "flow_score": 0.7,
+  "record_score": 0.9333,
+  "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9,
-    "record_score_contested": 0.6538,
+    "record_score": 0.9333,
+    "record_score_contested": 0.7692,
     "fields_contested": 13,
     "fields_auto_resolved": 32,
     "fields_confirmed_absent": 7,
@@ -15,10 +16,10 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 39,
-      "partial": 3,
-      "missing": 3,
-      "contradicted": 0,
+      "match": 41,
+      "partial": 2,
+      "missing": 1,
+      "contradicted": 1,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -56,8 +57,8 @@
       },
       "substance_use": {
         "fields": 8,
-        "credit": 7.5,
-        "score": 0.9375
+        "credit": 8.0,
+        "score": 1.0
       },
       "education_employment_legal_history": {
         "fields": 3,
@@ -71,22 +72,17 @@
       },
       "personal_history": {
         "fields": 4,
-        "credit": 2.0,
-        "score": 0.5
+        "credit": 3.0,
+        "score": 0.75
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough intake but struggled significantly with the personal history section. While the interviewer correctly identified and responded to the safety disclosure, they failed to recover from the patient's vague answers in the personal history section, leading to a repetitive and unproductive loop.",
+  "flow_summary": "The interviewer conducted a thorough and well-structured intake. The safety protocol was triggered appropriately following the PHQ-9, and the interviewer handled the disclosure with professional care. The only notable issue was a redundant follow-up question regarding therapy type.",
   "issues": [
-    {
-      "severity": "moderate",
-      "category": "recovery_failure",
-      "evidence": "The interviewer repeatedly asked for details about childhood and adolescence after the patient provided vague, non-responsive answers ('Born; grew up.', 'School; early career.') and eventually stated 'I don't know.' The interviewer should have accepted the limitation and moved on rather than re-asking the same questions."
-    },
     {
       "severity": "minor",
       "category": "redundant_question",
-      "evidence": "In the past psychiatric history section, the interviewer asked 'What type of therapy was it?' after the patient had already stated 'Individual psychotherapy' in the previous turn."
+      "evidence": "Interviewer: 'What type of therapy was it?' Patient: 'Individual psychotherapy.' (This was already stated in the previous turn)."
     }
   ],
   "field_verdicts": [
@@ -344,7 +340,7 @@
       "source": "auto",
       "note": "",
       "expected": "Owner and managing director, Quinn Import Services; 2004 to present",
-      "produced": "Owner and managing director, Quinn Import Services; 2004 to Present"
+      "produced": "Owner and managing director, Quinn Import Services; 2004 to present"
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -352,7 +348,7 @@
       "source": "llm",
       "note": "",
       "expected": "son's death; grief; sadness; cannot concentrate",
-      "produced": "Grief following the death of my son; very sad and unable to concentrate."
+      "produced": "Grief and sadness following my son's death, with difficulty concentrating."
     },
     {
       "ref": "current_concerns.goals",
@@ -360,7 +356,7 @@
       "source": "llm",
       "note": "",
       "expected": "cope with loss; return to functioning",
-      "produced": "To cope with the loss and return to functioning."
+      "produced": "Learn to cope with the loss and return to functioning."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -368,7 +364,7 @@
       "source": "llm",
       "note": "",
       "expected": "Followed by DR. LAURA BENNETT, psychiatrist, during two depressive episodes in 1998 and 2003",
-      "produced": "Dr. Laura Bennett, psychiatrist; assessed during two depressive episodes in 1998 and 2003. Patient reports two prior depressive episodes."
+      "produced": "Dr. Laura Bennett; followed during two depressive episodes in 1998 and 2003."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -382,17 +378,17 @@
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the specific number of sessions (16).",
+      "note": "Missing the date and session count.",
       "expected": "Individual psychotherapy; 1998; approximately 16 weekly sessions",
-      "produced": "Individual psychotherapy; 1998; sessions: Unknown; location: Unknown"
+      "produced": "Individual psychotherapy; type: individual psychotherapy; when: Unknown; sessions: Unknown; location: Unknown"
     },
     {
       "ref": "past_psychiatric_history.previous_treatments",
-      "verdict": "missing",
+      "verdict": "contradicted",
       "source": "llm",
-      "note": "System recorded 'Unknown' instead of the reported Sertraline use.",
+      "note": "System states none reported, but patient had prior treatment with Sertraline.",
       "expected": "Sertraline during two prior depressive episodes; good response",
-      "produced": "Unknown"
+      "produced": "None reported."
     },
     {
       "ref": "medications.past_medication_details",
@@ -400,7 +396,7 @@
       "source": "llm",
       "note": "",
       "expected": "Sertraline; 100 mg daily; taken for about 18 months in his 30s; stopped after sustained recovery",
-      "produced": "Sertraline; 100 mg daily; taken for about 18 months in my 30s; stopped after sustained recovery."
+      "produced": "Sertraline; 100 mg daily; taken for approximately 18 months in patient's 30s; discontinued after sustained recovery"
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -408,13 +404,13 @@
       "source": "llm",
       "note": "",
       "expected": "parents; depression; son; suicide",
-      "produced": "Mother; depression. Father; depression. Son; suicide-related history, diagnosis not specified."
+      "produced": "Mother; depression. Father; depression. Son; died by suicide."
     },
     {
       "ref": "substance_use.alcohol_use",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the context that usage increased from weekends only after the son's death.",
+      "note": "",
       "expected": "Current; wine; about half a bottle nightly; increased from weekends only after son's death; current duration 6 weeks",
       "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: About half a bottle nightly; Duration: 6 weeks"
     },
@@ -422,17 +418,17 @@
       "ref": "personal_history.early_childhood",
       "verdict": "missing",
       "source": "llm",
-      "note": "System recorded 'Unknown' for information that was expected.",
+      "note": "System reported unknown.",
       "expected": "born; grew up",
       "produced": "Unknown."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "llm",
-      "note": "System recorded 'Unknown' for information that was expected.",
+      "note": "",
       "expected": "school; early career",
-      "produced": "Unknown."
+      "produced": "School and early career."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -440,7 +436,7 @@
       "source": "llm",
       "note": "",
       "expected": "married",
-      "produced": "Marriage; date unknown; current status unknown."
+      "produced": "Marriage; duration and dates unknown; current status unknown."
     },
     {
       "ref": "personal_history.future_goals",

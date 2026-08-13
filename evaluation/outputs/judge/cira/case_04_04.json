@@ -2,23 +2,24 @@
   "system": "cira",
   "case_id": "04",
   "scenario_case_id": "04-04",
+  "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9634,
+  "record_score": 0.9512,
   "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9634,
-    "record_score_contested": 0.95,
-    "fields_contested": 10,
-    "fields_auto_resolved": 31,
+    "record_score": 0.9512,
+    "record_score_contested": 0.8182,
+    "fields_contested": 11,
+    "fields_auto_resolved": 30,
     "fields_confirmed_absent": 11,
     "fields_scored": 41,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 39,
-      "partial": 1,
-      "missing": 1,
-      "contradicted": 0,
+      "match": 38,
+      "partial": 2,
+      "missing": 0,
+      "contradicted": 1,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -26,18 +27,18 @@
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 10.0,
-        "score": 1.0
+        "credit": 9.0,
+        "score": 0.9
       },
       "past_psychiatric_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.5,
+        "score": 0.875
       },
       "medications": {
         "fields": 3,
-        "credit": 2.0,
-        "score": 0.6667
+        "credit": 2.5,
+        "score": 0.8333
       },
       "medical_history": {
         "fields": 4,
@@ -61,8 +62,8 @@
       },
       "education_employment_legal_history": {
         "fields": 3,
-        "credit": 2.5,
-        "score": 0.8333
+        "credit": 3.0,
+        "score": 1.0
       },
       "current_concerns": {
         "fields": 2,
@@ -76,22 +77,22 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona, demonstrating patience and persistence in clarifying questions. However, the system struggled with efficiency, frequently looping on questionnaire items and failing to maintain a smooth, professional flow when the patient became confused. The handling of the safety disclosure was appropriate, though the subsequent questioning felt mechanical and repetitive.",
+  "flow_summary": "The interviewer was patient and persistent in guiding a confused patient through a long intake, but the interaction suffered from significant mechanical repetition and a failure to handle the safety disclosure appropriately. While the interviewer successfully navigated the patient's confusion, they frequently repeated questions verbatim when the patient struggled, and the safety response was both poorly timed and redundant.",
   "issues": [
     {
-      "severity": "moderate",
-      "category": "repetition",
-      "evidence": "The interviewer repeatedly asked the same GAD-7 question (Question 3) twice in a row despite the patient's confusion, and struggled to maintain the flow of the questionnaire when the patient asked for clarification."
+      "severity": "major",
+      "category": "safety_handling",
+      "evidence": "The interviewer provided a safety resource, then immediately followed it with 'Thank you for telling me. I’m going to continue with the intake question: what do you hope to get out of your appointment?'"
     },
     {
       "severity": "moderate",
-      "category": "flow",
-      "evidence": "The interviewer frequently had to re-ask questions multiple times due to the patient's confusion, which, while necessary for recovery, resulted in a disjointed and repetitive interaction style that could have been more efficiently managed."
+      "category": "questioning_technique",
+      "evidence": "The interviewer repeatedly used verbatim repetition when the patient expressed confusion, such as in PHQ-9 questions 2, 4, 8, and GAD-7 questions 4, 5, 9, rather than rephrasing or simplifying the prompt."
     },
     {
       "severity": "minor",
-      "category": "clarity",
-      "evidence": "The interviewer's initial safety response was slightly wordy and bundled, which contributed to the patient's confusion: 'Please call or text 988, or go to the nearest emergency department if you may be in immediate danger. We can continue the intake when it is safe to do so.'"
+      "category": "flow",
+      "evidence": "The interviewer included a redundant 'Thank you for telling me' twice in the same turn after the safety disclosure."
     }
   ],
   "field_verdicts": [
@@ -110,14 +111,6 @@
       "note": "",
       "expected": "Female",
       "produced": "Female"
-    },
-    {
-      "ref": "general_information.date_of_birth",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "03/05/1975",
-      "produced": "03/05/1975"
     },
     {
       "ref": "general_information.address",
@@ -208,20 +201,12 @@
       "produced": true
     },
     {
-      "ref": "medications.current_medications",
+      "ref": "medications.has_past_medications",
       "verdict": "match",
       "source": "auto",
       "note": "",
-      "expected": "Sertraline; 50 mg each morning; started one week ago; mild nausea",
-      "produced": "Sertraline; 50 mg each morning; started one week ago; mild nausea"
-    },
-    {
-      "ref": "medications.has_past_medications",
-      "verdict": "missing",
-      "source": "auto",
-      "note": "",
       "expected": false,
-      "produced": null
+      "produced": false
     },
     {
       "ref": "medical_history.has_medical_conditions",
@@ -344,12 +329,28 @@
       "produced": "High school"
     },
     {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Administrative coordinator, Lakeshore Pet Nutrition; 2013 to present",
+      "produced": "Administrative coordinator, Lakeshore Pet Nutrition; 2013 to Present"
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "contradicted",
+      "source": "llm",
+      "note": "The produced date is May 3rd, 1975, while the expected date is March 5th, 1975.",
+      "expected": "03/05/1975",
+      "produced": "05/03/1975"
+    },
+    {
       "ref": "current_concerns.primary_problems",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "depression; guilt; workplace error; wants to die",
-      "produced": "Depressed mood and intense guilt related to a workplace error. The patient repeatedly thinks they did something terrible at work, and these thoughts have been building for months and lead to feeling like they want to die. The patient is currently in the emergency room because of this."
+      "produced": "Experiencing depression and intense guilt related to a perceived workplace error, with persistent fears that it could harm thousands of dogs and lead to arrest. At home, feeling unlike themselves. Reports wanting to die."
     },
     {
       "ref": "current_concerns.goals",
@@ -357,15 +358,23 @@
       "source": "llm",
       "note": "",
       "expected": "relief; help",
-      "produced": "Relief from the depression, guilt, and thoughts of dying; help to make these symptoms stop."
+      "produced": "Wants relief and help so the depression, guilt, and related distress will stop."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "The system failed to capture the clinical urgency/safety escalation requirement.",
       "expected": "Current suicidal thoughts with intent and a plan; immediate safety escalation is required.",
-      "produced": "Current suicidal thoughts with a plan and intent; patient reports not being safe right now."
+      "produced": "Current suicidal thoughts with plan and intent."
+    },
+    {
+      "ref": "medications.current_medications",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Start date and side effects were not captured.",
+      "expected": "Sertraline; 50 mg each morning; started one week ago; mild nausea",
+      "produced": "Sertraline; 50 mg each morning; start date/duration: Unknown; side effects: Unknown"
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -381,15 +390,7 @@
       "source": "llm",
       "note": "",
       "expected": "Current; wine; two glasses nightly; approximately 5 years",
-      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: Two glasses nightly; Duration: Approximately 5 years"
-    },
-    {
-      "ref": "education_employment_legal_history.employment_history",
-      "verdict": "partial",
-      "source": "llm",
-      "note": "The system failed to capture the job title and incorrectly stated the dates as unknown.",
-      "expected": "Administrative coordinator, Lakeshore Pet Nutrition; 2013 to present",
-      "produced": "Lakeshore Pet Nutrition; job title: Unknown; dates or duration: Unknown"
+      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: Two glasses nightly; Duration: About 5 years"
     },
     {
       "ref": "personal_history.early_childhood",
@@ -397,7 +398,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Patient reports only that they were born and grew up; no further early-childhood details provided."
+      "produced": "Patient was born and grew up but does not know how to describe their childhood characteristics or provide further details."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -405,7 +406,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; started working",
-      "produced": "Patient recalls attending school and then starting work; no further details provided."
+      "produced": "Patient attended school and began working; no further details provided."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -413,7 +414,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; 20 years; three children",
-      "produced": "Marriage; 20 years; current status not specified. Three children. Patient did not report additional relationships."
+      "produced": "Marriage; 20 years; has three children; current status not specified."
     },
     {
       "ref": "personal_history.future_goals",
@@ -421,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "recover; family",
-      "produced": "Recovery and family."
+      "produced": "Recover, get better, and be there for family."
     }
   ],
   "fabricated": []

@@ -1,4 +1,5 @@
 
+
 from __future__ import annotations
 
 import argparse
@@ -67,6 +68,7 @@ def stage_summary(systems):
 
     # Provenance: which models, prompts, scenarios and code produced this.
     summary["provenance"] = provenance.load_manifest()
+    summary["repetitions"] = config.REPETITIONS
     freshness = provenance.check_artifact_freshness(systems)
     summary["artifact_freshness"] = freshness
     if not freshness["clean"]:
@@ -175,6 +177,10 @@ def main() -> None:
     parser.add_argument("--systems", nargs="+", choices=config.SYSTEMS,
                         help="Limit scoring/judging to these systems. Default: both.")
     parser.add_argument("--case", default=None, help="Restrict to one case id, e.g. 04-01")
+    parser.add_argument("--repetitions", type=int, default=None,
+                        help="Independent interactions per scenario. More "
+                             "repetitions narrow the confidence intervals; "
+                             "cost scales linearly. Default 1 (no intervals).")
     parser.add_argument("--persona-seed", type=int, default=None,
                         help=f"Seed for persona assignment (default {config.PERSONA_SEED}).")
     parser.add_argument("--persona-strategy", choices=personas.ASSIGNMENT_STRATEGIES,
@@ -195,6 +201,7 @@ def main() -> None:
         "persona_override": args.persona or config.PERSONA_OVERRIDE,
         "persona_seed": args.persona_seed,
         "persona_strategy": args.persona_strategy,
+        "repetitions": args.repetitions,
     }
 
     # Resolve and persist the assignment ONCE, before any system runs, so all
@@ -215,7 +222,10 @@ def main() -> None:
     print("Systems:", ", ".join(systems))
     if args.case:
         print("Case filter:", args.case)
+    repetitions = args.repetitions or config.REPETITIONS
     print(f"Run id: {manifest['run_id']}   code: {manifest['code_revision']}")
+    print(f"Repetitions per scenario: {repetitions}"
+          + ("   (single run - no confidence intervals)" if repetitions < 2 else ""))
     print(f"Models: cira={manifest['models']['cira']} "
           f"patient={manifest['models']['patient_simulator']} "
           f"judge={manifest['models']['judge']}")

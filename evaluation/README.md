@@ -231,18 +231,94 @@ record. A failure in one cannot contaminate the other.
 
 ---
 
+## Repetitions and uncertainty
+
+One interaction per scenario is a single realisation of a stochastic process. A
+difference like 0.9308 vs 0.9285 is then uninterpretable — it could be a real
+effect or one lucky sample. Repeating each scenario independently turns that
+into a distribution.
+
+```bash
+python run_all.py --repetitions 20        # or CIRA_REPETITIONS=20
+```
+
+Repetition 0 keeps the original filename (`case_04_01.json`); later repetitions
+add `_r01`, `_r02`. A single-run evaluation therefore produces byte-identical
+paths to before repetitions existed, and older output sets still score.
+
+### What varies, and what does not
+
+Only the **repetition index** enters the patient seed. The same
+`(scenario, repetition)` produces the same patient for all three systems, so at
+repetition 3 every system faces an identical patient. Personas stay fixed per
+scenario. Variance comes from model sampling, not from a different patient.
+
+### Cluster bootstrap
+
+Repetitions of the same scenario are **not** independent — 04-04 is harder than
+04-02 for every system in every repetition. Treating 12 scenarios × 20
+repetitions as 240 independent draws would understate the interval.
+
+The bootstrap resamples **scenarios first, then repetitions within them**, so
+both sources of uncertainty propagate: which patients we happened to write, and
+how variable a system is on a given patient. Intervals are percentile-based
+rather than normal, because these metrics are bounded in [0, 1] and often sit
+near a boundary where a normal interval can imply impossible values.
+
+Proportions over a handful of cases (safety sensitivity, specificity) use a
+**Wilson** interval. With 5 positive cases and 5 successes the normal interval
+is [1.0, 1.0], which asserts a certainty a 5-case sample cannot support; Wilson
+gives [0.566, 1.000].
+
+### Paired differences are the claim test
+
+Every system sees the same scenarios and the same patients, so comparing two
+independent intervals throws that away and is needlessly conservative —
+**overlapping intervals do not imply the difference is indistinguishable from
+zero.** The paired bootstrap resamples the same scenarios for both systems and
+takes the difference within each draw, so scenario difficulty cancels.
+
+```
+PAIRED DIFFERENCES (* = 95% CI excludes zero)
+  cira - rule_based   record_score_contested   +0.006 [+0.000, +0.011]  *
+  cira - rule_based   flow_score               +0.009 [+0.002, +0.016]  *
+  cira - rule_based   fabricated_fields        -0.367 [-0.517, -0.233]  *
+```
+
+`excludes_zero` is the only basis for claiming one system beats another. If it
+is false, report the systems as comparable.
+
+### Run-to-run variability
+
+`structured_variability` and `flow_variability` report the range a system spans
+on the **same** scenario across repetitions. If that range is wider than the gap
+between two systems, the gap is not a result. It is reported rather than
+footnoted, because it is the number that justifies running repetitions at all.
+
+### Cost
+
+Cost scales linearly: 20 repetitions is 20× the API calls and wall-clock time
+(720 intakes plus ~1,440 judge calls for three systems over twelve scenarios).
+Validate the pipeline with `--repetitions 3` before committing to a full run.
+
+---
+
 ## Statistical caveats
 
-Twelve scenarios, one interaction per system, one judge pass. No repeated runs,
-no confidence intervals, no significance testing.
+With `--repetitions 1` (the default) there are no usable intervals: every
+metric is a single realisation, and differences of a few thousandths are not
+evidence of superiority. Run repetitions before making comparative claims.
 
-Differences of a few thousandths are **not** evidence of superiority and should
-not be reported as such. With twelve cases, safety specificity moves in steps of
-1/7 ≈ 0.14 — a single false alarm is the entire difference between 0.857 and 1.0.
+Even with repetitions, some limits are structural. Twelve scenarios is a small
+sample: safety specificity moves in steps of 1/7 ≈ 0.14, so one false alarm is
+the entire difference between 0.857 and 1.0, and no number of repetitions
+changes that — repetitions reduce sampling variance, not scenario coverage.
+There is also one judge model and one judge pass; sensitivity to the choice of
+judge is not measured.
 
-What this design does support: exact deterministic scores, a fabrication count,
-and the degradation curve across patient difficulty, where the gaps are large
-enough to survive the noise.
+What the design does support well: exact deterministic scores, a fabrication
+count, the degradation curve across patient difficulty, and — with repetitions —
+paired interval estimates for every comparison.
 
 ---
 

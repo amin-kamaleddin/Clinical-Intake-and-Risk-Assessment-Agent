@@ -2,34 +2,33 @@
   "system": "rule_based",
   "case_id": "12",
   "scenario_case_id": "04-12",
+  "repetition": 0,
   "persona_id": "moderate",
-  "record_score": 0.9889,
+  "record_score": 0.9778,
   "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9889,
-    "record_score_contested": 0.9762,
+    "record_score": 0.9778,
+    "record_score_contested": 0.9524,
     "fields_contested": 21,
     "fields_auto_resolved": 24,
-    "fields_confirmed_absent": 9,
+    "fields_confirmed_absent": 10,
     "fields_scored": 45,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 44,
-      "partial": 1,
+      "match": 43,
+      "partial": 2,
       "missing": 0,
       "contradicted": 0,
-      "fabricated": 1
+      "fabricated": 0
     },
-    "fabricated_fields": 1,
-    "fabricated_refs": [
-      "past_psychiatric_history.previous_treatments"
-    ],
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 10.0,
-        "score": 1.0
+        "credit": 9.5,
+        "score": 0.95
       },
       "past_psychiatric_history": {
         "fields": 3,
@@ -78,12 +77,22 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully completed the intake and gathered all necessary clinical information. However, the system struggled with the 'past_psychiatric_history' section, where it continued to ask follow-up questions about biological treatments despite the patient clearly stating they had never received them.",
+  "flow_summary": "The system successfully completed the intake and gathered all necessary clinical information. However, it struggled with the patient's imprecise communication, failing to clarify vague responses regarding address and employment history, and it used a jarring, overly formal tone when redirecting the patient.",
   "issues": [
     {
-      "severity": "moderate",
-      "category": "redundant_questioning",
-      "evidence": "The interviewer continued to ask 'When was it received?', 'Where was it received?', and 'Approximately how many sessions did you receive?' after the patient had already clarified they had not received any of those treatments."
+      "severity": "minor",
+      "category": "clarification",
+      "evidence": "When the patient expressed uncertainty about her address, the system ignored the confusion and moved immediately to the next question: 'Hmm, I think it’s on Birchmount Road in Scarborough. I may be missing something—do you need the full mailing address exactly as it appears?' followed by 'What is your Canadian postal code?'"
+    },
+    {
+      "severity": "minor",
+      "category": "communication_style",
+      "evidence": "The system used a blunt, robotic command to redirect the patient: 'Please answer yes or no.'"
+    },
+    {
+      "severity": "minor",
+      "category": "follow_up",
+      "evidence": "The system failed to probe the patient's disclosure of being a refugee or her husband's recent death, which were significant personal history details that could have been briefly acknowledged."
     }
   ],
   "field_verdicts": [
@@ -285,7 +294,7 @@
       "source": "llm",
       "note": "",
       "expected": "MAI FANG",
-      "produced": "I THINK IT’S MAI FANG."
+      "produced": "I THINK THEY HAVE IT AS MAI FANG, BUT I’M NOT TOTALLY SURE WHAT EXACT DOCUMENTS YOU MEAN. DO YOU MEAN THE NAME ON MY ID?"
     },
     {
       "ref": "general_information.gender",
@@ -297,11 +306,11 @@
     },
     {
       "ref": "general_information.address",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "The street number is missing.",
       "expected": "41 Birchmount Road, Scarborough, Ontario",
-      "produced": "41 Birchmount Road, Scarborough, Ontario."
+      "produced": "Hmm, I think it’s on Birchmount Road in Scarborough. I may be missing something—do you need the full mailing address exactly as it appears?"
     },
     {
       "ref": "general_information.family_doctor_name",
@@ -317,7 +326,7 @@
       "source": "llm",
       "note": "",
       "expected": "fatigue; back pain; insomnia; burden to family",
-      "produced": "Mostly I’ve been feeling very tired, and my back hurts. Sleep is a big problem too—I haven’t been sleeping well for many months. I also feel like I’m a burden to my family."
+      "produced": "Mostly I’ve been very tired, and my back has been bothering me. I’m also having trouble sleeping. And… I feel like I’m a burden to my family."
     },
     {
       "ref": "current_concerns.goals",
@@ -325,7 +334,7 @@
       "source": "llm",
       "note": "",
       "expected": "sleep better; have more energy",
-      "produced": "I want to sleep better and have more energy."
+      "produced": "I’d like to sleep better and have more energy."
     },
     {
       "ref": "medications.current_medications[0]",
@@ -333,7 +342,7 @@
       "source": "llm",
       "note": "",
       "expected": "Clonazepam; 0.5 mg nightly; started about 6 months ago; morning sleepiness",
-      "produced": "Medication 1: Name Or Description: The sleep one is clonazepam.; Dose: It’s a small dose, I think 0.5 mg at night.; Start Or Duration: Maybe about 6 months ago.; Side Effects: It makes me sleepy in the morning.\nMedication 2: Name Or Description: Yes, I’m taking hydrocodone-acetaminophen.; Dose: I think it’s 5/325 mg, one tablet up to twice a day as needed.; Start Or Duration: I started it in 2024, I believe.; Side Effects: It tends to make me constipated.\nMedication 3: Name Or Description: Yes, there is another one—acetaminophen.; Dose: 500 mg as needed, usually once a day.; Start Or Duration: I don’t know when I started that one.; Side Effects: None that I know of."
+      "produced": "Medication 1: Name Or Description: Clonazepam.; Dose: 0.5 mg at night, I think.; Start Or Duration: About 6 months ago, something like that.; Side Effects: It makes me sleepy in the morning.\nMedication 2: Name Or Description: Yes, hydrocodone-acetaminophen.; Dose: 5/325 mg, one tablet up to twice daily as needed.; Start Or Duration: I started it in 2024.; Side Effects: It causes constipation.\nMedication 3: Name Or Description: Yes, acetaminophen.; Dose: 500 mg as needed, usually once daily.; Start Or Duration: Unknown; Side Effects: None that I know of."
     },
     {
       "ref": "medications.current_medications[1]",
@@ -341,7 +350,7 @@
       "source": "llm",
       "note": "",
       "expected": "Hydrocodone-acetaminophen; 5/325 mg, one tablet up to twice daily as needed; started 2024; constipation",
-      "produced": "Medication 1: Name Or Description: The sleep one is clonazepam.; Dose: It’s a small dose, I think 0.5 mg at night.; Start Or Duration: Maybe about 6 months ago.; Side Effects: It makes me sleepy in the morning.\nMedication 2: Name Or Description: Yes, I’m taking hydrocodone-acetaminophen.; Dose: I think it’s 5/325 mg, one tablet up to twice a day as needed.; Start Or Duration: I started it in 2024, I believe.; Side Effects: It tends to make me constipated.\nMedication 3: Name Or Description: Yes, there is another one—acetaminophen.; Dose: 500 mg as needed, usually once a day.; Start Or Duration: I don’t know when I started that one.; Side Effects: None that I know of."
+      "produced": "Medication 1: Name Or Description: Clonazepam.; Dose: 0.5 mg at night, I think.; Start Or Duration: About 6 months ago, something like that.; Side Effects: It makes me sleepy in the morning.\nMedication 2: Name Or Description: Yes, hydrocodone-acetaminophen.; Dose: 5/325 mg, one tablet up to twice daily as needed.; Start Or Duration: I started it in 2024.; Side Effects: It causes constipation.\nMedication 3: Name Or Description: Yes, acetaminophen.; Dose: 500 mg as needed, usually once daily.; Start Or Duration: Unknown; Side Effects: None that I know of."
     },
     {
       "ref": "medications.current_medications[2]",
@@ -349,13 +358,13 @@
       "source": "llm",
       "note": "",
       "expected": "Acetaminophen; 500 mg as needed, usually once daily; duration unknown; no known side effects.",
-      "produced": "Medication 1: Name Or Description: The sleep one is clonazepam.; Dose: It’s a small dose, I think 0.5 mg at night.; Start Or Duration: Maybe about 6 months ago.; Side Effects: It makes me sleepy in the morning.\nMedication 2: Name Or Description: Yes, I’m taking hydrocodone-acetaminophen.; Dose: I think it’s 5/325 mg, one tablet up to twice a day as needed.; Start Or Duration: I started it in 2024, I believe.; Side Effects: It tends to make me constipated.\nMedication 3: Name Or Description: Yes, there is another one—acetaminophen.; Dose: 500 mg as needed, usually once a day.; Start Or Duration: I don’t know when I started that one.; Side Effects: None that I know of."
+      "produced": "Medication 1: Name Or Description: Clonazepam.; Dose: 0.5 mg at night, I think.; Start Or Duration: About 6 months ago, something like that.; Side Effects: It makes me sleepy in the morning.\nMedication 2: Name Or Description: Yes, hydrocodone-acetaminophen.; Dose: 5/325 mg, one tablet up to twice daily as needed.; Start Or Duration: I started it in 2024.; Side Effects: It causes constipation.\nMedication 3: Name Or Description: Yes, acetaminophen.; Dose: 500 mg as needed, usually once daily.; Start Or Duration: Unknown; Side Effects: None that I know of."
     },
     {
       "ref": "medical_history.medical_conditions",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the diagnosis date and the context of the fall.",
+      "note": "The diagnosis date and the context of the fall are missing.",
       "expected": "Chronic lower back pain; diagnosed 2023; worsened after a fall",
       "produced": "Just the chronic lower back pain."
     },
@@ -365,7 +374,7 @@
       "source": "llm",
       "note": "",
       "expected": "Gallbladder removal; 2015; no ongoing complications",
-      "produced": "Surgery: Gallbladder removal.; Date: In 2015, I think.; Details: No, no ongoing problems from it."
+      "produced": "Surgery: Gallbladder removal.; Date: In 2015.; Details: No, no ongoing complications."
     },
     {
       "ref": "medical_history.height",
@@ -373,7 +382,7 @@
       "source": "llm",
       "note": "",
       "expected": "158 cm",
-      "produced": "I’m about 158 cm."
+      "produced": "158 cm."
     },
     {
       "ref": "medical_history.weight",
@@ -381,7 +390,7 @@
       "source": "llm",
       "note": "",
       "expected": "72 kg",
-      "produced": "Around 72 kg."
+      "produced": "72 kg."
     },
     {
       "ref": "medication_allergies.medication_allergies",
@@ -389,7 +398,7 @@
       "source": "llm",
       "note": "",
       "expected": "Codeine; causes rash and facial swelling",
-      "produced": "Allergy 1: Name Or Description: Codeine.; Reaction: I got a rash and my face swelled up.; Date Or Age: I don’t remember exactly."
+      "produced": "Allergy 1: Name Or Description: Codeine.; Reaction: A rash and some facial swelling.; Date Or Age: Unknown"
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -397,7 +406,7 @@
       "source": "llm",
       "note": "",
       "expected": "no formal education; functionally illiterate",
-      "produced": "I never had formal schooling. I can’t read very well."
+      "produced": "I didn’t have formal schooling, so I can’t read well."
     },
     {
       "ref": "education_employment_legal_history.employment_history[0]",
@@ -421,7 +430,7 @@
       "source": "llm",
       "note": "",
       "expected": "born in Laos; refugee camp",
-      "produced": "I was born in Laos, and I spent time in a refugee camp. That’s most of what I remember from early childhood."
+      "produced": "I was born in Laos, and I spent time in a refugee camp. That’s about all I remember to say right now."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -429,7 +438,7 @@
       "source": "llm",
       "note": "",
       "expected": "refugee camp; resettled",
-      "produced": "Mostly still in the refugee camp, and then later I was resettled. I don’t have much else to add."
+      "produced": "Mostly the refugee camp and then being resettled later. I don’t have much more I can tell you about that."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -437,7 +446,7 @@
       "source": "llm",
       "note": "",
       "expected": "widowed; husband died; heart attack",
-      "produced": "My husband died a year ago from a heart attack."
+      "produced": "My husband died a year ago. He had a heart attack."
     },
     {
       "ref": "personal_history.future_goals",
@@ -445,19 +454,8 @@
       "source": "llm",
       "note": "",
       "expected": "support family; regain energy",
-      "produced": "I want to support my family and regain my energy."
+      "produced": "I want to support my family and get my energy back."
     }
   ],
-  "fabricated": [
-    {
-      "ref": "past_psychiatric_history.previous_treatments",
-      "section": "past_psychiatric_history",
-      "field": "previous_treatments",
-      "entry_index": null,
-      "expected": null,
-      "produced": "Unknown; I haven’t had any of those treatments.; I don’t know, because I haven’t had any of those treatments.; None, I didn’t receive any sessions.; I don’t know—there wasn’t any benefit because I didn’t have that treatment.",
-      "verdict": "fabricated",
-      "reason": "scenario provides no value for this field"
-    }
-  ]
+  "fabricated": []
 }

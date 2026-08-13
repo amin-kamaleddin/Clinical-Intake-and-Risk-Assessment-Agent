@@ -1,31 +1,4 @@
-"""Stage 4 - LLM judging: record fidelity and conversation flow.
 
-Two calls per case, each producing one number:
-
-* ``record_score``  - fields enumerated by ``harness.record_check``, verdicted
-  categorically by the LLM, aggregated back into a number by code. Exact and
-  boolean matches are auto-resolved without the model.
-* ``flow_score``    - one holistic 0-1 score for interviewing quality from the
-  transcript alone.
-
-Separate calls, not one combined call: shorter prompts judge more reliably, and
-a record failure cannot bleed into the flow number or vice versa. At 12 cases
-across 3 systems that is 72 calls, so the extra cost is negligible.
-
-PHQ-9, GAD-7 and the safety flag are NOT judged here. They have exact expected
-values and belong to ``harness.structured_score``, which the deterministic
-scoring stage runs. Nothing is scored twice.
-
-Reads:   outputs/<system>/transcripts/case_XX.json
-         outputs/<system>/records/case_XX.json
-Writes:  outputs/judge/<system>/case_XX.json
-         outputs/reports/judge_comparison.json
-
-Run directly::
-
-    python -m harness.stages.run_judge
-    python -m harness.stages.run_judge --case 04-01 --system cira
-"""
 
 from __future__ import annotations
 
@@ -38,6 +11,7 @@ from statistics import mean
 from harness import config
 from harness import personas
 from harness import record_check
+from harness import stats
 
 
 def load_json(path: Path):
@@ -66,18 +40,29 @@ def _resolve_persona(transcript: dict, record: dict, case_id: str) -> str:
 # --------------------------------------------------------------------------- #
 # One case
 # --------------------------------------------------------------------------- #
-def _judge_one(record_judge, flow_judge, scenario: dict, system: str) -> dict:
+def available_repetitions(system: str, case_id: str) -> list[int]:
+    """Repetition indices with both artifacts present."""
+    found = [
+        index for index in range(config.MAX_REPETITION_SCAN)
+        if config.record_path(system, case_id, index).exists()
+    ]
+    return found or [0]
+
+
+def _judge_one(record_judge, flow_judge, scenario: dict, system: str,
+               repetition: int = 0) -> dict:
     """Judge a single case. Returns a report row (OK or ERROR); never raises."""
     from harness.llm_judge import save_judge_result
 
     case_id = scenario["case_id"]
-    transcript_path = config.transcript_path(system, case_id)
-    record_path = config.record_path(system, case_id)
+    transcript_path = config.transcript_path(system, case_id, repetition)
+    record_path = config.record_path(system, case_id, repetition)
 
     base = {
         "system": system,
         "case_id": config.short_case_id(case_id),
         "scenario_case_id": case_id,
+        "repetition": repetition,
     }
 
     if not transcript_path.exists() or not record_path.exists():
@@ -124,7 +109,7 @@ def _judge_one(record_judge, flow_judge, scenario: dict, system: str) -> dict:
             "fabricated": rows["unsupported"],
         }
 
-        result_path = config.judge_path(system, case_id)
+        result_path = config.judge_path(system, case_id, repetition)
         save_judge_result(result, result_path)
         return {**result, "judge_result_file": str(result_path), "status": "OK"}
 
@@ -150,27 +135,35 @@ def judge_system(record_judge, flow_judge, scenarios: list[dict], system: str) -
     its own timeout, so the pool cannot hang. Results come back in scenario
     order regardless of completion order.
     """
-    workers = max(1, min(config.JUDGE_MAX_WORKERS, len(scenarios)))
-    report: list[dict] = [None] * len(scenarios)  # type: ignore[list-item]
+    # One unit of work per (scenario, repetition).
+    jobs = [
+        (scenario, repetition)
+        for scenario in scenarios
+        for repetition in available_repetitions(system, scenario["case_id"])
+    ]
+    workers = max(1, min(config.JUDGE_MAX_WORKERS, len(jobs)))
+    report: list[dict] = [None] * len(jobs)  # type: ignore[list-item]
 
     if workers == 1:
-        for index, scenario in enumerate(scenarios):
-            row = _judge_one(record_judge, flow_judge, scenario, system)
+        for index, (scenario, repetition) in enumerate(jobs):
+            row = _judge_one(record_judge, flow_judge, scenario, system, repetition)
             report[index] = row
             _print_row(system, scenario["case_id"], row)
         return report
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = {
-            pool.submit(_judge_one, record_judge, flow_judge, scenario, system): index
-            for index, scenario in enumerate(scenarios)
+            pool.submit(_judge_one, record_judge, flow_judge,
+                        scenario, system, repetition): index
+            for index, (scenario, repetition) in enumerate(jobs)
         }
-        print(f"[{system}] Judging {len(scenarios)} cases with {workers} workers...")
+        print(f"[{system}] Judging {len(jobs)} case-repetitions "
+              f"with {workers} workers...")
         for future in as_completed(futures):
             index = futures[future]
             row = future.result()
             report[index] = row
-            _print_row(system, scenarios[index]["case_id"], row)
+            _print_row(system, jobs[index][0]["case_id"], row)
     return report
 
 
@@ -300,6 +293,71 @@ def summarize_by_persona(cases: list[dict]) -> dict:
     return breakdown
 
 
+def _scenario_groups(cases: list[dict], value) -> dict[str, list]:
+    """{scenario_id: [one value per repetition]} for the OK cases."""
+    groups: dict[str, list] = {}
+    for case in cases:
+        if case.get("status") == "OK":
+            groups.setdefault(case["scenario_case_id"], []).append(value(case))
+    return groups
+
+
+JUDGE_METRICS = {
+    "record_score": lambda c: c.get("record_score"),
+    "record_score_contested": lambda c: (c.get("contested_shared") or {}).get("score"),
+    "flow_score": lambda c: c.get("flow_score"),
+    "fabricated_fields": lambda c: c["record_detail"]["fabricated_fields"],
+}
+
+
+def build_uncertainty(cases: list[dict]) -> dict:
+    """95% CI per judged metric, clustered by scenario."""
+    return {
+        "method": "cluster bootstrap over scenarios then repetitions, "
+                  "10000 resamples, percentile interval",
+        **{
+            name: stats.cluster_bootstrap(_scenario_groups(cases, value))
+            for name, value in JUDGE_METRICS.items()
+        },
+        "flow_variability": stats.variability(
+            _scenario_groups(cases, JUDGE_METRICS["flow_score"])
+        ),
+        "record_variability": stats.variability(
+            _scenario_groups(cases, JUDGE_METRICS["record_score"])
+        ),
+    }
+
+
+def build_pairwise_differences(all_cases: dict[str, list[dict]]) -> dict:
+    """Paired CI for every system pair on every judged metric.
+
+    This is the test that decides whether a difference can be claimed. Every
+    system saw the same scenarios and, at a given repetition index, the same
+    patient, so the difference is taken WITHIN a scenario and scenario
+    difficulty cancels - far more powerful than comparing two independent
+    intervals.
+
+    ``excludes_zero`` is the claim test. Two overlapping individual intervals do
+    NOT mean the difference is indistinguishable from zero, and a difference
+    like 0.9308 vs 0.9285 is exactly the case where the intuition from
+    overlapping intervals is wrong in both directions.
+    """
+    systems = list(all_cases)
+    differences: dict[str, dict] = {}
+
+    for index, system_a in enumerate(systems):
+        for system_b in systems[index + 1:]:
+            pair = f"{system_a} - {system_b}"
+            differences[pair] = {
+                name: stats.paired_bootstrap_difference(
+                    _scenario_groups(all_cases[system_a], value),
+                    _scenario_groups(all_cases[system_b], value),
+                )
+                for name, value in JUDGE_METRICS.items()
+            }
+    return differences
+
+
 def build_paired_comparison(all_cases: dict[str, list[dict]]) -> list[dict]:
     """Per-case side-by-side on the cases every system completed."""
     by_system = {
@@ -370,6 +428,9 @@ def run(systems=None, case_filter: str | None = None) -> dict:
             "fabrication_reported_not_penalized": True,
         },
         "systems": {s: summarize_system(s, c) for s, c in all_cases.items()},
+        "uncertainty": {s: build_uncertainty(c) for s, c in all_cases.items()},
+        # The only basis for claiming one system beats another.
+        "pairwise_differences": build_pairwise_differences(all_cases),
         "by_persona": {s: summarize_by_persona(c) for s, c in all_cases.items()},
         "paired_cases": build_paired_comparison(all_cases),
         "cases": all_cases,
@@ -392,6 +453,28 @@ def run(systems=None, case_filter: str | None = None) -> dict:
             print(f"{system:>12} |   {persona_id:>8}: "
                   f"record={stats['mean_record_score']} "
                   f"flow={stats['mean_flow_score']}")
+    # Only meaningful with repetitions; with one run per scenario the interval
+    # is wide and every pair comes back not-significant, which is the honest
+    # answer rather than a defect.
+    any_reps = any(
+        (u.get("record_score") or {}).get("repetitions_per_scenario", 1) > 1
+        for u in report["uncertainty"].values()
+    )
+    if any_reps:
+        print()
+        print("95% CONFIDENCE INTERVALS")
+        for system, unc in report["uncertainty"].items():
+            print(f"{system:>12} | record {stats.format_ci(unc['record_score'])}"
+                  f" | flow {stats.format_ci(unc['flow_score'])}")
+
+    print()
+    print("PAIRED DIFFERENCES (* = 95% CI excludes zero)")
+    for pair, metrics in report["pairwise_differences"].items():
+        for name in ("record_score_contested", "flow_score", "fabricated_fields"):
+            print(f"  {pair:<26} {name:<24} "
+                  f"{stats.format_difference(metrics[name])}")
+
+    print()
     print("Saved comparison report:", config.JUDGE_REPORT_PATH)
     print("=" * 72)
     return report

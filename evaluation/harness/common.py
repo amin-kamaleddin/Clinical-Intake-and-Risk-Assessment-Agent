@@ -1,21 +1,4 @@
-"""Shared deterministic-evaluation helpers for the CIRA harness.
 
-Both the live harness (run_evaluation.py) and the offline record checker
-(evaluate_records.py) import from here so the two reports compute *identical*
-deterministic checks. Previously each file kept its own copy of these helpers,
-which had drifted apart.
-
-Medication-format contract (from cira_scenarios.json)
------------------------------------------------------
-Within a medication field, ``;`` separates the *fields of one entry*
-(name; dose; start; side effect) and ``. `` separates *distinct entries*::
-
-    "Citalopram; 20 mg; started 2025; dry mouth. Multivitamin; one daily; ..."
-
-So entries are split on sentence boundaries, and the drug *name* is the text
-before the first ``;`` of an entry. The name is the stable coverage signal;
-matching every field verbatim is brittle and is not done here.
-"""
 
 from __future__ import annotations
 

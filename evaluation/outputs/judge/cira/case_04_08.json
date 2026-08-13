@@ -2,14 +2,15 @@
   "system": "cira",
   "case_id": "08",
   "scenario_case_id": "04-08",
+  "repetition": 0,
   "persona_id": "clear",
   "record_score": 0.9737,
-  "flow_score": 0.85,
+  "flow_score": 1.0,
   "record_detail": {
     "record_score": 0.9737,
-    "record_score_contested": 0.875,
-    "fields_contested": 8,
-    "fields_auto_resolved": 30,
+    "record_score_contested": 0.8889,
+    "fields_contested": 9,
+    "fields_auto_resolved": 29,
     "fields_confirmed_absent": 14,
     "fields_scored": 38,
     "fields_unjudged": 0,
@@ -17,8 +18,8 @@
     "verdict_counts": {
       "match": 37,
       "partial": 0,
-      "missing": 1,
-      "contradicted": 0,
+      "missing": 0,
+      "contradicted": 1,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -26,8 +27,8 @@
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 10.0,
-        "score": 1.0
+        "credit": 9.0,
+        "score": 0.9
       },
       "past_psychiatric_history": {
         "fields": 3,
@@ -71,19 +72,13 @@
       },
       "personal_history": {
         "fields": 4,
-        "credit": 3.0,
-        "score": 0.75
+        "credit": 4.0,
+        "score": 1.0
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and efficient intake, maintaining a professional tone and adhering to the required structure. The system correctly identified the safety risk triggered by the PHQ-9 and provided an appropriate, proportionate response. The only minor issue was a slight lack of flexibility when the patient provided vague answers in the personal history section, where the interviewer repeated the same prompt structure rather than rephrasing to elicit more specific information.",
-  "issues": [
-    {
-      "severity": "minor",
-      "category": "recovery_of_vague_answers",
-      "evidence": "When the patient gave a vague response about their childhood, the interviewer repeated a similar, slightly expanded version of the original question, which resulted in another vague, non-informative answer."
-    }
-  ],
+  "flow_summary": "The interviewer conducted a highly efficient and professional intake. It followed all procedural requirements, including the correct administration of the PHQ-9 and GAD-7, and appropriately triggered a safety response when the patient reported suicidal ideation on the PHQ-9.",
+  "issues": [],
   "field_verdicts": [
     {
       "ref": "general_information.name",
@@ -100,14 +95,6 @@
       "note": "",
       "expected": "Male",
       "produced": "Male"
-    },
-    {
-      "ref": "general_information.date_of_birth",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "06/02/1986",
-      "produced": "06/02/1986"
     },
     {
       "ref": "general_information.address",
@@ -323,7 +310,15 @@
       "source": "auto",
       "note": "",
       "expected": "Vice-president of sales, Meridian Logistics; 2016 to present",
-      "produced": "Vice-President of Sales, Meridian Logistics; 2016 to Present"
+      "produced": "Vice-president of sales, Meridian Logistics; 2016 to Present"
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "contradicted",
+      "source": "llm",
+      "note": "The produced date is February 6th, 1986, while the expected date is June 2nd, 1986.",
+      "expected": "06/02/1986",
+      "produced": "02/06/1986"
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -331,7 +326,7 @@
       "source": "llm",
       "note": "",
       "expected": "depressed; irritable; withdrawn; work stress",
-      "produced": "The patient has been experiencing depression, irritability, and social withdrawal, affecting work and their marriage."
+      "produced": "Feeling depressed, irritable, and withdrawn; affecting home and work, with significant strain in the marriage."
     },
     {
       "ref": "current_concerns.goals",
@@ -339,7 +334,7 @@
       "source": "llm",
       "note": "",
       "expected": "feel better; save marriage",
-      "produced": "The patient hopes to feel better and save their marriage."
+      "produced": "Feel better and save the marriage."
     },
     {
       "ref": "substance_use.alcohol_use",
@@ -347,7 +342,7 @@
       "source": "llm",
       "note": "",
       "expected": "Current; whisky and beer; 5 to 7 drinks nightly; about 9 months",
-      "produced": "Status: Current\nSubstance or product: Whisky and beer\nQuantity or frequency: Approximately 5 to 7 drinks nightly\nDuration: Approximately 9 months"
+      "produced": "Status: Current; Substance or product: Whisky and beer; Quantity or frequency: 5 to 7 drinks nightly; Duration: About 9 months"
     },
     {
       "ref": "substance_use.stimulant_use",
@@ -355,15 +350,15 @@
       "source": "llm",
       "note": "",
       "expected": "Current; cocaine; approximately 0.5 gram per use; 3 to 4 times per week; about 9 months",
-      "produced": "Status: Current\nSubstance or product: Cocaine\nQuantity or frequency: Approximately 0.5 gram per use, 3 to 4 times weekly\nDuration: Approximately 9 months"
+      "produced": "Status: Current; Substance or product: Cocaine; Quantity or frequency: About 0.5 gram per use, 3 to 4 times per week; Duration: About 9 months"
     },
     {
       "ref": "personal_history.early_childhood",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "llm",
-      "note": "The system explicitly stated it did not know this information.",
+      "note": "",
       "expected": "born; grew up",
-      "produced": "Unknown regarding where the patient was born, where they grew up, and how they described themselves as a young child."
+      "produced": "Patient was born and grew up but did not provide any more specific details about their early childhood."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -371,7 +366,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; early career",
-      "produced": "The patient went through school and began an early career but has no additional details to report."
+      "produced": "Patient attended school and began an early career but did not provide any more specific details about their adolescence or early adulthood."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -379,7 +374,7 @@
       "source": "llm",
       "note": "",
       "expected": "Married for 14 years; two children; significant marital tension during the past 6 months",
-      "produced": "Marriage; 14 years to present; current, with significant tension over the past 6 months. Two children."
+      "produced": "Marriage; 14 years to present; current; two children; significant marital tension over the past 6 months."
     },
     {
       "ref": "personal_history.future_goals",
@@ -387,7 +382,7 @@
       "source": "llm",
       "note": "",
       "expected": "recover; repair family",
-      "produced": "The patient wants to recover and repair their family."
+      "produced": "Recover and repair my family."
     }
   ],
   "fabricated": []

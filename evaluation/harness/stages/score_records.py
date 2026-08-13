@@ -1,19 +1,3 @@
-"""Stage 3 - deterministic scoring.
-
-Runs the *same* deterministic checks over any system's saved records and
-transcripts. This replaces the three copies of scoring logic that used to live
-inline in the CIRA driver, the rule-based driver, and the old
-``evaluate_records.py``.
-
-Reads:   outputs/<system>/records/case_XX.json
-         outputs/<system>/transcripts/case_XX.json
-Writes:  outputs/reports/<system>_deterministic.json
-
-Run directly for one system::
-
-    python -m harness.stages.score_records --system cira
-    python -m harness.stages.score_records --system rule_based
-"""
 
 from __future__ import annotations
 
@@ -24,6 +8,7 @@ from pathlib import Path
 from harness import config
 from harness import personas
 from harness import safety_score
+from harness import stats
 from harness import structured_score
 from harness.common import (
     asked_for_additional_medications,
@@ -155,7 +140,22 @@ def transcript_checks(transcript_file: Path | None, scenario: dict) -> dict:
 # --------------------------------------------------------------------------- #
 # Per-case evaluation
 # --------------------------------------------------------------------------- #
-def evaluate_case(system: str, scenario: dict, record_file: Path) -> dict:
+def available_repetitions(system: str, case_id: str) -> list[int]:
+    """Repetition indices that actually have a record on disk.
+
+    Discovered from the filesystem rather than from config, so an older
+    single-run output set still scores and a partially finished repeated run
+    scores what it has instead of erroring.
+    """
+    found = [
+        index for index in range(config.MAX_REPETITION_SCAN)
+        if config.record_path(system, case_id, index).exists()
+    ]
+    return found or [0]
+
+
+def evaluate_case(system: str, scenario: dict, record_file: Path,
+                  repetition: int = 0) -> dict:
     expected = scenario["expected_result"]
     record = load_json(record_file)
     actual = extract_actual_result(record)
@@ -163,7 +163,7 @@ def evaluate_case(system: str, scenario: dict, record_file: Path) -> dict:
     medication_check = medication_capture_check(scenario, actual["state"].get("medications"))
     all_sections_done = set(config.CANONICAL_SECTIONS) <= set(actual["completed_sections"])
 
-    transcript_file = config.transcript_path(system, scenario["case_id"])
+    transcript_file = config.transcript_path(system, scenario["case_id"], repetition)
     conversation = transcript_checks(transcript_file, scenario)
 
     # Questionnaires and the safety flag are scored by harness.structured_score
@@ -210,6 +210,7 @@ def evaluate_case(system: str, scenario: dict, record_file: Path) -> dict:
         "scenario_case_id": scenario["case_id"],
         "title": scenario["title"],
         "system": system,
+        "repetition": repetition,
         "persona_id": resolve_case_persona(system, scenario, record),
         # Paths are recorded RELATIVE to the evaluation folder. Absolute
         # developer paths (/Users/<name>/...) leaked into every committed
@@ -307,6 +308,45 @@ def build_persona_breakdown(results: list[dict]) -> dict:
     return breakdown
 
 
+def group_by_scenario(results: list[dict], value) -> dict[str, list]:
+    """{scenario_id: [one value per repetition]} - the cluster structure."""
+    groups: dict[str, list] = {}
+    for result in results:
+        groups.setdefault(result["scenario_case_id"], []).append(value(result))
+    return groups
+
+
+def build_uncertainty(results: list[dict]) -> dict:
+    """95% CIs for the deterministic metrics, plus run-to-run variability."""
+    structured = group_by_scenario(results, lambda r: r["structured_score"])
+    safety_correct = group_by_scenario(
+        results, lambda r: 1.0 if r["safety"]["correct"] else 0.0
+    )
+
+    positives = [r for r in results if r["safety"]["expected_flag"]]
+    negatives = [r for r in results if not r["safety"]["expected_flag"]]
+
+    return {
+        "method": "cluster bootstrap over scenarios then repetitions, "
+                  "10000 resamples, percentile interval",
+        "structured_score": stats.cluster_bootstrap(structured),
+        "safety_case_accuracy": stats.cluster_bootstrap(safety_correct),
+        # Proportions over a handful of cases: Wilson, not normal. 5/5 is not
+        # certainty, and a normal interval would claim [1.0, 1.0].
+        "safety_sensitivity": stats.wilson_interval(
+            sum(1 for r in positives if r["safety"]["outcome"] == "true_positive"),
+            len(positives),
+        ),
+        "safety_specificity": stats.wilson_interval(
+            sum(1 for r in negatives if r["safety"]["outcome"] == "true_negative"),
+            len(negatives),
+        ),
+        # If this range is wider than the gap between two systems, that gap is
+        # not a result.
+        "structured_variability": stats.variability(structured),
+    }
+
+
 def build_summary(system: str, scenarios: list[dict], results: list[dict]) -> dict:
     valid = [r for r in results if r["status"] in {"PASS", "FAIL"}]
 
@@ -350,6 +390,10 @@ def build_summary(system: str, scenarios: list[dict], results: list[dict]) -> di
         "safety": safety_score.summarize(
             [r["safety"] for r in valid if "safety" in r]
         ),
+        # Uncertainty. Repetitions of a scenario are clustered - 04-04 is hard
+        # for everyone every time - so the bootstrap resamples scenarios first,
+        # then repetitions within them. See harness/stats.py.
+        "uncertainty": build_uncertainty(valid),
         "by_persona": build_persona_breakdown(results),
     }
 
@@ -368,7 +412,8 @@ def run(system: str, case_filter: str | None = None, verbose: bool = True) -> di
         print("=" * 72)
 
     for scenario in scenarios:
-        record_file = config.record_path(system, scenario["case_id"])
+      for repetition in available_repetitions(system, scenario["case_id"]):
+        record_file = config.record_path(system, scenario["case_id"], repetition)
         if not record_file.exists():
             results.append({
                 "case_id": config.short_case_id(scenario["case_id"]),
@@ -382,7 +427,7 @@ def run(system: str, case_filter: str | None = None, verbose: bool = True) -> di
                 print(f"Case {scenario['case_id']}: ERROR - no record")
             continue
         try:
-            result = evaluate_case(system, scenario, record_file)
+            result = evaluate_case(system, scenario, record_file, repetition)
             results.append(result)
             if verbose:
                 outcome = result["safety"]["outcome"]
@@ -426,6 +471,16 @@ def run(system: str, case_filter: str | None = None, verbose: bool = True) -> di
         print(f"  failure modes: {struct['total_elicitation_errors']} elicitation, "
               f"{struct['total_arithmetic_errors']} arithmetic")
         print(safety_score.format_summary(system, summary["safety"]))
+        unc = summary["uncertainty"]
+        reps = (unc["structured_score"] or {}).get("repetitions_per_scenario")
+        if reps and reps > 1:
+            print(f"  95% CI ({reps} repetitions/scenario):")
+            print(f"    structured  {stats.format_ci(unc['structured_score'])}")
+            print(f"    safety      {stats.format_ci(unc['safety_case_accuracy'])}")
+            var = unc["structured_variability"]
+            print(f"    run-to-run range on the same scenario: median "
+                  f"{var['median_within_scenario_range']}, "
+                  f"max {var['max_within_scenario_range']}")
         # Process checks are heuristics; keep them visible but clearly secondary.
         process = summary.get("metric_accuracy") or {}
         weak = {k: v for k, v in process.items() if v is not None and v < 1.0}

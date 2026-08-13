@@ -1,47 +1,4 @@
-"""Single source of truth for the CIRA evaluation harness.
 
-Everything that used to be scattered and inconsistent across scripts lives here:
-
-* where files are read from and written to,
-* how a case id maps to a filename,
-* which .env files to load,
-* the tunable model / temperature settings.
-
-If you want to move the output tree or rename a report, change it *once* here
-and every stage follows.
-
-Layout produced by the harness
-------------------------------
-::
-
-    evaluation/
-      run_all.py                 <- the one entry point
-      cira_scenarios.json
-      harness/                   <- all library + stage code
-      outputs/
-        cira/
-          transcripts/case_04_01.json
-          records/case_04_01.json
-        rule_based/
-          transcripts/case_04_01.json
-          records/case_04_01.json
-        judge/
-          cira/case_04_01.json
-          rule_based/case_04_01.json
-        reports/
-          cira_deterministic.json
-          rule_based_deterministic.json
-          judge_comparison.json
-          summary.json
-
-Naming rules (used everywhere; no more per-script variants)
------------------------------------------------------------
-* ``safe_case_id("04-01")``  -> ``"04_01"``   (used in every filename)
-* ``short_case_id("04-01")`` -> ``"01"``      (record metadata id)
-* every per-case artifact is ``case_<safe_id>.json`` in a folder that names
-  its own type, so the filename never has to encode the system or artifact
-  kind again.
-"""
 
 from __future__ import annotations
 
@@ -104,8 +61,37 @@ def short_case_id(case_id: str) -> str:
     return match.group(1)
 
 
-def case_filename(case_id: str) -> str:
-    return f"case_{safe_case_id(case_id)}.json"
+# --------------------------------------------------------------------------- #
+# Repetitions
+# --------------------------------------------------------------------------- #
+# One interaction per scenario is a single realisation of a stochastic process,
+# so a difference like 0.9308 vs 0.9285 cannot be distinguished from sampling
+# noise. Repeating each scenario independently gives a distribution instead.
+#
+# Repetition 0 keeps the original filename (case_04_01.json) so existing
+# artifacts, single-run behaviour and every downstream path stay valid; later
+# repetitions add a _r01, _r02 ... suffix.
+REPETITIONS = int(os.getenv("CIRA_REPETITIONS", "1"))
+
+
+# Upper bound when discovering repetitions from the filesystem. Scoring reads
+# what exists rather than what config says, so an older single-run output set
+# still scores and a partially finished repeated run scores what it has.
+MAX_REPETITION_SCAN = int(os.getenv("CIRA_MAX_REPETITION_SCAN", "200"))
+
+
+def repetition_indices(repetitions: int | None = None) -> range:
+    return range(repetitions if repetitions is not None else REPETITIONS)
+
+
+def case_filename(case_id: str, repetition: int = 0) -> str:
+    """``case_04_01.json`` for repetition 0, ``case_04_01_r01.json`` after.
+
+    Repetition 0 deliberately keeps the unsuffixed name so that a single-run
+    evaluation produces byte-identical paths to before repetitions existed.
+    """
+    suffix = "" if not repetition else f"_r{repetition:02d}"
+    return f"case_{safe_case_id(case_id)}{suffix}.json"
 
 
 # --------------------------------------------------------------------------- #
@@ -125,20 +111,20 @@ def record_dir(system: str) -> Path:
     return _system_dir(system) / "records"
 
 
-def transcript_path(system: str, case_id: str) -> Path:
-    return transcript_dir(system) / case_filename(case_id)
+def transcript_path(system: str, case_id: str, repetition: int = 0) -> Path:
+    return transcript_dir(system) / case_filename(case_id, repetition)
 
 
-def record_path(system: str, case_id: str) -> Path:
-    return record_dir(system) / case_filename(case_id)
+def record_path(system: str, case_id: str, repetition: int = 0) -> Path:
+    return record_dir(system) / case_filename(case_id, repetition)
 
 
 def judge_dir(system: str) -> Path:
     return JUDGE_DIR / system
 
 
-def judge_path(system: str, case_id: str) -> Path:
-    return judge_dir(system) / case_filename(case_id)
+def judge_path(system: str, case_id: str, repetition: int = 0) -> Path:
+    return judge_dir(system) / case_filename(case_id, repetition)
 
 
 # --------------------------------------------------------------------------- #

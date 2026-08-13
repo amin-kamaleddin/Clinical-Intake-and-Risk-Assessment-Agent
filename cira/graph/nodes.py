@@ -5,6 +5,7 @@ from langchain_openai import ChatOpenAI
 from core.config import MODEL_NAME
 from core.state import (
     AliceState,
+    CONDITIONAL_FIELDS,
     FIELD_TO_SECTION,
     MAX_REPEATABLE_FOLLOWUPS,
     REPEATABLE_TEXT_FIELDS,
@@ -223,6 +224,27 @@ def apply_tool_calls(state: AliceState, section: str, response):
                     "item until they choose one."
                 )
                 continue
+
+            # A conditional field cannot be written while its controlling
+            # boolean says the thing does not exist. This is the guard that was
+            # missing in case 04-05: a stopped medication was saved into
+            # current_medications even though has_current_medications was False,
+            # producing a fabricated field that no record metric catches (the
+            # field has null ground truth, so it is excluded from the
+            # denominator - only the fabrication count sees it).
+            dependency = CONDITIONAL_FIELDS.get(field)
+            if dependency:
+                parent, hidden_value = dependency
+                if state[target_section].get(parent) is hidden_value:
+                    tool_results[tc["id"]] = (
+                        f"invalid: {field} cannot be set while {parent} is "
+                        f"{hidden_value}. If this information belongs to the "
+                        f"patient, set {parent} first; if it is a PAST item, "
+                        f"save it in the corresponding past/history field "
+                        f"instead. Do not record the same item as both current "
+                        f"and past."
+                    )
+                    continue
 
             validator   = FIELD_VALIDATORS.get(field)
             saved_value = None

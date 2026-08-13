@@ -2,34 +2,36 @@
   "system": "naive_llm",
   "case_id": "07",
   "scenario_case_id": "04-07",
+  "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9881,
+  "record_score": 1.0,
   "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9881,
-    "record_score_contested": 0.9762,
-    "fields_contested": 21,
-    "fields_auto_resolved": 21,
-    "fields_confirmed_absent": 9,
+    "record_score": 1.0,
+    "record_score_contested": 1.0,
+    "fields_contested": 13,
+    "fields_auto_resolved": 29,
+    "fields_confirmed_absent": 8,
     "fields_scored": 42,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 41,
-      "partial": 1,
+      "match": 42,
+      "partial": 0,
       "missing": 0,
       "contradicted": 0,
-      "fabricated": 1
+      "fabricated": 2
     },
-    "fabricated_fields": 1,
+    "fabricated_fields": 2,
     "fabricated_refs": [
-      "past_psychiatric_history.assessment_details"
+      "past_psychiatric_history.previous_treatments",
+      "medications.past_medication_details"
     ],
     "by_section": {
       "general_information": {
         "fields": 11,
-        "credit": 10.5,
-        "score": 0.9545
+        "credit": 11.0,
+        "score": 1.0
       },
       "past_psychiatric_history": {
         "fields": 4,
@@ -56,6 +58,11 @@
         "credit": 2.0,
         "score": 1.0
       },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
       "education_employment_legal_history": {
         "fields": 3,
         "credit": 3.0,
@@ -66,11 +73,6 @@
         "credit": 2.0,
         "score": 1.0
       },
-      "substance_use": {
-        "fields": 8,
-        "credit": 8.0,
-        "score": 1.0
-      },
       "personal_history": {
         "fields": 4,
         "credit": 4.0,
@@ -78,17 +80,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona, demonstrating patience and persistence in re-explaining the questionnaire scales. While the interviewer was effective at redirecting and clarifying, the process became somewhat mechanical during the PHQ-9 and GAD-7 sections, where the patient's confusion led to repetitive, slightly clunky interactions.",
+  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona, demonstrating patience and persistence in gathering necessary information. However, the system struggled with the PHQ-9 and GAD-7 sections, frequently looping and repeating questions when the patient expressed confusion, rather than effectively simplifying the delivery or confirming understanding.",
   "issues": [
     {
-      "severity": "minor",
-      "category": "clarity",
-      "evidence": "The interviewer had to re-explain the GAD-7 scale multiple times because the patient struggled to retain the options, which, while necessary, made the flow feel repetitive."
+      "severity": "moderate",
+      "category": "questioning_technique",
+      "evidence": "The interviewer repeatedly re-asked the exact same PHQ-9 and GAD-7 questions when the patient expressed confusion, rather than rephrasing or providing clearer guidance. For example: 'PHQ-9 question 1: Over the last two weeks, how often have you been bothered by little interest or pleasure in doing things?' was asked three times."
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "The transition into the PHQ-9 and GAD-7 sections was very rigid, which contributed to the patient's confusion and difficulty in responding to the standardized questions."
+      "evidence": "The interviewer occasionally struggled to maintain a smooth flow during the questionnaire phase, leading to a repetitive and somewhat mechanical interaction style when the patient was struggling to recall the scale."
     }
   ],
   "field_verdicts": [
@@ -253,6 +255,70 @@
       "produced": true
     },
     {
+      "ref": "substance_use.alcohol_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
       "ref": "education_employment_legal_history.active_legal_cases",
       "verdict": "match",
       "source": "auto",
@@ -262,11 +328,11 @@
     },
     {
       "ref": "general_information.address",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing province.",
+      "note": "",
       "expected": "500 Wellington Street West, Toronto, Ontario",
-      "produced": "500 Wellington Street West, Toronto"
+      "produced": "500 Wellington Street West, Toronto, Ontario, Canada"
     },
     {
       "ref": "general_information.phone",
@@ -282,7 +348,7 @@
       "source": "llm",
       "note": "",
       "expected": "mood swings; premenstrual; irritability; relationship",
-      "produced": "Mood swings tied to her period, irritability, and effects on relationships."
+      "produced": "Mood and irritability, worsening before her period and causing difficulties in relationships."
     },
     {
       "ref": "current_concerns.goals",
@@ -290,7 +356,7 @@
       "source": "llm",
       "note": "",
       "expected": "control mood swings; save relationships",
-      "produced": "Control the mood swings and save her relationships."
+      "produced": "Get mood swings under control and prevent them from hurting relationships."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
@@ -298,7 +364,7 @@
       "source": "llm",
       "note": "",
       "expected": "History of non-suicidal self-injury since adolescence, used to reduce anxiety.",
-      "produced": "History of cutting since adolescence; described as non-suicidal and used to calm anxiety."
+      "produced": "History of non-suicidal self-injury beginning in adolescence; patient stated it was not about wanting to die and temporarily eased anxiety. No recent episodes and no current thoughts of self-harm or feeling unsafe."
     },
     {
       "ref": "medications.current_medications",
@@ -306,7 +372,7 @@
       "source": "llm",
       "note": "",
       "expected": "Combined oral contraceptive; one tablet daily; started 2023; no known side effects",
-      "produced": "Combined oral contraceptive, one tablet daily; started in 2023; name and strength unknown; no known side effects."
+      "produced": "Combined oral contraceptive, one tablet daily; started in 2023; brand name and exact dose unknown; no known side effects."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -314,71 +380,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; major depressive disorder; one psychiatric admission in 2018",
-      "produced": "Mother has major depressive disorder and had one psychiatric admission in 2018. No other family psychiatric or substance-use history reported."
-    },
-    {
-      "ref": "substance_use.alcohol_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "Never."
-    },
-    {
-      "ref": "substance_use.nicotine_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
-    },
-    {
-      "ref": "substance_use.marijuana_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
-    },
-    {
-      "ref": "substance_use.stimulant_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
-    },
-    {
-      "ref": "substance_use.opioid_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
-    },
-    {
-      "ref": "substance_use.benzodiazepine_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
-    },
-    {
-      "ref": "substance_use.hallucinogen_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
-    },
-    {
-      "ref": "substance_use.other_substance_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
+      "produced": "Mother has major depressive disorder and had one psychiatric admission in 2018. No other known family psychiatric, substance-use, or suicide-attempt history."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -394,7 +396,7 @@
       "source": "llm",
       "note": "",
       "expected": "Investment banking analyst, Harbour Capital; 2022 to present",
-      "produced": "Working as an investment banking analyst at Harbour Capital since 2022, approximately."
+      "produced": "Investment banking analyst at Harbour Capital since 2022; no prior employment history reported."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -402,7 +404,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born and grew up there; described childhood as fairly ordinary. Specific location/details not provided."
+      "produced": "Born and grew up there; no major experiences reported."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -410,7 +412,7 @@
       "source": "llm",
       "note": "",
       "expected": "cutting began; school",
-      "produced": "Cutting began during adolescence while attending school; patient described it as related mostly to anxiety."
+      "produced": "Cutting began during adolescence; school was described as challenging but no further details provided."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -418,7 +420,7 @@
       "source": "llm",
       "note": "",
       "expected": "One significant two-year relationship; ended three months ago; currently single",
-      "produced": "One significant romantic relationship lasting about two years; ended three months ago. Currently single."
+      "produced": "One significant relationship lasting about two years ended three months ago; currently single."
     },
     {
       "ref": "personal_history.future_goals",
@@ -426,17 +428,27 @@
       "source": "llm",
       "note": "",
       "expected": "stable relationships; career",
-      "produced": "Mostly stable relationships and career goals."
+      "produced": "Have more stable relationships and continue progressing in her career."
     }
   ],
   "fabricated": [
     {
-      "ref": "past_psychiatric_history.assessment_details",
+      "ref": "past_psychiatric_history.previous_treatments",
       "section": "past_psychiatric_history",
-      "field": "assessment_details",
+      "field": "previous_treatments",
       "entry_index": null,
       "expected": null,
-      "produced": "Patient does not think she has previously had a formal mental-health assessment and does not recall being told an assessment result.",
+      "produced": "No other psychiatric treatments, including medication management, group therapy, or intensive outpatient care.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    },
+    {
+      "ref": "medications.past_medication_details",
+      "section": "medications",
+      "field": "past_medication_details",
+      "entry_index": null,
+      "expected": null,
+      "produced": "No other past medications, over-the-counter medicines, vitamins, or supplements reported.",
       "verdict": "fabricated",
       "reason": "scenario provides no value for this field"
     }

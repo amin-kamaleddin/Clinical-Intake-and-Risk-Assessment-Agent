@@ -2,12 +2,13 @@
   "system": "cira",
   "case_id": "11",
   "scenario_case_id": "04-11",
+  "repetition": 0,
   "persona_id": "moderate",
-  "record_score": 0.9659,
+  "record_score": 0.9432,
   "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9659,
-    "record_score_contested": 0.875,
+    "record_score": 0.9432,
+    "record_score_contested": 0.7917,
     "fields_contested": 12,
     "fields_auto_resolved": 32,
     "fields_confirmed_absent": 10,
@@ -15,8 +16,8 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 42,
-      "partial": 1,
+      "match": 40,
+      "partial": 3,
       "missing": 0,
       "contradicted": 1,
       "fabricated": 0
@@ -31,13 +32,13 @@
       },
       "past_psychiatric_history": {
         "fields": 5,
-        "credit": 4.0,
-        "score": 0.8
+        "credit": 3.5,
+        "score": 0.7
       },
       "medications": {
         "fields": 3,
-        "credit": 3.0,
-        "score": 1.0
+        "credit": 2.5,
+        "score": 0.8333
       },
       "medical_history": {
         "fields": 4,
@@ -76,17 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and professional intake, effectively managing a patient who was occasionally imprecise or hesitant. The system successfully navigated the patient's vagueness through gentle, targeted follow-up questions and maintained a logical structure throughout the session.",
+  "flow_summary": "The interviewer conducted a thorough and professional intake, effectively managing a patient who was occasionally imprecise or hesitant. The system successfully navigated the patient's tendency to bundle information by breaking down complex questions and consistently redirected the conversation when necessary.",
   "issues": [
     {
       "severity": "minor",
-      "category": "clarity",
-      "evidence": "In the personal history section, the interviewer asked a multi-part question: 'Could you describe your early childhood, including where you were born, where you grew up, and what you were like as a young child?'"
+      "category": "redundant_question",
+      "evidence": "The interviewer repeated PHQ-9 Question 5 after the patient expressed confusion, which was necessary for clarity, but the phrasing of the second attempt was identical to the first."
     },
     {
       "severity": "minor",
-      "category": "flow",
-      "evidence": "The interviewer repeated the GAD-7 question 2 prompt after the patient gave a vague answer, which was necessary for clarity but slightly disrupted the flow."
+      "category": "clarity",
+      "evidence": "In the GAD-7 section, the interviewer had to re-state the timeframe for Question 2 because the patient was confused, indicating the initial prompt could have been more explicit."
     }
   ],
   "field_verdicts": [
@@ -264,7 +265,7 @@
       "source": "auto",
       "note": "",
       "expected": "Sister; depression",
-      "produced": "Mother; depression; no additional details known. Sister; depression; no additional details known. Maternal uncle; diagnosis unknown; died by suicide."
+      "produced": "Mother; depression; no additional details known. Sister; depression; no additional details known. Maternal uncle; died by suicide."
     },
     {
       "ref": "substance_use.alcohol_use",
@@ -352,7 +353,7 @@
       "source": "llm",
       "note": "",
       "expected": "floundering at work; cannot concentrate; no future orientation",
-      "produced": "At work, I have been floundering and unable to move a simple project forward. I am having difficulty concentrating and do not really see a future. These difficulties have been particularly noticeable in the mornings."
+      "produced": "Difficulty getting started on even simple work projects, trouble concentrating, and feeling unable to progress as expected at work."
     },
     {
       "ref": "current_concerns.goals",
@@ -360,31 +361,31 @@
       "source": "llm",
       "note": "",
       "expected": "function at work; move forward",
-      "produced": "I want to function effectively at work again and be able to move forward."
+      "produced": "Improve functioning at work and be able to move forward."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the detail that the diagnosis occurred during college.",
       "expected": "depression; college; recurrent",
-      "produced": "Recurrent depressive disorder; diagnosed in college"
+      "produced": "Depression; recurrent, by patient report"
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "contradicted",
       "source": "llm",
-      "note": "The system reported none, but the expected value included time off after father's death.",
+      "note": "The system reported none, while the expected value noted time off after a death.",
       "expected": "time off after father's death",
-      "produced": "None reported."
+      "produced": "None reported"
     },
     {
       "ref": "medications.current_medications",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the detail that the patient takes one tablet each morning.",
       "expected": "Antidepressant; patient does not remember the name or dose; takes one tablet each morning; started about 4 months ago; no side effects recalled",
-      "produced": "Antidepressant (name unknown); Unknown dose; one tablet each morning; started approximately 4 months ago; no recalled side effects."
+      "produced": "Unknown antidepressant; dose Unknown; started approximately 4 months ago; no side effects recalled"
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -392,15 +393,15 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; major depressive disorder",
-      "produced": "Mother; depression; no additional details known. Sister; depression; no additional details known. Maternal uncle; diagnosis unknown; died by suicide."
+      "produced": "Mother; depression; no additional details known. Sister; depression; no additional details known. Maternal uncle; died by suicide."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[2]",
       "verdict": "partial",
       "source": "llm",
-      "note": "The year 2008 is missing from the produced value.",
+      "note": "Missing the year of the suicide.",
       "expected": "Maternal uncle; died by suicide in 2008.",
-      "produced": "Mother; depression; no additional details known. Sister; depression; no additional details known. Maternal uncle; diagnosis unknown; died by suicide."
+      "produced": "Mother; depression; no additional details known. Sister; depression; no additional details known. Maternal uncle; died by suicide."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -416,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Patient was born and grew up in the same place; no further details provided about location or childhood temperament."
+      "produced": "Born and grew up in Toronto. Described himself as an ordinary child and did not recall anything unusual."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -424,7 +425,7 @@
       "source": "llm",
       "note": "",
       "expected": "college; father died; leukemia",
-      "produced": "Attended college. Patient's father died of leukemia around that time, which was a significant experience."
+      "produced": "College was a significant part of adolescence and early adulthood. His father died of leukemia when he was younger, which he identified as the main significant experience he remembered."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -432,7 +433,7 @@
       "source": "llm",
       "note": "",
       "expected": "Separated from spouse after 6 years of marriage; divorce in progress; interested in a coworker",
-      "produced": "Marriage; 6 years; separated; divorce in progress. Interest in a coworker; duration and current status not specified."
+      "produced": "Marriage; approximately 6 years; separated, divorce in progress. Coworker; current interest; relationship status not specified."
     },
     {
       "ref": "personal_history.future_goals",
@@ -440,7 +441,7 @@
       "source": "llm",
       "note": "",
       "expected": "rebuild; career",
-      "produced": "Rebuild life and advance career."
+      "produced": "Rebuild his life and get his career back on track."
     }
   ],
   "fabricated": []

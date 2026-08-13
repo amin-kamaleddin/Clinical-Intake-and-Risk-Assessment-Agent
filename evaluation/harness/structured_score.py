@@ -1,38 +1,4 @@
-"""Deterministic scoring for everything with an exact expected value.
 
-This module owns PHQ-9, GAD-7 and the safety flag. No LLM touches any of it.
-
-Why code and not the judge
---------------------------
-Every value here has one right answer sitting in the scenario. Asking a model
-to grade it adds sampling variance to the one number that should be exact, and
-buys nothing: there is no paraphrase to resolve, no judgement to make. The
-judge's old ``questionnaire_and_safety_accuracy`` subscore measured exactly
-this and is deleted; this is its replacement.
-
-Item level, not total level
----------------------------
-Totals alone are lossy. Two compensating item errors (one item scored +1, a
-second scored -1) produce a correct total from a broken intake. So all 16 items
-are checked individually, and the totals are checked on top.
-
-Two failure modes, separated
-----------------------------
-* **elicitation error** - a recorded item value disagrees with ground truth.
-  The system misheard the patient, or guessed a score off a vague answer
-  instead of re-asking. This is where a ``confused`` persona should bite.
-* **arithmetic error** - the items are right but the recorded total is not
-  their sum. The system can interview but cannot add.
-
-Both are diagnostics; only the binary checks below feed the score.
-
-The score
----------
-The simple mean of 20 binary checks - 9 PHQ-9 items, 7 GAD-7 items, 2 totals,
-safety flag, PHQ-9-Q9 invariant. Deliberately unweighted: any weighting here
-would be invented, and an unweighted mean over a stated check list is the one
-aggregation that needs no defending.
-"""
 
 from __future__ import annotations
 

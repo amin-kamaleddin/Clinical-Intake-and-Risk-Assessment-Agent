@@ -1,32 +1,4 @@
-"""Field enumeration for record fidelity: code decides scope, the LLM only judges.
 
-The old judge received two JSON blobs and returned a float. That gave the model
-discretion over *what counted* as well as *whether it matched*, which is the
-main reason its record score was hard to reproduce or defend.
-
-Here the work is split:
-
-1. **Code** (this module) walks ``patient_facts`` and the produced record in
-   parallel and emits one row per checkable fact. Fields the scenario leaves
-   null are not ground truth and are dropped. Repeatable fields are split so
-   capturing 1 of 3 medications cannot score the same as capturing 3 of 3.
-2. **Code** auto-resolves every row that needs no judgement at all - exact
-   string match, boolean match, empty produced value. On these scenarios that
-   is typically half the rows, so the payload and the latency drop, and those
-   verdicts carry zero model variance.
-3. **The LLM** sees only the genuinely ambiguous rows and returns a categorical
-   verdict per row. Models are poorly calibrated on continuous scores and
-   reliable on categories, so this is the shape that reruns consistently.
-4. **Code** turns verdicts back into the number.
-
-Fabrication is detected here too, by walking the other direction: fields the
-record filled where the scenario has no ground truth. Since the patient
-simulator is prompt-bound never to invent, anything there is unsupported by
-construction - the transcript is not needed to establish it. Per the current
-configuration these rows are *reported and not scored*, so a system cannot lose
-record points twice for one bad field, and the fabrication count stands on its
-own as a metric.
-"""
 
 from __future__ import annotations
 

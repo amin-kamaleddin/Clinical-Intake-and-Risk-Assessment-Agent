@@ -2,29 +2,28 @@
   "system": "naive_llm",
   "case_id": "03",
   "scenario_case_id": "04-03",
+  "repetition": 0,
   "persona_id": "clear",
-  "record_score": 0.9556,
-  "flow_score": 0.85,
+  "record_score": 0.9778,
+  "flow_score": 1.0,
   "record_detail": {
-    "record_score": 0.9556,
-    "record_score_contested": 0.9091,
+    "record_score": 0.9778,
+    "record_score_contested": 0.9545,
     "fields_contested": 22,
     "fields_auto_resolved": 23,
-    "fields_confirmed_absent": 6,
+    "fields_confirmed_absent": 7,
     "fields_scored": 45,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 41,
-      "partial": 4,
+      "match": 43,
+      "partial": 2,
       "missing": 0,
       "contradicted": 0,
-      "fabricated": 1
+      "fabricated": 0
     },
-    "fabricated_fields": 1,
-    "fabricated_refs": [
-      "medications.current_medications"
-    ],
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
     "by_section": {
       "general_information": {
         "fields": 11,
@@ -33,13 +32,13 @@
       },
       "past_psychiatric_history": {
         "fields": 7,
-        "credit": 5.5,
-        "score": 0.7857
+        "credit": 6.5,
+        "score": 0.9286
       },
       "medications": {
         "fields": 3,
-        "credit": 3.0,
-        "score": 1.0
+        "credit": 2.5,
+        "score": 0.8333
       },
       "medical_history": {
         "fields": 4,
@@ -68,8 +67,8 @@
       },
       "substance_use": {
         "fields": 8,
-        "credit": 7.5,
-        "score": 0.9375
+        "credit": 8.0,
+        "score": 1.0
       },
       "personal_history": {
         "fields": 4,
@@ -78,14 +77,8 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and well-structured intake. While the system struggled to elicit more detailed responses regarding the patient's childhood and adolescence despite multiple attempts, it handled the safety disclosure appropriately and followed all clinical protocols.",
-  "issues": [
-    {
-      "severity": "moderate",
-      "category": "recovery_of_vague_answers",
-      "evidence": "The interviewer repeated the question about childhood three times when the patient provided a vague, non-responsive answer, without attempting to rephrase or break the question down into more specific components."
-    }
-  ],
+  "flow_summary": "The interviewer conducted a thorough and efficient intake. It followed a logical structure, handled the patient's disclosures with appropriate empathy, and correctly identified the need for a safety follow-up based on the PHQ-9 results.",
+  "issues": [],
   "field_verdicts": [
     {
       "ref": "general_information.name",
@@ -93,7 +86,7 @@
       "source": "auto",
       "note": "",
       "expected": "DAVID QUINN",
-      "produced": "DAVID QUINN"
+      "produced": "David Quinn"
     },
     {
       "ref": "general_information.gender",
@@ -157,7 +150,7 @@
       "source": "auto",
       "note": "",
       "expected": "DR. SIMON GREEN",
-      "produced": "DR. SIMON GREEN"
+      "produced": "Dr. Simon Green"
     },
     {
       "ref": "general_information.has_psychiatrist",
@@ -173,7 +166,7 @@
       "source": "auto",
       "note": "",
       "expected": "DR. LAURA BENNETT",
-      "produced": "DR. LAURA BENNETT"
+      "produced": "Dr. Laura Bennett"
     },
     {
       "ref": "past_psychiatric_history.previously_assessed",
@@ -277,7 +270,7 @@
       "source": "llm",
       "note": "",
       "expected": "son's death; grief; sadness; cannot concentrate",
-      "produced": "My son died by suicide 6 weeks ago, and I’ve been dealing with grief, constant sadness, and trouble concentrating."
+      "produced": "Son died by suicide six weeks ago; grief, constant sadness, and inability to concentrate."
     },
     {
       "ref": "current_concerns.goals",
@@ -285,7 +278,7 @@
       "source": "llm",
       "note": "",
       "expected": "cope with loss; return to functioning",
-      "produced": "I want to cope with the loss and get back to functioning."
+      "produced": "To cope with the loss and return to functioning."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -293,39 +286,39 @@
       "source": "llm",
       "note": "",
       "expected": "Followed by DR. LAURA BENNETT, psychiatrist, during two depressive episodes in 1998 and 2003",
-      "produced": "Followed by DR. LAURA BENNETT, a psychiatrist, during two depressive episodes in 1998 and 2003."
+      "produced": "Followed by Dr. Laura Bennett, psychiatrist, during two depressive episodes in 1998 and 2003."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing information regarding the two prior episodes and the age of onset.",
+      "note": "",
       "expected": "depression; two prior episodes; 30s",
-      "produced": "Depression."
+      "produced": "Depression, with two prior episodes in his 30s."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the duration/frequency of sessions.",
+      "note": "",
       "expected": "Individual psychotherapy; 1998; approximately 16 weekly sessions",
-      "produced": "Individual psychotherapy in 1998."
+      "produced": "Individual psychotherapy in 1998 for approximately 16 weekly sessions."
     },
     {
       "ref": "past_psychiatric_history.previous_treatments",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the information about the good response to treatment.",
+      "note": "The fact that the patient had a good response to the treatment is missing.",
       "expected": "Sertraline during two prior depressive episodes; good response",
-      "produced": "Sertraline during two prior depressive episodes."
+      "produced": "Sertraline during two prior depressive episodes in his 30s."
     },
     {
       "ref": "medications.past_medication_details",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "The fact that the medication was stopped after sustained recovery is missing.",
       "expected": "Sertraline; 100 mg daily; taken for about 18 months in his 30s; stopped after sustained recovery",
-      "produced": "Sertraline, 100 mg daily, taken for about 18 months in his 30s during prior depressive episodes; stopped after sustained recovery. No remembered side effects. No other past medications."
+      "produced": "Sertraline 100 mg daily for about 18 months in his 30s; no remembered side effects. Previously used during two depressive episodes."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -337,11 +330,11 @@
     },
     {
       "ref": "substance_use.alcohol_use",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the context regarding the increase in frequency and duration.",
+      "note": "",
       "expected": "Current; wine; about half a bottle nightly; increased from weekends only after son's death; current duration 6 weeks",
-      "produced": "Current alcohol use: wine, about half a bottle nightly."
+      "produced": "Current wine use, about half a bottle nightly; increased from weekends only after son's death, ongoing for 6 weeks."
     },
     {
       "ref": "substance_use.nicotine_use",
@@ -421,7 +414,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Patient stated: \"I was born and grew up.\" No further details provided."
+      "produced": "Born and grew up; no other significant experiences reported."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -429,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; early career",
-      "produced": "School and early career."
+      "produced": "Went to school and started his early career; no other significant experiences reported."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -445,19 +438,8 @@
       "source": "llm",
       "note": "",
       "expected": "recover; honour son's memory",
-      "produced": "I want to recover and honour my son's memory."
+      "produced": "To recover and honour his son's memory."
     }
   ],
-  "fabricated": [
-    {
-      "ref": "medications.current_medications",
-      "section": "medications",
-      "field": "current_medications",
-      "entry_index": null,
-      "expected": null,
-      "produced": "Not taking any current medications.",
-      "verdict": "fabricated",
-      "reason": "scenario provides no value for this field"
-    }
-  ]
+  "fabricated": []
 }

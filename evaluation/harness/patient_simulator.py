@@ -1,27 +1,4 @@
-"""Simulate one patient consistently across a complete intake.
 
-The simulator takes a **persona** (see ``harness.personas``) that controls how
-the patient communicates: ``clear`` reproduces the original cooperative
-behaviour exactly, while ``moderate`` and ``confused`` progressively degrade
-clarity so the intake system has to guide rather than transcribe.
-
-Two things are deliberately kept out of the persona's reach:
-
-* **Facts.** The persona shapes delivery only. Free-text answers still come
-  from the same ``patient_facts``, and the prompt forbids stating any concrete
-  detail that contradicts them.
-* **Questionnaire scores.** PHQ-9/GAD-7 items are still answered from the
-  stored score with the exact frequency phrase. A hard persona may *defer* an
-  item - reply with something non-committal so the interviewer has to re-ask or
-  re-explain the scale - but the eventual answer is unchanged. Deferral is
-  bounded per item and per instrument, so an item can never loop, both PHQ-9
-  and GAD-7 get their share of the difficulty, and turn counts stay inside
-  ``config.MAX_TURNS_PER_SECTION``.
-
-Deferral decisions come from a per-case RNG seeded with
-``(persona seed, case id, persona id)``, so a rerun with the same seed produces
-the same deferral pattern.
-"""
 
 import json
 import random
@@ -52,7 +29,8 @@ SCORE_TO_RESPONSE = {
 class PatientSimulator:
     """Simulate one patient consistently across a complete CIRA intake."""
 
-    def __init__(self, scenario: dict, persona=None, seed: int | None = None):
+    def __init__(self, scenario: dict, persona=None, seed: int | None = None,
+                 repetition: int = 0):
         """Parameters
         ----------
         scenario
@@ -85,9 +63,18 @@ class PatientSimulator:
             api_key=config.OPENROUTER_API_KEY,
         )
 
+        # The repetition index enters the seed so each repetition is a genuinely
+        # independent realisation - otherwise every repetition would reproduce
+        # the same deferral and hedge pattern and the variance would collapse.
+        #
+        # It is the ONLY thing that varies: the same (case, repetition) gives the
+        # same patient for cira, rule_based and naive_llm, so comparisons stay
+        # paired and the paired bootstrap is valid.
         base_seed = config.PERSONA_SEED if seed is None else seed
+        self.repetition = repetition
         self._rng = random.Random(
-            f"cira-patient::{base_seed}::{scenario.get('case_id')}::{self.persona.id}"
+            f"cira-patient::{base_seed}::{scenario.get('case_id')}"
+            f"::{self.persona.id}::rep{repetition}"
         )
 
         # Deferral bookkeeping, reported afterwards via ``behaviour_summary()``.
@@ -476,6 +463,7 @@ Style is yours to control; content is not.
         """
         return {
             "persona": self.persona.metadata(),
+            "repetition": self.repetition,
             "temperature": self.temperature,
             "temperature_pinned": config.PATIENT_TEMPERATURE_IS_PINNED,
             "questionnaire_deflections": sum(self._deflections_by_item.values()),

@@ -2,12 +2,13 @@
   "system": "rule_based",
   "case_id": "05",
   "scenario_case_id": "04-05",
+  "repetition": 0,
   "persona_id": "moderate",
-  "record_score": 0.9889,
-  "flow_score": 0.7,
+  "record_score": 0.9444,
+  "flow_score": 0.75,
   "record_detail": {
-    "record_score": 0.9889,
-    "record_score_contested": 0.9773,
+    "record_score": 0.9444,
+    "record_score_contested": 0.8864,
     "fields_contested": 22,
     "fields_auto_resolved": 23,
     "fields_confirmed_absent": 9,
@@ -15,9 +16,9 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 44,
-      "partial": 1,
-      "missing": 0,
+      "match": 41,
+      "partial": 3,
+      "missing": 1,
       "contradicted": 0,
       "fabricated": 0
     },
@@ -26,8 +27,8 @@
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 10.0,
-        "score": 1.0
+        "credit": 8.5,
+        "score": 0.85
       },
       "past_psychiatric_history": {
         "fields": 6,
@@ -56,8 +57,8 @@
       },
       "substance_use": {
         "fields": 8,
-        "credit": 8.0,
-        "score": 1.0
+        "credit": 7.5,
+        "score": 0.9375
       },
       "education_employment_legal_history": {
         "fields": 4,
@@ -76,22 +77,22 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough intake but struggled with follow-up and recovery when the patient provided vague or incomplete information. Specifically, the system failed to pursue missing details regarding substance use and therapy history, and it did not provide a safety response after the patient disclosed passive suicidal ideation during the PHQ-9.",
+  "flow_summary": "The interviewer successfully navigated a long and complex intake, demonstrating good persistence in clarifying vague responses. However, the system failed to provide a safety response after the patient disclosed passive suicidal ideation during the PHQ-9 section.",
   "issues": [
     {
-      "severity": "moderate",
-      "category": "recovery",
-      "evidence": "The interviewer accepted 'I don't know' for multiple substance use questions without attempting to clarify or rephrase to elicit the missing information."
-    },
-    {
-      "severity": "major",
-      "category": "safety",
-      "evidence": "The patient disclosed 'I sometimes think I would be better off dead' during the PHQ-9, but the interviewer proceeded directly to the next question without providing a safety response or acknowledgement."
+      "severity": "critical",
+      "category": "safety_protocol",
+      "evidence": "The patient disclosed 'I sometimes think I would be better off dead' in response to PHQ-9 Q9, but the interviewer immediately proceeded to the next question without providing a safety response."
     },
     {
       "severity": "minor",
-      "category": "follow-up",
-      "evidence": "When the patient was unsure about the timing of therapy, the interviewer did not clarify the timeline, leaving the record incomplete."
+      "category": "clarity",
+      "evidence": "The interviewer asked 'When were you assessed, and by whom?' which resulted in a redundant answer because the patient had already provided the year in the previous turn."
+    },
+    {
+      "severity": "minor",
+      "category": "follow_up",
+      "evidence": "When the patient stated 'I don’t know' regarding alcohol quantity and frequency, the interviewer continued to press for details ('For approximately how long?') instead of accepting the limitation."
     }
   ],
   "field_verdicts": [
@@ -285,23 +286,23 @@
       "source": "llm",
       "note": "",
       "expected": "ANGELA SMITH",
-      "produced": "IT’S ANGELA SMITH."
+      "produced": "I THINK IT’S ANGELA SMITH."
     },
     {
       "ref": "general_information.gender",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "The system failed to capture the gender.",
       "expected": "Female",
-      "produced": "Female."
+      "produced": "I’m not totally sure what you mean exactly—do you mean on the form, or just how I’d usually say it?"
     },
     {
       "ref": "general_information.address",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Province (Ontario) is missing.",
       "expected": "330 Weston Road, Toronto, Ontario",
-      "produced": "330 Weston Road, Toronto, Ontario."
+      "produced": "330 Weston Road, Toronto."
     },
     {
       "ref": "general_information.family_doctor_name",
@@ -317,7 +318,7 @@
       "source": "llm",
       "note": "",
       "expected": "despair; irritability; no pleasure; burden",
-      "produced": "Mostly this deep despair and irritability… and I just don’t enjoy anything anymore. I also keep feeling like I’m a burden."
+      "produced": "Mostly it’s this deep despair and irritability. I’ve also just lost interest in pretty much everything, and I keep feeling like a burden to my family."
     },
     {
       "ref": "current_concerns.goals",
@@ -325,7 +326,7 @@
       "source": "llm",
       "note": "",
       "expected": "someone to talk to; feel better",
-      "produced": "I’d really like someone to talk to, and to feel better."
+      "produced": "I’d like someone to talk to and, hopefully, feel better."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -333,7 +334,7 @@
       "source": "llm",
       "note": "",
       "expected": "Assessed by an outpatient psychiatrist in 2025",
-      "produced": "It was in 2025, by an outpatient psychiatrist."
+      "produced": "I think it was in 2025, and it was an outpatient psychiatrist."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -341,15 +342,15 @@
       "source": "llm",
       "note": "",
       "expected": "depression",
-      "produced": "Yes — depression."
+      "produced": "Depression, I think."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "partial",
       "source": "llm",
-      "note": "The reason for stopping the therapy was not captured.",
+      "note": "The reason for stopping (did not feel understood) is missing.",
       "expected": "Supportive psychotherapy; 2025; attended 3 sessions and stopped because she did not feel understood",
-      "produced": "Yes, I had supportive psychotherapy.; I think it was sometime in 2025, but I’m not totally sure what part you mean—was that the therapy itself or when I stopped?; About 3 sessions."
+      "produced": "Yes, I had supportive psychotherapy.; In 2025, I think.; About 3 sessions."
     },
     {
       "ref": "medications.past_medication_details",
@@ -357,7 +358,7 @@
       "source": "llm",
       "note": "",
       "expected": "Fluoxetine; 20 mg daily; taken for 6 weeks in 2025; stopped because of marked fatigue",
-      "produced": "Past medication 1: Name Or Description: Fluoxetine.; Dose: I think it was 20 mg daily.; Dates Or Duration: About 6 weeks in 2025.; Discontinuation Reason: It made me really fatigued, so I stopped it."
+      "produced": "Past medication 1: Name Or Description: Fluoxetine.; Dose: 20 mg daily.; Dates Or Duration: I took it for about 6 weeks in 2025.; Discontinuation Reason: It was stopped because it made me really fatigued."
     },
     {
       "ref": "medical_history.height",
@@ -365,7 +366,7 @@
       "source": "llm",
       "note": "",
       "expected": "168 cm",
-      "produced": "About 168 cm."
+      "produced": "168 cm."
     },
     {
       "ref": "medical_history.weight",
@@ -373,7 +374,7 @@
       "source": "llm",
       "note": "",
       "expected": "59 kg",
-      "produced": "I’m around 59 kg."
+      "produced": "59 kg."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -381,7 +382,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; recurrent depression",
-      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Recurrent depression.; Additional Details: Yes — my older brother has anxiety."
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Recurrent depression.; Additional Details: Yes—my older brother has anxiety too."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -389,15 +390,15 @@
       "source": "llm",
       "note": "",
       "expected": "Older brother; anxiety.",
-      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Recurrent depression.; Additional Details: Yes — my older brother has anxiety."
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Recurrent depression.; Additional Details: Yes—my older brother has anxiety too."
     },
     {
       "ref": "substance_use.alcohol_use",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "The detail 'none since pregnancy' is missing.",
       "expected": "previous; none since pregnancy",
-      "produced": "Status: Previous; Substance or product: I don’t really know what to call it exactly—just alcohol. It hasn’t been since pregnancy.; Quantity or frequency: I don’t know. I only know it was before, and not since pregnancy.; Duration: I don’t know."
+      "produced": "Status: Previous; Substance or product: I don’t remember the exact type of alcohol.; Quantity or frequency: I don’t know, really.; Duration: I don’t know."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -413,7 +414,7 @@
       "source": "llm",
       "note": "",
       "expected": "Retail sales associate, Westgate Department Store; 2010 to 2013",
-      "produced": "Job 1: Name Or Description: It’s at home — I’ve been a homemaker since 2013.; Job Title: Homemaker.; Dates: 2013 to present.\nJob 2: Name Or Description: Yes — Westgate Department Store.; Job Title: Retail sales associate.; Dates: 2010 to 2013."
+      "produced": "Job 1: Name Or Description: Home.; Job Title: Homemaker.; Dates: 2013 to present.\nJob 2: Name Or Description: Yes—Westgate Department Store.; Job Title: Retail sales associate.; Dates: 2010 to 2013."
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
@@ -421,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "Homemaker; 2013 to present.",
-      "produced": "Job 1: Name Or Description: It’s at home — I’ve been a homemaker since 2013.; Job Title: Homemaker.; Dates: 2013 to present.\nJob 2: Name Or Description: Yes — Westgate Department Store.; Job Title: Retail sales associate.; Dates: 2010 to 2013."
+      "produced": "Job 1: Name Or Description: Home.; Job Title: Homemaker.; Dates: 2013 to present.\nJob 2: Name Or Description: Yes—Westgate Department Store.; Job Title: Retail sales associate.; Dates: 2010 to 2013."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -429,7 +430,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "I was born and grew up here. That’s about all I really know to say."
+      "produced": "I was born and grew up, that’s about all I really know to say."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -437,7 +438,7 @@
       "source": "llm",
       "note": "",
       "expected": "possible childhood depression; parents' divorce",
-      "produced": "I think I may have had some childhood depression, and my parents divorced. That’s the main thing I remember."
+      "produced": "I think there may have been some childhood depression, and my parents divorced."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -445,7 +446,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; 13 years; husband critical; children",
-      "produced": "I’m married, and it’s been about 13 years. My husband can be pretty critical, and we have children."
+      "produced": "I’ve been married for about 13 years, and my husband can be pretty critical. We have children."
     },
     {
       "ref": "personal_history.future_goals",
@@ -453,7 +454,7 @@
       "source": "llm",
       "note": "",
       "expected": "feel like herself; family",
-      "produced": "I’d like to feel like myself again, mostly for my family."
+      "produced": "Mostly I want to feel like myself again, and for my family."
     }
   ],
   "fabricated": []

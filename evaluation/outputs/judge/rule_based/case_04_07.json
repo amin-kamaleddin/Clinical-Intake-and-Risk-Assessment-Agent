@@ -2,35 +2,35 @@
   "system": "rule_based",
   "case_id": "07",
   "scenario_case_id": "04-07",
+  "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9286,
-  "flow_score": 0.5,
+  "record_score": 0.9762,
+  "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9286,
-    "record_score_contested": 0.8571,
-    "fields_contested": 21,
-    "fields_auto_resolved": 21,
-    "fields_confirmed_absent": 8,
+    "record_score": 0.9762,
+    "record_score_contested": 0.9444,
+    "fields_contested": 18,
+    "fields_auto_resolved": 24,
+    "fields_confirmed_absent": 9,
     "fields_scored": 42,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 39,
+      "match": 41,
       "partial": 0,
-      "missing": 3,
+      "missing": 1,
       "contradicted": 0,
-      "fabricated": 2
+      "fabricated": 1
     },
-    "fabricated_fields": 2,
+    "fabricated_fields": 1,
     "fabricated_refs": [
-      "past_psychiatric_history.previous_diagnoses",
       "past_psychiatric_history.previous_therapies"
     ],
     "by_section": {
       "general_information": {
         "fields": 11,
-        "credit": 8.0,
-        "score": 0.7273
+        "credit": 10.0,
+        "score": 0.9091
       },
       "past_psychiatric_history": {
         "fields": 4,
@@ -79,25 +79,44 @@
       }
     }
   },
-  "flow_summary": "The system successfully completed the intake but struggled significantly with the patient's confusion. It failed to address the patient's explicit requests for clarification regarding formatting, instead repeating the same instructions verbatim, which led to a frustrating and repetitive loop.",
+  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona by consistently redirecting the conversation and clarifying requirements. While the interviewer was effective at gathering the necessary data, the reliance on rigid, repetitive questioning (e.g., asking for the same information in different formats) felt mechanical and occasionally redundant.",
   "issues": [
     {
-      "severity": "moderate",
-      "category": "recovery_failure",
-      "evidence": "When the patient asked for clarification on the date format, the system simply repeated the instruction: 'Please repeat your date of birth in DD/MM/YYYY format.'"
-    },
-    {
-      "severity": "moderate",
-      "category": "recovery_failure",
-      "evidence": "When the patient asked for clarification on the postal code format, the system ignored the request and repeated the instruction: 'Please repeat the postal code using letters and numbers.'"
+      "severity": "minor",
+      "category": "redundant_questioning",
+      "evidence": "The interviewer asked for the date of birth and phone number twice, once in a general format and then immediately again in a specific format, despite the patient having provided the information clearly in the first instance."
     },
     {
       "severity": "minor",
-      "category": "flow",
-      "evidence": "The system skipped the patient's initial attempt to provide their name in the first turn, moving directly to gender without acknowledging the name."
+      "category": "mechanical_flow",
+      "evidence": "The transition between sections felt very rigid, often ignoring the patient's conversational cues and jumping immediately to the next scripted item."
     }
   ],
   "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "11/03/2000",
+      "produced": "11/03/2000"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M5V1E3",
+      "produced": "M5V1E3"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "emily.wang@example.com",
+      "produced": "emily.wang@example.com"
+    },
     {
       "ref": "general_information.phone",
       "verdict": "match",
@@ -272,7 +291,7 @@
       "source": "llm",
       "note": "",
       "expected": "EMILY WANG",
-      "produced": "UH—SORRY, DO YOU MEAN THE NAME THAT’S ON MY ID? I’M BLANKING ON THE EXACT WAY YOU WANT IT SAID. IT’S EMILY… AND THEN WANG, I THINK, BUT I’M NOT SURE IF YOU WANT THE MIDDLE PART OR JUST THE FULL LEGAL VERSION."
+      "produced": "OH—MY LEGAL NAME? I MEAN, I THINK YOU’RE ASKING FOR THE NAME ON MY DOCUMENTS, BUT I’M NOT SURE IF YOU WANT THE FULL THING SPELLED OUT OR JUST HOW IT’S LISTED… UM, I’VE GOT EMILY, AND THEN WANG, I THINK. IF YOU WANT, YOU CAN ASK ME IT PIECE BY PIECE OR SAY EXACTLY HOW YOU NEED IT WRITTEN."
     },
     {
       "ref": "general_information.gender",
@@ -283,44 +302,20 @@
       "produced": "Female."
     },
     {
-      "ref": "general_information.date_of_birth",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "The system recorded 'Unknown' instead of the provided date.",
-      "expected": "11/03/2000",
-      "produced": "Unknown"
-    },
-    {
       "ref": "general_information.address",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "500 Wellington Street West, Toronto, Ontario",
-      "produced": "500 Wellington Street West… Toronto, Ontario."
-    },
-    {
-      "ref": "general_information.postal_code",
       "verdict": "missing",
       "source": "llm",
-      "note": "The system recorded 'Unknown' instead of the provided postal code.",
-      "expected": "M5V1E3",
+      "note": "The system failed to capture the address.",
+      "expected": "500 Wellington Street West, Toronto, Ontario",
       "produced": "Unknown"
-    },
-    {
-      "ref": "general_information.email",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "emily.wang@example.com",
-      "produced": "emily.wang@example.com."
     },
     {
       "ref": "general_information.family_doctor_name",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "llm",
-      "note": "The system recorded 'unknown' instead of the provided doctor's name.",
+      "note": "",
       "expected": "DR. GRACE LIM",
-      "produced": "unknown"
+      "produced": "OH, HER NAME—RIGHT, I DO HAVE ONE, AND I ALWAYS FORGET WHETHER IT’S DR. LIM OR MAYBE DR. GRACE LIM, SOMETHING LIKE THAT. I’M NOT TOTALLY SURE WHAT PART YOU WANT FIRST, THE DR. OR THE NAME AFTER IT?"
     },
     {
       "ref": "general_information.psychiatrist_name",
@@ -336,7 +331,7 @@
       "source": "llm",
       "note": "",
       "expected": "mood swings; premenstrual; irritability; relationship",
-      "produced": "Mostly it’s mood swings, and they seem to be tied to my cycle — premenstrual, like I get really irritable and it spills into my relationship stuff. It’s... the relationships part has been hard."
+      "produced": "It’s mostly my mood and relationships, and it gets really tied to my period — I get irritable and my mood swings a lot beforehand, and then it’s like it settles down again once my period starts. At the moment I’m actually pretty okay, but the premenstrual bit is what’s been causing the problems."
     },
     {
       "ref": "current_concerns.goals",
@@ -344,7 +339,7 @@
       "source": "llm",
       "note": "",
       "expected": "control mood swings; save relationships",
-      "produced": "I want to get the mood swings under control, honestly. And, um, save my relationships if I can."
+      "produced": "I want to get the mood swings under control, honestly. And… I guess I want to stop it from hurting my relationships so much."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
@@ -352,7 +347,7 @@
       "source": "llm",
       "note": "",
       "expected": "History of non-suicidal self-injury since adolescence, used to reduce anxiety.",
-      "produced": "It was cutting, back in adolescence and after that too, but not with suicidal intent. No current or immediate safety concern."
+      "produced": "It was cutting, back when I was younger, and it tended to help with the anxiety in the moment. There isn’t any current or immediate safety concern, and I’m not having suicidal thoughts."
     },
     {
       "ref": "medications.current_medications",
@@ -360,7 +355,7 @@
       "source": "llm",
       "note": "",
       "expected": "Combined oral contraceptive; one tablet daily; started 2023; no known side effects",
-      "produced": "Medication 1: Name Or Description: It’s a combined oral contraceptive.; Dose: One tablet daily.; Start Or Duration: I started it in 2023.; Side Effects: None that I know of."
+      "produced": "Medication 1: Name Or Description: It’s my combined oral contraceptive.; Dose: One tablet daily.; Start Or Duration: 2023.; Side Effects: None that I know of."
     },
     {
       "ref": "medical_history.height",
@@ -384,7 +379,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; major depressive disorder; one psychiatric admission in 2018",
-      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Major depressive disorder.; Additional Details: She had one psychiatric admission in 2018."
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Major depressive disorder.; Additional Details: Yes — she had one psychiatric admission in 2018."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -392,7 +387,7 @@
       "source": "llm",
       "note": "",
       "expected": "bachelor's degree",
-      "produced": "A bachelor’s degree."
+      "produced": "A bachelor's degree."
     },
     {
       "ref": "education_employment_legal_history.employment_history",
@@ -408,7 +403,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "I was born and grew up… I mean, just here, and as a young child I don’t really know what to say, it was pretty ordinary."
+      "produced": "I was born and grew up… well, just here, really. I don’t have much more to say about that."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -416,7 +411,7 @@
       "source": "llm",
       "note": "",
       "expected": "cutting began; school",
-      "produced": "In adolescence and early adulthood, um, school was a big part of it, and that’s also when the cutting started, back then. I was focused on school… yes, that’s the main thing I remember."
+      "produced": "That’s when the cutting started, and school was a thing… I guess that’s the main part I’d mention."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -424,7 +419,7 @@
       "source": "llm",
       "note": "",
       "expected": "One significant two-year relationship; ended three months ago; currently single",
-      "produced": "There was one significant relationship, about two years long, and it ended three months ago. I’m single now."
+      "produced": "I had one significant relationship that lasted about two years, and it ended three months ago. I’m single now."
     },
     {
       "ref": "personal_history.future_goals",
@@ -432,27 +427,17 @@
       "source": "llm",
       "note": "",
       "expected": "stable relationships; career",
-      "produced": "Stable relationships, and career, I guess."
+      "produced": "Stable relationships, and my career."
     }
   ],
   "fabricated": [
-    {
-      "ref": "past_psychiatric_history.previous_diagnoses",
-      "section": "past_psychiatric_history",
-      "field": "previous_diagnoses",
-      "entry_index": null,
-      "expected": null,
-      "produced": "I don’t have any diagnosis to list, no.",
-      "verdict": "fabricated",
-      "reason": "scenario provides no value for this field"
-    },
     {
       "ref": "past_psychiatric_history.previous_therapies",
       "section": "past_psychiatric_history",
       "field": "previous_therapies",
       "entry_index": null,
       "expected": null,
-      "produced": "I don’t have any previous therapy to report.; I don’t know, because I haven’t had therapy.; None — I didn’t attend any sessions.",
+      "produced": "I don’t know — I haven’t really had therapy before, so I don’t have anything to report there.; I don’t know, because I haven’t had any therapy that I can remember.; I don’t know — none that I can recall.",
       "verdict": "fabricated",
       "reason": "scenario provides no value for this field"
     }

@@ -1,26 +1,4 @@
-"""Regression tests for the deterministic safety gate.
 
-Run from the cira folder::
-
-    python -m tests.test_safety_gate
-
-No API keys, no network, no model. ``explicit_safety_trigger`` is pure regex.
-
-Both directions are pinned, because they fail differently:
-
-* A **false negative** - a real current disclosure the gate misses - is the
-  worst outcome this system can produce. Those cases are listed in
-  ``MUST_TRIGGER`` and are the reason for the widened patterns and the
-  clause-level exclusion logic.
-* A **false positive** - flagging a historical, third-person, negated or
-  hypothetical statement - costs clinician time and, at volume, causes alarm
-  fatigue. Those cases are in ``MUST_NOT_TRIGGER``.
-
-The gate is only one of three paths to the flag (the others are PHQ-9 item 9
-and the model's raise_safety_flag tool), so a miss here is not necessarily a
-miss overall. It is still the only path that cannot be talked out of firing,
-which is why it is tested exhaustively.
-"""
 
 from __future__ import annotations
 

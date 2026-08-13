@@ -2,12 +2,13 @@
   "system": "rule_based",
   "case_id": "09",
   "scenario_case_id": "04-09",
+  "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.8298,
+  "record_score": 0.9149,
   "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.8298,
-    "record_score_contested": 0.6667,
+    "record_score": 0.9149,
+    "record_score_contested": 0.8333,
     "fields_contested": 24,
     "fields_auto_resolved": 23,
     "fields_confirmed_absent": 11,
@@ -15,9 +16,9 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 37,
-      "partial": 4,
-      "missing": 6,
+      "match": 40,
+      "partial": 6,
+      "missing": 1,
       "contradicted": 0,
       "fabricated": 0
     },
@@ -26,8 +27,8 @@
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 8.5,
-        "score": 0.85
+        "credit": 9.0,
+        "score": 0.9
       },
       "past_psychiatric_history": {
         "fields": 3,
@@ -41,8 +42,8 @@
       },
       "medical_history": {
         "fields": 9,
-        "credit": 4.0,
-        "score": 0.4444
+        "credit": 6.5,
+        "score": 0.7222
       },
       "medication_allergies": {
         "fields": 1,
@@ -61,13 +62,13 @@
       },
       "education_employment_legal_history": {
         "fields": 3,
-        "credit": 2.0,
-        "score": 0.6667
+        "credit": 2.5,
+        "score": 0.8333
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 1.5,
-        "score": 0.75
+        "credit": 2.0,
+        "score": 1.0
       },
       "personal_history": {
         "fields": 4,
@@ -76,17 +77,22 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated a long and complex intake with a patient who was occasionally confused or forgetful. While the interviewer was generally effective at guiding the patient, there were a few instances of mechanical or redundant questioning, particularly in the employment section.",
+  "flow_summary": "The interviewer successfully navigated a complex intake with a confused patient, maintaining a professional tone and ensuring all required data points were collected. However, the system relied on overly rigid, mechanical responses when the patient expressed confusion, rather than offering brief, helpful clarifications.",
   "issues": [
     {
-      "severity": "minor",
-      "category": "redundant_questioning",
-      "evidence": "In the employment section, after the patient provided their employment history, the interviewer asked 'Please answer yes or no' which was confusing and redundant given the patient had already provided the information."
+      "severity": "moderate",
+      "category": "responsiveness",
+      "evidence": "When the patient expressed confusion about the term 'psychiatrist', the interviewer responded with 'Please answer yes or no.' instead of briefly clarifying the role."
+    },
+    {
+      "severity": "moderate",
+      "category": "responsiveness",
+      "evidence": "When the patient was unsure about the definition of 'assessed by a mental health professional', the interviewer again defaulted to 'Please answer yes or no.' rather than providing a simple explanation."
     },
     {
       "severity": "minor",
-      "category": "flow_and_transitions",
-      "evidence": "The transition from the initial name request to the gender question was abrupt, as the interviewer ignored the patient's confusion regarding their name and simply moved to the next item on the script."
+      "category": "flow",
+      "evidence": "The interviewer did not acknowledge the patient's difficulty with the address format in turn 4, simply moving to the next question without confirming the address was captured correctly."
     }
   ],
   "field_verdicts": [
@@ -276,11 +282,11 @@
     },
     {
       "ref": "general_information.name",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "llm",
-      "note": "The system failed to capture the name.",
+      "note": "",
       "expected": "ROBERT MILLER",
-      "produced": "OH—MY NAME? I’M GETTING MIXED UP A BIT. DO YOU MEAN THE NAME ON MY PAPERWORK, OR JUST HOW I USUALLY GO BY? I CAN’T QUITE THINK OF THE WHOLE THING RIGHT THIS SECOND."
+      "produced": "OH—RIGHT, MY NAME IS ROBERT MILLER."
     },
     {
       "ref": "general_information.gender",
@@ -292,27 +298,27 @@
     },
     {
       "ref": "general_information.address",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "The system failed to capture the address.",
       "expected": "76 Lakeshore Road East, Oakville, Ontario",
-      "produced": "76 Lakeshore Road East... Oakville, Ontario."
+      "produced": "Unknown"
     },
     {
       "ref": "general_information.family_doctor_name",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "First name is missing.",
+      "note": "",
       "expected": "DR. SUSAN PARK",
-      "produced": "OH, THE DOCTOR’S NAME—I’M DRAWING A BLANK ON THE EXACT FULL NAME RIGHT NOW. IT’S DR. PARK, I THINK, BUT I’D RATHER NOT GUESS THE FIRST NAME."
+      "produced": "DR. SUSAN PARK."
     },
     {
       "ref": "current_concerns.primary_problems",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "The system failed to explicitly list the specific problems mentioned in the expected value.",
+      "note": "",
       "expected": "lost interest; fatigue; social withdrawal; sleep",
-      "produced": "Well, lately it’s been a bit hard to sort out. I’ve just been feeling… not quite myself, and things that used to be easier seem to take more out of me. There’s been sleep trouble too, which doesn’t help. I might need you to say that another way?"
+      "produced": "Mostly it’s been this sort of blah feeling, and I just don’t really enjoy things the way I used to. I’m tired a lot, and I’ve been pulling back from people. Sleep has gotten worse too—falling asleep is a bit of a fight."
     },
     {
       "ref": "current_concerns.goals",
@@ -320,7 +326,7 @@
       "source": "llm",
       "note": "",
       "expected": "enjoy life; stay active",
-      "produced": "I’d like to get back to enjoying life, and stay active if I can."
+      "produced": "I’d like to enjoy life again, really, and stay active if I can."
     },
     {
       "ref": "medications.current_medications[0]",
@@ -328,7 +334,7 @@
       "source": "llm",
       "note": "",
       "expected": "Carbidopa-levodopa; 25/100 mg, one tablet three times daily; started 2024; occasional nausea",
-      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: 25/100 mg, one tablet three times daily.; Start Or Duration: I started it in 2024.; Side Effects: Occasionally it makes me feel a bit nauseous.\nMedication 2: Name Or Description: Yes, I am—latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: 2021.; Side Effects: None known.\nMedication 3: Name Or Description: Yes, one more—um, allopurinol.; Dose: 100 mg daily.; Start Or Duration: I started that in 2019.; Side Effects: None known."
+      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: It’s 25/100 mg, one tablet three times daily.; Start Or Duration: Started in 2024.; Side Effects: Occasional nausea.\nMedication 2: Name Or Description: Yes — latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: Started in 2021.; Side Effects: None known.\nMedication 3: Name Or Description: Yes — allopurinol.; Dose: 100 mg daily.; Start Or Duration: Started in 2019.; Side Effects: None known."
     },
     {
       "ref": "medications.current_medications[1]",
@@ -336,7 +342,7 @@
       "source": "llm",
       "note": "",
       "expected": "Latanoprost eye drops; one drop in each eye nightly; started 2021; no known side effects",
-      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: 25/100 mg, one tablet three times daily.; Start Or Duration: I started it in 2024.; Side Effects: Occasionally it makes me feel a bit nauseous.\nMedication 2: Name Or Description: Yes, I am—latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: 2021.; Side Effects: None known.\nMedication 3: Name Or Description: Yes, one more—um, allopurinol.; Dose: 100 mg daily.; Start Or Duration: I started that in 2019.; Side Effects: None known."
+      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: It’s 25/100 mg, one tablet three times daily.; Start Or Duration: Started in 2024.; Side Effects: Occasional nausea.\nMedication 2: Name Or Description: Yes — latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: Started in 2021.; Side Effects: None known.\nMedication 3: Name Or Description: Yes — allopurinol.; Dose: 100 mg daily.; Start Or Duration: Started in 2019.; Side Effects: None known."
     },
     {
       "ref": "medications.current_medications[2]",
@@ -344,47 +350,47 @@
       "source": "llm",
       "note": "",
       "expected": "Allopurinol; 100 mg daily; started 2019; no known side effects.",
-      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: 25/100 mg, one tablet three times daily.; Start Or Duration: I started it in 2024.; Side Effects: Occasionally it makes me feel a bit nauseous.\nMedication 2: Name Or Description: Yes, I am—latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: 2021.; Side Effects: None known.\nMedication 3: Name Or Description: Yes, one more—um, allopurinol.; Dose: 100 mg daily.; Start Or Duration: I started that in 2019.; Side Effects: None known."
+      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: It’s 25/100 mg, one tablet three times daily.; Start Or Duration: Started in 2024.; Side Effects: Occasional nausea.\nMedication 2: Name Or Description: Yes — latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: Started in 2021.; Side Effects: None known.\nMedication 3: Name Or Description: Yes — allopurinol.; Dose: 100 mg daily.; Start Or Duration: Started in 2019.; Side Effects: None known."
     },
     {
       "ref": "medical_history.medical_conditions[0]",
-      "verdict": "missing",
+      "verdict": "partial",
       "source": "llm",
-      "note": "System returned unknown.",
+      "note": "The diagnosis date (2024) is missing.",
       "expected": "Parkinson's disease; diagnosed 2024",
-      "produced": "Unknown"
+      "produced": "Well, there’s Parkinson’s disease, and… I know there are a few other things, but I’m having to think them through. I believe one was glaucoma, and gout too. Also prostate cancer, though that’s in remission now. And a sleep thing—REM sleep behaviour disorder, I think."
     },
     {
       "ref": "medical_history.medical_conditions[1]",
-      "verdict": "missing",
+      "verdict": "partial",
       "source": "llm",
-      "note": "System returned unknown.",
+      "note": "The treatment year (2018) is missing.",
       "expected": "Prostate cancer; treated in 2018 and currently in remission",
-      "produced": "Unknown"
+      "produced": "Well, there’s Parkinson’s disease, and… I know there are a few other things, but I’m having to think them through. I believe one was glaucoma, and gout too. Also prostate cancer, though that’s in remission now. And a sleep thing—REM sleep behaviour disorder, I think."
     },
     {
       "ref": "medical_history.medical_conditions[2]",
-      "verdict": "missing",
+      "verdict": "partial",
       "source": "llm",
-      "note": "System returned unknown.",
+      "note": "The diagnosis date (2021) is missing.",
       "expected": "Glaucoma; diagnosed 2021",
-      "produced": "Unknown"
+      "produced": "Well, there’s Parkinson’s disease, and… I know there are a few other things, but I’m having to think them through. I believe one was glaucoma, and gout too. Also prostate cancer, though that’s in remission now. And a sleep thing—REM sleep behaviour disorder, I think."
     },
     {
       "ref": "medical_history.medical_conditions[3]",
-      "verdict": "missing",
+      "verdict": "partial",
       "source": "llm",
-      "note": "System returned unknown.",
+      "note": "The diagnosis date (2019) is missing.",
       "expected": "Gout; diagnosed 2019",
-      "produced": "Unknown"
+      "produced": "Well, there’s Parkinson’s disease, and… I know there are a few other things, but I’m having to think them through. I believe one was glaucoma, and gout too. Also prostate cancer, though that’s in remission now. And a sleep thing—REM sleep behaviour disorder, I think."
     },
     {
       "ref": "medical_history.medical_conditions[4]",
-      "verdict": "missing",
+      "verdict": "partial",
       "source": "llm",
-      "note": "System returned unknown.",
+      "note": "The diagnosis date (2025) is missing.",
       "expected": "REM sleep behaviour disorder; diagnosed 2025.",
-      "produced": "Unknown"
+      "produced": "Well, there’s Parkinson’s disease, and… I know there are a few other things, but I’m having to think them through. I believe one was glaucoma, and gout too. Also prostate cancer, though that’s in remission now. And a sleep thing—REM sleep behaviour disorder, I think."
     },
     {
       "ref": "medical_history.height",
@@ -408,7 +414,7 @@
       "source": "llm",
       "note": "",
       "expected": "Granddaughter; ADHD; diagnosed at age 9",
-      "produced": "Family member 1: Name Or Description: My granddaughter.; Diagnosis Or Condition: ADHD.; Additional Details: She was diagnosed when she was 9, I think. That’s all I know."
+      "produced": "Family member 1: Name Or Description: My granddaughter.; Diagnosis Or Condition: ADHD.; Additional Details: Diagnosed when she was 9."
     },
     {
       "ref": "substance_use.alcohol_use",
@@ -416,21 +422,21 @@
       "source": "llm",
       "note": "",
       "expected": "current; wine; monthly; minimal",
-      "produced": "Status: Current; Substance or product: Wine.; Quantity or frequency: Monthly.; Duration: Just minimal, really. I don’t have a long history of it."
+      "produced": "Status: Current; Substance or product: Wine.; Quantity or frequency: Monthly.; Duration: Minimal."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the profession (teacher) in the education field.",
+      "note": "",
       "expected": "bachelor's degree; teacher",
-      "produced": "I have a bachelor’s degree."
+      "produced": "I have a bachelor’s degree. I was a teacher."
     },
     {
       "ref": "education_employment_legal_history.employment_history",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the retirement status.",
+      "note": "The retirement status is missing.",
       "expected": "High school science teacher, Oakville District School Board; 1978 to 2013; retired",
       "produced": "Job 1: Name Or Description: Oakville District School Board.; Job Title: High school science teacher.; Dates: 1978 to 2013."
     },
@@ -440,7 +446,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "I was born and grew up... I’d say just a fairly ordinary childhood, nothing too remarkable."
+      "produced": "Born and grew up, just... that part was pretty ordinary. I don’t have much else to say about it."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -448,7 +454,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; became a teacher",
-      "produced": "School, mostly. I became a teacher. That’s the main thing I remember clearly."
+      "produced": "School, mostly—then I became a teacher. That’s the main thing I remember from that time."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -456,7 +462,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; 49 years; supportive wife",
-      "produced": "I’ve been married for 49 years, and my wife has been very supportive."
+      "produced": "I’m married, and it’s been a long time—49 years now—with a supportive wife."
     },
     {
       "ref": "personal_history.future_goals",
@@ -464,7 +470,7 @@
       "source": "llm",
       "note": "",
       "expected": "enjoy life; manage illness",
-      "produced": "I want to enjoy life and manage this illness."
+      "produced": "I’d like to enjoy life and manage the illness… and stay active, if possible."
     }
   ],
   "fabricated": []
