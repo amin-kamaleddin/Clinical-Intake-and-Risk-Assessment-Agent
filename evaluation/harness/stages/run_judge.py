@@ -1,31 +1,4 @@
-"""Stage 4 - LLM judging: record fidelity and conversation flow.
 
-Two calls per case, each producing one number:
-
-* ``record_score``  - fields enumerated by ``harness.record_check``, verdicted
-  categorically by the LLM, aggregated back into a number by code. Exact and
-  boolean matches are auto-resolved without the model.
-* ``flow_score``    - one holistic 0-1 score for interviewing quality from the
-  transcript alone.
-
-Separate calls, not one combined call: shorter prompts judge more reliably, and
-a record failure cannot bleed into the flow number or vice versa. At 12 cases
-across 3 systems that is 72 calls, so the extra cost is negligible.
-
-PHQ-9, GAD-7 and the safety flag are NOT judged here. They have exact expected
-values and belong to ``harness.structured_score``, which the deterministic
-scoring stage runs. Nothing is scored twice.
-
-Reads:   outputs/<system>/transcripts/case_XX.json
-         outputs/<system>/records/case_XX.json
-Writes:  outputs/judge/<system>/case_XX.json
-         outputs/reports/judge_comparison.json
-
-Run directly::
-
-    python -m harness.stages.run_judge
-    python -m harness.stages.run_judge --case 04-01 --system cira
-"""
 
 from __future__ import annotations
 
@@ -203,23 +176,7 @@ def _mean(values) -> float | None:
 
 
 def build_shared_contested_refs(all_cases: dict[str, list[dict]]) -> dict[str, set]:
-    """Per case, the UNION of field refs any system needed the judge for.
 
-    ``record_detail.record_score_contested`` is computed per system, over that
-    system's own judged rows. That makes it uncomparable: a row is auto-resolved
-    in code when the produced value matches ground truth exactly, so a system
-    that writes verbatim-correct values removes its own easy wins from its own
-    denominator and is left being scored on the hard residue.
-
-    On this run that skew was severe - 12.1 contested fields per case for one
-    system against 21.8 for another, from an identical 44-field pool. The
-    resulting "contested" ranking was an artifact of which fields each system
-    happened to ace, not of capture quality.
-
-    Scoring every system over the union fixes it: if ANY system needed a
-    judgement on a field, ALL systems are scored on that field, using whatever
-    verdict they got (including auto-resolved ones). Same exam for everyone.
-    """
     refs_by_case: dict[str, set] = {}
     for cases in all_cases.values():
         for case in cases:
@@ -466,6 +423,27 @@ def run(systems=None, case_filter: str | None = None) -> dict:
     config.JUDGE_REPORT_PATH.write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
     )
+
+    # Unequal OK sets break pairing silently: the paired bootstrap drops
+    # unmatched cases, so one system's mean can exclude the hardest scenario
+    # with nothing saying so.
+    ok_sets = {
+        system: {c["scenario_case_id"] for c in cases if c.get("status") == "OK"}
+        for system, cases in all_cases.items()
+    }
+    if ok_sets and len({frozenset(v) for v in ok_sets.values()}) > 1:
+        every = set().union(*ok_sets.values())
+        shared = set.intersection(*ok_sets.values())
+        print("\n" + "!" * 72)
+        print("WARNING: systems did not judge the same set of cases.")
+        for system, cases in ok_sets.items():
+            missing = sorted(every - cases)
+            if missing:
+                print(f"  {system}: missing {', '.join(missing)}")
+        print(f"  Only {len(shared)} case(s) are common to all systems.")
+        print("  Means are over different sets. Re-run --only judge before")
+        print("  reporting any comparison.")
+        print("!" * 72)
 
     print("\n" + "=" * 72)
     print("JUDGE SUMMARY")

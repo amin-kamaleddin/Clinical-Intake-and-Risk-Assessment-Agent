@@ -17,12 +17,7 @@ def _speaker(turn) -> str:
 
 
 def measure(conversation, elapsed_seconds: float | None = None) -> dict:
-    """Budget for one case, computed from its transcript.
 
-    Words are a model-agnostic proxy for tokens. A true token count would need
-    the tokenizer of each arm's model, and those differ; words are comparable
-    across arms, which is the property that matters here.
-    """
     turns = list(conversation or [])
     system_turns = [t for t in turns if _speaker(t) not in ("PATIENT", "USER")]
     patient_turns = [t for t in turns if _speaker(t) in ("PATIENT", "USER")]

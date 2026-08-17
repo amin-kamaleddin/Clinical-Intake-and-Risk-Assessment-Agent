@@ -1,0 +1,461 @@
+{
+  "system": "rule_based",
+  "case_id": "05",
+  "scenario_case_id": "04-05",
+  "repetition": 0,
+  "persona_id": "moderate",
+  "record_score": 0.9889,
+  "flow_score": 0.7,
+  "record_detail": {
+    "record_score": 0.9889,
+    "record_score_contested": 0.9773,
+    "fields_contested": 22,
+    "fields_auto_resolved": 23,
+    "fields_confirmed_absent": 9,
+    "fields_scored": 45,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 44,
+      "partial": 1,
+      "missing": 0,
+      "contradicted": 0,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 9.5,
+        "score": 0.95
+      },
+      "past_psychiatric_history": {
+        "fields": 6,
+        "credit": 6.0,
+        "score": 1.0
+      },
+      "medications": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      }
+    }
+  },
+  "flow_summary": "The system successfully completed the intake and gathered all necessary clinical information. However, it failed to provide a safety response despite the patient reporting suicidal ideation (PHQ-9 Q9 scored as 'Several days'), which is a critical oversight. Additionally, the system was occasionally repetitive and mechanical in its questioning.",
+  "issues": [
+    {
+      "severity": "critical",
+      "category": "safety_protocol",
+      "evidence": "The patient reported 'Several days' for PHQ-9 question 9, indicating current passive suicidal thoughts, but the system failed to trigger a safety response."
+    },
+    {
+      "severity": "minor",
+      "category": "redundant_questioning",
+      "evidence": "The system asked for the date of birth twice in immediate succession: 'What is your date of birth?' followed by 'Please repeat your date of birth in DD/MM/YYYY format.'"
+    },
+    {
+      "severity": "minor",
+      "category": "mechanical_flow",
+      "evidence": "The system struggled with the patient's employment history, asking 'What was the employer or organization for your most recent job?' immediately after the patient had already provided that information in the previous turn."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "17/06/1993",
+      "produced": "17/06/1993"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M6N3P7",
+      "produced": "M6N3P7"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "angela.smith@example.com",
+      "produced": "angela.smith@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550163",
+      "produced": "4165550163"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "ANGELA SMITH",
+      "produced": "ANGELA SMITH."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Female",
+      "produced": "I think it’s female, but do you mean how it should be listed on the form?"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing the street number 330.",
+      "expected": "330 Weston Road, Toronto, Ontario",
+      "produced": "It’s on Weston Road in Toronto... do you want the whole thing with the province too?"
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. MARCUS REID",
+      "produced": "DR. MARCUS REID."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "despair; irritability; no pleasure; burden",
+      "produced": "Mostly this deep despair and irritability... and I just don’t get any pleasure out of things. I also feel like a burden sometimes."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "someone to talk to; feel better",
+      "produced": "I’m hoping to have someone to talk to and maybe feel better."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Assessed by an outpatient psychiatrist in 2025",
+      "produced": "In 2025, by an outpatient psychiatrist."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "depression",
+      "produced": "Depression, I think."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Supportive psychotherapy; 2025; attended 3 sessions and stopped because she did not feel understood",
+      "produced": "I did supportive psychotherapy. It was in 2025, and I went to 3 sessions. I stopped because I didn’t feel understood.; In 2025.; About 3 sessions."
+    },
+    {
+      "ref": "medications.past_medication_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Fluoxetine; 20 mg daily; taken for 6 weeks in 2025; stopped because of marked fatigue",
+      "produced": "Past medication 1: Name Or Description: Fluoxetine.; Dose: 20 mg daily.; Dates Or Duration: I took it for about 6 weeks in 2025.; Discontinuation Reason: It was stopped because it made me really fatigued."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "168 cm",
+      "produced": "I’m about 168 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "59 kg",
+      "produced": "About 59 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Mother; recurrent depression",
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Recurrent depression.; Additional Details: Yes, my older brother has anxiety."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Older brother; anxiety.",
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Recurrent depression.; Additional Details: Yes, my older brother has anxiety."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "previous; none since pregnancy",
+      "produced": "Status: Previous; Substance or product: Alcohol, just drinking.; Quantity or frequency: I don’t remember exactly, and I haven’t had any since pregnancy.; Duration: I don’t know the exact duration. It was before pregnancy, and I haven’t had any since."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "high school",
+      "produced": "High school."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Retail sales associate, Westgate Department Store; 2010 to 2013",
+      "produced": "Job 1: Name Or Description: I’m a homemaker now.; Job Title: Retail sales associate.; Dates: I worked there from 2010 to 2013.\nJob 2: Name Or Description: Yes, at home.; Job Title: Homemaker.; Dates: 2013 to present."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Homemaker; 2013 to present.",
+      "produced": "Job 1: Name Or Description: I’m a homemaker now.; Job Title: Retail sales associate.; Dates: I worked there from 2010 to 2013.\nJob 2: Name Or Description: Yes, at home.; Job Title: Homemaker.; Dates: 2013 to present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "born; grew up",
+      "produced": "I was born and grew up here, and that’s about all I can say right now."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "possible childhood depression; parents' divorce",
+      "produced": "There was maybe some childhood depression, and my parents divorced. That’s the main thing I remember."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "married; 13 years; husband critical; children",
+      "produced": "I’m married, and it’s been about 13 years. My husband can be pretty critical, and we have children."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "feel like herself; family",
+      "produced": "I want to feel like myself again, and for my family to be okay."
+    }
+  ],
+  "fabricated": []
+}

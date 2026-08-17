@@ -220,7 +220,11 @@ JUDGE_REASONING_EFFORT = os.getenv("CIRA_JUDGE_REASONING_EFFORT", "minimal")
 # workers judge several cases concurrently.
 JUDGE_TIMEOUT = float(os.getenv("CIRA_JUDGE_TIMEOUT", "90"))
 JUDGE_MAX_RETRIES = int(os.getenv("CIRA_JUDGE_MAX_RETRIES", "2"))
-JUDGE_MAX_TOKENS = int(os.getenv("CIRA_JUDGE_MAX_TOKENS", "4000"))
+# Raised from 4000: record-judge responses were truncated mid-JSON on cases
+# with many contested fields, failing schema validation and dropping the whole
+# case from every mean. Batching in llm_judge.py is the real bound; this is a
+# second layer.
+JUDGE_MAX_TOKENS = int(os.getenv("CIRA_JUDGE_MAX_TOKENS", "8000"))
 JUDGE_MAX_WORKERS = int(os.getenv("CIRA_JUDGE_MAX_WORKERS", "4"))
 
 # Live-CIRA driver.

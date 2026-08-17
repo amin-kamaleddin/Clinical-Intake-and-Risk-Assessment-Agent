@@ -48,11 +48,6 @@ def _merge_repeatable_value(existing, incoming):
     return incoming
 
 
-# A repeatable field whose value simply reports absence has nothing further to
-# enumerate, so asking "are there any others?" is meaningless. The model
-# correctly refuses to ask, which used to leave the field open until the
-# follow-up valve tripped three turns later - and those turns showed up in the
-# transcript as a repeated completion message. Closing on save removes them.
 _NEGATION_PATTERN = re.compile(
     r"^(?:none|no|n/?a|nil|nothing|never|unknown|not applicable|not reported"
     r"|not discussed|not provided|not identified|denies|denied"
@@ -413,14 +408,32 @@ def section_node(state: AliceState) -> AliceState:
         reply = SAFETY_REPLY + "\n\n" + (reply or "")
         state["safety_text_sent"] = True
 
-    # An empty assistant turn stalls the driver, which reads the last message as
-    # the next question. Rather than emit nothing, fall back to the pending field.
+    # A reply must carry a question whenever the section still has pending
+    # fields. Two failures made this necessary, both observed on a real case:
+    #
+    #   1. An empty assistant turn stalls the driver, which reads the last
+    #      message as the next question.
+    #   2. When the safety flag is raised on the SAME turn as a question, the
+    #      crisis text can displace that question. The patient then answers
+    #      nothing, the field stays open, and the model - believing it is
+    #      finished - emits "All done!" and filler until the stall guard ends
+    #      the section. On case 04-03 that cost phq9_difficulty and the whole
+    #      phq9 section, on a clear-persona patient.
+    pending = get_pending_fields(state, section)
     if not (reply or "").strip():
-        pending = get_pending_fields(state, section)
         reply = (
             f"Could you tell me about {pending[0].replace('_', ' ')}?"
             if pending
             else "Is there anything else you would like to add or change?"
+        )
+    elif pending and not _looks_like_a_question(reply):
+        # Announcing completion while a field is open is the tell. Append the
+        # pending question rather than replacing the text, so a safety message
+        # is still delivered in full.
+        reply = (
+            reply.rstrip()
+            + f"\n\nTo finish this section: could you tell me about "
+            f"{pending[0].replace('_', ' ')}?"
         )
 
     # ── Stage 7: completion for every section this turn touched ──
@@ -434,6 +447,31 @@ def section_node(state: AliceState) -> AliceState:
     )
     state["conversation_started"] = True
     return state
+
+
+# Completion phrases the model reaches for when it wrongly believes a section
+# is finished. Used only to decide whether a pending question must be appended.
+_CLOSING_PHRASES = (
+    "all done", "intake is complete", "responses have been recorded",
+    "i'm here if you need", "i am here if you need", "i'm here to help",
+    "i am here to help", "no further information", "available if you have",
+    "thank you for completing", "that completes",
+)
+
+
+def _looks_like_a_question(reply: str) -> bool:
+    """True when the reply actually asks the patient something.
+
+    A question mark alone is not enough: "All done! Anything to change?" reads
+    as a question but asks nothing about the pending field. Closing phrases are
+    therefore treated as non-questions even when punctuated as one.
+    """
+    text = " ".join(str(reply or "").split()).lower()
+    if not text:
+        return False
+    if any(phrase in text for phrase in _CLOSING_PHRASES):
+        return False
+    return "?" in text
 
 
 def _safety_text_already_sent(state: AliceState) -> bool:

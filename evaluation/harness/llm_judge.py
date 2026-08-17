@@ -1,9 +1,9 @@
 
-
 from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any, Literal
 
@@ -22,7 +22,9 @@ class FieldVerdict(BaseModel):
 
     ref: str
     verdict: Literal["match", "partial", "missing", "contradicted"]
-    note: str = ""
+    #: Bounded deliberately: notes are diagnostic only, and long ones are the
+    #: main driver of response length - which is what truncated whole cases.
+    note: str = Field(default="", max_length=120)
 
 
 class RecordVerdicts(BaseModel):
@@ -297,6 +299,9 @@ class RecordFidelityJudge:
         # Drop anything the model invented; keep only refs we asked about.
         return {v.ref: v for v in result.verdicts if v.ref in wanted}
 
+
+    BATCH_SIZE = 12
+
     def judge(self, rows: list[dict]) -> list[dict]:
         """Attach a verdict to each row. Missing verdicts get one retry.
 
@@ -304,11 +309,27 @@ class RecordFidelityJudge:
         defaulted, so ``record_check.score`` can exclude and count it. Silently
         defaulting would either flatter or punish a system for a harness fault.
         """
-        verdicts = self._ask(rows)
+        verdicts: dict[str, FieldVerdict] = {}
+        for start in range(0, len(rows), self.BATCH_SIZE):
+            batch = rows[start:start + self.BATCH_SIZE]
+            try:
+                verdicts.update(self._ask(batch))
+            except Exception as error:  # noqa: BLE001
+                # One malformed batch must not cost the whole case. Its fields
+                # are retried below; anything still unresolved is counted as
+                # unjudged rather than silently scored.
+                print(f"[record_judge] batch {start // self.BATCH_SIZE} failed "
+                      f"({type(error).__name__}); retrying its fields",
+                      file=sys.stderr)
 
         outstanding = [row for row in rows if row["ref"] not in verdicts]
-        if outstanding:
-            verdicts.update(self._ask(outstanding))
+        for start in range(0, len(outstanding), self.BATCH_SIZE):
+            batch = outstanding[start:start + self.BATCH_SIZE]
+            try:
+                verdicts.update(self._ask(batch))
+            except Exception as error:  # noqa: BLE001
+                print(f"[record_judge] retry failed for {len(batch)} field(s): "
+                      f"{type(error).__name__}", file=sys.stderr)
 
         judged = []
         for row in rows:

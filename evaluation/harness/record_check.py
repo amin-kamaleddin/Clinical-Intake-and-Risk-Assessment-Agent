@@ -7,9 +7,7 @@ import re
 from harness import config
 
 
-# Verdicts the judge may return, and what each is worth.
-# ``fabricated`` is deliberately absent from the credit table: those rows are
-# excluded from the denominator and reported separately.
+
 VERDICT_CREDIT = {
     "match": 1.0,
     "partial": 0.5,
@@ -18,11 +16,10 @@ VERDICT_CREDIT = {
 }
 VERDICTS = tuple(VERDICT_CREDIT) + ("fabricated",)
 
-# PHQ-9 and GAD-7 belong to harness.structured_score and must never reach the
-# judge; scoring them twice by two different methods was the old duplication.
+
 EXCLUDED_SECTIONS = {"phq9", "gad7"}
 
-# Record keys that are bookkeeping rather than clinical content.
+
 NON_CLINICAL_KEYS = {
     "case_id", "scenario_case_id", "title", "system", "persona_id",
     "safety_flag", "safety_reasons", "sections_completed", "issues",
@@ -175,11 +172,7 @@ def build_rows(scenario: dict, record: dict) -> dict:
             produced = produced_section.get(field)
 
             if _is_empty(expected):
-                # No ground truth to score against. Two very different cases:
-                #   "None"          -> the system correctly reported absence
-                #   "Prozac 20mg"   -> the system invented a clinical fact
-                # Only the second is a fabrication. Neither is scored, since
-                # there is nothing to compare a correct answer against.
+
                 if _is_empty(produced) or is_negation(produced):
                     confirmed_absent.append({
                         **_row(section, field, expected, produced),
@@ -256,11 +249,7 @@ def score(rows: list[dict], unsupported: list[dict],
         entry["credit"] = round(entry["credit"], 4)
         entry["score"] = round(entry["credit"] / entry["fields"], 4)
 
-    # Rows the model actually had to judge - the ones where systems can differ.
-    # The overall score is diluted by ~20 free rows per case (eight substance_use
-    # "Never" answers, twelve booleans) that every system gets right, which is
-    # why a no-LLM baseline can tie a full agent on the headline number. The
-    # contested score is the discriminating subset.
+
     contested = [r for r in scored if r.get("verdict_source") == "llm"]
     contested_credit = sum(VERDICT_CREDIT[r["verdict"]] for r in contested)
 
