@@ -1,3 +1,19 @@
+"""Stage 3 - deterministic scoring.
+
+Runs the *same* deterministic checks over any system's saved records and
+transcripts. This replaces the three copies of scoring logic that used to live
+inline in the CIRA driver, the rule-based driver, and the old
+``evaluate_records.py``.
+
+Reads:   outputs/<system>/records/case_XX.json
+         outputs/<system>/transcripts/case_XX.json
+Writes:  outputs/reports/<system>_deterministic.json
+
+Run directly for one system::
+
+    python -m harness.stages.score_records --system cira
+    python -m harness.stages.score_records --system rule_based
+"""
 
 from __future__ import annotations
 
@@ -7,6 +23,7 @@ from pathlib import Path
 
 from harness import config
 from harness import personas
+from harness import budget
 from harness import safety_score
 from harness import stats
 from harness import structured_score
@@ -212,6 +229,10 @@ def evaluate_case(system: str, scenario: dict, record_file: Path,
         "system": system,
         "repetition": repetition,
         "persona_id": resolve_case_persona(system, scenario, record),
+        "budget": (
+            load_json(transcript_file).get("budget")
+            if transcript_file.exists() else None
+        ),
         # Paths are recorded RELATIVE to the evaluation folder. Absolute
         # developer paths (/Users/<name>/...) leaked into every committed
         # report and are not reproducible on another machine.
@@ -390,6 +411,9 @@ def build_summary(system: str, scenarios: list[dict], results: list[dict]) -> di
         "safety": safety_score.summarize(
             [r["safety"] for r in valid if "safety" in r]
         ),
+        # Interaction cost. Reported so a completeness or flow difference is
+        # never read as architecture when it may be budget.
+        "budget": budget.summarize([r.get("budget") for r in valid]),
         # Uncertainty. Repetitions of a scenario are clustered - 04-04 is hard
         # for everyone every time - so the bootstrap resamples scenarios first,
         # then repetitions within them. See harness/stats.py.

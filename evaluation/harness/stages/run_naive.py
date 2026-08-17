@@ -1,3 +1,18 @@
+"""Stage - run the naive single-LLM baseline over the scenarios (ablation).
+
+Same patient simulator, same scenarios, same output schema as the other
+systems; the only difference from CIRA is the absence of architecture (one
+prompt + a plain chat loop + one extraction call). Produces artifacts only;
+scoring and judging happen uniformly downstream.
+
+Writes:  outputs/naive_llm/transcripts/case_XX.json
+         outputs/naive_llm/records/case_XX.json
+
+Run directly::
+
+    python -m harness.stages.run_naive
+    python -m harness.stages.run_naive --case 04-01
+"""
 
 from __future__ import annotations
 
@@ -6,6 +21,7 @@ import json
 
 from harness import config
 from harness import personas
+from harness import budget
 from harness import provenance
 from harness.patient_simulator import PatientSimulator
 
@@ -89,6 +105,7 @@ def run_case(scenario: dict, persona=None, repetition: int = 0) -> None:
         "repetition": repetition,
         "persona_id": persona.id,
         "patient_behaviour": patient.behaviour_summary(),
+        "budget": budget.measure(transcript),
         "conversation": transcript,
         "final_result": {
             "safety_flag": record.get("safety_flag"),

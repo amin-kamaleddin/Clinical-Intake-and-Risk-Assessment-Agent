@@ -1,4 +1,22 @@
+"""Offline checks for the persona layer. No API keys, no network, no langchain.
 
+Run from the evaluation folder::
+
+    python -m tests.test_personas
+
+These guard the two properties the persona layer is only useful if it has:
+
+1. **Reproducibility.** One seed determines the whole assignment, filtering a
+   run to one case does not change that case's persona, and every system sees
+   the same patient on the same case.
+2. **Ground-truth safety.** Making the patient harder must not corrupt the
+   scores being measured. Questionnaire answers still converge to the exact
+   stored response, deferral is bounded, and no deferral line can be misread as
+   a real answer.
+
+langchain is stubbed so the simulator can be exercised without dependencies or
+credentials; nothing here calls a model.
+"""
 
 from __future__ import annotations
 

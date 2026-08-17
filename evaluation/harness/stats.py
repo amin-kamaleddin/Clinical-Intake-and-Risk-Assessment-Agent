@@ -1,13 +1,11 @@
 
-
 from __future__ import annotations
 
 import random
 from statistics import mean, median
 from typing import Callable, Sequence
 
-# Fixed so a reported interval is reproducible. Resampling noise should not
-# change the number between two runs of the analysis on identical data.
+
 BOOTSTRAP_SEED = 20260804
 BOOTSTRAP_RESAMPLES = 10_000
 CONFIDENCE = 0.95
@@ -107,12 +105,37 @@ def paired_bootstrap_difference(
     """
     groups_a, groups_b = _clean(groups_a), _clean(groups_b)
     shared = sorted(set(groups_a) & set(groups_b))
+
+    # Repetition r of a scenario is the SAME simulated patient for both systems,
+    # so observation r of A and observation r of B are a matched pair. An
+    # earlier version resampled A's repetitions and B's repetitions
+    # independently inside each drawn scenario, which destroyed that pairing and
+    # inflated the variance of the difference - the interval was wrong in a way
+    # that made real effects look non-significant.
+    #
+    # Joint pairs are resampled instead: one index is drawn and used for BOTH
+    # systems, so the matching survives every resample.
     if len(shared) < 2:
         return {"difference": None, "ci_low": None, "ci_high": None,
                 "paired_scenarios": len(shared), "excludes_zero": None,
                 "note": "too few shared scenarios for a paired interval"}
 
-    per_scenario = [statistic(groups_a[k]) - statistic(groups_b[k]) for k in shared]
+    # Only repetitions present for BOTH systems can be paired. Extra
+    # repetitions on one side are dropped rather than matched arbitrarily.
+    paired: dict[str, tuple[list[float], list[float]]] = {}
+    for key in shared:
+        depth = min(len(groups_a[key]), len(groups_b[key]))
+        if depth:
+            paired[key] = (groups_a[key][:depth], groups_b[key][:depth])
+    shared = sorted(paired)
+    if len(shared) < 2:
+        return {"difference": None, "ci_low": None, "ci_high": None,
+                "paired_scenarios": len(shared), "excludes_zero": None,
+                "note": "too few shared scenarios for a paired interval"}
+
+    per_scenario = [
+        statistic(paired[k][0]) - statistic(paired[k][1]) for k in shared
+    ]
     difference = mean(per_scenario)
 
     rng = random.Random(seed)
@@ -121,9 +144,12 @@ def paired_bootstrap_difference(
         drawn_keys = [rng.choice(shared) for _ in shared]
         drawn = []
         for key in drawn_keys:
-            a_values, b_values = groups_a[key], groups_b[key]
-            a_stat = statistic([rng.choice(a_values) for _ in a_values])
-            b_stat = statistic([rng.choice(b_values) for _ in b_values])
+            a_values, b_values = paired[key]
+            # ONE index per draw, applied to both systems: the pair travels
+            # together, which is what makes this a paired bootstrap.
+            indices = [rng.randrange(len(a_values)) for _ in a_values]
+            a_stat = statistic([a_values[i] for i in indices])
+            b_stat = statistic([b_values[i] for i in indices])
             drawn.append(a_stat - b_stat)
         draws.append(mean(drawn))
     draws.sort()
@@ -136,6 +162,8 @@ def paired_bootstrap_difference(
         "ci_low": low,
         "ci_high": high,
         "paired_scenarios": len(shared),
+        "paired_observations": sum(len(a) for a, _ in paired.values()),
+        "pairing": "joint (A,B) repetition pairs within scenario clusters",
         # The claim test. If this is False, say the systems are comparable.
         "excludes_zero": low > 0 or high < 0,
         "confidence": confidence,

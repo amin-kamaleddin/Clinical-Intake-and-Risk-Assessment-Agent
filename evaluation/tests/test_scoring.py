@@ -1,4 +1,13 @@
+"""Offline checks for the deterministic scorer and the record enumerator.
 
+Run from the evaluation folder::
+
+    python -m tests.test_scoring
+
+No API keys, no network, no LLM. Everything tested here is code that must be
+right *before* a judge is involved, because these are the numbers the judge is
+deliberately kept away from.
+"""
 
 from __future__ import annotations
 

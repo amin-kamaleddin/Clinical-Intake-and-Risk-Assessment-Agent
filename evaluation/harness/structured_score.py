@@ -1,5 +1,4 @@
 
-
 from __future__ import annotations
 
 PHQ9_ITEMS = tuple(f"phq9_q{i}" for i in range(1, 10))

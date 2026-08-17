@@ -3,7 +3,7 @@
   "scenario_case_id": "04-01",
   "title": "Moody and Irritable",
   "system": "rule_based",
-  "run_id": "d0efe970b7c1",
+  "run_id": "ab3309be7db6",
   "repetition": 1,
   "persona_id": "confused",
   "patient_behaviour": {
@@ -22,15 +22,97 @@
     "repetition": 1,
     "temperature": 0.8,
     "temperature_pinned": false,
-    "questionnaire_deflections": 0,
+    "questionnaire_deflections": 10,
     "freetext_hedges": 4,
     "max_consecutive_hedges": 1,
     "hedges_by_section": {
       "(none)": 4
     },
-    "deflections_by_instrument": {},
-    "deflections_by_item": {},
-    "deflection_log": []
+    "deflections_by_instrument": {
+      "phq9": 5,
+      "gad7": 5
+    },
+    "deflections_by_item": {
+      "phq9_q2": 1,
+      "phq9_q3": 1,
+      "phq9_q4": 2,
+      "phq9_q5": 1,
+      "gad7_q1": 2,
+      "gad7_q2": 2,
+      "gad7_q3": 1
+    },
+    "deflection_log": [
+      {
+        "item": "phq9_q2",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "Uh... some weeks more than others, I suppose."
+      },
+      {
+        "item": "phq9_q3",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "I really don't know how to answer that one."
+      },
+      {
+        "item": "phq9_q4",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "Uh... some weeks more than others, I suppose."
+      },
+      {
+        "item": "phq9_q4",
+        "instrument": "phq9",
+        "attempt": 2,
+        "response": "That depends. Are you asking about now or about back then?"
+      },
+      {
+        "item": "phq9_q5",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "Uh... some weeks more than others, I suppose."
+      },
+      {
+        "item": "gad7_q1",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+      },
+      {
+        "item": "gad7_q1",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "Which of those was the middle one? I've forgotten the list."
+      },
+      {
+        "item": "gad7_q2",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "Hm. Hard to say. My days all run together lately."
+      },
+      {
+        "item": "gad7_q2",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "That depends. Are you asking about now or about back then?"
+      },
+      {
+        "item": "gad7_q3",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "Hm. Hard to say. My days all run together lately."
+      }
+    ]
+  },
+  "budget": {
+    "total_turns": 174,
+    "system_turns": 87,
+    "patient_turns": 87,
+    "system_words": 1453,
+    "patient_words": 634,
+    "total_words": 2087,
+    "mean_system_turn_words": 16.7,
+    "elapsed_seconds": null
   },
   "conversation": [
     {
@@ -43,7 +125,7 @@
       "section": "general_information",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Uh, my name? I mean, I think you’re asking for the full one on the papers and stuff, but I’m not sure what part you want first. People usually call me Wyatt, and—sorry, I’m kind of mixing that up with my school things. Could you say it another way?"
+      "message": "Uh—my name? I think it’s Wyatt, but like, you mean the whole thing from the paperwork? I’m not sure which part you want first. Could you ask it another way?"
     },
     {
       "section": "general_information",
@@ -79,7 +161,7 @@
       "section": "general_information",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "88 Fairlawn Avenue, Toronto, Ontario."
+      "message": "88 Fairlawn Avenue, Toronto, Ontario"
     },
     {
       "section": "general_information",
@@ -115,7 +197,7 @@
       "section": "general_information",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "Uh—phone number, right? I know it’s the one with the 416 area code, but I’m blanking on whether you want the whole thing with the area code or just the rest of it. Is it for calling, or…?"
+      "message": "Uh, the number... I always mix this up when it’s like the whole thing with the area code. It starts with 416, and then the rest—sorry, I’m blanking a bit. Could you ask it again maybe?"
     },
     {
       "section": "general_information",
@@ -139,7 +221,7 @@
       "section": "general_information",
       "turn": 9,
       "speaker": "PATIENT",
-      "message": "Yeah, I do. Dr. Helen Chu."
+      "message": "Yeah, we do. Dr. Helen Chu."
     },
     {
       "section": "general_information",
@@ -151,7 +233,7 @@
       "section": "general_information",
       "turn": 10,
       "speaker": "PATIENT",
-      "message": "Dr. Helen Chu"
+      "message": "Dr. Helen Chu."
     },
     {
       "section": "general_information",
@@ -163,7 +245,7 @@
       "section": "general_information",
       "turn": 11,
       "speaker": "PATIENT",
-      "message": "Yeah — Dr. Raj Patel."
+      "message": "Yes, Dr. Raj Patel."
     },
     {
       "section": "general_information",
@@ -175,7 +257,7 @@
       "section": "general_information",
       "turn": 12,
       "speaker": "PATIENT",
-      "message": "Uh, the psychiatrist… I mean, I know it’s Dr. Raj something, but I’m not sure if you want the full name or just the doctor part. Could you say it again maybe?"
+      "message": "Oh, the doctor? I know we see him, it’s… Raj, I think, but I’m drawing a blank on the exact way it’s written out. Could you say it another way?"
     },
     {
       "section": "current_concerns",
@@ -187,7 +269,7 @@
       "section": "current_concerns",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "It’s mostly the anger stuff… I get these temper outbursts and I’m irritable a lot, and then I end up in fights at home and school. I got suspended too, which was… yeah. I want to stop getting so angry, and maybe have more friends and do better in school, but the anger is the big one."
+      "message": "Mostly I get these temper outbursts and I’m irritable a lot, and then things blow up at home and school. I got suspended too. And I feel bad after, like I shouldn’t have done it, but then it happens again."
     },
     {
       "section": "current_concerns",
@@ -199,7 +281,7 @@
       "section": "current_concerns",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Um… I’m not totally sure how to say it. I guess, like, I want things to be less messy at school and at home, if that makes sense? I’m sort of thinking out loud here, sorry. Could you maybe ask it in a simpler way?"
+      "message": "Um… I’m not totally sure how to say it right. I guess, like, I want things to be less… messy, and for people not to be mad all the time. Could you ask it in a simpler way?"
     },
     {
       "section": "past_psychiatric_history",
@@ -211,7 +293,7 @@
       "section": "past_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yeah, when I was 10, Dr. Raj Patel saw me. It was about the school stuff… the inattention and being impulsive, I think."
+      "message": "Yeah, at age 10 I was assessed by Dr. Raj Patel, a child psychiatrist, because I was having school inattention and impulsivity stuff."
     },
     {
       "section": "past_psychiatric_history",
@@ -223,7 +305,7 @@
       "section": "past_psychiatric_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "When I was 10, by Dr. Raj Patel, the child psychiatrist."
+      "message": "At age 10, by Dr. Raj Patel."
     },
     {
       "section": "past_psychiatric_history",
@@ -235,7 +317,7 @@
       "section": "past_psychiatric_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Yeah, ADHD — combined type."
+      "message": "Yes—ADHD, combined type."
     },
     {
       "section": "past_psychiatric_history",
@@ -247,7 +329,7 @@
       "section": "past_psychiatric_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "No, never."
+      "message": "No."
     },
     {
       "section": "past_psychiatric_history",
@@ -259,7 +341,7 @@
       "section": "past_psychiatric_history",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "No, I haven’t."
+      "message": "No, never."
     },
     {
       "section": "past_psychiatric_history",
@@ -271,7 +353,7 @@
       "section": "past_psychiatric_history",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "Yeah… I did behavioural therapy when I was around 10 to 11. It was at an outpatient clinic, and I think there were about 12 sessions, maybe around that."
+      "message": "Yeah, I had behavioural therapy. It was when I was 10 to 11, I think, and it was at an outpatient clinic. I did about 12 sessions, something like that."
     },
     {
       "section": "past_psychiatric_history",
@@ -283,7 +365,7 @@
       "section": "past_psychiatric_history",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "Um, age 10 to 11, I think."
+      "message": "Age 10 to 11."
     },
     {
       "section": "past_psychiatric_history",
@@ -295,7 +377,7 @@
       "section": "past_psychiatric_history",
       "turn": 8,
       "speaker": "PATIENT",
-      "message": "About 12 sessions."
+      "message": "Approximately 12 sessions."
     },
     {
       "section": "past_psychiatric_history",
@@ -307,7 +389,7 @@
       "section": "past_psychiatric_history",
       "turn": 9,
       "speaker": "PATIENT",
-      "message": "I don’t know—no, I haven’t had any of those."
+      "message": "No, I don’t think so."
     },
     {
       "section": "medications",
@@ -319,7 +401,7 @@
       "section": "medications",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yeah, I am. Just the one right now."
+      "message": "Yeah—methylphenidate short-acting."
     },
     {
       "section": "medications",
@@ -343,7 +425,7 @@
       "section": "medications",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "It’s the small morning one… and then a noon one too. I think the morning is 10 mg and the noon one is 5 mg."
+      "message": "Uh, it’s the small morning one and then another at noon... I think it’s 10 mg in the morning and 5 mg at noon."
     },
     {
       "section": "medications",
@@ -355,7 +437,7 @@
       "section": "medications",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "September 2024."
+      "message": "Started in September 2024."
     },
     {
       "section": "medications",
@@ -367,7 +449,7 @@
       "section": "medications",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "My appetite’s worse at lunch. Like I don’t feel like eating much then."
+      "message": "It kind of makes my appetite worse at lunch."
     },
     {
       "section": "medications",
@@ -379,7 +461,7 @@
       "section": "medications",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "No, just that one."
+      "message": "No, that’s the only one."
     },
     {
       "section": "medications",
@@ -391,7 +473,7 @@
       "section": "medications",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "No, I haven’t."
+      "message": "No, none before this one."
     },
     {
       "section": "medical_history",
@@ -403,7 +485,7 @@
       "section": "medical_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "I don’t think so. Nothing that I know of."
+      "message": "I don’t have any medical conditions that I know of."
     },
     {
       "section": "medical_history",
@@ -475,7 +557,7 @@
       "section": "family_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yeah… my dad has anxiety and depression. And my mom has ADHD too. I think there’s something with my maternal grandfather as well, but I’m not sure how to say it right."
+      "message": "Yeah, I think so... my dad has anxiety and depression, my mom has ADHD, and my maternal grandfather had alcohol use disorder."
     },
     {
       "section": "family_psychiatric_history",
@@ -487,7 +569,7 @@
       "section": "family_psychiatric_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "My dad — and my mom. The grandfather thing is my mom’s dad, but I’m not sure… it was something like alcohol use disorder."
+      "message": "My dad."
     },
     {
       "section": "family_psychiatric_history",
@@ -499,7 +581,7 @@
       "section": "family_psychiatric_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "My dad had anxiety and depression, and my mom had ADHD. I’m not sure about the grandfather one."
+      "message": "Anxiety and depression."
     },
     {
       "section": "family_psychiatric_history",
@@ -511,7 +593,7 @@
       "section": "family_psychiatric_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "I don’t know anything more about it."
+      "message": "No, that’s all I know."
     },
     {
       "section": "family_psychiatric_history",
@@ -523,7 +605,79 @@
       "section": "family_psychiatric_history",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "Yeah, my maternal grandfather too. Then… no, those are all."
+      "message": "Yes—my mom."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "What diagnosis or mental health condition did they have?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "ADHD."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "Are there any additional details you wish to provide about that family member?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "No, that’s all I know."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "Are there any other family members with a mental health condition? If yes, state their relationship to you."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "Yeah, my maternal grandfather."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "What diagnosis or mental health condition did they have?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "Alcohol use disorder."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "Are there any additional details you wish to provide about that family member?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "No, those are all."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "Are there any other family members with a mental health condition? If yes, state their relationship to you."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "No, those are all."
     },
     {
       "section": "substance_use",
@@ -643,7 +797,7 @@
       "section": "education_employment_legal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Grade 6 — I’m at Northview Middle School."
+      "message": "Grade 6, I’m at Northview Middle School."
     },
     {
       "section": "education_employment_legal_history",
@@ -655,7 +809,7 @@
       "section": "education_employment_legal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "No, I’m a student. No job history."
+      "message": "No, I’m a student."
     },
     {
       "section": "personal_history",
@@ -667,7 +821,7 @@
       "section": "personal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Uh… I don’t know about the born part. I was just a kid, and I was irritable even then, with outbursts. That’s the main thing I remember, honestly."
+      "message": "I don’t really know about where I was born, but I was kind of irritable even when I was little, and I’d have outbursts. That part’s been around for a while."
     },
     {
       "section": "personal_history",
@@ -679,7 +833,7 @@
       "section": "personal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I’m in grade 6, so it’s mostly school difficulties. The big thing is school being hard because of the anger and… yeah, the inattention/impulsivity stuff from before, I guess. I don’t really have jobs or anything like that."
+      "message": "Uh, I’m in grade 6 now, so there isn’t really early adulthood. School’s been hard, and I’ve had difficulties there."
     },
     {
       "section": "personal_history",
@@ -691,7 +845,7 @@
       "section": "personal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "I don’t have any romantic relationships to talk about."
+      "message": "I don’t have any romantic relationships."
     },
     {
       "section": "personal_history",
@@ -703,7 +857,7 @@
       "section": "personal_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "I want more friends, and to do better in school, and to get a handle on my anger. That’s pretty much it."
+      "message": "I want to have more friends, do better in school, and not get angry so much."
     },
     {
       "section": "phq9",
@@ -715,7 +869,7 @@
       "section": "phq9",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Not at all."
+      "message": "Not at all"
     },
     {
       "section": "phq9",
@@ -727,103 +881,151 @@
       "section": "phq9",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Several days."
+      "message": "Uh... some weeks more than others, I suppose."
     },
     {
       "section": "phq9",
       "turn": 3,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "phq9",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "Several days"
+    },
+    {
+      "section": "phq9",
+      "turn": 4,
       "speaker": "CIRA",
       "message": "Question 3: Over the last two weeks, how often have you had trouble falling or staying asleep, or slept too much? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 3,
+      "turn": 4,
       "speaker": "PATIENT",
-      "message": "Not at all."
+      "message": "I really don't know how to answer that one."
     },
     {
       "section": "phq9",
-      "turn": 4,
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "phq9",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "Not at all"
+    },
+    {
+      "section": "phq9",
+      "turn": 6,
       "speaker": "CIRA",
       "message": "Question 4: Over the last two weeks, how often have you felt tired or had little energy? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 4,
+      "turn": 6,
       "speaker": "PATIENT",
-      "message": "Not at all."
+      "message": "Uh... some weeks more than others, I suppose."
     },
     {
       "section": "phq9",
-      "turn": 5,
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "phq9",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "That depends. Are you asking about now or about back then?"
+    },
+    {
+      "section": "phq9",
+      "turn": 8,
       "speaker": "CIRA",
       "message": "Question 5: Over the last two weeks, how often have you had poor appetite or overeaten? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 5,
+      "turn": 8,
       "speaker": "PATIENT",
-      "message": "Several days. But I mean, the lunch appetite thing is from the medicine, so… yeah."
+      "message": "Uh... some weeks more than others, I suppose."
     },
     {
       "section": "phq9",
-      "turn": 6,
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "phq9",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "Not at all"
+    },
+    {
+      "section": "phq9",
+      "turn": 10,
       "speaker": "CIRA",
       "message": "Question 6: Over the last two weeks, how often have you felt bad about yourself, or that you are a failure or have let yourself or your family down? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 6,
+      "turn": 10,
       "speaker": "PATIENT",
-      "message": "Several days. I guess when I lose it and get in trouble, I feel bad about that."
+      "message": "Several days"
     },
     {
       "section": "phq9",
-      "turn": 7,
+      "turn": 11,
       "speaker": "CIRA",
       "message": "Question 7: Over the last two weeks, how often have you had trouble concentrating on things, such as reading or watching television? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 7,
+      "turn": 11,
       "speaker": "PATIENT",
-      "message": "Not at all. I mean, maybe sometimes at school? But I’m not sure."
+      "message": "Not at all"
     },
     {
       "section": "phq9",
-      "turn": 8,
+      "turn": 12,
       "speaker": "CIRA",
       "message": "Question 8: Over the last two weeks, how often have you been moving or speaking so slowly that other people could have noticed, or been so restless that you moved around much more than usual? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 8,
+      "turn": 12,
       "speaker": "PATIENT",
-      "message": "Several days. I get pretty restless sometimes, I think."
+      "message": "Several days"
     },
     {
       "section": "phq9",
-      "turn": 9,
+      "turn": 13,
       "speaker": "CIRA",
       "message": "Question 9: Over the last two weeks, how often have you had thoughts that you would be better off absent or of hurting yourself in some way? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 9,
+      "turn": 13,
       "speaker": "PATIENT",
-      "message": "Not at all."
+      "message": "Not at all"
     },
     {
       "section": "phq9",
-      "turn": 10,
+      "turn": 14,
       "speaker": "CIRA",
       "message": "How difficult have these problems made work, home responsibilities, or relationships? Not difficult at all, Somewhat difficult, Very difficult, or Extremely difficult."
     },
     {
       "section": "phq9",
-      "turn": 10,
+      "turn": 14,
       "speaker": "PATIENT",
-      "message": "Somewhat difficult. Yeah, it’s been causing problems at home and school, so… somewhat difficult."
+      "message": "Somewhat difficult."
     },
     {
       "section": "gad7",
@@ -835,97 +1037,133 @@
       "section": "gad7",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Several days. I mean, that one is weird because I’m more mad than nervous, but some days I do feel on edge."
+      "message": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
     },
     {
       "section": "gad7",
       "turn": 2,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "gad7",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "Which of those was the middle one? I've forgotten the list."
+    },
+    {
+      "section": "gad7",
+      "turn": 3,
       "speaker": "CIRA",
       "message": "Question 2: Over the last two weeks, how often have you been unable to stop or control worrying? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 2,
+      "turn": 3,
       "speaker": "PATIENT",
-      "message": "Several days. I think. That one’s hard to tell apart from just being annoyed all the time."
+      "message": "Hm. Hard to say. My days all run together lately."
     },
     {
       "section": "gad7",
-      "turn": 3,
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "gad7",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "That depends. Are you asking about now or about back then?"
+    },
+    {
+      "section": "gad7",
+      "turn": 5,
       "speaker": "CIRA",
       "message": "Question 3: Over the last two weeks, how often have you worried too much about different things? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 3,
+      "turn": 5,
       "speaker": "PATIENT",
-      "message": "Several days. It’s not all the time, just some days."
+      "message": "Hm. Hard to say. My days all run together lately."
     },
     {
       "section": "gad7",
-      "turn": 4,
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "gad7",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "Several days"
+    },
+    {
+      "section": "gad7",
+      "turn": 7,
       "speaker": "CIRA",
       "message": "Question 4: Over the last two weeks, how often have you had trouble relaxing? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 4,
+      "turn": 7,
       "speaker": "PATIENT",
-      "message": "Several days. I guess I don’t relax very well when I’m already wound up."
+      "message": "Several days"
     },
     {
       "section": "gad7",
-      "turn": 5,
+      "turn": 8,
       "speaker": "CIRA",
       "message": "Question 5: Over the last two weeks, how often have you been so restless that it was hard to sit still? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 5,
+      "turn": 8,
       "speaker": "PATIENT",
-      "message": "Several days. Yeah, I can’t sit still sometimes."
+      "message": "Several days"
     },
     {
       "section": "gad7",
-      "turn": 6,
+      "turn": 9,
       "speaker": "CIRA",
       "message": "Question 6: Over the last two weeks, how often have you become easily annoyed or irritable? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 6,
+      "turn": 9,
       "speaker": "PATIENT",
-      "message": "More than half the days. Probably that one. It’s been a lot lately."
+      "message": "More than half the days"
     },
     {
       "section": "gad7",
-      "turn": 7,
+      "turn": 10,
       "speaker": "CIRA",
       "message": "Question 7: Over the last two weeks, how often have you felt afraid as if something awful might happen? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 7,
+      "turn": 10,
       "speaker": "PATIENT",
-      "message": "Several days. Not every day, just sometimes."
+      "message": "Several days"
     },
     {
       "section": "gad7",
-      "turn": 8,
+      "turn": 11,
       "speaker": "CIRA",
       "message": "How difficult have these problems made work, home responsibilities, or relationships? Not difficult at all, Somewhat difficult, Very difficult, or Extremely difficult."
     },
     {
       "section": "gad7",
-      "turn": 8,
+      "turn": 11,
       "speaker": "PATIENT",
-      "message": "Somewhat difficult. It’s been messing with home and school stuff."
+      "message": "Somewhat difficult."
     }
   ],
   "final_result": {
     "safety_flag": false,
-    "phq9_total": 4,
-    "gad7_total": 8,
+    "phq9_total": 3,
+    "gad7_total": 6,
     "completed_sections": [
       "general_information",
       "current_concerns",

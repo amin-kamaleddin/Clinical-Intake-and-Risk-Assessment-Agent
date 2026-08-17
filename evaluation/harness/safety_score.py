@@ -1,9 +1,7 @@
 
-
 from __future__ import annotations
 
-# Scenario classifications that exist to be mistaken for current patient risk.
-# A flag raised on one of these is a reasoning failure, not a borderline call.
+
 DISTRACTOR_CLASSIFICATIONS = {
     "third_person_family_history_only",
     "historical_non_suicidal_self_injury",

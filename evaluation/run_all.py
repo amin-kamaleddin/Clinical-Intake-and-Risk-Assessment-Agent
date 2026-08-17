@@ -97,6 +97,7 @@ def stage_summary(systems):
             entry["by_persona"] = (det.get("summary") or {}).get("by_persona")
             entry["structured"] = (det.get("summary") or {}).get("structured")
             entry["safety"] = (det.get("summary") or {}).get("safety")
+            entry["budget"] = (det.get("summary") or {}).get("budget")
         summary["systems"][system] = entry
 
     if config.JUDGE_REPORT_PATH.exists():
@@ -116,6 +117,16 @@ def stage_summary(systems):
             summary["systems"].setdefault(system, {})["judge"] = judge_summary
 
     config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    # Computed before the write so it persists in summary.json; the printed
+    # table below reads the same values.
+    budgets = {
+        system: entry["budget"]
+        for system, entry in summary["systems"].items() if entry.get("budget")
+    }
+    if budgets:
+        from harness import budget as budget_module
+        summary["budget_comparison"] = budget_module.compare(budgets)
+
     config.SUMMARY_REPORT_PATH.write_text(
         json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8"
     )
@@ -171,12 +182,13 @@ def stage_summary(systems):
     print("Summary saved to:", config.SUMMARY_REPORT_PATH)
     print("=" * 72)
 
-    # Confidence intervals and paired differences. Printed here because the
-    # point estimates above are not, on their own, a basis for comparing
-    # systems: a gap smaller than its own interval is not a result. The data
-    # already lives in the reports, so this only formats it - and the same
-    # block can be re-printed later with `python -m tools.show_intervals`
-    # without re-running anything.
+
+    if budgets:
+        print()
+        print(budget_module.format_summary(
+            budgets, summary.get("budget_comparison") or {}
+        ))
+
     try:
         from tools.show_intervals import print_intervals
         print()
@@ -221,10 +233,7 @@ def main() -> None:
         "repetitions": args.repetitions,
     }
 
-    # Resolve and persist the assignment ONCE, before any system runs, so all
-    # three systems provably face the same patient on the same case and the
-    # mapping survives in outputs/reports/persona_assignment.json.
-    # Written before anything runs, so every artifact can be stamped with it.
+
     manifest = provenance.write_manifest()
 
     persona_report = personas.write_assignment(

@@ -437,9 +437,27 @@ Family psychiatric history details:
 
 "substance_use": """
 Collect the following fields in order:
-alcohol_use, nicotine_use, marijuana_use, stimulant_use,
-opioid_use, benzodiazepine_use, hallucinogen_use,
-other_substance_use
+nonmedical_alcohol_use, nonmedical_nicotine_use, nonmedical_marijuana_use, nonmedical_stimulant_use,
+nonmedical_opioid_use, nonmedical_benzodiazepine_use, nonmedical_hallucinogen_use,
+nonmedical_other_substance_use
+
+SCOPE — THIS SECTION IS ABOUT NONMEDICAL USE ONLY
+- Every field here records use OUTSIDE prescribed medical treatment:
+  recreational use, use of someone else's prescription, or taking more than
+  prescribed.
+- A medication the patient is PRESCRIBED and takes as directed does NOT belong
+  here. It belongs in the medications section, and it does not change the answer
+  in this section.
+- A patient prescribed clonazepam who never uses benzodiazepines outside that
+  prescription is "Never" for nonmedical_benzodiazepine_use. The same holds for
+  a prescribed opioid painkiller or a prescribed stimulant such as
+  methylphenidate.
+- Make this explicit when you ask. For example: "Apart from any medication
+  prescribed to you, have you ever used opioids or narcotics - never,
+  previously, or currently?"
+- If the patient describes taking a prescribed medication more often or at a
+  higher dose than prescribed, or using someone else's, THAT is nonmedical use
+  and belongs here.
 
 General rules:
 - Ask only one question at a time.
@@ -481,13 +499,16 @@ Marijuana:
 
 Stimulants:
 - Ask about stimulant use, such as cocaine,
+- Exclude anything prescribed to the patient and taken as directed; ask only about nonmedical use.
   methamphetamine, MDMA, or ecstasy.
 
 Opiates or narcotics:
 - Ask about opiates or narcotics.
+- Exclude anything prescribed to the patient and taken as directed; ask only about nonmedical use.
 
 Benzodiazepines:
 - Ask about benzodiazepines, such as Valium,
+- Exclude anything prescribed to the patient and taken as directed; ask only about nonmedical use.
   Ativan, or Xanax.
 
 Hallucinogens:

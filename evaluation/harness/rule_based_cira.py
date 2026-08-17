@@ -1,5 +1,4 @@
 
-
 from __future__ import annotations
 
 import re
@@ -12,8 +11,7 @@ from harness.config import CANONICAL_SECTIONS
 
 AnswerFunction = Callable[[str], str]
 
-# The section list is defined once in harness.config so the engine and the
-# deterministic scorer share a single source of truth.
+
 SECTIONS = CANONICAL_SECTIONS
 
 YES = {"yes", "y", "yeah", "yep", "i do", "i have", "correct", "true"}
@@ -454,10 +452,10 @@ class RuleBasedCIRA:
     def substance_use(self, answer_fn: AnswerFunction) -> None:
         s = "substance_use"
         categories = [
-            ("alcohol_use", "alcohol"), ("nicotine_use", "nicotine products such as cigarettes or vaping"),
-            ("marijuana_use", "marijuana or cannabis"), ("stimulant_use", "stimulants such as cocaine, methamphetamine, MDMA, or ecstasy"),
-            ("opioid_use", "opiates or narcotics"), ("benzodiazepine_use", "benzodiazepines such as Valium, Ativan, or Xanax"),
-            ("hallucinogen_use", "hallucinogens such as LSD, PCP, or psilocybin"), ("other_substance_use", "any other substances not already discussed"),
+            ("nonmedical_alcohol_use", "alcohol"), ("nonmedical_nicotine_use", "nicotine products such as cigarettes or vaping"),
+            ("nonmedical_marijuana_use", "marijuana or cannabis"), ("nonmedical_stimulant_use", "stimulants such as cocaine, methamphetamine, MDMA, or ecstasy"),
+            ("nonmedical_opioid_use", "opiates or narcotics"), ("nonmedical_benzodiazepine_use", "benzodiazepines such as Valium, Ativan, or Xanax"),
+            ("nonmedical_hallucinogen_use", "hallucinogens such as LSD, PCP, or psilocybin"), ("nonmedical_other_substance_use", "any other substances not already discussed"),
         ]
         for field_name, label in categories:
             status = self.ask(s, f"For {label}, is your use Never, Previous, or Current?", answer_fn)

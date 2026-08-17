@@ -1,4 +1,14 @@
+"""Print confidence intervals and paired differences from existing reports.
 
+The CI data is computed while the reports are *built*, so it is already inside
+``judge_comparison.json`` and each ``<system>_deterministic.json``. Only the
+console printing needed those numbers again - which is why a crash in the print
+block loses nothing.
+
+No API calls, no re-running:
+
+    python -m tools.show_intervals
+"""
 
 from __future__ import annotations
 

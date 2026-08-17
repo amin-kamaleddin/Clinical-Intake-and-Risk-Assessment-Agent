@@ -1,4 +1,17 @@
+"""Stage 2 - run the deterministic rule-based baseline over the scenarios.
 
+Produces raw artifacts only (transcript + record). Deterministic scoring is done
+uniformly for every system by ``harness.stages.score_records``, so this driver
+no longer computes or writes its own report.
+
+Writes:  outputs/rule_based/transcripts/case_XX.json
+         outputs/rule_based/records/case_XX.json
+
+Run directly::
+
+    python -m harness.stages.run_rule_based
+    python -m harness.stages.run_rule_based --case 04-01
+"""
 
 from __future__ import annotations
 
@@ -7,6 +20,7 @@ import json
 
 from harness import config
 from harness import personas
+from harness import budget
 from harness import provenance
 from harness.patient_simulator import PatientSimulator
 from harness.rule_based_cira import RuleBasedCIRA
@@ -54,6 +68,7 @@ def run_case(scenario: dict, persona=None, repetition: int = 0) -> None:
         "repetition": repetition,
         "persona_id": persona.id,
         "patient_behaviour": patient.behaviour_summary(),
+        "budget": budget.measure(result.transcript),
         "conversation": result.transcript,
         "final_result": {
             "safety_flag": result.safety_flag,

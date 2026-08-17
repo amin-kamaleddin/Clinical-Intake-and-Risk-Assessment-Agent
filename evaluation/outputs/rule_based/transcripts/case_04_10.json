@@ -3,7 +3,7 @@
   "scenario_case_id": "04-10",
   "title": "Mixed Features, but Not Bipolar",
   "system": "rule_based",
-  "run_id": "d0efe970b7c1",
+  "run_id": "ab3309be7db6",
   "repetition": 0,
   "persona_id": "moderate",
   "patient_behaviour": {
@@ -22,15 +22,58 @@
     "repetition": 0,
     "temperature": 0.4,
     "temperature_pinned": false,
-    "questionnaire_deflections": 0,
+    "questionnaire_deflections": 4,
     "freetext_hedges": 2,
     "max_consecutive_hedges": 1,
     "hedges_by_section": {
       "(none)": 2
     },
-    "deflections_by_instrument": {},
-    "deflections_by_item": {},
-    "deflection_log": []
+    "deflections_by_instrument": {
+      "phq9": 2,
+      "gad7": 2
+    },
+    "deflections_by_item": {
+      "phq9_q1": 1,
+      "phq9_q6": 1,
+      "gad7_q2": 1,
+      "gad7_q3": 1
+    },
+    "deflection_log": [
+      {
+        "item": "phq9_q1",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "Hmm, that one's hard to say. What were the choices again?"
+      },
+      {
+        "item": "phq9_q6",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "Depends what you mean exactly - over what stretch of time?"
+      },
+      {
+        "item": "gad7_q2",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "I'm not sure how to put that. Can you ask it a different way?"
+      },
+      {
+        "item": "gad7_q3",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "Sort of, I guess? It really depends on the week."
+      }
+    ]
+  },
+  "budget": {
+    "total_turns": 200,
+    "system_turns": 100,
+    "patient_turns": 100,
+    "system_words": 1539,
+    "patient_words": 577,
+    "total_words": 2116,
+    "mean_system_turn_words": 15.4,
+    "elapsed_seconds": null
   },
   "conversation": [
     {
@@ -115,7 +158,7 @@
       "section": "general_information",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "Uh, I can give it, but do you mean the main number on file? I think it starts with 416…"
+      "message": "Uh, I think I’d rather just check the number before I give it out — can you tell me if you need the home number or a mobile number?"
     },
     {
       "section": "general_information",
@@ -163,7 +206,7 @@
       "section": "general_information",
       "turn": 11,
       "speaker": "PATIENT",
-      "message": "I think so, yes — I’m seeing one for my mental health right now. If you want, I can give the name."
+      "message": "I think so, yes — I’ve been seeing someone for my mental health. Was you asking about the doctor I see now?"
     },
     {
       "section": "general_information",
@@ -199,7 +242,7 @@
       "section": "current_concerns",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Mostly depression and everything around the breakup. I was just in the hospital for the overdose too."
+      "message": "Mostly depression, and it’s been a rough time after the breakup. I was also just hospitalized after the overdose."
     },
     {
       "section": "current_concerns",
@@ -211,7 +254,7 @@
       "section": "current_concerns",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "I want to stay safe and get back on track. Also, I’m hoping to be well enough to focus on law school."
+      "message": "I want to stay safe and recover. Also, I’m hoping to get back on track for law school."
     },
     {
       "section": "past_psychiatric_history",
@@ -223,7 +266,7 @@
       "section": "past_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes — during my first psychiatric admission in June 2026. I’m in an intensive outpatient program now too."
+      "message": "Yes — I was assessed during my first psychiatric admission in June 2026."
     },
     {
       "section": "past_psychiatric_history",
@@ -235,7 +278,7 @@
       "section": "past_psychiatric_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "During my first psychiatric admission in June 2026. I don’t know the name of who assessed me."
+      "message": "I was assessed during my first psychiatric admission in June 2026. I don’t remember the person’s name."
     },
     {
       "section": "past_psychiatric_history",
@@ -259,7 +302,7 @@
       "section": "past_psychiatric_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "Yes, I was."
+      "message": "Yes, I was admitted once for mental health reasons."
     },
     {
       "section": "past_psychiatric_history",
@@ -271,7 +314,7 @@
       "section": "past_psychiatric_history",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "It was in June 2026 at St. Michael's Hospital, and I was there for 7 days."
+      "message": "It was in June 2026 at St. Michael’s Hospital, and I stayed for about 7 days."
     },
     {
       "section": "past_psychiatric_history",
@@ -283,7 +326,7 @@
       "section": "past_psychiatric_history",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "Yes — I had one suicide attempt after a breakup."
+      "message": "Yes — I’ve had one previous suicide attempt after a breakup."
     },
     {
       "section": "past_psychiatric_history",
@@ -295,7 +338,7 @@
       "section": "past_psychiatric_history",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "It was an impulsive overdose after the breakup. Several days. I still sometimes feel I would be better off dead, but I do not have a current plan."
+      "message": "I’m horrified that it happened. Several days. I still sometimes feel I would be better off dead, but I do not have a current plan."
     },
     {
       "section": "past_psychiatric_history",
@@ -307,7 +350,7 @@
       "section": "past_psychiatric_history",
       "turn": 8,
       "speaker": "PATIENT",
-      "message": "Yes — I’ve had individual psychotherapy before."
+      "message": "Yes — I had individual psychotherapy in college."
     },
     {
       "section": "past_psychiatric_history",
@@ -319,7 +362,7 @@
       "section": "past_psychiatric_history",
       "turn": 9,
       "speaker": "PATIENT",
-      "message": "In college."
+      "message": "Back in college, I think."
     },
     {
       "section": "past_psychiatric_history",
@@ -331,7 +374,7 @@
       "section": "past_psychiatric_history",
       "turn": 10,
       "speaker": "PATIENT",
-      "message": "About 8 sessions."
+      "message": "About 8 sessions, something like that."
     },
     {
       "section": "past_psychiatric_history",
@@ -343,7 +386,7 @@
       "section": "past_psychiatric_history",
       "turn": 11,
       "speaker": "PATIENT",
-      "message": "Yes — ketamine treatment."
+      "message": "Yes — I had ketamine treatment during my admission."
     },
     {
       "section": "past_psychiatric_history",
@@ -367,7 +410,7 @@
       "section": "past_psychiatric_history",
       "turn": 13,
       "speaker": "PATIENT",
-      "message": "At St. Michael's Hospital."
+      "message": "At St. Michael’s Hospital."
     },
     {
       "section": "past_psychiatric_history",
@@ -379,7 +422,7 @@
       "section": "past_psychiatric_history",
       "turn": 14,
       "speaker": "PATIENT",
-      "message": "2 sessions."
+      "message": "I had 2 sessions."
     },
     {
       "section": "past_psychiatric_history",
@@ -391,7 +434,7 @@
       "section": "past_psychiatric_history",
       "turn": 15,
       "speaker": "PATIENT",
-      "message": "About 2 days."
+      "message": "It helped for about 2 days."
     },
     {
       "section": "medications",
@@ -403,7 +446,7 @@
       "section": "medications",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, I’m on something for my mood."
+      "message": "Yes — I’m on something for my mood."
     },
     {
       "section": "medications",
@@ -439,7 +482,7 @@
       "section": "medications",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "I started it in June 2026."
+      "message": "June 2026."
     },
     {
       "section": "medications",
@@ -451,7 +494,7 @@
       "section": "medications",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "Nausea during the first week."
+      "message": "I had nausea during the first week."
     },
     {
       "section": "medications",
@@ -463,7 +506,7 @@
       "section": "medications",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "Yes — quetiapine."
+      "message": "Yes — I’m also taking quetiapine."
     },
     {
       "section": "medications",
@@ -487,7 +530,7 @@
       "section": "medications",
       "turn": 8,
       "speaker": "PATIENT",
-      "message": "I started it in June 2026 too."
+      "message": "June 2026."
     },
     {
       "section": "medications",
@@ -523,7 +566,7 @@
       "section": "medications",
       "turn": 11,
       "speaker": "PATIENT",
-      "message": "Yes — escitalopram."
+      "message": "Yes — I tried escitalopram before."
     },
     {
       "section": "medications",
@@ -571,7 +614,7 @@
       "section": "medications",
       "turn": 15,
       "speaker": "PATIENT",
-      "message": "I stopped because it made me feel emotionally numb."
+      "message": "It made me feel emotionally numb."
     },
     {
       "section": "medications",
@@ -595,7 +638,7 @@
       "section": "medical_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I haven’t."
+      "message": "No, I haven’t been diagnosed with any medical conditions."
     },
     {
       "section": "medical_history",
@@ -619,7 +662,7 @@
       "section": "medical_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "164 cm."
+      "message": "I’m 164 cm tall."
     },
     {
       "section": "medical_history",
@@ -631,7 +674,7 @@
       "section": "medical_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "78 kg."
+      "message": "I weigh 78 kg."
     },
     {
       "section": "medication_allergies",
@@ -691,7 +734,7 @@
       "section": "family_psychiatric_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "I don’t know anything else to add."
+      "message": "No, that’s all I know."
     },
     {
       "section": "family_psychiatric_history",
@@ -871,7 +914,7 @@
       "section": "education_employment_legal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Yes — I work as an administrative assistant at Ontario Legal Services."
+      "message": "Yes — I work as an administrative assistant at Ontario Legal Services, I think since 2021."
     },
     {
       "section": "education_employment_legal_history",
@@ -931,7 +974,7 @@
       "section": "personal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "I was born and grew up in Toronto. I don’t really have much else to add about being little."
+      "message": "I was born and grew up, and that’s about all I really know to say."
     },
     {
       "section": "personal_history",
@@ -943,7 +986,7 @@
       "section": "personal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "High school was okay, but I was moody, and I had depression in college."
+      "message": "High school was okay, but I was moody, and then I had depression in college."
     },
     {
       "section": "personal_history",
@@ -955,7 +998,7 @@
       "section": "personal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "I’m single now, and a relationship ended recently — it was about two years long."
+      "message": "I’m single now. I recently ended a two-year relationship."
     },
     {
       "section": "personal_history",
@@ -967,7 +1010,7 @@
       "section": "personal_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "Law school and stability."
+      "message": "Law school, and stability."
     },
     {
       "section": "phq9",
@@ -979,113 +1022,137 @@
       "section": "phq9",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "More than half the days."
+      "message": "Hmm, that one's hard to say. What were the choices again?"
     },
     {
       "section": "phq9",
       "turn": 2,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "phq9",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "More than half the days"
+    },
+    {
+      "section": "phq9",
+      "turn": 3,
       "speaker": "CIRA",
       "message": "Question 2: Over the last two weeks, how often have you felt down, depressed, or hopeless? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 2,
+      "turn": 3,
       "speaker": "PATIENT",
-      "message": "More than half the days."
+      "message": "More than half the days"
     },
     {
       "section": "phq9",
-      "turn": 3,
+      "turn": 4,
       "speaker": "CIRA",
       "message": "Question 3: Over the last two weeks, how often have you had trouble falling or staying asleep, or slept too much? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 3,
+      "turn": 4,
       "speaker": "PATIENT",
-      "message": "Several days."
+      "message": "Several days"
     },
     {
       "section": "phq9",
-      "turn": 4,
+      "turn": 5,
       "speaker": "CIRA",
       "message": "Question 4: Over the last two weeks, how often have you felt tired or had little energy? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 4,
+      "turn": 5,
       "speaker": "PATIENT",
-      "message": "Not at all."
+      "message": "Not at all"
     },
     {
       "section": "phq9",
-      "turn": 5,
+      "turn": 6,
       "speaker": "CIRA",
       "message": "Question 5: Over the last two weeks, how often have you had poor appetite or overeaten? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 5,
+      "turn": 6,
       "speaker": "PATIENT",
-      "message": "More than half the days."
+      "message": "More than half the days"
     },
     {
       "section": "phq9",
-      "turn": 6,
+      "turn": 7,
       "speaker": "CIRA",
       "message": "Question 6: Over the last two weeks, how often have you felt bad about yourself, or that you are a failure or have let yourself or your family down? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 6,
+      "turn": 7,
       "speaker": "PATIENT",
-      "message": "More than half the days."
+      "message": "Depends what you mean exactly - over what stretch of time?"
     },
     {
       "section": "phq9",
-      "turn": 7,
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "phq9",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "More than half the days"
+    },
+    {
+      "section": "phq9",
+      "turn": 9,
       "speaker": "CIRA",
       "message": "Question 7: Over the last two weeks, how often have you had trouble concentrating on things, such as reading or watching television? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 7,
+      "turn": 9,
       "speaker": "PATIENT",
-      "message": "More than half the days."
+      "message": "More than half the days"
     },
     {
       "section": "phq9",
-      "turn": 8,
+      "turn": 10,
       "speaker": "CIRA",
       "message": "Question 8: Over the last two weeks, how often have you been moving or speaking so slowly that other people could have noticed, or been so restless that you moved around much more than usual? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 8,
+      "turn": 10,
       "speaker": "PATIENT",
-      "message": "More than half the days."
+      "message": "More than half the days"
     },
     {
       "section": "phq9",
-      "turn": 9,
+      "turn": 11,
       "speaker": "CIRA",
       "message": "Question 9: Over the last two weeks, how often have you had thoughts that you would be better off absent or of hurting yourself in some way? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 9,
+      "turn": 11,
       "speaker": "PATIENT",
-      "message": "Several days. I still sometimes feel I would be better off dead, but I do not have a current plan."
+      "message": "Several days"
     },
     {
       "section": "phq9",
-      "turn": 10,
+      "turn": 12,
       "speaker": "CIRA",
       "message": "How difficult have these problems made work, home responsibilities, or relationships? Not difficult at all, Somewhat difficult, Very difficult, or Extremely difficult."
     },
     {
       "section": "phq9",
-      "turn": 10,
+      "turn": 12,
       "speaker": "PATIENT",
       "message": "Very difficult."
     },
@@ -1099,7 +1166,7 @@
       "section": "gad7",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "More than half the days."
+      "message": "More than half the days"
     },
     {
       "section": "gad7",
@@ -1111,77 +1178,101 @@
       "section": "gad7",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "More than half the days."
+      "message": "I'm not sure how to put that. Can you ask it a different way?"
     },
     {
       "section": "gad7",
       "turn": 3,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "gad7",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "More than half the days"
+    },
+    {
+      "section": "gad7",
+      "turn": 4,
       "speaker": "CIRA",
       "message": "Question 3: Over the last two weeks, how often have you worried too much about different things? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 3,
+      "turn": 4,
       "speaker": "PATIENT",
-      "message": "More than half the days."
+      "message": "Sort of, I guess? It really depends on the week."
     },
     {
       "section": "gad7",
-      "turn": 4,
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "gad7",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "More than half the days"
+    },
+    {
+      "section": "gad7",
+      "turn": 6,
       "speaker": "CIRA",
       "message": "Question 4: Over the last two weeks, how often have you had trouble relaxing? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 4,
+      "turn": 6,
       "speaker": "PATIENT",
-      "message": "Several days."
+      "message": "Several days"
     },
     {
       "section": "gad7",
-      "turn": 5,
+      "turn": 7,
       "speaker": "CIRA",
       "message": "Question 5: Over the last two weeks, how often have you been so restless that it was hard to sit still? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 5,
+      "turn": 7,
       "speaker": "PATIENT",
-      "message": "More than half the days. Sometimes I feel kind of keyed up."
+      "message": "More than half the days"
     },
     {
       "section": "gad7",
-      "turn": 6,
+      "turn": 8,
       "speaker": "CIRA",
       "message": "Question 6: Over the last two weeks, how often have you become easily annoyed or irritable? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 6,
+      "turn": 8,
       "speaker": "PATIENT",
-      "message": "Several days."
+      "message": "Several days"
     },
     {
       "section": "gad7",
-      "turn": 7,
+      "turn": 9,
       "speaker": "CIRA",
       "message": "Question 7: Over the last two weeks, how often have you felt afraid as if something awful might happen? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 7,
+      "turn": 9,
       "speaker": "PATIENT",
-      "message": "Several days."
+      "message": "Several days"
     },
     {
       "section": "gad7",
-      "turn": 8,
+      "turn": 10,
       "speaker": "CIRA",
       "message": "How difficult have these problems made work, home responsibilities, or relationships? Not difficult at all, Somewhat difficult, Very difficult, or Extremely difficult."
     },
     {
       "section": "gad7",
-      "turn": 8,
+      "turn": 10,
       "speaker": "PATIENT",
       "message": "Very difficult."
     }

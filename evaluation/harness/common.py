@@ -5,13 +5,7 @@ from __future__ import annotations
 import re
 
 
-# --------------------------------------------------------------------------- #
-# Text / id primitives
-# --------------------------------------------------------------------------- #
-# Punctuation is stripped for MATCHING only. Ground truth writes
-# "Methylphenidate short-acting" while a record may write "Methylphenidate,
-# short-acting" - identical drugs, and the comma alone was failing the
-# medication-coverage check.
+
 _PUNCTUATION_FOR_MATCHING = str.maketrans("", "", ",;:.'\"()[]{}")
 
 

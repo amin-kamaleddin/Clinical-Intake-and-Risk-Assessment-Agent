@@ -29,23 +29,9 @@ NON_CLINICAL_KEYS = {
     "patient_behaviour", "messages", "session_id", "current_section",
 }
 
-# Abbreviations that end in a period and must not be read as an entry break.
 _ABBREVIATIONS = ("dr", "mr", "mrs", "ms", "st", "approx", "no", "vs", "etc")
 
-# A scenario field left null means "the patient has nothing to report here" for
-# fields the form still requires an answer to - previous_treatments,
-# previous_diagnoses and previous_therapies together account for 22 of these
-# across the 12 scenarios. A correct system asks, the patient says "none", and
-# the system writes "None". That is the RIGHT answer, not an invention.
-#
-# Counting it as fabrication produced a floor of exactly 1.833 fabricated
-# fields per case for every system, which is what the metric was reporting
-# before this check existed. Only a concrete POSITIVE assertion with no ground
-# truth behind it is a fabrication now.
-#
-# The pattern deliberately matches whole short strings only: "no previous
-# treatments" is a negation, but "No previous diagnoses; patient reports ADHD"
-# contains a claim and is not.
+
 _NEGATION_PATTERN = re.compile(
     r"^(?:none|no|n/?a|nil|nothing|never|unknown|not applicable|not reported"
     r"|not discussed|not provided|not identified|denies|denied"

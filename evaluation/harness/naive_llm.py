@@ -1,5 +1,4 @@
 
-
 from __future__ import annotations
 
 from typing import Optional
@@ -12,9 +11,7 @@ from harness import config
 COMPLETION_SENTINEL = "[[INTAKE_COMPLETE]]"
 
 
-# --------------------------------------------------------------------------- #
-# Record schema (mirrors the CIRA record / scenario patient_facts layout)
-# --------------------------------------------------------------------------- #
+
 class GeneralInformation(BaseModel):
     name: Optional[str] = None
     gender: Optional[str] = None
@@ -73,14 +70,14 @@ class FamilyPsychiatricHistory(BaseModel):
 
 
 class SubstanceUse(BaseModel):
-    alcohol_use: Optional[str] = None
-    nicotine_use: Optional[str] = None
-    marijuana_use: Optional[str] = None
-    stimulant_use: Optional[str] = None
-    opioid_use: Optional[str] = None
-    benzodiazepine_use: Optional[str] = None
-    hallucinogen_use: Optional[str] = None
-    other_substance_use: Optional[str] = None
+    nonmedical_alcohol_use: Optional[str] = None
+    nonmedical_nicotine_use: Optional[str] = None
+    nonmedical_marijuana_use: Optional[str] = None
+    nonmedical_stimulant_use: Optional[str] = None
+    nonmedical_opioid_use: Optional[str] = None
+    nonmedical_benzodiazepine_use: Optional[str] = None
+    nonmedical_hallucinogen_use: Optional[str] = None
+    nonmedical_other_substance_use: Optional[str] = None
 
 
 class EducationEmploymentLegalHistory(BaseModel):

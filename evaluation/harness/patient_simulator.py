@@ -1,5 +1,4 @@
 
-
 import json
 import random
 import re
@@ -8,14 +7,51 @@ import sys
 from harness import config
 from harness import personas as personas_module
 
-# langchain is imported lazily inside the methods that need it, so this module
-# (and any stage that imports it) loads even when the LLM dependencies are not
-# installed. The dependency is only required to actually simulate a patient.
-
 
 def normalize_question(text: str) -> str:
     """Collapse whitespace and case so a re-ask is recognised as the same question."""
     return re.sub(r"\s+", " ", str(text or "")).strip().lower()
+
+
+
+ITEM_SIGNATURES: dict[str, tuple[tuple[str, ...], ...]] = {
+    "phq9_q1": (("little interest", "pleasure in doing"),),
+    "phq9_q2": (("down, depressed", "depressed, or hopeless", "hopeless"),),
+    "phq9_q3": (("falling or staying asleep", "sleeping too much", "trouble sleeping"),),
+    "phq9_q4": (("tired or having little energy", "little energy"),),
+    "phq9_q5": (("poor appetite", "overeating"),),
+    "phq9_q6": (("bad about yourself", "you are a failure", "let yourself or your family down"),),
+    "phq9_q7": (("trouble concentrating", "concentrating on things"),),
+    "phq9_q8": (("moving or speaking so slowly", "fidgety or restless"),),
+    "phq9_q9": (("better off dead", "hurting yourself in some way"),),
+    "gad7_q1": (("nervous, anxious", "anxious, or on edge", "on edge"),),
+    "gad7_q2": (("stop or control worrying", "control worrying"),),
+    "gad7_q3": (("worrying too much about different things",),),
+    "gad7_q4": (("trouble relaxing", "difficulty relaxing"),),
+    "gad7_q5": (("hard to sit still", "so restless that"),),
+    "gad7_q6": (("easily annoyed", "annoyed or irritable"),),
+    "gad7_q7": (("something awful might happen", "afraid as if", "afraid, as if"),),
+}
+
+DIFFICULTY_SIGNATURES = {
+    "phq9": ("phq-9", "phq9"),
+    "gad7": ("gad-7", "gad7"),
+}
+
+
+def identify_item_by_text(question: str) -> str | None:
+    """Resolve a questionnaire item from its wording alone.
+
+    Returns the item key (e.g. ``"phq9_q5"``) when exactly one signature
+    matches. Ambiguity returns None rather than guessing: a wrong item is worse
+    than falling through to the other resolution paths.
+    """
+    lowered = " ".join(str(question or "").lower().split())
+    matches = [
+        key for key, groups in ITEM_SIGNATURES.items()
+        if any(any(phrase in lowered for phrase in group) for group in groups)
+    ]
+    return matches[0] if len(matches) == 1 else None
 
 
 SCORE_TO_RESPONSE = {
@@ -281,6 +317,14 @@ Style is yours to control; content is not.
             self._current_item = key
             return key, SCORE_TO_RESPONSE[int(self._answer_for(key))]
 
+        # Text match first: it is system-independent and cannot be confused by
+        # a stale latch or an unusual numbering scheme.
+        by_text = identify_item_by_text(question)
+        if by_text is not None:
+            self._current_item = by_text
+            self._current_instrument = by_text.split("_", 1)[0]
+            return by_text, SCORE_TO_RESPONSE[int(self._answer_for(by_text))]
+
         # Fall back to the latched instrument for a bare "Question N:".
         if self._current_instrument:
             limit = 9 if self._current_instrument == "phq9" else 7
@@ -323,15 +367,30 @@ Style is yours to control; content is not.
         """"phq9_q3" -> "phq9". Budgets are counted per instrument."""
         return item_key.split("_", 1)[0]
 
-    def begin_section(self, section: str) -> None:
-        """Start a new intake section and refresh the per-section hedge budget.
+    #: Intake section -> questionnaire it administers.
+    SECTION_INSTRUMENTS = {"phq9": "phq9", "gad7": "gad7"}
 
-        Called by the driver at each section boundary. Without it the budget is
-        spent in the opening sections and the rest of the intake is effectively
-        run against the ``clear`` persona.
+    def begin_section(self, section: str) -> None:
+        """Start a new intake section: refresh the hedge budget AND the instrument.
+
+        Latching the instrument here is what makes a bare "Question 1: ..."
+        resolvable. A system that never writes the instrument name - the
+        rule-based comparator does exactly this - previously left
+        ``_current_instrument`` unset, so the item fell through to the free-text
+        LLM and the patient invented an answer off the 0-3 scale.
+
+        That was not hypothetical: on case 04-01 the rule-based arm received
+        "Several days" for PHQ-9 item 5 whose ground truth is 0, and was scored
+        as wrong for a simulator fault. The simulator must reproduce its own
+        ground truth identically for every system, or arms are not comparable.
+
+        ``_current_item`` is reset at the same time so a stale item from the
+        previous instrument can never satisfy an unlabelled re-ask.
         """
         self._current_section = section
         self._hedges_this_section = 0
+        self._current_instrument = self.SECTION_INSTRUMENTS.get(section)
+        self._current_item = None
 
     def _should_hedge(self, question: str) -> bool:
         """Whether to stall on this free-text question rather than answer it.
@@ -424,6 +483,17 @@ Style is yours to control; content is not.
             # deterministic answer means the item number could not be parsed;
             # the LLM may answer off the fixed frequency scale and corrupt the
             # PHQ-9/GAD-7 totals. Surface it rather than failing silently.
+            # A questionnaire turn that reaches the LLM corrupts the very
+            # totals structured_score treats as exact. Inside a questionnaire
+            # section this is a harness fault, not a soft warning: raise, so it
+            # is impossible to ship results built on invented scores.
+            if self._current_instrument and self._looks_like_scale_prompt(cira_question):
+                raise RuntimeError(
+                    f"Questionnaire item could not be resolved deterministically "
+                    f"in section {self._current_section!r}: {cira_question!r}. "
+                    f"The item would have been answered by the free-text model, "
+                    f"which invalidates the instrument total."
+                )
             if self._looks_like_questionnaire(cira_question):
                 print(
                     "[patient_simulator] WARNING: questionnaire item fell through "

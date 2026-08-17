@@ -1,4 +1,24 @@
+"""Stage 1 - drive the live CIRA agent through every scenario.
 
+Produces raw artifacts only (transcript + record). Deterministic scoring is done
+uniformly by ``harness.stages.score_records``.
+
+The record is now written explicitly with a stable name
+(``outputs/cira/records/case_XX.json``) instead of relying on the graph's
+internal UUID-suffixed save, so nothing downstream has to glob for it.
+
+Requires the real CIRA package in the sibling ``cira/`` folder. If it can't be
+imported (e.g. running the harness without the agent), this stage reports the
+problem and is skipped rather than crashing the whole run.
+
+Writes:  outputs/cira/transcripts/case_XX.json
+         outputs/cira/records/case_XX.json
+
+Run directly::
+
+    python -m harness.stages.run_cira
+    python -m harness.stages.run_cira --case 04-01
+"""
 
 from __future__ import annotations
 
@@ -12,6 +32,7 @@ from pathlib import Path
 
 from harness import config
 from harness import personas
+from harness import budget
 from harness import provenance
 from harness.patient_simulator import PatientSimulator
 
@@ -288,6 +309,7 @@ def _save_artifacts(
         "repetition": repetition,
         "persona_id": patient.persona.id if patient else None,
         "patient_behaviour": patient.behaviour_summary() if patient else None,
+        "budget": budget.measure(_clean_conversation(transcript)),
         "conversation": _clean_conversation(transcript),
         "final_result": {
             "safety_flag": cira_state.get("safety_flag"),

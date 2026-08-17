@@ -1,5 +1,4 @@
 
-
 from __future__ import annotations
 
 import argparse
@@ -11,13 +10,6 @@ from typing import Iterable
 from harness import config
 
 
-# --------------------------------------------------------------------------- #
-# The fixed PHQ-9 / GAD-7 frequency phrases.
-#
-# No deflection line may contain one of these: CIRA's parser would read it as a
-# real answer and the deferral would silently become a scored response.
-# ``_validate_personas()`` enforces this at import time.
-# --------------------------------------------------------------------------- #
 CANONICAL_RESPONSES = (
     "not at all",
     "several days",

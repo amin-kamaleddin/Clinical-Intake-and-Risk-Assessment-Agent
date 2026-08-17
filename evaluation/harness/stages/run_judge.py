@@ -1,4 +1,31 @@
+"""Stage 4 - LLM judging: record fidelity and conversation flow.
 
+Two calls per case, each producing one number:
+
+* ``record_score``  - fields enumerated by ``harness.record_check``, verdicted
+  categorically by the LLM, aggregated back into a number by code. Exact and
+  boolean matches are auto-resolved without the model.
+* ``flow_score``    - one holistic 0-1 score for interviewing quality from the
+  transcript alone.
+
+Separate calls, not one combined call: shorter prompts judge more reliably, and
+a record failure cannot bleed into the flow number or vice versa. At 12 cases
+across 3 systems that is 72 calls, so the extra cost is negligible.
+
+PHQ-9, GAD-7 and the safety flag are NOT judged here. They have exact expected
+values and belong to ``harness.structured_score``, which the deterministic
+scoring stage runs. Nothing is scored twice.
+
+Reads:   outputs/<system>/transcripts/case_XX.json
+         outputs/<system>/records/case_XX.json
+Writes:  outputs/judge/<system>/case_XX.json
+         outputs/reports/judge_comparison.json
+
+Run directly::
+
+    python -m harness.stages.run_judge
+    python -m harness.stages.run_judge --case 04-01 --system cira
+"""
 
 from __future__ import annotations
 

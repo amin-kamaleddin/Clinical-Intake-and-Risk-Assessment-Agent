@@ -79,14 +79,14 @@ class FamilyPsychiatricHistory(TypedDict):
 
 
 class SubstanceUse(TypedDict):
-    alcohol_use: Optional[str]
-    nicotine_use: Optional[str]
-    marijuana_use: Optional[str]
-    stimulant_use: Optional[str]
-    opioid_use: Optional[str]
-    benzodiazepine_use: Optional[str]
-    hallucinogen_use: Optional[str]
-    other_substance_use: Optional[str]
+    nonmedical_alcohol_use: Optional[str]
+    nonmedical_nicotine_use: Optional[str]
+    nonmedical_marijuana_use: Optional[str]
+    nonmedical_stimulant_use: Optional[str]
+    nonmedical_opioid_use: Optional[str]
+    nonmedical_benzodiazepine_use: Optional[str]
+    nonmedical_hallucinogen_use: Optional[str]
+    nonmedical_other_substance_use: Optional[str]
 
 
 class EducationEmploymentLegalHistory(TypedDict):
@@ -212,9 +212,9 @@ REQUIRED_FIELDS = {
         "family_psychiatric_history_details",
     ],
     "substance_use": [
-        "alcohol_use", "nicotine_use", "marijuana_use", "stimulant_use",
-        "opioid_use", "benzodiazepine_use", "hallucinogen_use",
-        "other_substance_use",
+        "nonmedical_alcohol_use", "nonmedical_nicotine_use", "nonmedical_marijuana_use", "nonmedical_stimulant_use",
+        "nonmedical_opioid_use", "nonmedical_benzodiazepine_use", "nonmedical_hallucinogen_use",
+        "nonmedical_other_substance_use",
     ],
     "education_employment_legal_history": [
         "active_legal_cases", "legal_case_details",
@@ -325,14 +325,14 @@ initial_state: AliceState = {
         "family_psychiatric_history_details": None,
     },
     "substance_use": {
-        "alcohol_use": None,
-        "nicotine_use": None,
-        "marijuana_use": None,
-        "stimulant_use": None,
-        "opioid_use": None,
-        "benzodiazepine_use": None,
-        "hallucinogen_use": None,
-        "other_substance_use": None,
+        "nonmedical_alcohol_use": None,
+        "nonmedical_nicotine_use": None,
+        "nonmedical_marijuana_use": None,
+        "nonmedical_stimulant_use": None,
+        "nonmedical_opioid_use": None,
+        "nonmedical_benzodiazepine_use": None,
+        "nonmedical_hallucinogen_use": None,
+        "nonmedical_other_substance_use": None,
     },
     "education_employment_legal_history": {
         "active_legal_cases": None,
