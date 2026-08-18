@@ -421,19 +421,19 @@ def section_node(state: AliceState) -> AliceState:
     #      phq9 section, on a clear-persona patient.
     pending = get_pending_fields(state, section)
     if not (reply or "").strip():
-        reply = (
-            f"Could you tell me about {pending[0].replace('_', ' ')}?"
-            if pending
-            else "Is there anything else you would like to add or change?"
-        )
+        reply = _pending_field_question(pending)
     elif pending and not _looks_like_a_question(reply):
         # Announcing completion while a field is open is the tell. Append the
         # pending question rather than replacing the text, so a safety message
         # is still delivered in full.
+        # Phrased WITHOUT the raw field key. "could you tell me about gad7 q1"
+        # both reads badly to a patient and, because it contains "q1", was
+        # matched by the simulator's bare-question-number pattern - which
+        # resolved a GAD-7 item to phq9_q1 and made the GAD-7 record a copy of
+        # the PHQ-9 record. Field names must not leak into patient-facing text.
         reply = (
             reply.rstrip()
-            + f"\n\nTo finish this section: could you tell me about "
-            f"{pending[0].replace('_', ' ')}?"
+            + "\n\nBefore we move on, could you answer the question above?"
         )
 
     # ── Stage 7: completion for every section this turn touched ──
@@ -457,6 +457,25 @@ _CLOSING_PHRASES = (
     "i am here to help", "no further information", "available if you have",
     "thank you for completing", "that completes",
 )
+
+
+# Questionnaire item keys must never appear in patient-facing text. Rendering
+# "gad7_q1" as "gad7 q1" produced a message containing "q1", which the patient
+# simulator's bare-question-number pattern matched - a GAD-7 item resolved to
+# phq9_q1 and the entire GAD-7 record became a copy of the PHQ-9 record. It also
+# reads as nonsense to a patient, which is reason enough on its own.
+_QUESTIONNAIRE_KEY = re.compile(r"^(?:phq9|gad7)_(?:q\d+|difficulty)$")
+
+
+def _pending_field_question(pending: list) -> str:
+    """A patient-facing prompt for the next pending field."""
+    if not pending:
+        return "Is there anything else you would like to add or change?"
+    field = pending[0]
+    if _QUESTIONNAIRE_KEY.match(field):
+        # The item text is already on screen; point at it rather than name it.
+        return "Could you choose one of the options above for that question?"
+    return f"Could you tell me about {field.replace('_', ' ')}?"
 
 
 def _looks_like_a_question(reply: str) -> bool:

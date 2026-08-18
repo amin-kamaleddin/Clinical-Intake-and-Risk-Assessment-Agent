@@ -4,11 +4,11 @@
   "scenario_case_id": "04-03",
   "repetition": 0,
   "persona_id": "clear",
-  "record_score": 0.9444,
-  "flow_score": 0.85,
+  "record_score": 0.9556,
+  "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9444,
-    "record_score_contested": 0.8864,
+    "record_score": 0.9556,
+    "record_score_contested": 0.9091,
     "fields_contested": 22,
     "fields_auto_resolved": 23,
     "fields_confirmed_absent": 7,
@@ -16,8 +16,8 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 40,
-      "partial": 5,
+      "match": 41,
+      "partial": 4,
       "missing": 0,
       "contradicted": 0,
       "fabricated": 0
@@ -37,8 +37,8 @@
       },
       "medications": {
         "fields": 3,
-        "credit": 2.5,
-        "score": 0.8333
+        "credit": 3.0,
+        "score": 1.0
       },
       "medical_history": {
         "fields": 4,
@@ -77,12 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and well-structured intake. The flow was logical and adhered to the required questionnaires, though it failed to properly handle a specific response during the safety assessment.",
+  "flow_summary": "The interviewer conducted a thorough intake, but failed to address a critical misunderstanding during the safety assessment. The system misinterpreted the patient's response to a PHQ-9 question as a frequency answer, leading to a redundant and confusing safety follow-up.",
   "issues": [
     {
       "severity": "moderate",
-      "category": "responsiveness",
-      "evidence": "When asked if he was having thoughts of suicide right now, the patient replied 'Several days' (likely misinterpreting the question as a continuation of the PHQ-9 scale), and the interviewer failed to clarify or re-ask the question, instead moving directly to a safety script."
+      "category": "safety_protocol",
+      "evidence": "When asked about current suicidal thoughts, the patient answered 'Several days' (the frequency scale), and the interviewer failed to clarify that this was a misunderstanding of the question, instead proceeding as if the patient had affirmed current active risk."
+    },
+    {
+      "severity": "minor",
+      "category": "clarity",
+      "evidence": "The interviewer failed to recover when the patient provided a vague or nonsensical answer regarding early childhood, simply moving on to the next question."
     }
   ],
   "field_verdicts": [
@@ -276,7 +281,7 @@
       "source": "llm",
       "note": "",
       "expected": "son's death; grief; sadness; cannot concentrate",
-      "produced": "My son's death, grief, sadness, and I can't concentrate."
+      "produced": "My son’s death, grief, sadness, and I can’t concentrate."
     },
     {
       "ref": "current_concerns.goals",
@@ -292,13 +297,13 @@
       "source": "llm",
       "note": "",
       "expected": "Followed by DR. LAURA BENNETT, psychiatrist, during two depressive episodes in 1998 and 2003",
-      "produced": "Followed by Dr. Laura Bennett, psychiatrist, during two depressive episodes in 1998 and 2003."
+      "produced": "Followed by Dr. Laura Bennett during two depressive episodes in 1998 and 2003."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing details regarding the two prior episodes and age of onset.",
+      "note": "Missing details regarding the number of episodes and age of onset.",
       "expected": "depression; two prior episodes; 30s",
       "produced": "Depression."
     },
@@ -306,7 +311,7 @@
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing details regarding the number of sessions.",
+      "note": "Missing the duration/frequency of sessions.",
       "expected": "Individual psychotherapy; 1998; approximately 16 weekly sessions",
       "produced": "Individual psychotherapy in 1998."
     },
@@ -314,17 +319,17 @@
       "ref": "past_psychiatric_history.previous_treatments",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing details regarding the two prior episodes and response to treatment.",
+      "note": "Missing the context of the two prior episodes and the response to treatment.",
       "expected": "Sertraline during two prior depressive episodes; good response",
       "produced": "Sertraline."
     },
     {
       "ref": "medications.past_medication_details",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing duration of use and reason for stopping.",
+      "note": "",
       "expected": "Sertraline; 100 mg daily; taken for about 18 months in his 30s; stopped after sustained recovery",
-      "produced": "Sertraline, 100 mg daily; start date not remembered; no recalled side effects."
+      "produced": "Sertraline, 100 mg daily, taken for about 18 months in his 30s; no remembered side effects."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -332,15 +337,15 @@
       "source": "llm",
       "note": "",
       "expected": "parents; depression; son; suicide",
-      "produced": "Parents had depression. Son died by suicide."
+      "produced": "Parents had depression; son died by suicide."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing context regarding the increase in frequency and duration of current use.",
+      "note": "Missing the history of increased usage and duration.",
       "expected": "Current; wine; about half a bottle nightly; increased from weekends only after son's death; current duration 6 weeks",
-      "produced": "Wine nightly, about half a bottle."
+      "produced": "Currently drinks wine, about half a bottle nightly."
     },
     {
       "ref": "substance_use.nonmedical_nicotine_use",
@@ -348,7 +353,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No."
     },
     {
       "ref": "substance_use.nonmedical_marijuana_use",
@@ -356,7 +361,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No."
     },
     {
       "ref": "substance_use.nonmedical_stimulant_use",
@@ -364,7 +369,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No."
     },
     {
       "ref": "substance_use.nonmedical_opioid_use",
@@ -372,7 +377,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No."
     },
     {
       "ref": "substance_use.nonmedical_benzodiazepine_use",
@@ -380,7 +385,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No."
     },
     {
       "ref": "substance_use.nonmedical_hallucinogen_use",
@@ -388,7 +393,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No."
     },
     {
       "ref": "substance_use.nonmedical_other_substance_use",
@@ -396,7 +401,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No, never."
+      "produced": "No."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -420,7 +425,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born and grew up; no other details reported."
+      "produced": "I was born and grew up there. Birthplace and upbringing location unknown."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -444,7 +449,7 @@
       "source": "llm",
       "note": "",
       "expected": "recover; honour son's memory",
-      "produced": "To recover and honour my son's memory."
+      "produced": "To recover and honour my son’s memory."
     }
   ],
   "fabricated": []

@@ -8,9 +8,9 @@
   "flow_score": 0.7,
   "record_detail": {
     "record_score": 0.9659,
-    "record_score_contested": 0.9118,
-    "fields_contested": 17,
-    "fields_auto_resolved": 27,
+    "record_score_contested": 0.9,
+    "fields_contested": 15,
+    "fields_auto_resolved": 29,
     "fields_confirmed_absent": 10,
     "fields_scored": 44,
     "fields_unjudged": 0,
@@ -77,27 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully completed the intake and gathered all necessary clinical information. However, the system frequently used redundant 'Please answer yes or no' prompts even after the patient had already provided a clear, affirmative, or negative response, which disrupted the flow.",
+  "flow_summary": "The system conducted a thorough and efficient intake, successfully navigating all required sections. However, it failed to address vague or incomplete responses in the personal history section, accepting minimal answers without attempting to clarify or probe for necessary clinical context.",
   "issues": [
     {
-      "severity": "minor",
-      "category": "redundant_questioning",
-      "evidence": "In the medications section, after the patient answered 'Prenatal multivitamin with iron', the interviewer asked 'Please answer yes or no.' This was unnecessary as the patient had already provided the requested information."
+      "severity": "moderate",
+      "category": "follow_up",
+      "evidence": "When asked to describe her early childhood, the patient replied 'I was born and grew up there,' which the system accepted without further inquiry."
     },
     {
-      "severity": "minor",
-      "category": "redundant_questioning",
-      "evidence": "In the medical history section, after the patient stated 'Asthma', the interviewer asked 'Please answer yes or no.'"
-    },
-    {
-      "severity": "minor",
-      "category": "redundant_questioning",
-      "evidence": "In the family psychiatric history section, after the patient provided a detailed answer about her mother, the interviewer asked 'Please answer yes or no.'"
-    },
-    {
-      "severity": "minor",
-      "category": "redundant_questioning",
-      "evidence": "In the employment history section, after the patient provided her job history, the interviewer asked 'Please answer yes or no.'"
+      "severity": "moderate",
+      "category": "follow_up",
+      "evidence": "When asked to describe her adolescence and early adulthood, the patient provided a very brief response ('School and coffee shop work'), which the system accepted without probing for more detail."
     }
   ],
   "field_verdicts": [
@@ -238,6 +228,22 @@
       "produced": true
     },
     {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "162 cm",
+      "produced": "162 cm"
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "70 kg",
+      "produced": "70 kg"
+    },
+    {
       "ref": "medication_allergies.has_medication_allergies",
       "verdict": "match",
       "source": "auto",
@@ -323,7 +329,7 @@
       "source": "llm",
       "note": "",
       "expected": "low mood; fatigue; postpartum; overwhelmed",
-      "produced": "Low mood, fatigue, and feeling overwhelmed after having the baby."
+      "produced": "Low mood, fatigue, postpartum, and feeling overwhelmed."
     },
     {
       "ref": "current_concerns.goals",
@@ -331,7 +337,7 @@
       "source": "llm",
       "note": "",
       "expected": "feel like herself; cope; care for children",
-      "produced": "To feel like myself again, cope better, and care for my children."
+      "produced": "Feel like myself, cope better, and care for my children."
     },
     {
       "ref": "medications.current_medications",
@@ -339,13 +345,13 @@
       "source": "llm",
       "note": "",
       "expected": "Prenatal multivitamin with iron; one tablet daily; started during pregnancy; no side effects known",
-      "produced": "Medication 1: Name Or Description: Prenatal multivitamin with iron.; Dose: One tablet daily.; Start Or Duration: During pregnancy.; Side Effects: No side effects that I know of."
+      "produced": "Medication 1: Name Or Description: Prenatal multivitamin with iron.; Dose: One tablet daily.; Start Or Duration: During pregnancy.; Side Effects: None known."
     },
     {
       "ref": "medical_history.medical_conditions",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing childhood diagnosis and salbutamol usage details.",
+      "note": "Missing details regarding childhood diagnosis and use of salbutamol inhaler.",
       "expected": "Asthma; diagnosed in childhood; uses salbutamol inhaler as needed",
       "produced": "Asthma."
     },
@@ -356,22 +362,6 @@
       "note": "",
       "expected": "Emergency caesarean section; February 2026; no ongoing complications",
       "produced": "Surgery: Emergency caesarean section.; Date: February 2026.; Details: No ongoing complications."
-    },
-    {
-      "ref": "medical_history.height",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "162 cm",
-      "produced": "162 cm."
-    },
-    {
-      "ref": "medical_history.weight",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "70 kg",
-      "produced": "70 kg."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -393,9 +383,9 @@
       "ref": "substance_use.nonmedical_nicotine_use",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the detail about stopping when pregnancy was confirmed.",
+      "note": "Missing the detail that use stopped when pregnancy was confirmed.",
       "expected": "Previous; cigarettes; about 5 per day; used for 4 years; stopped when pregnancy was confirmed",
-      "produced": "Status: Previous; Substance or product: Cigarettes.; Quantity or frequency: About 5 per day.; Duration: For 4 years."
+      "produced": "Status: Previous; Substance or product: Cigarettes.; Quantity or frequency: About 5 per day.; Duration: Used for 4 years."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -411,7 +401,7 @@
       "source": "llm",
       "note": "Missing the detail that employment stopped during pregnancy.",
       "expected": "Barista at Lakeside Coffee; 2021 to 2025; stopped during pregnancy",
-      "produced": "Job 1: Name Or Description: Lakeside Coffee.; Job Title: Barista.; Dates: 2021 to 2025.\nJob 2: Name Or Description: Yes, I’m currently a homemaker.; Job Title: Homemaker.; Dates: 2025 to present."
+      "produced": "Job 1: Name Or Description: Lakeside Coffee.; Job Title: Barista.; Dates: 2021 to 2025.\nJob 2: Name Or Description: Yes, I am a homemaker.; Job Title: Homemaker.; Dates: 2025 to present."
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
@@ -419,7 +409,7 @@
       "source": "llm",
       "note": "",
       "expected": "Currently homemaker.",
-      "produced": "Job 1: Name Or Description: Lakeside Coffee.; Job Title: Barista.; Dates: 2021 to 2025.\nJob 2: Name Or Description: Yes, I’m currently a homemaker.; Job Title: Homemaker.; Dates: 2025 to present."
+      "produced": "Job 1: Name Or Description: Lakeside Coffee.; Job Title: Barista.; Dates: 2021 to 2025.\nJob 2: Name Or Description: Yes, I am a homemaker.; Job Title: Homemaker.; Dates: 2025 to present."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -435,7 +425,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; coffee shop work",
-      "produced": "I was in school and later worked at a coffee shop."
+      "produced": "School and coffee shop work."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -443,7 +433,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; husband; unsupportive; absent",
-      "produced": "I’m married. My husband has been largely absent and unsupportive."
+      "produced": "Married, with my husband. He’s been absent and not very supportive."
     },
     {
       "ref": "personal_history.future_goals",

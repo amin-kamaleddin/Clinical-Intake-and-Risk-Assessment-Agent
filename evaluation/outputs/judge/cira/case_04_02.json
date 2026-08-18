@@ -4,22 +4,22 @@
   "scenario_case_id": "04-02",
   "repetition": 0,
   "persona_id": "clear",
-  "record_score": 0.9432,
-  "flow_score": 0.85,
+  "record_score": 0.9659,
+  "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9432,
-    "record_score_contested": 0.7727,
-    "fields_contested": 11,
-    "fields_auto_resolved": 33,
+    "record_score": 0.9659,
+    "record_score_contested": 0.875,
+    "fields_contested": 12,
+    "fields_auto_resolved": 32,
     "fields_confirmed_absent": 10,
     "fields_scored": 44,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 40,
+      "match": 41,
       "partial": 3,
       "missing": 0,
-      "contradicted": 1,
+      "contradicted": 0,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -42,8 +42,8 @@
       },
       "medical_history": {
         "fields": 6,
-        "credit": 5.5,
-        "score": 0.9167
+        "credit": 5.0,
+        "score": 0.8333
       },
       "medication_allergies": {
         "fields": 1,
@@ -57,8 +57,8 @@
       },
       "substance_use": {
         "fields": 8,
-        "credit": 7.5,
-        "score": 0.9375
+        "credit": 8.0,
+        "score": 1.0
       },
       "education_employment_legal_history": {
         "fields": 4,
@@ -72,17 +72,22 @@
       },
       "personal_history": {
         "fields": 4,
-        "credit": 3.0,
-        "score": 0.75
+        "credit": 4.0,
+        "score": 1.0
       }
     }
   },
-  "flow_summary": "The system conducted a thorough and efficient intake, adhering well to the structure and requirements. It handled the patient's clear communication style effectively, though it struggled slightly with the personal history section where it failed to pivot after the patient provided 'I do not know' responses.",
+  "flow_summary": "The interviewer successfully completed the intake but suffered from a persistent, repetitive technical glitch where it repeatedly appended 'Before we move on, could you answer the question above?' to its prompts, even when the patient had already answered. This made the interaction feel mechanical and redundant.",
   "issues": [
     {
-      "severity": "minor",
-      "category": "follow_up",
-      "evidence": "The interviewer continued to press for details in the personal history section after the patient clearly stated 'I do not know' twice, rather than moving on."
+      "severity": "moderate",
+      "category": "redundant_questioning",
+      "evidence": "The interviewer repeatedly appended 'Before we move on, could you answer the question above?' to questions that were being asked for the first time, such as: 'Please tell me about your recent employment history... Before we move on, could you answer the question above?'"
+    },
+    {
+      "severity": "moderate",
+      "category": "redundant_questioning",
+      "evidence": "The same redundant phrase was appended to every single GAD-7 question, despite the patient having provided an answer in the previous turn, creating a repetitive and confusing user experience."
     }
   ],
   "field_verdicts": [
@@ -223,14 +228,6 @@
       "produced": true
     },
     {
-      "ref": "medical_history.surgical_history",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Emergency caesarean section; February 2026; no ongoing complications",
-      "produced": "Emergency caesarean section; February 2026; no ongoing complications"
-    },
-    {
       "ref": "medical_history.height",
       "verdict": "match",
       "source": "auto",
@@ -356,7 +353,7 @@
       "source": "llm",
       "note": "",
       "expected": "low mood; fatigue; postpartum; overwhelmed",
-      "produced": "Feeling very low and exhausted since having the baby; feeling overwhelmed caring for the newborn and toddler; husband has been mostly absent. Difficulties are occurring in the home and caregiving context."
+      "produced": "Low mood, fatigue, and feeling overwhelmed since the postpartum period. These difficulties occur mostly at home while caring for the baby and toddler; the husband being largely absent makes them harder to manage."
     },
     {
       "ref": "current_concerns.goals",
@@ -370,25 +367,33 @@
       "ref": "medications.current_medications",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing start date and side effect information.",
+      "note": "Start date and side effect status missing.",
       "expected": "Prenatal multivitamin with iron; one tablet daily; started during pregnancy; no side effects known",
-      "produced": "Prenatal multivitamin with iron; one tablet daily; start date or duration: Unknown; side effects: Unknown"
+      "produced": "Prenatal multivitamin with iron; one tablet daily; duration Unknown; side effects Unknown"
     },
     {
       "ref": "medical_history.medical_conditions",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing information about the salbutamol inhaler.",
+      "note": "Inhaler usage information missing.",
       "expected": "Asthma; diagnosed in childhood; uses salbutamol inhaler as needed",
       "produced": "Asthma; diagnosed in childhood"
     },
     {
-      "ref": "substance_use.nonmedical_nicotine_use",
+      "ref": "medical_history.surgical_history",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the detail that use stopped when pregnancy was confirmed.",
+      "note": "Complication status missing.",
+      "expected": "Emergency caesarean section; February 2026; no ongoing complications",
+      "produced": "Emergency caesarean section; February 2026"
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
       "expected": "Previous; cigarettes; about 5 per day; used for 4 years; stopped when pregnancy was confirmed",
-      "produced": "Status: Previous; Substance or product: Cigarettes; Quantity or frequency: About 5 per day; Duration: 4 years"
+      "produced": "Status: Previous; Substance or product: Cigarettes; Quantity or frequency: About 5 cigarettes per day; Duration: 4 years; stopped when pregnancy was confirmed"
     },
     {
       "ref": "education_employment_legal_history.employment_history[0]",
@@ -396,7 +401,7 @@
       "source": "llm",
       "note": "",
       "expected": "Barista at Lakeside Coffee; 2021 to 2025; stopped during pregnancy",
-      "produced": "Homemaker; Employer or organization: Unknown; Job title: Homemaker; Dates or duration: Unknown. Lakeside Coffee; Job title: Barista; Dates: 2021 to 2025"
+      "produced": "Barista, Lakeside Coffee; 2021 to 2025. Homemaker; Present"
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
@@ -404,15 +409,15 @@
       "source": "llm",
       "note": "",
       "expected": "Currently homemaker.",
-      "produced": "Homemaker; Employer or organization: Unknown; Job title: Homemaker; Dates or duration: Unknown. Lakeside Coffee; Job title: Barista; Dates: 2021 to 2025"
+      "produced": "Barista, Lakeside Coffee; 2021 to 2025. Homemaker; Present"
     },
     {
       "ref": "personal_history.early_childhood",
-      "verdict": "contradicted",
+      "verdict": "match",
       "source": "llm",
-      "note": "The system states the patient does not know these facts, whereas the expected value implies they are known.",
+      "note": "",
       "expected": "born; grew up",
-      "produced": "Patient does not know where they were born, where they grew up, or how they would describe themselves as a young child."
+      "produced": "Patient does not know or have further details about where they were born, where they grew up, or what they were like as a young child."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -420,7 +425,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; coffee shop work",
-      "produced": "Attended school and worked at a coffee shop."
+      "produced": "Patient attended school and later worked at a coffee shop."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -428,7 +433,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; husband; unsupportive; absent",
-      "produced": "Marriage; duration and dates not provided; current; husband described as mostly absent and unsupportive."
+      "produced": "Marriage; duration and current status not specified; husband described as largely absent and not very supportive."
     },
     {
       "ref": "personal_history.future_goals",
@@ -436,7 +441,7 @@
       "source": "llm",
       "note": "",
       "expected": "care for children; return to work",
-      "produced": "Care for my children and return to work."
+      "produced": "Patient wants to care for her children and return to work."
     }
   ],
   "fabricated": []

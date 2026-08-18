@@ -1,24 +1,4 @@
-"""Stage 1 - drive the live CIRA agent through every scenario.
 
-Produces raw artifacts only (transcript + record). Deterministic scoring is done
-uniformly by ``harness.stages.score_records``.
-
-The record is now written explicitly with a stable name
-(``outputs/cira/records/case_XX.json``) instead of relying on the graph's
-internal UUID-suffixed save, so nothing downstream has to glob for it.
-
-Requires the real CIRA package in the sibling ``cira/`` folder. If it can't be
-imported (e.g. running the harness without the agent), this stage reports the
-problem and is skipped rather than crashing the whole run.
-
-Writes:  outputs/cira/transcripts/case_XX.json
-         outputs/cira/records/case_XX.json
-
-Run directly::
-
-    python -m harness.stages.run_cira
-    python -m harness.stages.run_cira --case 04-01
-"""
 
 from __future__ import annotations
 
@@ -187,12 +167,21 @@ def _run_sections(scenario, transcript, state_box, graph, get_pending_fields,
                 # section (and self_harm_details) on the active-risk case.
                 print(f"WARNING: empty question in '{section}' "
                       f"(pending {pending_fields}); nudging")
-                cira_question = (
-                    f"Could you tell me about "
-                    f"{pending_fields[0].replace('_', ' ')}?"
-                    if pending_fields
-                    else "Is there anything else you would like to add?"
-                )
+                # Never render a questionnaire item key into patient-facing
+                # text: "gad7_q1" becomes "gad7 q1", and the simulator's
+                # bare-question-number pattern matched the "q1", resolving a
+                # GAD-7 item to phq9_q1.
+                first = pending_fields[0] if pending_fields else ""
+                if first.startswith(("phq9_", "gad7_")):
+                    cira_question = (
+                        "Could you choose one of the options above for that question?"
+                    )
+                elif pending_fields:
+                    cira_question = (
+                        f"Could you tell me about {first.replace('_', ' ')}?"
+                    )
+                else:
+                    cira_question = "Is there anything else you would like to add?"
 
             print("\nCIRA:", cira_question)
             transcript.append({

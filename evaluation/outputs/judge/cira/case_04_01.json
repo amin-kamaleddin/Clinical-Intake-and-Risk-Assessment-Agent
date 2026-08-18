@@ -4,11 +4,11 @@
   "scenario_case_id": "04-01",
   "repetition": 0,
   "persona_id": "confused",
-  "record_score": 1.0,
+  "record_score": 0.9783,
   "flow_score": 0.7,
   "record_detail": {
-    "record_score": 1.0,
-    "record_score_contested": 1.0,
+    "record_score": 0.9783,
+    "record_score_contested": 0.9167,
     "fields_contested": 12,
     "fields_auto_resolved": 34,
     "fields_confirmed_absent": 8,
@@ -16,8 +16,8 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 46,
-      "partial": 0,
+      "match": 44,
+      "partial": 2,
       "missing": 0,
       "contradicted": 0,
       "fabricated": 0
@@ -32,8 +32,8 @@
       },
       "past_psychiatric_history": {
         "fields": 6,
-        "credit": 6.0,
-        "score": 1.0
+        "credit": 5.5,
+        "score": 0.9167
       },
       "medications": {
         "fields": 3,
@@ -72,27 +72,22 @@
       },
       "personal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.5,
+        "score": 0.875
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient by consistently breaking down complex questions and providing necessary guidance. While the interviewer was patient and effective at redirection, the process was slowed by the need to repeat the full questionnaire scales multiple times, and the interviewer occasionally failed to maintain the flow when the patient struggled with the PHQ-9 and GAD-7, leading to a somewhat mechanical interaction.",
+  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona by consistently redirecting and re-explaining questions. While the interviewer was patient and thorough, the process was inefficient due to the repetitive nature of the PHQ-9 and GAD-7 administration, where the patient frequently required the scale to be re-read or the question to be re-phrased, leading to a somewhat mechanical and disjointed flow.",
   "issues": [
     {
       "severity": "minor",
       "category": "efficiency",
-      "evidence": "The interviewer repeated the full PHQ-9 and GAD-7 scales in almost every turn, which became redundant and contributed to the patient's confusion."
+      "evidence": "The interviewer repeatedly re-read the full PHQ-9 and GAD-7 scales and instructions, which, while necessary for this specific persona, resulted in a very repetitive and slow-moving interaction."
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "In the PHQ-9 and GAD-7 sections, the interviewer often re-read the entire list of options rather than just confirming the patient's choice, which caused the patient to lose the thread of the conversation."
-    },
-    {
-      "severity": "minor",
-      "category": "clarity",
-      "evidence": "The interviewer asked 'What is your psychiatrist’s full name' immediately after the patient had already provided the name in the previous turn."
+      "evidence": "In the PHQ-9 and GAD-7 sections, the interviewer often had to ask the same question multiple times because the patient lost the thread, which could have been mitigated by keeping the scale visible or simplifying the prompt structure earlier."
     }
   ],
   "field_verdicts": [
@@ -374,7 +369,7 @@
       "source": "llm",
       "note": "",
       "expected": "temper outbursts; irritable; conflicts at home and school; suspension",
-      "produced": "At home, I become very irritable and have temper outbursts. My parents feel exhausted by these episodes, and I feel sorry immediately afterward, but I have difficulty controlling myself in the moment. At school, I get into conflicts and was suspended after getting into trouble. I am in Grade 6 at Northview Middle School and do not have many friends. My siblings sometimes avoid me."
+      "produced": "At home, I experience intense anger and temper outbursts, followed by feeling guilty and regretting my actions. At school, I have conflicts and was suspended once after punching a classmate when I lost a chess match; I still feel bad about it. I have few friends."
     },
     {
       "ref": "current_concerns.goals",
@@ -382,7 +377,7 @@
       "source": "llm",
       "note": "",
       "expected": "more friends; do better in school; stop getting angry",
-      "produced": "I want to make more friends, do better in school, and stop getting angry so often."
+      "produced": "Make more friends; do better in school; reduce frequent anger."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -390,7 +385,7 @@
       "source": "llm",
       "note": "",
       "expected": "Assessed at age 10 by DR. RAJ PATEL, child psychiatrist, for school inattention and impulsivity",
-      "produced": "Age 10; assessed by Dr. Raj Patel, child psychiatrist; for school inattention and impulsivity."
+      "produced": "Age 10; Dr. Raj Patel, child psychiatrist; assessed for school inattention and impulsivity. No other assessments recalled."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -398,15 +393,15 @@
       "source": "llm",
       "note": "",
       "expected": "ADHD; combined",
-      "produced": "ADHD, combined presentation (attention difficulties and hyperactivity/impulsivity)."
+      "produced": "ADHD, combined type"
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Outpatient clinic setting is missing.",
       "expected": "Behavioural therapy; age 10 to 11; approximately 12 sessions; outpatient clinic",
-      "produced": "Behavioural therapy; age 10 to 11; approximately 12 sessions; outpatient clinic."
+      "produced": "Behavioural therapy; age 10 to 11; approximately 12 sessions"
     },
     {
       "ref": "medications.current_medications",
@@ -414,7 +409,7 @@
       "source": "llm",
       "note": "",
       "expected": "Methylphenidate short-acting; 10 mg each morning and 5 mg at noon; started September 2024; reduced appetite at lunch",
-      "produced": "Methylphenidate, short-acting; 10 mg in the morning and 5 mg at noon; started September 2024; reduced appetite at lunch."
+      "produced": "Methylphenidate short-acting; 10 mg in the morning and 5 mg at noon; started September 2024; reduced appetite at lunch."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -422,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "Grade 6; currently attending Northview Middle School",
-      "produced": "Grade 6 completed; currently attending Northview Middle School"
+      "produced": "Currently attending Grade 6 at Northview Middle School; not yet completed"
     },
     {
       "ref": "education_employment_legal_history.employment_history",
@@ -438,7 +433,7 @@
       "source": "llm",
       "note": "",
       "expected": "irritability; early childhood; outbursts",
-      "produced": "Birthplace: Unknown. Grew up: Patient is unsure; said they grew up “here.” As a young child, they were irritable and had outbursts."
+      "produced": "Unknown place of birth; Unknown place where they grew up; Irritable as a young child with outbursts."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -446,7 +441,7 @@
       "source": "llm",
       "note": "",
       "expected": "grade 6; school difficulties",
-      "produced": "Currently in Grade 6, so early adulthood is not applicable. School has been difficult, with inattention, impulsivity, and anger-related difficulties."
+      "produced": "Currently in Grade 6; early adulthood is not applicable. School has been difficult lately."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -454,15 +449,15 @@
       "source": "llm",
       "note": "",
       "expected": "siblings avoid; few friends",
-      "produced": "Parents and siblings; current; they sometimes avoid the patient. Few friendships; the patient would like to improve this."
+      "produced": "Siblings; current; avoid the patient. A few friends; current; no further details provided."
     },
     {
       "ref": "personal_history.future_goals",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Goals regarding friends and anger management are missing.",
       "expected": "more friends; school; manage anger",
-      "produced": "Make more friends, do better in school, and manage anger more effectively."
+      "produced": "Do better in school."
     }
   ],
   "fabricated": []

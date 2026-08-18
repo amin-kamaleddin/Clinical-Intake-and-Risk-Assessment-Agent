@@ -1,4 +1,3 @@
-
 import json
 import random
 import re
@@ -305,27 +304,42 @@ Style is yours to control; content is not.
         The item key (e.g. ``"phq9_q3"``) is what lets deferral be counted per
         item rather than per turn, so re-asking the same item always converges.
         """
-        phq_number = self._question_number(question, "phq9", 9)
-        if phq_number is not None:
-            key = f"phq9_q{phq_number}"
-            self._current_item = key
-            return key, SCORE_TO_RESPONSE[int(self._answer_for(key))]
-
-        gad_number = self._question_number(question, "gad7", 7)
-        if gad_number is not None:
-            key = f"gad7_q{gad_number}"
-            self._current_item = key
-            return key, SCORE_TO_RESPONSE[int(self._answer_for(key))]
-
-        # Text match first: it is system-independent and cannot be confused by
-        # a stale latch or an unusual numbering scheme.
+        # ORDER MATTERS. The item's own wording is checked FIRST, because it is
+        # the only signal that cannot be fooled by a stray token elsewhere in
+        # the message.
+        #
+        # The previous order tried PHQ-9 numbering first. One of the patterns
+        # in _question_number is a bare r"\bq\s*([1-9])\b", so a message that
+        # merely CONTAINED "q1" anywhere matched it - including the pending-field
+        # hint the agent appends ("could you tell me about gad7 q1"). A question
+        # that plainly said "**GAD-7 Question 1:**" therefore resolved to
+        # phq9_q1, and the whole GAD-7 record came back as a copy of the PHQ-9
+        # record. It only showed up in repetitions where deflections caused that
+        # hint to be appended, which is why it was intermittent: 4 of 24 records.
         by_text = identify_item_by_text(question)
         if by_text is not None:
             self._current_item = by_text
             self._current_instrument = by_text.split("_", 1)[0]
             return by_text, SCORE_TO_RESPONSE[int(self._answer_for(by_text))]
 
-        # Fall back to the latched instrument for a bare "Question N:".
+        # Numbered lookup, CURRENT instrument first. Trying one instrument
+        # unconditionally first lets a stray token from the other one win; the
+        # section we are actually in should take precedence.
+        instrument_order = (
+            ["gad7", "phq9"] if self._current_instrument == "gad7"
+            else ["phq9", "gad7"]
+        )
+        for instrument in instrument_order:
+            limit = 9 if instrument == "phq9" else 7
+            number = self._question_number(question, instrument, limit)
+            if number is not None:
+                key = f"{instrument}_q{number}"
+                self._current_item = key
+                self._current_instrument = instrument
+                return key, SCORE_TO_RESPONSE[int(self._answer_for(key))]
+
+        # Bare "Question N:" with no instrument named at all - resolve against
+        # whichever instrument the current section administers.
         if self._current_instrument:
             limit = 9 if self._current_instrument == "phq9" else 7
             number = self._bare_question_number(question)
@@ -347,7 +361,17 @@ Style is yours to control; content is not.
         # carries no item label, so it is a clarification of the item already
         # in progress. Without this the item is handed to the LLM and the score
         # is invented.
-        if self._current_item and self._looks_like_scale_prompt(question):
+        # The latched item is only usable if it belongs to the instrument the
+        # current section administers. A stale item from the previous
+        # questionnaire must never answer for this one.
+        if (
+            self._current_item
+            and self._looks_like_scale_prompt(question)
+            and (
+                self._current_instrument is None
+                or self._current_item.startswith(self._current_instrument)
+            )
+        ):
             key = self._current_item
             if key.endswith("_difficulty"):
                 return key, self._answer_for(key)

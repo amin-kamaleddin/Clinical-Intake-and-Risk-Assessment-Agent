@@ -5,12 +5,12 @@
   "repetition": 0,
   "persona_id": "moderate",
   "record_score": 0.9773,
-  "flow_score": 0.85,
+  "flow_score": 0.95,
   "record_detail": {
     "record_score": 0.9773,
-    "record_score_contested": 0.9643,
-    "fields_contested": 28,
-    "fields_auto_resolved": 16,
+    "record_score_contested": 0.95,
+    "fields_contested": 20,
+    "fields_auto_resolved": 24,
     "fields_confirmed_absent": 9,
     "fields_scored": 44,
     "fields_unjudged": 0,
@@ -57,6 +57,11 @@
         "credit": 3.5,
         "score": 0.875
       },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
       "education_employment_legal_history": {
         "fields": 3,
         "credit": 3.0,
@@ -67,11 +72,6 @@
         "credit": 2.0,
         "score": 1.0
       },
-      "substance_use": {
-        "fields": 8,
-        "credit": 8.0,
-        "score": 1.0
-      },
       "personal_history": {
         "fields": 4,
         "credit": 4.0,
@@ -79,12 +79,12 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and professional intake. It handled the patient's occasional vagueness well by rephrasing questions when the patient struggled to understand, and it successfully navigated the PHQ-9 and GAD-7 questionnaires.",
+  "flow_summary": "The interviewer conducted a thorough and professional intake, demonstrating excellent recovery skills when the patient was imprecise or struggled with questionnaire wording. The system successfully navigated the patient's tendency to hedge by rephrasing questions clearly without being repetitive or dismissive.",
   "issues": [
     {
       "severity": "minor",
-      "category": "repetition",
-      "evidence": "The interviewer repeated the exact same PHQ-9 and GAD-7 questions after the patient expressed confusion, rather than simply rephrasing them initially."
+      "category": "clarity",
+      "evidence": "The patient initially struggled with the PHQ-9 and GAD-7 questions, requiring the interviewer to rephrase or repeat the options to get a concrete answer."
     }
   ],
   "field_verdicts": [
@@ -209,6 +209,70 @@
       "produced": true
     },
     {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
       "ref": "education_employment_legal_history.active_legal_cases",
       "verdict": "match",
       "source": "auto",
@@ -228,7 +292,7 @@
       "ref": "general_information.address",
       "verdict": "partial",
       "source": "llm",
-      "note": "City and province are missing.",
+      "note": "City and province information missing.",
       "expected": "9 Prince Arthur Avenue, Toronto, Ontario",
       "produced": "9 Prince Arthur Avenue"
     },
@@ -254,7 +318,7 @@
       "source": "llm",
       "note": "",
       "expected": "floundering at work; cannot concentrate; no future orientation",
-      "produced": "Floundering at work; difficulty getting started on simple projects, concentrating, and picturing where things are headed."
+      "produced": "Floundering at work, difficulty initiating even simple projects, trouble concentrating, and little sense of where things are headed."
     },
     {
       "ref": "current_concerns.goals",
@@ -262,7 +326,7 @@
       "source": "llm",
       "note": "",
       "expected": "function at work; move forward",
-      "produced": "Mainly to function better at work and actually move forward again."
+      "produced": "To function better at work and be able to move forward again."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -270,7 +334,7 @@
       "source": "llm",
       "note": "",
       "expected": "depression; college; recurrent",
-      "produced": "Depression, occurring in college and more than once."
+      "produced": "Possible depression during college; patient is unsure of the exact wording."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
@@ -278,7 +342,7 @@
       "source": "llm",
       "note": "",
       "expected": "time off after father's death",
-      "produced": "Took some time off after father died; unsure whether there was formal counseling."
+      "produced": "Therapy or counseling after father died; exact type and timing not recalled."
     },
     {
       "ref": "medications.current_medications",
@@ -286,7 +350,7 @@
       "source": "llm",
       "note": "",
       "expected": "Antidepressant; patient does not remember the name or dose; takes one tablet each morning; started about 4 months ago; no side effects recalled",
-      "produced": "Unidentified antidepressant for mood; one tablet each morning, started approximately 4 months ago, dose unknown, no recalled side effects."
+      "produced": "One unidentified medication for mood, one tablet each morning; started approximately 4 months ago; dose unknown; no recalled side effects."
     },
     {
       "ref": "medical_history.height",
@@ -310,7 +374,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; major depressive disorder",
-      "produced": "Mother has major depression; sister has depression; maternal uncle died by suicide."
+      "produced": "Mother has depression; sister has depression; maternal uncle died by suicide."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -318,79 +382,15 @@
       "source": "llm",
       "note": "",
       "expected": "Sister; depression",
-      "produced": "Mother has major depression; sister has depression; maternal uncle died by suicide."
+      "produced": "Mother has depression; sister has depression; maternal uncle died by suicide."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[2]",
       "verdict": "partial",
       "source": "llm",
-      "note": "The year of the suicide was omitted.",
+      "note": "The year of the suicide (2008) is missing.",
       "expected": "Maternal uncle; died by suicide in 2008.",
-      "produced": "Mother has major depression; sister has depression; maternal uncle died by suicide."
-    },
-    {
-      "ref": "substance_use.nonmedical_alcohol_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "Never."
-    },
-    {
-      "ref": "substance_use.nonmedical_nicotine_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
-    },
-    {
-      "ref": "substance_use.nonmedical_marijuana_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
-    },
-    {
-      "ref": "substance_use.nonmedical_stimulant_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
-    },
-    {
-      "ref": "substance_use.nonmedical_opioid_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
-    },
-    {
-      "ref": "substance_use.nonmedical_benzodiazepine_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
-    },
-    {
-      "ref": "substance_use.nonmedical_hallucinogen_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
-    },
-    {
-      "ref": "substance_use.nonmedical_other_substance_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "No, never."
+      "produced": "Mother has depression; sister has depression; maternal uncle died by suicide."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -406,7 +406,7 @@
       "source": "llm",
       "note": "",
       "expected": "Architect, Northline Studio; 2020 to present",
-      "produced": "Architect at Northline Studio since 2020."
+      "produced": "Working as an architect at Northline Studio since approximately 2020."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -414,7 +414,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born and grew up, with no further details provided."
+      "produced": "Born and grew up mostly in the same place; no other significant early-childhood experiences reported."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -422,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "college; father died; leukemia",
-      "produced": "College was a big part of that time; father died when patient was younger, possibly from leukemia."
+      "produced": "Attended college; father died of leukemia when patient was younger."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -430,7 +430,7 @@
       "source": "llm",
       "note": "",
       "expected": "Separated from spouse after 6 years of marriage; divorce in progress; interested in a coworker",
-      "produced": "Separated from spouse after 6 years of marriage; divorce is in progress. Interested in a coworker."
+      "produced": "Separated from spouse after approximately 6 years of marriage; divorce is in progress. Interested in a coworker."
     },
     {
       "ref": "personal_history.future_goals",
@@ -438,7 +438,7 @@
       "source": "llm",
       "note": "",
       "expected": "rebuild; career",
-      "produced": "Rebuild things and get career moving again."
+      "produced": "Rebuild things and get his career moving again."
     }
   ],
   "fabricated": [
@@ -448,7 +448,7 @@
       "field": "previous_treatments",
       "entry_index": null,
       "expected": null,
-      "produced": "Currently taking an unidentified antidepressant for mood.",
+      "produced": "Currently taking an unidentified mood medication, one tablet each morning, started approximately 4 months ago; dose unknown and no recalled side effects.",
       "verdict": "fabricated",
       "reason": "scenario provides no value for this field"
     }

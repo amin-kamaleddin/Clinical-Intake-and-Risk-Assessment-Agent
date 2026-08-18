@@ -4,21 +4,21 @@
   "scenario_case_id": "04-09",
   "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9255,
+  "record_score": 0.8723,
   "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9255,
-    "record_score_contested": 0.8478,
-    "fields_contested": 23,
-    "fields_auto_resolved": 24,
+    "record_score": 0.8723,
+    "record_score_contested": 0.75,
+    "fields_contested": 24,
+    "fields_auto_resolved": 23,
     "fields_confirmed_absent": 11,
     "fields_scored": 47,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 43,
-      "partial": 1,
-      "missing": 3,
+      "match": 40,
+      "partial": 2,
+      "missing": 5,
       "contradicted": 0,
       "fabricated": 0
     },
@@ -42,8 +42,8 @@
       },
       "medical_history": {
         "fields": 9,
-        "credit": 7.0,
-        "score": 0.7778
+        "credit": 4.5,
+        "score": 0.5
       },
       "medication_allergies": {
         "fields": 1,
@@ -77,22 +77,22 @@
       }
     }
   },
-  "flow_summary": "The interviewer struggled to manage a confused patient, often failing to provide necessary guidance when the patient was clearly struggling with the format. While the interviewer successfully completed the intake, they relied on repetitive, robotic prompts ('Please answer yes or no', 'Please choose one response option') rather than rephrasing or clarifying, which led to significant friction during the PHQ-9 and GAD-7 sections.",
+  "flow_summary": "The interviewer struggled to manage a confused patient, often failing to provide necessary guidance when the patient expressed difficulty understanding the task. While the interviewer successfully completed the intake, they frequently resorted to blunt, repetitive prompts ('Please answer yes or no') rather than rephrasing or clarifying, and they failed to maintain the structure of the PHQ-9 and GAD-7, leading to significant confusion and redundant questioning.",
   "issues": [
     {
       "severity": "moderate",
       "category": "communication_style",
-      "evidence": "The interviewer repeatedly used blunt, robotic prompts like 'Please answer yes or no' and 'Please choose one response option' instead of offering helpful clarification when the patient expressed confusion."
+      "evidence": "The interviewer repeatedly used the blunt, unhelpful prompt 'Please answer yes or no' when the patient expressed confusion, rather than rephrasing the question to be more accessible."
     },
     {
-      "severity": "moderate",
-      "category": "questioning_technique",
-      "evidence": "During the PHQ-9 and GAD-7, the interviewer failed to adapt to the patient's confusion, leading to multiple instances where the patient had to ask for the list of options again, such as: 'Which of those was the middle one? I've forgotten the list.'"
+      "severity": "major",
+      "category": "questionnaire_management",
+      "evidence": "The interviewer failed to maintain the flow of the PHQ-9 and GAD-7, resulting in the patient repeatedly asking for the list of options again and the interviewer having to re-prompt multiple times."
     },
     {
       "severity": "minor",
-      "category": "flow",
-      "evidence": "The interviewer did not acknowledge the patient's difficulty with the questionnaire format, which made the interaction feel mechanical and disconnected from the patient's stated confusion."
+      "category": "redundancy",
+      "evidence": "The interviewer asked 'What is your family doctor's full first and last name?' immediately after the patient had already provided the name 'Dr. Susan Park' in the previous turn."
     }
   ],
   "field_verdicts": [
@@ -135,14 +135,6 @@
       "note": "",
       "expected": true,
       "produced": true
-    },
-    {
-      "ref": "general_information.family_doctor_name",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "DR. SUSAN PARK",
-      "produced": "DR. SUSAN PARK"
     },
     {
       "ref": "general_information.has_psychiatrist",
@@ -294,7 +286,7 @@
       "source": "llm",
       "note": "",
       "expected": "ROBERT MILLER",
-      "produced": "OH—FULL LEGAL NAME, RIGHT. IT’S ROBERT MILLER."
+      "produced": "OH, RIGHT, THE FULL LEGAL NAME… I THINK IT’S ROBERT MILLER."
     },
     {
       "ref": "general_information.gender",
@@ -302,15 +294,23 @@
       "source": "llm",
       "note": "",
       "expected": "Male",
-      "produced": "Male, I suppose."
+      "produced": "Male, yes."
     },
     {
       "ref": "general_information.address",
       "verdict": "missing",
       "source": "llm",
-      "note": "The system failed to capture the address.",
+      "note": "The address was not captured.",
       "expected": "76 Lakeshore Road East, Oakville, Ontario",
-      "produced": "Unknown"
+      "produced": "Uh… you mean the whole thing, street and city and province all together? I’m blanking a bit on the format right now—could you say it another way?"
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. SUSAN PARK",
+      "produced": "DR. SUSAN PARK."
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -318,7 +318,7 @@
       "source": "llm",
       "note": "",
       "expected": "lost interest; fatigue; social withdrawal; sleep",
-      "produced": "Mostly it’s been this loss of interest, and I’ve been so fatigued… I’m not as social as I used to be, and sleep has become a bit of a nuisance too."
+      "produced": "Mostly it’s… losing interest in things, feeling worn out, and I’ve been pulling back from people. Sleep has been off too, especially getting to sleep."
     },
     {
       "ref": "current_concerns.goals",
@@ -326,7 +326,7 @@
       "source": "llm",
       "note": "",
       "expected": "enjoy life; stay active",
-      "produced": "Well, I’d like to enjoy life again, and keep active if I can."
+      "produced": "I want to enjoy life again, and stay active if I can."
     },
     {
       "ref": "medications.current_medications[0]",
@@ -334,7 +334,7 @@
       "source": "llm",
       "note": "",
       "expected": "Carbidopa-levodopa; 25/100 mg, one tablet three times daily; started 2024; occasional nausea",
-      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: It’s the 25/100 mg tablets… one tablet, three times a day.; Start Or Duration: Started in 2024.; Side Effects: Occasional nausea.\nMedication 2: Name Or Description: Yes… latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: Started in 2021.; Side Effects: None known.\nMedication 3: Name Or Description: Yes, one more: allopurinol.; Dose: 100 mg daily.; Start Or Duration: Started in 2019.; Side Effects: None known."
+      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: It’s 25/100 mg, one tablet three times daily.; Start Or Duration: Started in 2024.; Side Effects: Occasional nausea.\nMedication 2: Name Or Description: Yes — latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: Started in 2021.; Side Effects: None known.\nMedication 3: Name Or Description: Yes — allopurinol.; Dose: 100 mg daily.; Start Or Duration: Started in 2019.; Side Effects: None known."
     },
     {
       "ref": "medications.current_medications[1]",
@@ -342,7 +342,7 @@
       "source": "llm",
       "note": "",
       "expected": "Latanoprost eye drops; one drop in each eye nightly; started 2021; no known side effects",
-      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: It’s the 25/100 mg tablets… one tablet, three times a day.; Start Or Duration: Started in 2024.; Side Effects: Occasional nausea.\nMedication 2: Name Or Description: Yes… latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: Started in 2021.; Side Effects: None known.\nMedication 3: Name Or Description: Yes, one more: allopurinol.; Dose: 100 mg daily.; Start Or Duration: Started in 2019.; Side Effects: None known."
+      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: It’s 25/100 mg, one tablet three times daily.; Start Or Duration: Started in 2024.; Side Effects: Occasional nausea.\nMedication 2: Name Or Description: Yes — latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: Started in 2021.; Side Effects: None known.\nMedication 3: Name Or Description: Yes — allopurinol.; Dose: 100 mg daily.; Start Or Duration: Started in 2019.; Side Effects: None known."
     },
     {
       "ref": "medications.current_medications[2]",
@@ -350,47 +350,47 @@
       "source": "llm",
       "note": "",
       "expected": "Allopurinol; 100 mg daily; started 2019; no known side effects.",
-      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: It’s the 25/100 mg tablets… one tablet, three times a day.; Start Or Duration: Started in 2024.; Side Effects: Occasional nausea.\nMedication 2: Name Or Description: Yes… latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: Started in 2021.; Side Effects: None known.\nMedication 3: Name Or Description: Yes, one more: allopurinol.; Dose: 100 mg daily.; Start Or Duration: Started in 2019.; Side Effects: None known."
+      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: It’s 25/100 mg, one tablet three times daily.; Start Or Duration: Started in 2024.; Side Effects: Occasional nausea.\nMedication 2: Name Or Description: Yes — latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: Started in 2021.; Side Effects: None known.\nMedication 3: Name Or Description: Yes — allopurinol.; Dose: 100 mg daily.; Start Or Duration: Started in 2019.; Side Effects: None known."
     },
     {
       "ref": "medical_history.medical_conditions[0]",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Diagnosis date missing.",
       "expected": "Parkinson's disease; diagnosed 2024",
-      "produced": "Oh… there are a few, but let me think. Parkinson’s disease is one. And then there’s glaucoma, and gout—those are the ones I remember offhand."
+      "produced": "Parkinson’s disease."
     },
     {
       "ref": "medical_history.medical_conditions[1]",
       "verdict": "missing",
       "source": "llm",
-      "note": "Prostate cancer history is missing from the produced list.",
+      "note": "Prostate cancer not captured.",
       "expected": "Prostate cancer; treated in 2018 and currently in remission",
-      "produced": "Oh… there are a few, but let me think. Parkinson’s disease is one. And then there’s glaucoma, and gout—those are the ones I remember offhand."
+      "produced": "Parkinson’s disease."
     },
     {
       "ref": "medical_history.medical_conditions[2]",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "Glaucoma not captured.",
       "expected": "Glaucoma; diagnosed 2021",
-      "produced": "Oh… there are a few, but let me think. Parkinson’s disease is one. And then there’s glaucoma, and gout—those are the ones I remember offhand."
+      "produced": "Parkinson’s disease."
     },
     {
       "ref": "medical_history.medical_conditions[3]",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "Gout is not present in the produced list.",
       "expected": "Gout; diagnosed 2019",
-      "produced": "Oh… there are a few, but let me think. Parkinson’s disease is one. And then there’s glaucoma, and gout—those are the ones I remember offhand."
+      "produced": "Parkinson’s disease."
     },
     {
       "ref": "medical_history.medical_conditions[4]",
       "verdict": "missing",
       "source": "llm",
-      "note": "REM sleep behaviour disorder is not mentioned in the produced text.",
+      "note": "REM sleep behaviour disorder is not present in the produced list.",
       "expected": "REM sleep behaviour disorder; diagnosed 2025.",
-      "produced": "Oh… there are a few, but let me think. Parkinson’s disease is one. And then there’s glaucoma, and gout—those are the ones I remember offhand."
+      "produced": "Parkinson’s disease."
     },
     {
       "ref": "medical_history.height",
@@ -422,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "current; wine; monthly; minimal",
-      "produced": "Status: Current; Substance or product: Wine.; Quantity or frequency: Monthly… minimal, just a little.; Duration: I don’t know."
+      "produced": "Status: Current; Substance or product: Wine.; Quantity or frequency: Monthly, and it’s minimal.; Duration: I don’t know."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -430,13 +430,13 @@
       "source": "llm",
       "note": "",
       "expected": "bachelor's degree; teacher",
-      "produced": "Bachelor’s degree… teacher, I think that’s the way it would be put."
+      "produced": "Bachelor’s degree… I was a teacher, if that helps."
     },
     {
       "ref": "education_employment_legal_history.employment_history",
       "verdict": "partial",
       "source": "llm",
-      "note": "The retirement status is missing.",
+      "note": "Retired status is missing.",
       "expected": "High school science teacher, Oakville District School Board; 1978 to 2013; retired",
       "produced": "Job 1: Name Or Description: Oakville District School Board.; Job Title: High school science teacher.; Dates: 1978 to 2013."
     },
@@ -446,7 +446,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born, grew up… just sort of there, you know. I was born and grew up, not much more to say than that, really."
+      "produced": "Born, grew up… just sort of a normal childhood, I guess. I don’t have much more to say there."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -454,7 +454,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; became a teacher",
-      "produced": "School, mostly — and then I became a teacher. That’s the main thing I remember."
+      "produced": "School, mostly… and then I became a teacher. I don’t have a lot of details beyond that."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -462,7 +462,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; 49 years; supportive wife",
-      "produced": "Married. It’s been 49 years, and my wife is supportive."
+      "produced": "I’ve been married for 49 years, and my wife’s been very supportive."
     },
     {
       "ref": "personal_history.future_goals",
@@ -470,7 +470,7 @@
       "source": "llm",
       "note": "",
       "expected": "enjoy life; manage illness",
-      "produced": "I’d like to enjoy life, and manage the illness."
+      "produced": "To enjoy life… and manage the illness, really."
     }
   ],
   "fabricated": []

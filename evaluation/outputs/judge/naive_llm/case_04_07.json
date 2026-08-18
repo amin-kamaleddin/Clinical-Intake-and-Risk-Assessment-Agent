@@ -4,31 +4,35 @@
   "scenario_case_id": "04-07",
   "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9881,
+  "record_score": 1.0,
   "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9881,
-    "record_score_contested": 0.975,
-    "fields_contested": 20,
-    "fields_auto_resolved": 22,
-    "fields_confirmed_absent": 10,
+    "record_score": 1.0,
+    "record_score_contested": 1.0,
+    "fields_contested": 21,
+    "fields_auto_resolved": 21,
+    "fields_confirmed_absent": 7,
     "fields_scored": 42,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 41,
-      "partial": 1,
+      "match": 42,
+      "partial": 0,
       "missing": 0,
       "contradicted": 0,
-      "fabricated": 0
+      "fabricated": 3
     },
-    "fabricated_fields": 0,
-    "fabricated_refs": [],
+    "fabricated_fields": 3,
+    "fabricated_refs": [
+      "past_psychiatric_history.assessment_details",
+      "past_psychiatric_history.previous_therapies",
+      "past_psychiatric_history.previous_treatments"
+    ],
     "by_section": {
       "general_information": {
         "fields": 11,
-        "credit": 10.5,
-        "score": 0.9545
+        "credit": 11.0,
+        "score": 1.0
       },
       "past_psychiatric_history": {
         "fields": 4,
@@ -77,17 +81,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated a challenging, confused patient persona, demonstrating patience and persistence in gathering all required information. While the interviewer was effective at redirecting the patient and ensuring completion, the process became quite mechanical and repetitive during the standardized questionnaire phase, where the patient's confusion led to significant friction.",
+  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona. While the interviewer was persistent and eventually obtained all necessary information, the process was marred by significant repetition during the PHQ-9 and GAD-7 sections, where the interviewer frequently had to re-ask questions due to the patient's confusion.",
   "issues": [
     {
-      "severity": "minor",
-      "category": "flow",
-      "evidence": "The interviewer repeatedly re-read the full PHQ-9 and GAD-7 question text when the patient expressed confusion, rather than simplifying the prompt or confirming understanding more efficiently."
+      "severity": "moderate",
+      "category": "questioning_technique",
+      "evidence": "The interviewer repeatedly had to re-ask PHQ-9 and GAD-7 questions multiple times because the patient was confused by the scale or the timeframe, leading to a repetitive and somewhat mechanical flow."
     },
     {
       "severity": "minor",
-      "category": "flow",
-      "evidence": "The interviewer occasionally struggled to maintain a natural conversational flow during the questionnaire, leading to a rigid, robotic interaction style when the patient asked for clarification."
+      "category": "efficiency",
+      "evidence": "In the GAD-7 section, the interviewer had to re-ask 'GAD-7 question 2: Thinking specifically about the last two weeks...' after the patient deflected, which, while necessary for recovery, highlights the difficulty in maintaining a smooth flow with this persona."
     }
   ],
   "field_verdicts": [
@@ -106,14 +110,6 @@
       "note": "",
       "expected": "Female",
       "produced": "Female"
-    },
-    {
-      "ref": "general_information.date_of_birth",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "11/03/2000",
-      "produced": "11/03/2000"
     },
     {
       "ref": "general_information.postal_code",
@@ -268,12 +264,20 @@
       "produced": false
     },
     {
-      "ref": "general_information.address",
-      "verdict": "partial",
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing province information.",
+      "note": "",
+      "expected": "11/03/2000",
+      "produced": "November 3, 2000"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
       "expected": "500 Wellington Street West, Toronto, Ontario",
-      "produced": "500 Wellington Street West, Toronto"
+      "produced": "500 Wellington Street West, Toronto, Ontario, Canada"
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -281,7 +285,7 @@
       "source": "llm",
       "note": "",
       "expected": "mood swings; premenstrual; irritability; relationship",
-      "produced": "Mood swings tied to menstrual cycle, premenstrual symptoms, irritability, and relationship problems."
+      "produced": "Mood swings and irritability, especially about a week or a bit longer before her period, with low mood, snappiness, and relationship impact; symptoms settle once her period starts."
     },
     {
       "ref": "current_concerns.goals",
@@ -289,7 +293,7 @@
       "source": "llm",
       "note": "",
       "expected": "control mood swings; save relationships",
-      "produced": "Get mood swings under control and prevent them from damaging relationships."
+      "produced": "Mostly I want the mood swings under control, and I want to stop it from damaging my relationships."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
@@ -297,7 +301,7 @@
       "source": "llm",
       "note": "",
       "expected": "History of non-suicidal self-injury since adolescence, used to reduce anxiety.",
-      "produced": "History of non-suicidal self-injury by cutting since adolescence, reportedly to ease anxiety rather than as a suicide attempt. Patient reports no current self-injury to report and no suicidal thoughts."
+      "produced": "History of cutting beginning in adolescence, described as non-suicidal and used to reduce anxiety. Exact most recent episode unknown; no recent urges and not currently engaging in it."
     },
     {
       "ref": "medications.current_medications",
@@ -305,7 +309,7 @@
       "source": "llm",
       "note": "",
       "expected": "Combined oral contraceptive; one tablet daily; started 2023; no known side effects",
-      "produced": "Combined oral contraceptive, one tablet daily, started in 2023; no known side effects. Name and dose otherwise unknown."
+      "produced": "Combined oral contraceptive, one tablet daily; started in 2023; brand and strength unknown; no known side effects."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -313,7 +317,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; major depressive disorder; one psychiatric admission in 2018",
-      "produced": "Mother has major depressive disorder and had one psychiatric admission in 2018. No other known family psychiatric or substance-use concerns or suicide history."
+      "produced": "Mother has major depressive disorder and was admitted to a psychiatric unit once in 2018. No other known family psychiatric, substance-use, suicide attempt, or suicide history."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -401,7 +405,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Grew up where born in an ordinary family environment; no major early-childhood experiences recalled."
+      "produced": "Born and raised in a normal family environment; no major early-childhood experiences recalled."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -409,7 +413,7 @@
       "source": "llm",
       "note": "",
       "expected": "cutting began; school",
-      "produced": "Cutting began during adolescence; school was part of that period, with no further details provided."
+      "produced": "Cutting began during adolescence; school was also part of the difficulties, but no further details provided."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -417,7 +421,7 @@
       "source": "llm",
       "note": "",
       "expected": "One significant two-year relationship; ended three months ago; currently single",
-      "produced": "One significant relationship lasted about two years and ended three months ago. Currently single; relationship concerns contribute to distress from mood symptoms."
+      "produced": "Currently single. One significant relationship lasted about two years and ended three months ago."
     },
     {
       "ref": "personal_history.future_goals",
@@ -425,8 +429,39 @@
       "source": "llm",
       "note": "",
       "expected": "stable relationships; career",
-      "produced": "Have stable relationships and continue moving forward in career."
+      "produced": "Stable relationships and keeping her career on track."
     }
   ],
-  "fabricated": []
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "section": "past_psychiatric_history",
+      "field": "assessment_details",
+      "entry_index": null,
+      "expected": null,
+      "produced": "Patient does not recall having a formal mental-health assessment.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "section": "past_psychiatric_history",
+      "field": "previous_therapies",
+      "entry_index": null,
+      "expected": null,
+      "produced": "Does not recall participating in psychotherapy or counseling.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    },
+    {
+      "ref": "past_psychiatric_history.previous_treatments",
+      "section": "past_psychiatric_history",
+      "field": "previous_treatments",
+      "entry_index": null,
+      "expected": null,
+      "produced": "No prior psychiatric medication, intensive outpatient care, or other mental-health programs.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
 }

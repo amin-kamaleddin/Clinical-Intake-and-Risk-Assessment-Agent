@@ -4,22 +4,22 @@
   "scenario_case_id": "04-11",
   "repetition": 0,
   "persona_id": "moderate",
-  "record_score": 0.9545,
+  "record_score": 0.9205,
   "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9545,
-    "record_score_contested": 0.8182,
-    "fields_contested": 11,
-    "fields_auto_resolved": 33,
+    "record_score": 0.9205,
+    "record_score_contested": 0.7083,
+    "fields_contested": 12,
+    "fields_auto_resolved": 32,
     "fields_confirmed_absent": 10,
     "fields_scored": 44,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 41,
-      "partial": 2,
+      "match": 39,
+      "partial": 3,
       "missing": 0,
-      "contradicted": 1,
+      "contradicted": 2,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -62,13 +62,13 @@
       },
       "education_employment_legal_history": {
         "fields": 3,
-        "credit": 3.0,
-        "score": 1.0
+        "credit": 2.5,
+        "score": 0.8333
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 2.0,
-        "score": 1.0
+        "credit": 1.0,
+        "score": 0.5
       },
       "personal_history": {
         "fields": 4,
@@ -77,17 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and professional intake, effectively managing a patient who was occasionally imprecise or hesitant. The system successfully navigated the patient's ambiguity through clear, patient, and well-timed follow-up questions, ensuring all necessary clinical information was captured.",
+  "flow_summary": "The interviewer managed a somewhat imprecise patient well, using effective redirection and clarification techniques. The intake was thorough and adhered to the required structure, though the interviewer occasionally used redundant phrasing when prompting for answers.",
   "issues": [
     {
       "severity": "minor",
-      "category": "clarity",
-      "evidence": "The interviewer repeated the full PHQ-9 and GAD-7 question text when the patient asked for clarification, which was slightly redundant but ultimately effective in ensuring the patient understood the scale."
+      "category": "redundancy",
+      "evidence": "The interviewer frequently appended 'Before we move on, could you answer the question above?' even when the patient had already provided the necessary information or was in the middle of a coherent response."
     },
     {
       "severity": "minor",
-      "category": "flow",
-      "evidence": "In the personal history section, the interviewer had to re-ask for birthplace details after the patient initially deflected, though the interviewer handled this with appropriate persistence."
+      "category": "clarity",
+      "evidence": "In the PHQ-9 and GAD-7 sections, the interviewer occasionally repeated the entire question block when the patient asked for clarification, which was helpful but slightly mechanical."
     }
   ],
   "field_verdicts": [
@@ -260,20 +260,12 @@
       "produced": true
     },
     {
-      "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Mother; major depressive disorder",
-      "produced": "Mother; major depressive disorder; no additional details known. Sister; depression. Maternal uncle; died by suicide."
-    },
-    {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
       "verdict": "match",
       "source": "auto",
       "note": "",
       "expected": "Sister; depression",
-      "produced": "Mother; major depressive disorder; no additional details known. Sister; depression. Maternal uncle; died by suicide."
+      "produced": "Mother; major depression; further details unknown. Sister; depression; further details unknown. Maternal uncle; died by suicide; mental health diagnosis unknown"
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -357,11 +349,11 @@
     },
     {
       "ref": "current_concerns.primary_problems",
-      "verdict": "match",
+      "verdict": "contradicted",
       "source": "llm",
-      "note": "",
+      "note": "The system states no specific consequences, contradicting the patient's report of work-related problems.",
       "expected": "floundering at work; cannot concentrate; no future orientation",
-      "produced": "Difficulty getting started and making progress on a simple work project; difficulty concentrating at work; limited sense of a future."
+      "produced": "Feeling generally stuck and having difficulty getting moving or taking action as expected; occurs more generally rather than in one specific setting. No specific consequences reported."
     },
     {
       "ref": "current_concerns.goals",
@@ -369,7 +361,7 @@
       "source": "llm",
       "note": "",
       "expected": "function at work; move forward",
-      "produced": "Improve functioning at work and be able to move forward again."
+      "produced": "Improve functioning at work and make progress with tasks and other responsibilities."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -377,15 +369,15 @@
       "source": "llm",
       "note": "",
       "expected": "depression; college; recurrent",
-      "produced": "Recurrent depression; diagnosed in college"
+      "produced": "Depression; recurrent; diagnosed during college"
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "contradicted",
       "source": "llm",
-      "note": "The system reported none, but the expected value included time off after father's death.",
+      "note": "The system reports none, while the patient reported taking time off.",
       "expected": "time off after father's death",
-      "produced": "None reported"
+      "produced": "None reported."
     },
     {
       "ref": "medications.current_medications",
@@ -393,7 +385,15 @@
       "source": "llm",
       "note": "Missing the frequency of taking one tablet each morning.",
       "expected": "Antidepressant; patient does not remember the name or dose; takes one tablet each morning; started about 4 months ago; no side effects recalled",
-      "produced": "Antidepressant (name unknown); dose unknown; started approximately 4 months ago; no recalled side effects."
+      "produced": "Unknown antidepressant; dose Unknown; started approximately 4 months ago; no side effects reported"
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Mother; major depressive disorder",
+      "produced": "Mother; major depression; further details unknown. Sister; depression; further details unknown. Maternal uncle; died by suicide; mental health diagnosis unknown"
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[2]",
@@ -401,15 +401,15 @@
       "source": "llm",
       "note": "Missing the year of the suicide (2008).",
       "expected": "Maternal uncle; died by suicide in 2008.",
-      "produced": "Mother; major depressive disorder; no additional details known. Sister; depression. Maternal uncle; died by suicide."
+      "produced": "Mother; major depression; further details unknown. Sister; depression; further details unknown. Maternal uncle; died by suicide; mental health diagnosis unknown"
     },
     {
       "ref": "education_employment_legal_history.highest_education",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the field of study (architecture).",
       "expected": "master's degree; architecture",
-      "produced": "Master's degree in architecture"
+      "produced": "Master's degree"
     },
     {
       "ref": "personal_history.early_childhood",
@@ -417,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Patient does not know or recall the specific place of birth or where they grew up; no further details provided."
+      "produced": "Patient was born and grew up in the same general area; no specific additional details provided."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -425,7 +425,7 @@
       "source": "llm",
       "note": "",
       "expected": "college; father died; leukemia",
-      "produced": "Mostly attended college. His father died from leukemia during that period; this was the main significant experience he recalled."
+      "produced": "College was a significant part of this period. The patient's father died of leukemia around that time, which is one of the main experiences they remember."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -433,7 +433,7 @@
       "source": "llm",
       "note": "",
       "expected": "Separated from spouse after 6 years of marriage; divorce in progress; interested in a coworker",
-      "produced": "Marriage; approximately 6 years; separated; divorce in progress. Coworker; romantic interest; current."
+      "produced": "Marriage; approximately 6 years; separated; divorce in progress. Interest in a coworker; recent; current, not a formal relationship."
     },
     {
       "ref": "personal_history.future_goals",
@@ -441,7 +441,7 @@
       "source": "llm",
       "note": "",
       "expected": "rebuild; career",
-      "produced": "Rebuild his life and get his career back on track."
+      "produced": "Rebuild and move forward with their career."
     }
   ],
   "fabricated": []

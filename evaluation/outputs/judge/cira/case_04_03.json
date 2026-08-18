@@ -4,22 +4,22 @@
   "scenario_case_id": "04-03",
   "repetition": 0,
   "persona_id": "clear",
-  "record_score": 0.9222,
+  "record_score": 0.9667,
   "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9222,
-    "record_score_contested": 0.75,
-    "fields_contested": 14,
-    "fields_auto_resolved": 31,
+    "record_score": 0.9667,
+    "record_score_contested": 0.8846,
+    "fields_contested": 13,
+    "fields_auto_resolved": 32,
     "fields_confirmed_absent": 7,
     "fields_scored": 45,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 40,
-      "partial": 3,
-      "missing": 2,
-      "contradicted": 0,
+      "match": 43,
+      "partial": 1,
+      "missing": 0,
+      "contradicted": 1,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -32,8 +32,8 @@
       },
       "past_psychiatric_history": {
         "fields": 7,
-        "credit": 5.0,
-        "score": 0.7143
+        "credit": 5.5,
+        "score": 0.7857
       },
       "medications": {
         "fields": 3,
@@ -57,8 +57,8 @@
       },
       "substance_use": {
         "fields": 8,
-        "credit": 7.5,
-        "score": 0.9375
+        "credit": 8.0,
+        "score": 1.0
       },
       "education_employment_legal_history": {
         "fields": 3,
@@ -72,27 +72,32 @@
       },
       "personal_history": {
         "fields": 4,
-        "credit": 3.0,
-        "score": 0.75
+        "credit": 4.0,
+        "score": 1.0
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough intake but suffered from significant mechanical redundancy, particularly in the 'Personal History' and 'PHQ-9/GAD-7' sections, where it repeatedly asked the patient to confirm information that had just been provided. While the safety response was appropriate and timely, the system's tendency to loop or re-ask for confirmation at the end of every section felt robotic and unnecessary.",
+  "flow_summary": "The interviewer conducted a thorough intake but struggled with repetitive and unnecessary phrasing, particularly in the personal history section. While the safety protocol was triggered correctly following the PHQ-9, the interviewer frequently appended 'Before we move on, could you answer the question above?' to questions that had not yet been answered, which was redundant and slightly confusing.",
   "issues": [
     {
-      "severity": "moderate",
-      "category": "redundancy",
-      "evidence": "To finish this section: could you tell me about early childhood? ... To finish this section: could you tell me about adolescence early adulthood? ... To finish this section: could you tell me about future goals?"
+      "severity": "minor",
+      "category": "redundant_phrasing",
+      "evidence": "Before we move on, could you answer the question above?"
     },
     {
       "severity": "minor",
-      "category": "redundancy",
-      "evidence": "All done! Please take a look at the panel on the right... To finish this section: could you tell me about phq9 difficulty?"
+      "category": "redundant_phrasing",
+      "evidence": "Before we move on, could you answer the question above?"
     },
     {
       "severity": "minor",
-      "category": "redundancy",
-      "evidence": "All done! Please take a look at the panel on the right... To finish this section: could you tell me about past medication details?"
+      "category": "redundant_phrasing",
+      "evidence": "Before we move on, could you answer the question above?"
+    },
+    {
+      "severity": "minor",
+      "category": "redundant_phrasing",
+      "evidence": "Before we move on, could you answer the question above?"
     }
   ],
   "field_verdicts": [
@@ -345,12 +350,20 @@
       "produced": "Bachelor's degree"
     },
     {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Owner and managing director, Quinn Import Services; 2004 to present",
+      "produced": "Owner and managing director, Quinn Import Services; 2004 to Present"
+    },
+    {
       "ref": "current_concerns.primary_problems",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "son's death; grief; sadness; cannot concentrate",
-      "produced": "Since my son died by suicide six weeks ago, I have been constantly sad and having difficulty concentrating."
+      "produced": "Grief and constant sadness following the patient's son's death by suicide six weeks ago; difficulty concentrating."
     },
     {
       "ref": "current_concerns.goals",
@@ -358,7 +371,7 @@
       "source": "llm",
       "note": "",
       "expected": "cope with loss; return to functioning",
-      "produced": "I want help coping with the loss, getting back to functioning, and honouring my son’s memory."
+      "produced": "Cope with the loss and return to functioning."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -366,31 +379,31 @@
       "source": "llm",
       "note": "",
       "expected": "Followed by DR. LAURA BENNETT, psychiatrist, during two depressive episodes in 1998 and 2003",
-      "produced": "Dr. Laura Bennett; assessed during two depressive episodes in 1998 and 2003."
+      "produced": "Dr. Laura Bennett; during depressive episodes in 1998 and 2003."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the number of episodes and age of onset.",
+      "note": "Missing details regarding the number of episodes and age of onset.",
       "expected": "depression; two prior episodes; 30s",
       "produced": "Depression"
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Failed to capture that the therapy was individual psychotherapy.",
+      "note": "",
       "expected": "Individual psychotherapy; 1998; approximately 16 weekly sessions",
-      "produced": "Unknown therapy type; 1998; approximately 16 weekly sessions; location Unknown"
+      "produced": "Individual psychotherapy; 1998; approximately 16 weekly sessions; location: Unknown"
     },
     {
       "ref": "past_psychiatric_history.previous_treatments",
-      "verdict": "missing",
+      "verdict": "contradicted",
       "source": "llm",
-      "note": "System recorded 'Unknown' instead of the medication history.",
+      "note": "System states none reported, but patient had prior treatment with Sertraline.",
       "expected": "Sertraline during two prior depressive episodes; good response",
-      "produced": "Unknown"
+      "produced": "None reported."
     },
     {
       "ref": "medications.past_medication_details",
@@ -398,7 +411,7 @@
       "source": "llm",
       "note": "",
       "expected": "Sertraline; 100 mg daily; taken for about 18 months in his 30s; stopped after sustained recovery",
-      "produced": "Sertraline; 100 mg daily; taken for approximately 18 months in his 30s; stopped after sustained recovery"
+      "produced": "Sertraline; 100 mg daily; taken for approximately 18 months in his 30s; stopped after sustained recovery."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -410,27 +423,19 @@
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the detail that usage increased from weekends only.",
+      "note": "",
       "expected": "Current; wine; about half a bottle nightly; increased from weekends only after son's death; current duration 6 weeks",
       "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: About half a bottle nightly; Duration: About 6 weeks"
     },
     {
-      "ref": "education_employment_legal_history.employment_history",
+      "ref": "personal_history.early_childhood",
       "verdict": "match",
       "source": "llm",
       "note": "",
-      "expected": "Owner and managing director, Quinn Import Services; 2004 to present",
-      "produced": "Owner and managing director, Quinn Import Services; 2004 to present."
-    },
-    {
-      "ref": "personal_history.early_childhood",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "System recorded 'Unknown' for all details.",
       "expected": "born; grew up",
-      "produced": "Place of birth: Unknown. Place raised: Unknown. Description as a young child: Unknown."
+      "produced": "Patient does not know where they were born or grew up, or how they would describe themselves as a young child."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -438,7 +443,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; early career",
-      "produced": "School and early career; no further details reported."
+      "produced": "School and early career."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -446,7 +451,7 @@
       "source": "llm",
       "note": "",
       "expected": "married",
-      "produced": "Marriage; duration and dates: Unknown; current status: Unknown."
+      "produced": "Marriage; duration and current status unknown."
     },
     {
       "ref": "personal_history.future_goals",
@@ -454,7 +459,7 @@
       "source": "llm",
       "note": "",
       "expected": "recover; honour son's memory",
-      "produced": "Recover and honour my son's memory."
+      "produced": "To recover and honour my son's memory."
     }
   ],
   "fabricated": []

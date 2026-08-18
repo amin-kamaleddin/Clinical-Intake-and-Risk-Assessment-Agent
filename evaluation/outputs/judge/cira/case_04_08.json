@@ -4,11 +4,11 @@
   "scenario_case_id": "04-08",
   "repetition": 0,
   "persona_id": "clear",
-  "record_score": 0.9737,
-  "flow_score": 0.85,
+  "record_score": 0.9605,
+  "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9737,
-    "record_score_contested": 0.8889,
+    "record_score": 0.9605,
+    "record_score_contested": 0.8333,
     "fields_contested": 9,
     "fields_auto_resolved": 29,
     "fields_confirmed_absent": 14,
@@ -16,8 +16,8 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 37,
-      "partial": 0,
+      "match": 36,
+      "partial": 1,
       "missing": 0,
       "contradicted": 1,
       "fabricated": 0
@@ -67,8 +67,8 @@
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 2.0,
-        "score": 1.0
+        "credit": 1.5,
+        "score": 0.75
       },
       "personal_history": {
         "fields": 4,
@@ -77,12 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and efficient intake. The system handled the safety disclosure appropriately by pausing to assess risk and then resuming the assessment. The main issue was a failure to stop after the patient repeatedly stated they did not know the answers to historical questions.",
+  "flow_summary": "The system successfully collected the required intake information but suffered from significant mechanical failures in the latter half of the interview. It repeatedly appended a redundant 'Before we move on, could you answer the question above?' prompt to almost every question in the PHQ-9 section, and it looped the final confirmation question twice.",
   "issues": [
     {
       "severity": "moderate",
-      "category": "redundant_questioning",
-      "evidence": "The interviewer asked about therapy and biological treatments multiple times despite the patient clearly stating 'I do not know' for each, effectively looping on the same information."
+      "category": "redundancy",
+      "evidence": "The interviewer appended 'Before we move on, could you answer the question above?' to almost every PHQ-9 question, despite the patient having already answered the question in the same turn."
+    },
+    {
+      "severity": "minor",
+      "category": "redundancy",
+      "evidence": "The interviewer repeated the final confirmation question ('All done! Please take a look at the panel...') twice in succession."
     }
   ],
   "field_verdicts": [
@@ -328,11 +333,11 @@
     },
     {
       "ref": "current_concerns.primary_problems",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Work stress is missing from the produced list of problems.",
       "expected": "depressed; irritable; withdrawn; work stress",
-      "produced": "The patient has been experiencing depression, irritability, and social withdrawal, affecting their work and marriage."
+      "produced": "Feeling depressed, irritable, and withdrawn, affecting my marriage and how I interact with my family."
     },
     {
       "ref": "current_concerns.goals",
@@ -340,7 +345,7 @@
       "source": "llm",
       "note": "",
       "expected": "feel better; save marriage",
-      "produced": "The patient hopes to feel better and save their marriage."
+      "produced": "Feel better and save my marriage."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -364,7 +369,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born and grew up; other details unknown."
+      "produced": "Patient was born and grew up; no other early childhood information reported."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -372,7 +377,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; early career",
-      "produced": "School and early career."
+      "produced": "Patient went through school and began an early career; no other adolescence or early adulthood information reported."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -380,7 +385,7 @@
       "source": "llm",
       "note": "",
       "expected": "Married for 14 years; two children; significant marital tension during the past 6 months",
-      "produced": "Marriage; 14 years; current. Two children. Significant marital tension over the past 6 months."
+      "produced": "Marriage; 14 years to present; current, with significant marital tension over the past 6 months. Two children."
     },
     {
       "ref": "personal_history.future_goals",
@@ -388,7 +393,7 @@
       "source": "llm",
       "note": "",
       "expected": "recover; repair family",
-      "produced": "Recover and repair my family."
+      "produced": "Patient wants to recover and repair their family."
     }
   ],
   "fabricated": []

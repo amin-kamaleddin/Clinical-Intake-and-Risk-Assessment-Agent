@@ -5,13 +5,13 @@
   "repetition": 0,
   "persona_id": "clear",
   "record_score": 0.9891,
-  "flow_score": 1.0,
+  "flow_score": 0.7,
   "record_detail": {
     "record_score": 0.9891,
     "record_score_contested": 0.9667,
     "fields_contested": 15,
     "fields_auto_resolved": 31,
-    "fields_confirmed_absent": 8,
+    "fields_confirmed_absent": 7,
     "fields_scored": 46,
     "fields_unjudged": 0,
     "unjudged_refs": [],
@@ -20,10 +20,12 @@
       "partial": 1,
       "missing": 0,
       "contradicted": 0,
-      "fabricated": 0
+      "fabricated": 1
     },
-    "fabricated_fields": 0,
-    "fabricated_refs": [],
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_treatments"
+    ],
     "by_section": {
       "general_information": {
         "fields": 11,
@@ -77,8 +79,14 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a highly efficient and structured intake. The questions were clear, appropriately sequenced, and the system effectively managed the transition between sections and handled repeatable entries by confirming when no further information was available.",
-  "issues": [],
+  "flow_summary": "The interviewer conducted a thorough and structured intake, but struggled significantly with the 'past_psychiatric_history' section, where it repeatedly asked for details about treatments the patient had already explicitly denied receiving.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "redundant_questioning",
+      "evidence": "The interviewer asked four consecutive questions (turns 10-13) regarding the timing, location, duration, and benefit of treatments the patient had already stated she did not receive."
+    }
+  ],
   "field_verdicts": [
     {
       "ref": "general_information.name",
@@ -334,7 +342,7 @@
       "source": "llm",
       "note": "",
       "expected": "feeling low for years; guilt; underachievement",
-      "produced": "Feeling low for years, guilt, and underachievement."
+      "produced": "Feeling low for years, with guilt and a sense of underachievement."
     },
     {
       "ref": "current_concerns.goals",
@@ -364,9 +372,9 @@
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the detail that the patient found it helpful.",
+      "note": "The fact that the patient found the therapy helpful is missing.",
       "expected": "Individual psychotherapy; age 16 to 17; about 20 sessions; found it helpful",
-      "produced": "Yes. Individual psychotherapy.; Age 16 to 17.; About 20 sessions."
+      "produced": "Yes, I had individual psychotherapy when I was 16 to 17.; When I was 16 to 17.; About 20 sessions."
     },
     {
       "ref": "medications.current_medications[0]",
@@ -374,7 +382,7 @@
       "source": "llm",
       "note": "",
       "expected": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth",
-      "produced": "Medication 1: Name Or Description: Citalopram.; Dose: 20 mg each morning.; Start Or Duration: I started it in March 2025.; Side Effects: Mild dry mouth.\nMedication 2: Name Or Description: Yes. Multivitamin.; Dose: One tablet daily.; Start Or Duration: Unknown; Side Effects: None.\nMedication 3: Name Or Description: Yes. Oral contraceptive.; Dose: One tablet daily.; Start Or Duration: I started it in 2022.; Side Effects: None."
+      "produced": "Medication 1: Name Or Description: Citalopram.; Dose: 20 mg each morning.; Start Or Duration: I started it in March 2025.; Side Effects: Mild dry mouth.\nMedication 2: Name Or Description: Yes, I’m taking a multivitamin.; Dose: One tablet daily.; Start Or Duration: Unknown; Side Effects: None.\nMedication 3: Name Or Description: Yes, I’m taking an oral contraceptive.; Dose: One tablet daily.; Start Or Duration: I started it in 2022.; Side Effects: None."
     },
     {
       "ref": "medications.current_medications[1]",
@@ -382,7 +390,7 @@
       "source": "llm",
       "note": "",
       "expected": "Multivitamin; one tablet daily; start date unknown; no side effects",
-      "produced": "Medication 1: Name Or Description: Citalopram.; Dose: 20 mg each morning.; Start Or Duration: I started it in March 2025.; Side Effects: Mild dry mouth.\nMedication 2: Name Or Description: Yes. Multivitamin.; Dose: One tablet daily.; Start Or Duration: Unknown; Side Effects: None.\nMedication 3: Name Or Description: Yes. Oral contraceptive.; Dose: One tablet daily.; Start Or Duration: I started it in 2022.; Side Effects: None."
+      "produced": "Medication 1: Name Or Description: Citalopram.; Dose: 20 mg each morning.; Start Or Duration: I started it in March 2025.; Side Effects: Mild dry mouth.\nMedication 2: Name Or Description: Yes, I’m taking a multivitamin.; Dose: One tablet daily.; Start Or Duration: Unknown; Side Effects: None.\nMedication 3: Name Or Description: Yes, I’m taking an oral contraceptive.; Dose: One tablet daily.; Start Or Duration: I started it in 2022.; Side Effects: None."
     },
     {
       "ref": "medications.current_medications[2]",
@@ -390,7 +398,7 @@
       "source": "llm",
       "note": "",
       "expected": "Oral contraceptive; one tablet daily; started 2022; no side effects.",
-      "produced": "Medication 1: Name Or Description: Citalopram.; Dose: 20 mg each morning.; Start Or Duration: I started it in March 2025.; Side Effects: Mild dry mouth.\nMedication 2: Name Or Description: Yes. Multivitamin.; Dose: One tablet daily.; Start Or Duration: Unknown; Side Effects: None.\nMedication 3: Name Or Description: Yes. Oral contraceptive.; Dose: One tablet daily.; Start Or Duration: I started it in 2022.; Side Effects: None."
+      "produced": "Medication 1: Name Or Description: Citalopram.; Dose: 20 mg each morning.; Start Or Duration: I started it in March 2025.; Side Effects: Mild dry mouth.\nMedication 2: Name Or Description: Yes, I’m taking a multivitamin.; Dose: One tablet daily.; Start Or Duration: Unknown; Side Effects: None.\nMedication 3: Name Or Description: Yes, I’m taking an oral contraceptive.; Dose: One tablet daily.; Start Or Duration: I started it in 2022.; Side Effects: None."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -398,7 +406,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; depression; treated intermittently with antidepressants",
-      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Depression.; Additional Details: She has been treated intermittently with antidepressants."
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Depression.; Additional Details: She was treated intermittently with antidepressants."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -422,7 +430,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up; shy",
-      "produced": "I was born and grew up there, and I was shy."
+      "produced": "I was born and grew up here, and I was shy."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -430,7 +438,7 @@
       "source": "llm",
       "note": "",
       "expected": "father hospitalised; leukemia; school",
-      "produced": "My father was hospitalised for leukemia during school."
+      "produced": "My father was hospitalised for leukemia, and I was in school."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -438,7 +446,7 @@
       "source": "llm",
       "note": "",
       "expected": "single; dysfunctional relationships",
-      "produced": "I’m single and have had dysfunctional relationships."
+      "produced": "I’m single, and I’ve had dysfunctional relationships."
     },
     {
       "ref": "personal_history.future_goals",
@@ -449,5 +457,16 @@
       "produced": "More satisfying work and healthier relationships."
     }
   ],
-  "fabricated": []
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_treatments",
+      "section": "past_psychiatric_history",
+      "field": "previous_treatments",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I have not.; I did not receive any of those treatments.; I did not receive any of those treatments.; I did not receive any of those treatments.; I did not receive any of those treatments.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
 }

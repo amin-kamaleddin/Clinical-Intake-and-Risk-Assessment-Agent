@@ -4,22 +4,22 @@
   "scenario_case_id": "04-10",
   "repetition": 0,
   "persona_id": "moderate",
-  "record_score": 0.9412,
+  "record_score": 0.9706,
   "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9412,
-    "record_score_contested": 0.8125,
-    "fields_contested": 16,
-    "fields_auto_resolved": 35,
+    "record_score": 0.9706,
+    "record_score_contested": 0.9211,
+    "fields_contested": 19,
+    "fields_auto_resolved": 32,
     "fields_confirmed_absent": 4,
     "fields_scored": 51,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 46,
-      "partial": 4,
+      "match": 48,
+      "partial": 3,
       "missing": 0,
-      "contradicted": 1,
+      "contradicted": 0,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -32,8 +32,8 @@
       },
       "past_psychiatric_history": {
         "fields": 10,
-        "credit": 7.5,
-        "score": 0.75
+        "credit": 9.0,
+        "score": 0.9
       },
       "medications": {
         "fields": 5,
@@ -77,17 +77,22 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated a comprehensive intake, demonstrating good persistence in clarifying vague responses and managing the patient's imprecision. However, the system failed to adhere to the requirement of asking each PHQ-9 and GAD-7 item exactly once, as it repeated several questions when the patient expressed confusion, rather than simply clarifying the options.",
+  "flow_summary": "The system conducted a thorough intake and handled the patient's moderate communication style well, particularly in recovering from vague answers. However, the system failed to adhere to the requirement of asking each PHQ-9 and GAD-7 item exactly once, as it repeated several questions when the patient expressed confusion, and it occasionally bundled administrative instructions with clinical questions.",
   "issues": [
     {
       "severity": "moderate",
       "category": "questionnaire_administration",
-      "evidence": "The interviewer repeated PHQ-9 Question 1, PHQ-9 Question 2, and GAD-7 Question 2 after the patient expressed confusion, violating the requirement to ask each item exactly once."
+      "evidence": "The system repeated PHQ-9 Question 4 and GAD-7 Questions 1 and 3 after the patient expressed confusion, violating the requirement to ask each item exactly once."
     },
     {
       "severity": "minor",
-      "category": "questionnaire_administration",
-      "evidence": "The interviewer rephrased GAD-7 Question 4 in a second attempt, which, while helpful for the patient, technically constitutes a deviation from the strict administration protocol."
+      "category": "question_bundling",
+      "evidence": "In turn 8 of general_information, the system bundled a request for a phone number with a meta-instruction: 'Yes, please provide the complete phone number, including the area code. Before we move on, could you answer the question above?'"
+    },
+    {
+      "severity": "minor",
+      "category": "question_bundling",
+      "evidence": "In turn 12 of past_psychiatric_history, the system bundled a safety instruction, a request for a description of a past event, and a meta-instruction: 'Please briefly describe the past self-harm event... Before we move on, could you answer the question above?'"
     }
   ],
   "field_verdicts": [
@@ -188,14 +193,6 @@
       "produced": true
     },
     {
-      "ref": "past_psychiatric_history.previous_diagnoses",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "depression",
-      "produced": "Depression"
-    },
-    {
       "ref": "past_psychiatric_history.hospital_admission",
       "verdict": "match",
       "source": "auto",
@@ -252,14 +249,6 @@
       "produced": "164 cm"
     },
     {
-      "ref": "medical_history.weight",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "78 kg",
-      "produced": "78 kg"
-    },
-    {
       "ref": "medication_allergies.has_medication_allergies",
       "verdict": "match",
       "source": "auto",
@@ -274,14 +263,6 @@
       "note": "",
       "expected": true,
       "produced": true
-    },
-    {
-      "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Sister; panic disorder and depression.",
-      "produced": "Sister; panic disorder and depression. Brother; alcohol use disorder and cocaine use disorder."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -377,39 +358,47 @@
       "source": "llm",
       "note": "",
       "expected": "depression; after breakup; hospitalisation; overdose",
-      "produced": "Depression, which has worsened since the breakup and events surrounding a hospital stay and overdose. The patient is still recovering and trying to stay safe, and wants to get back on track for law school."
+      "produced": "Depression that worsened significantly after a breakup, along with coping with a hospital stay and the aftermath of an overdose."
     },
     {
       "ref": "current_concerns.goals",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the specific goal of returning to law school.",
+      "note": "Missing the goal of law school.",
       "expected": "stay safe; recover; law school",
-      "produced": "The patient hopes things will settle down, to feel safer and more stable, and to regain the ability to focus properly."
+      "produced": "Improve stability and talk through what has been happening in more detail."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the information about the current intensive outpatient program.",
+      "note": "",
       "expected": "Assessed during first psychiatric admission in June 2026; currently attending an intensive outpatient programme",
-      "produced": "During the patient's first psychiatric hospital admission; exact timing unclear."
+      "produced": "Assessment occurred around June 2026 during the patient's first psychiatric admission; assessed by a hospital-based mental health professional, role unknown."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "depression",
+      "produced": "Depression."
     },
     {
       "ref": "past_psychiatric_history.hospital_details",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the context that it was an impulsive overdose.",
+      "note": "Missing the reason for admission (impulsive overdose).",
       "expected": "First psychiatric admission; St. Michael's Hospital; June 2026; 7-day stay after an impulsive overdose",
-      "produced": "June 2026; St. Michael's Hospital; 7 days"
+      "produced": "June 2026; St. Michael's Hospital; approximately 1 week."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
-      "verdict": "contradicted",
+      "verdict": "partial",
       "source": "llm",
-      "note": "Incorrectly states the attempt occurred several days ago; the expected value implies it occurred in June 2026.",
+      "note": "Missing the current status regarding suicide plans.",
       "expected": "One previous suicide attempt after a breakup; no current plan.",
-      "produced": "One previous suicide attempt after a breakup; occurred several days ago. Patient reports current passive suicidal thoughts, saying they sometimes feel they would be better off dead, with no current plan."
+      "produced": "Impulsive overdose after a breakup in June 2026."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies[0]",
@@ -417,15 +406,15 @@
       "source": "llm",
       "note": "",
       "expected": "Individual psychotherapy in college; approximately 8 sessions",
-      "produced": "Individual psychotherapy; during college; approximately number of sessions: Unknown; location: Unknown. CBT; current intensive outpatient program; approximately number of sessions: Unknown; location: Unknown"
+      "produced": "Individual psychotherapy; during college; sessions: Unknown; location: college setting. Intensive outpatient CBT; started June 2026; approximately 3 days per week; sessions: Unknown; location: current program, exact name unknown."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies[1]",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the frequency (3 days per week) and start date (June 2026).",
+      "note": "",
       "expected": "Intensive outpatient CBT; started June 2026; currently attending 3 days per week.",
-      "produced": "Individual psychotherapy; during college; approximately number of sessions: Unknown; location: Unknown. CBT; current intensive outpatient program; approximately number of sessions: Unknown; location: Unknown"
+      "produced": "Individual psychotherapy; during college; sessions: Unknown; location: college setting. Intensive outpatient CBT; started June 2026; approximately 3 days per week; sessions: Unknown; location: current program, exact name unknown."
     },
     {
       "ref": "past_psychiatric_history.previous_treatments",
@@ -433,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "Ketamine treatment; 2 sessions during admission; short-lived improvement lasting about 2 days",
-      "produced": "Ketamine treatment; during June 2026 admission; St. Michael's Hospital; 2 sessions; benefit lasted about 2 days"
+      "produced": "Ketamine treatment; during June 2026 hospital admission; St. Michael's Hospital; approximately 2 sessions; benefit lasted about 2 days."
     },
     {
       "ref": "medications.current_medications[0]",
@@ -441,7 +430,7 @@
       "source": "llm",
       "note": "",
       "expected": "Vilazodone; 20 mg each morning; started June 2026; nausea during first week",
-      "produced": "Vilazodone; 20 mg each morning; started around June 2026; nausea during the first week. Quetiapine; 50 mg nightly; started around June 2026; morning drowsiness"
+      "produced": "Vilazodone; 20 mg each morning; started approximately June 2026; side effects: mild nausea during the first week. Quetiapine; 50 mg nightly; started approximately June 2026; side effects: morning drowsiness"
     },
     {
       "ref": "medications.current_medications[1]",
@@ -449,7 +438,7 @@
       "source": "llm",
       "note": "",
       "expected": "Quetiapine; 50 mg nightly; started June 2026; morning drowsiness.",
-      "produced": "Vilazodone; 20 mg each morning; started around June 2026; nausea during the first week. Quetiapine; 50 mg nightly; started around June 2026; morning drowsiness"
+      "produced": "Vilazodone; 20 mg each morning; started approximately June 2026; side effects: mild nausea during the first week. Quetiapine; 50 mg nightly; started approximately June 2026; side effects: morning drowsiness"
     },
     {
       "ref": "medications.past_medication_details",
@@ -457,7 +446,15 @@
       "source": "llm",
       "note": "",
       "expected": "Escitalopram; 10 mg daily; taken for about 3 months in college; stopped because she felt emotionally numb",
-      "produced": "Escitalopram; 10 mg daily; taken for about 3 months during college; stopped due to emotional numbness"
+      "produced": "Escitalopram; 10 mg daily; started during college; taken for approximately 3 months; discontinued because it caused emotional numbness"
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "78 kg",
+      "produced": "Approximately 78 kg"
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -465,7 +462,15 @@
       "source": "llm",
       "note": "",
       "expected": "Brother; alcohol and cocaine use disorder",
-      "produced": "Sister; panic disorder and depression. Brother; alcohol use disorder and cocaine use disorder."
+      "produced": "Sister; depression and panic issues. Brother; problems with alcohol and cocaine."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Sister; panic disorder and depression.",
+      "produced": "Sister; depression and panic issues. Brother; problems with alcohol and cocaine."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -473,7 +478,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born and grew up in Ontario, to the best of the patient's recollection. Described herself as mostly okay and somewhat moody as a child."
+      "produced": "Born and raised in the same place; no further early childhood information provided."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -481,7 +486,7 @@
       "source": "llm",
       "note": "",
       "expected": "high school; moodiness; college depression",
-      "produced": "High school was generally okay, although the patient was somewhat moody. She experienced depression in college and later worked as an administrative assistant."
+      "produced": "High school was okay, but I was quite moody. I experienced depression in college."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -489,7 +494,7 @@
       "source": "llm",
       "note": "",
       "expected": "single; recently ended; two-year relationship",
-      "produced": "Romantic relationship; approximately two years; recently ended. Patient is currently single and reported the breakup was difficult."
+      "produced": "Romantic relationship; two years; recently ended. Currently single."
     },
     {
       "ref": "personal_history.future_goals",
@@ -497,7 +502,7 @@
       "source": "llm",
       "note": "",
       "expected": "law school; stability",
-      "produced": "The patient wants to remain stable and safe and eventually attend law school."
+      "produced": "I want stability and would still like to attend law school."
     }
   ],
   "fabricated": []

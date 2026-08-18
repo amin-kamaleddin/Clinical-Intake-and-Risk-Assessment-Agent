@@ -4,21 +4,21 @@
   "scenario_case_id": "04-02",
   "repetition": 0,
   "persona_id": "clear",
-  "record_score": 0.9205,
+  "record_score": 0.9773,
   "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9205,
-    "record_score_contested": 0.8542,
-    "fields_contested": 24,
-    "fields_auto_resolved": 20,
+    "record_score": 0.9773,
+    "record_score_contested": 0.9545,
+    "fields_contested": 22,
+    "fields_auto_resolved": 22,
     "fields_confirmed_absent": 10,
     "fields_scored": 44,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 39,
-      "partial": 3,
-      "missing": 2,
+      "match": 42,
+      "partial": 2,
+      "missing": 0,
       "contradicted": 0,
       "fabricated": 0
     },
@@ -42,8 +42,8 @@
       },
       "medical_history": {
         "fields": 6,
-        "credit": 3.0,
-        "score": 0.5
+        "credit": 5.5,
+        "score": 0.9167
       },
       "medication_allergies": {
         "fields": 1,
@@ -77,17 +77,12 @@
       }
     }
   },
-  "flow_summary": "The system conducted a thorough and efficient intake, adhering well to the structure of the questionnaires and gathering necessary clinical details. While the interaction was highly functional, it lacked empathy in response to the patient's disclosure of a difficult relationship, and the transition to the PHQ-9/GAD-7 sections was purely mechanical.",
+  "flow_summary": "The interviewer conducted a thorough and efficient intake, adhering to the required structure and questionnaire protocols. While the interviewer was generally effective, they missed an opportunity to provide a brief, empathetic acknowledgement when the patient disclosed that her husband is 'mostly absent and unsupportive,' which was a significant piece of social history.",
   "issues": [
     {
       "severity": "minor",
       "category": "empathy",
-      "evidence": "The patient disclosed that her husband has been 'absent and not very supportive,' but the interviewer immediately moved to the next question without acknowledging this significant social stressor."
-    },
-    {
-      "severity": "minor",
-      "category": "flow",
-      "evidence": "The transition to the PHQ-9 and GAD-7 sections was abrupt and lacked a brief introductory statement to explain the shift to standardized screening tools."
+      "evidence": "The interviewer moved immediately to the next question after the patient disclosed: 'I’m married, and my husband has been mostly absent and unsupportive.'"
     }
   ],
   "field_verdicts": [
@@ -97,7 +92,7 @@
       "source": "auto",
       "note": "",
       "expected": "MARIA GONZALEZ",
-      "produced": "Maria Gonzalez"
+      "produced": "MARIA GONZALEZ"
     },
     {
       "ref": "general_information.gender",
@@ -228,6 +223,22 @@
       "produced": true
     },
     {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "162 cm",
+      "produced": "162 cm"
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "70 kg",
+      "produced": "70 kg"
+    },
+    {
       "ref": "medication_allergies.has_medication_allergies",
       "verdict": "match",
       "source": "auto",
@@ -257,7 +268,7 @@
       "source": "llm",
       "note": "",
       "expected": "low mood; fatigue; postpartum; overwhelmed",
-      "produced": "Low mood, fatigue, and feeling overwhelmed postpartum."
+      "produced": "Low mood, fatigue, postpartum, and feeling overwhelmed."
     },
     {
       "ref": "current_concerns.goals",
@@ -273,39 +284,23 @@
       "source": "llm",
       "note": "",
       "expected": "Prenatal multivitamin with iron; one tablet daily; started during pregnancy; no side effects known",
-      "produced": "Prenatal multivitamin with iron, one tablet daily; started during pregnancy, with no noticed side effects. Salbutamol inhaler as needed for asthma."
+      "produced": "Prenatal multivitamin with iron, one tablet daily; started during pregnancy; no known side effects."
     },
     {
       "ref": "medical_history.medical_conditions",
       "verdict": "partial",
       "source": "llm",
-      "note": "Childhood diagnosis date is missing.",
+      "note": "Missing details regarding diagnosis timing and current management.",
       "expected": "Asthma; diagnosed in childhood; uses salbutamol inhaler as needed",
-      "produced": "Asthma; uses a salbutamol inhaler as needed."
+      "produced": "Asthma."
     },
     {
       "ref": "medical_history.surgical_history",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing information regarding no ongoing complications.",
+      "note": "",
       "expected": "Emergency caesarean section; February 2026; no ongoing complications",
       "produced": "Emergency caesarean section in February 2026."
-    },
-    {
-      "ref": "medical_history.height",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "Height was not captured.",
-      "expected": "162 cm",
-      "produced": "Unknown"
-    },
-    {
-      "ref": "medical_history.weight",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "Weight was not captured.",
-      "expected": "70 kg",
-      "produced": "Unknown"
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -337,7 +332,7 @@
       "source": "llm",
       "note": "",
       "expected": "Previous; cigarettes; about 5 per day; used for 4 years; stopped when pregnancy was confirmed",
-      "produced": "Previously smoked cigarettes, about 5 per day for 4 years; stopped when pregnancy was confirmed."
+      "produced": "Former cigarette smoker, about 5 cigarettes per day for 4 years; stopped when she found out she was pregnant."
     },
     {
       "ref": "substance_use.nonmedical_marijuana_use",
@@ -401,7 +396,7 @@
       "source": "llm",
       "note": "The detail about stopping work during pregnancy is missing.",
       "expected": "Barista at Lakeside Coffee; 2021 to 2025; stopped during pregnancy",
-      "produced": "Worked as a barista at Lakeside Coffee from 2021 to 2025; currently a homemaker."
+      "produced": "Currently a homemaker. Previously worked as a barista at Lakeside Coffee from 2021 to 2025."
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
@@ -409,7 +404,7 @@
       "source": "llm",
       "note": "",
       "expected": "Currently homemaker.",
-      "produced": "Worked as a barista at Lakeside Coffee from 2021 to 2025; currently a homemaker."
+      "produced": "Currently a homemaker. Previously worked as a barista at Lakeside Coffee from 2021 to 2025."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -417,7 +412,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born and grew up there; no other details reported."
+      "produced": "Patient stated, \"I was born and grew up there.\" When asked for more details, patient stated, \"I don’t know.\""
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -425,7 +420,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; coffee shop work",
-      "produced": "Went to school and later worked at a coffee shop."
+      "produced": "It was school and coffee shop work."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -433,7 +428,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; husband; unsupportive; absent",
-      "produced": "Married; husband has been absent and not very supportive."
+      "produced": "Married; husband has been mostly absent and unsupportive."
     },
     {
       "ref": "personal_history.future_goals",
@@ -441,7 +436,7 @@
       "source": "llm",
       "note": "",
       "expected": "care for children; return to work",
-      "produced": "Wants to care for her children and return to work."
+      "produced": "To care for my children and return to work."
     }
   ],
   "fabricated": []

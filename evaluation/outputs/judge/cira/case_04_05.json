@@ -4,20 +4,20 @@
   "scenario_case_id": "04-05",
   "repetition": 0,
   "persona_id": "moderate",
-  "record_score": 0.9778,
-  "flow_score": 0.85,
+  "record_score": 0.9444,
+  "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9778,
-    "record_score_contested": 0.9091,
-    "fields_contested": 11,
-    "fields_auto_resolved": 34,
+    "record_score": 0.9444,
+    "record_score_contested": 0.8077,
+    "fields_contested": 13,
+    "fields_auto_resolved": 32,
     "fields_confirmed_absent": 9,
     "fields_scored": 45,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 43,
-      "partial": 2,
+      "match": 40,
+      "partial": 5,
       "missing": 0,
       "contradicted": 0,
       "fabricated": 0
@@ -57,37 +57,42 @@
       },
       "substance_use": {
         "fields": 8,
-        "credit": 7.5,
-        "score": 0.9375
+        "credit": 8.0,
+        "score": 1.0
       },
       "education_employment_legal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.0,
+        "score": 0.75
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 2.0,
-        "score": 1.0
+        "credit": 1.5,
+        "score": 0.75
       },
       "personal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.5,
+        "score": 0.875
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and professional intake, effectively managing a patient who was occasionally imprecise or hesitant. The system handled the safety disclosure appropriately and maintained a good balance between structure and responsiveness, though it occasionally struggled with the patient's confusion regarding questionnaire timeframes.",
+  "flow_summary": "The interviewer successfully completed the intake but struggled significantly with the patient's imprecision, leading to a repetitive and disjointed interaction. The system frequently failed to maintain a conversational flow, often repeating questions or adding unnecessary prompts that confused the patient, and it exhibited a glitch by asking the patient to answer a question that had already been addressed.",
   "issues": [
     {
-      "severity": "minor",
-      "category": "clarity",
-      "evidence": "The interviewer had to repeat PHQ-9 and GAD-7 questions multiple times because the patient was confused by the timeframe, suggesting the initial presentation of the questionnaire could be more intuitive."
+      "severity": "moderate",
+      "category": "repetitive_questioning",
+      "evidence": "The interviewer repeatedly asked 'Before we move on, could you answer the question above?' even when the patient had already provided the information or was in the middle of a response."
+    },
+    {
+      "severity": "moderate",
+      "category": "mechanical_interaction",
+      "evidence": "The system's transition between sections and its handling of the PHQ-9/GAD-7 felt robotic, often ignoring the patient's conversational cues and forcing a rigid script that caused the patient to ask for clarification multiple times."
     },
     {
       "severity": "minor",
-      "category": "flow",
-      "evidence": "The interviewer occasionally repeated the full text of a questionnaire item when the patient expressed confusion, rather than clarifying the timeframe more concisely."
+      "category": "poor_redirection",
+      "evidence": "When the patient was unsure about the scope of a question, the interviewer often just repeated the question verbatim rather than rephrasing it to be more accessible, which led to the patient needing to ask for clarification repeatedly."
     }
   ],
   "field_verdicts": [
@@ -273,15 +278,7 @@
       "source": "auto",
       "note": "",
       "expected": "Mother; recurrent depression",
-      "produced": "Mother; recurrent depression; no further details known. Older brother; anxiety."
-    },
-    {
-      "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Older brother; anxiety.",
-      "produced": "Mother; recurrent depression; no further details known. Older brother; anxiety."
+      "produced": "Mother; recurrent depression. Older brother; anxiety"
     },
     {
       "ref": "substance_use.nonmedical_nicotine_use",
@@ -356,20 +353,12 @@
       "produced": "High school"
     },
     {
-      "ref": "education_employment_legal_history.employment_history[0]",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Retail sales associate, Westgate Department Store; 2010 to 2013",
-      "produced": "Retail sales associate, Westgate Department Store; 2010 to 2013. Homemaker; 2013 to Present"
-    },
-    {
       "ref": "current_concerns.primary_problems",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing 'burden' and 'despair' is not explicitly captured.",
       "expected": "despair; irritability; no pleasure; burden",
-      "produced": "Feeling really down and irritable, mainly at home and in the relationship. Waking very early, experiencing little pleasure in anything, pacing frequently, and snapping at family members, which is causing problems with people around her."
+      "produced": "At home, I wake up too early, no longer get much pleasure from anything, pace around, and snap at my family more than I used to."
     },
     {
       "ref": "current_concerns.goals",
@@ -377,7 +366,7 @@
       "source": "llm",
       "note": "",
       "expected": "someone to talk to; feel better",
-      "produced": "Have someone to talk to and feel better again."
+      "produced": "I want someone to talk to, to feel better and more like myself again, and to improve things for my family."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -385,15 +374,15 @@
       "source": "llm",
       "note": "",
       "expected": "Assessed by an outpatient psychiatrist in 2025",
-      "produced": "Outpatient psychiatrist; 2025"
+      "produced": "Outpatient psychiatrist; 2025. Supportive psychotherapy; 2025"
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "partial",
       "source": "llm",
-      "note": "Reason for stopping therapy is missing.",
+      "note": "Missing the reason for stopping (did not feel understood).",
       "expected": "Supportive psychotherapy; 2025; attended 3 sessions and stopped because she did not feel understood",
-      "produced": "Supportive psychotherapy; 2025; approximately 3 sessions; Unknown location"
+      "produced": "Supportive psychotherapy; 2025; sessions: Unknown; location: Unknown"
     },
     {
       "ref": "medications.past_medication_details",
@@ -401,23 +390,39 @@
       "source": "llm",
       "note": "",
       "expected": "Fluoxetine; 20 mg daily; taken for 6 weeks in 2025; stopped because of marked fatigue",
-      "produced": "Fluoxetine; 20 mg daily; taken for about 6 weeks in 2025; discontinued due to fatigue."
+      "produced": "Fluoxetine; 20 mg daily; taken for approximately 6 weeks in 2025; stopped due to marked fatigue."
     },
     {
-      "ref": "substance_use.nonmedical_alcohol_use",
-      "verdict": "partial",
-      "source": "llm",
-      "note": "The specific detail that she has had none since pregnancy is missing.",
-      "expected": "previous; none since pregnancy",
-      "produced": "Status: Previous; Substance or product: Alcohol; Quantity or frequency: Unknown; Duration: Unknown"
-    },
-    {
-      "ref": "education_employment_legal_history.employment_history[1]",
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
       "verdict": "match",
       "source": "llm",
       "note": "",
+      "expected": "Older brother; anxiety.",
+      "produced": "Mother; recurrent depression. Older brother; anxiety"
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "previous; none since pregnancy",
+      "produced": "Status: Previous; Substance or product: Alcohol; Quantity or frequency: Unknown (casual use); Duration: Unknown; No use since pregnancy."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[0]",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing the specific dates (2010-2013).",
+      "expected": "Retail sales associate, Westgate Department Store; 2010 to 2013",
+      "produced": "Homemaker; Unknown to Present. Retail sales associate, Westgate Department Store; Unknown duration"
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[1]",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing the specific start date (2013).",
       "expected": "Homemaker; 2013 to present.",
-      "produced": "Retail sales associate, Westgate Department Store; 2010 to 2013. Homemaker; 2013 to Present"
+      "produced": "Homemaker; Unknown to Present. Retail sales associate, Westgate Department Store; Unknown duration"
     },
     {
       "ref": "personal_history.early_childhood",
@@ -425,7 +430,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born and grew up in an unspecified location; described herself as somewhat sensitive as a young child."
+      "produced": "Born and grew up here; no additional childhood details provided."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -433,15 +438,15 @@
       "source": "llm",
       "note": "",
       "expected": "possible childhood depression; parents' divorce",
-      "produced": "Reported possible childhood depression and that her parents divorced. Described school as okay."
+      "produced": "During adolescence, the patient's parents divorced. The patient recalls possible childhood depression during that period, and school and other responsibilities felt more difficult."
     },
     {
       "ref": "personal_history.significant_relationships",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the detail that the husband is critical.",
       "expected": "married; 13 years; husband critical; children",
-      "produced": "Marriage; approximately 13 years; current. Children; dates and current status not specified. Husband described as sometimes critical."
+      "produced": "Marriage; approximately 13 years to present; current. Children; duration not provided; current."
     },
     {
       "ref": "personal_history.future_goals",
@@ -449,7 +454,7 @@
       "source": "llm",
       "note": "",
       "expected": "feel like herself; family",
-      "produced": "Would like to feel like herself again, primarily for her family."
+      "produced": "To feel like herself again and be there for her family."
     }
   ],
   "fabricated": []

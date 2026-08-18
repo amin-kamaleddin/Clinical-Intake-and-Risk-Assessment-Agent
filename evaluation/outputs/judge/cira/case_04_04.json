@@ -4,11 +4,11 @@
   "scenario_case_id": "04-04",
   "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9512,
-  "flow_score": 0.7,
+  "record_score": 0.9878,
+  "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9512,
-    "record_score_contested": 0.8182,
+    "record_score": 0.9878,
+    "record_score_contested": 0.9545,
     "fields_contested": 11,
     "fields_auto_resolved": 30,
     "fields_confirmed_absent": 11,
@@ -16,9 +16,9 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 38,
-      "partial": 2,
-      "missing": 1,
+      "match": 40,
+      "partial": 1,
+      "missing": 0,
       "contradicted": 0,
       "fabricated": 0
     },
@@ -52,8 +52,8 @@
       },
       "family_psychiatric_history": {
         "fields": 2,
-        "credit": 1.5,
-        "score": 0.75
+        "credit": 2.0,
+        "score": 1.0
       },
       "substance_use": {
         "fields": 8,
@@ -62,37 +62,37 @@
       },
       "education_employment_legal_history": {
         "fields": 3,
-        "credit": 2.5,
-        "score": 0.8333
+        "credit": 3.0,
+        "score": 1.0
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 2.0,
-        "score": 1.0
+        "credit": 1.5,
+        "score": 0.75
       },
       "personal_history": {
         "fields": 4,
-        "credit": 3.0,
-        "score": 0.75
+        "credit": 4.0,
+        "score": 1.0
       }
     }
   },
-  "flow_summary": "The interviewer managed a challenging, disorganized patient with patience and persistence. While the interviewer successfully navigated the intake and handled the safety disclosure appropriately, the conversation was marred by frequent, repetitive loops during the PHQ-9 and GAD-7 sections, where the patient repeatedly lost the thread and the interviewer failed to adapt the delivery to be more accessible.",
+  "flow_summary": "The interviewer successfully navigated a difficult, confused patient persona, demonstrating patience and persistence in re-explaining questions. However, the system struggled with efficiency, frequently repeating the entire PHQ-9 and GAD-7 scales (including the full list of options) every time the patient expressed confusion, rather than simply restating the question or the options. The system also failed to maintain a consistent flow during the safety assessment, resulting in a somewhat mechanical and repetitive interaction.",
   "issues": [
     {
       "severity": "moderate",
-      "category": "flow",
-      "evidence": "The interviewer repeatedly re-asked the full PHQ-9 and GAD-7 questions verbatim when the patient expressed confusion, rather than simplifying the delivery or confirming understanding. For example: 'PHQ-9 Question 1: Over the last two weeks, how often have you had little interest or pleasure in doing things? 0 - Not at all 1 - Several days 2 - More than half the days 3 - Nearly every day' was repeated three times."
+      "category": "efficiency",
+      "evidence": "The interviewer repeatedly recited the full list of PHQ-9 and GAD-7 options (e.g., '0 - Not at all, 1 - Several days, 2 - More than half the days, 3 - Nearly every day') every time the patient asked for clarification, rather than just restating the question or the scale."
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "In the personal history section, the interviewer struggled to recover from the patient's confusion, leading to a series of 'I don't know' responses that were not effectively probed or redirected: 'I’m not sure where you grew up. Could you name the city, town, or region?'"
+      "evidence": "The interviewer asked 'Are you currently able to stay safe?' multiple times in close succession, which felt redundant given the patient's clear and consistent disclosure of risk."
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "The interviewer occasionally used slightly wordy or complex phrasing that contributed to the patient's confusion, such as: 'Apart from alcohol used as part of prescribed medical treatment—which is not applicable—have you ever used alcohol recreationally...'"
+      "evidence": "In the medication section, the interviewer asked 'Are you taking any other prescribed medications?' and then immediately followed up with 'Do you have any other current prescribed medications?', which was a redundant question."
     }
   ],
   "field_verdicts": [
@@ -103,14 +103,6 @@
       "note": "",
       "expected": "SUSAN REISS",
       "produced": "SUSAN REISS"
-    },
-    {
-      "ref": "general_information.gender",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Female",
-      "produced": "Female"
     },
     {
       "ref": "general_information.date_of_birth",
@@ -337,12 +329,28 @@
       "produced": "High school"
     },
     {
-      "ref": "current_concerns.primary_problems",
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Administrative coordinator, Lakeshore Pet Nutrition; 2013 to present",
+      "produced": "Administrative coordinator, Lakeshore Pet Nutrition; 2013 to Present"
+    },
+    {
+      "ref": "general_information.gender",
       "verdict": "match",
       "source": "llm",
       "note": "",
+      "expected": "Female",
+      "produced": "Woman"
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing specific mention of suicidal ideation/wants to die.",
       "expected": "depression; guilt; workplace error; wants to die",
-      "produced": "Depression and intense guilt related to a workplace error keep looping in her thoughts. At work, she cannot shake the belief that she has done something terrible that will hurt thousands of dogs and lead to her arrest. She reports wanting to die."
+      "produced": "Depressed mood and intense guilt related to an incident at work, with persistent rumination and thoughts that things have been ruined. These difficulties are affecting home and work."
     },
     {
       "ref": "current_concerns.goals",
@@ -350,7 +358,7 @@
       "source": "llm",
       "note": "",
       "expected": "relief; help",
-      "produced": "She hopes to find relief and receive help to make these thoughts and feelings stop."
+      "produced": "Wants some relief and help."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
@@ -358,7 +366,7 @@
       "source": "llm",
       "note": "",
       "expected": "Current suicidal thoughts with intent and a plan; immediate safety escalation is required.",
-      "produced": "Currently has suicidal thoughts, a plan, and intent; reports being unable to keep herself safe."
+      "produced": "Current thoughts of intentionally hurting self with a plan and stated desire to act; patient is uncertain about how to describe what happened and has not confirmed current safety."
     },
     {
       "ref": "medications.current_medications",
@@ -370,11 +378,11 @@
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing information regarding the sister's treatment with medication.",
+      "note": "",
       "expected": "Older sister; recurrent depression; treated with medication",
-      "produced": "Older sister; recurrent depression."
+      "produced": "Older sister; recurrent depression; treated with medication; no additional details provided."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -382,23 +390,15 @@
       "source": "llm",
       "note": "",
       "expected": "Current; wine; two glasses nightly; approximately 5 years",
-      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: Two glasses nightly; Duration: Approximately 5 years"
-    },
-    {
-      "ref": "education_employment_legal_history.employment_history",
-      "verdict": "partial",
-      "source": "llm",
-      "note": "Dates of employment were not captured correctly.",
-      "expected": "Administrative coordinator, Lakeshore Pet Nutrition; 2013 to present",
-      "produced": "Administrative coordinator, Lakeshore Pet Nutrition; dates unknown"
+      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: Approximately two glasses nightly; Duration: Approximately 5 years"
     },
     {
       "ref": "personal_history.early_childhood",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "llm",
-      "note": "The system reported unknown for all fields instead of capturing the provided history.",
+      "note": "",
       "expected": "born; grew up",
-      "produced": "Place of birth: Unknown. Place where patient grew up: Unknown. Personality as a young child: Unknown."
+      "produced": "Patient reported that they were born and grew up but did not provide further details."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -406,7 +406,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; started working",
-      "produced": "Patient attended school and started working; no other details provided."
+      "produced": "Patient reported that their adolescence and early adulthood involved school, with no further details provided."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -414,7 +414,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; 20 years; three children",
-      "produced": "Marriage; 20 years; current or ended status not provided. Three children; significant family relationship; current or ended status not provided."
+      "produced": "Husband; married approximately 20 years; current. Three children; current."
     },
     {
       "ref": "personal_history.future_goals",
@@ -422,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "recover; family",
-      "produced": "Recover and focus on family."
+      "produced": "Recovery and family."
     }
   ],
   "fabricated": []

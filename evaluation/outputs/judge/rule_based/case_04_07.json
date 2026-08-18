@@ -4,26 +4,27 @@
   "scenario_case_id": "04-07",
   "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9762,
+  "record_score": 0.9524,
   "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9762,
-    "record_score_contested": 0.9412,
-    "fields_contested": 17,
-    "fields_auto_resolved": 25,
-    "fields_confirmed_absent": 9,
+    "record_score": 0.9524,
+    "record_score_contested": 0.8889,
+    "fields_contested": 18,
+    "fields_auto_resolved": 24,
+    "fields_confirmed_absent": 8,
     "fields_scored": 42,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 41,
+      "match": 40,
       "partial": 0,
-      "missing": 1,
+      "missing": 2,
       "contradicted": 0,
-      "fabricated": 1
+      "fabricated": 2
     },
-    "fabricated_fields": 1,
+    "fabricated_fields": 2,
     "fabricated_refs": [
+      "past_psychiatric_history.previous_diagnoses",
       "past_psychiatric_history.previous_therapies"
     ],
     "by_section": {
@@ -74,27 +75,27 @@
       },
       "personal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.0,
+        "score": 0.75
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated the intake but struggled significantly with the patient's confusion during the PHQ-9 and GAD-7 sections. While the interviewer correctly attempted to redirect the patient to the required response options, the process became repetitive and mechanical, failing to adapt to the patient's clear difficulty in understanding the standardized format.",
+  "flow_summary": "The interviewer successfully navigated the intake but struggled significantly with the patient's confusion during the PHQ-9 and GAD-7 sections. While the interviewer correctly identified the need to re-prompt for specific answers, they failed to adapt to the patient's repeated confusion regarding the timeframe and response options, leading to a repetitive and mechanical interaction.",
   "issues": [
     {
       "severity": "moderate",
       "category": "questioning_technique",
-      "evidence": "The interviewer repeatedly forced the patient to choose from the list of options without acknowledging the patient's confusion, leading to a repetitive loop: 'Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day.'"
+      "evidence": "The interviewer repeatedly forced the patient to choose from the list of options without acknowledging the patient's confusion about the timeframe or the specific options, e.g., 'Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day.'"
     },
     {
       "severity": "minor",
       "category": "responsiveness",
-      "evidence": "When the patient asked 'Which of those was the middle one? I've forgotten the list,' the interviewer ignored the request for clarification and simply repeated the full list of options again."
+      "evidence": "When the patient expressed confusion about the PHQ-9/GAD-7 timeframe ('Are you asking about now or about back then?'), the interviewer ignored the question and simply repeated the list of options, failing to clarify the 'last two weeks' instruction."
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "The interviewer failed to address the patient's confusion regarding the timeframe ('Are you asking about now or about back then?') and instead just repeated the question, which did not resolve the patient's uncertainty."
+      "evidence": "The interviewer asked 'What is your family doctor's full first and last name?' immediately after the patient had already provided the name 'Dr. Grace Lim' in the previous turn."
     }
   ],
   "field_verdicts": [
@@ -105,14 +106,6 @@
       "note": "",
       "expected": "11/03/2000",
       "produced": "11/03/2000"
-    },
-    {
-      "ref": "general_information.address",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "500 Wellington Street West, Toronto, Ontario",
-      "produced": "500 Wellington Street West, Toronto, Ontario"
     },
     {
       "ref": "general_information.postal_code",
@@ -304,7 +297,7 @@
       "source": "llm",
       "note": "",
       "expected": "EMILY WANG",
-      "produced": "UM — SORRY, COULD YOU MEAN MY NAME ON THE DOCUMENTS, OR LIKE THE NAME I GO BY? I GET A BIT MIXED UP WITH THE FORMAL WORDING. IT’S EMILY… AND THEN I THINK THE LAST NAME STARTS WITH W, BUT I’M NOT SURE WHAT EXACTLY YOU WANT ME TO SAY HERE."
+      "produced": "UM—SORRY, WHAT DO YOU MEAN EXACTLY? I’M JUST TRYING TO THINK HOW TO SAY IT PROPERLY. MY NAME IS EMILY… I THINK THAT’S THE PART YOU MEAN, BUT I’M NOT SURE IF YOU WANT THE WHOLE FORMAL VERSION WITH EVERYTHING ON THE DOCUMENTS."
     },
     {
       "ref": "general_information.gender",
@@ -313,6 +306,14 @@
       "note": "",
       "expected": "Female",
       "produced": "Female."
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "500 Wellington Street West, Toronto, Ontario",
+      "produced": "It’s 500 Wellington Street West… Toronto, Ontario."
     },
     {
       "ref": "general_information.family_doctor_name",
@@ -336,7 +337,7 @@
       "source": "llm",
       "note": "",
       "expected": "mood swings; premenstrual; irritability; relationship",
-      "produced": "It’s mostly my mood… the swings and irritability, and it gets tied up with my relationship stuff. It’s worst before my period, like about a week or so before, and then it settles once it starts."
+      "produced": "Mostly it’s mood swings, and they get really tied to my period — I get irritable, and it spills into relationships. It’s a bit hard to explain cleanly, but that’s the main thing."
     },
     {
       "ref": "current_concerns.goals",
@@ -344,7 +345,7 @@
       "source": "llm",
       "note": "",
       "expected": "control mood swings; save relationships",
-      "produced": "Mostly I want to get the mood swings under control, honestly. And… keep it from wrecking relationships. That’s really the main thing."
+      "produced": "I want to get the mood swings under control, and honestly save my relationships if I can."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
@@ -352,7 +353,7 @@
       "source": "llm",
       "note": "",
       "expected": "History of non-suicidal self-injury since adolescence, used to reduce anxiety.",
-      "produced": "It was cutting, back in adolescence and after that too, and it seemed to help my anxiety a bit at the time. I don’t have any suicidal thoughts now, and I’m not worried about an immediate safety issue today."
+      "produced": "It was cutting, back when I was younger, and it was more about managing anxiety than anything else. Right now, no — I’m not having suicidal thoughts or anything immediate like that."
     },
     {
       "ref": "medications.current_medications",
@@ -360,7 +361,7 @@
       "source": "llm",
       "note": "",
       "expected": "Combined oral contraceptive; one tablet daily; started 2023; no known side effects",
-      "produced": "Medication 1: Name Or Description: It’s the combined oral contraceptive.; Dose: One tablet daily.; Start Or Duration: I started it in 2023.; Side Effects: None that I know of."
+      "produced": "Medication 1: Name Or Description: It’s a combined oral contraceptive — that’s the one I’m on.; Dose: One tablet daily.; Start Or Duration: Started in 2023.; Side Effects: None that I know of."
     },
     {
       "ref": "medical_history.height",
@@ -384,7 +385,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; major depressive disorder; one psychiatric admission in 2018",
-      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Major depressive disorder.; Additional Details: She had one psychiatric admission in 2018."
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Major depressive disorder.; Additional Details: She had one psychiatric admission in 2018. I think that’s the main extra detail."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -404,11 +405,11 @@
     },
     {
       "ref": "personal_history.early_childhood",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "The system failed to capture the early childhood history.",
       "expected": "born; grew up",
-      "produced": "I was born and grew up… just, you know, normally. I don’t really have much else to add about that."
+      "produced": "Unknown"
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -416,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "cutting began; school",
-      "produced": "That’s where the cutting started, back in school years, and then I was… just focused on school and getting through things. Not much else I want to go into right now."
+      "produced": "That’s when the cutting started, and school was part of it. I don’t know if you want more than that, but that’s the main thing I can say."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -424,7 +425,7 @@
       "source": "llm",
       "note": "",
       "expected": "One significant two-year relationship; ended three months ago; currently single",
-      "produced": "There was one significant relationship, about two years, and it ended three months ago. I’m single now."
+      "produced": "There was one significant relationship, about two years long, and it ended three months ago. I’m single now."
     },
     {
       "ref": "personal_history.future_goals",
@@ -432,17 +433,27 @@
       "source": "llm",
       "note": "",
       "expected": "stable relationships; career",
-      "produced": "I’d like stable relationships, and… to keep moving forward in my career."
+      "produced": "Stable relationships, and my career."
     }
   ],
   "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "section": "past_psychiatric_history",
+      "field": "previous_diagnoses",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I don’t know of any diagnosis, no.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    },
     {
       "ref": "past_psychiatric_history.previous_therapies",
       "section": "past_psychiatric_history",
       "field": "previous_therapies",
       "entry_index": null,
       "expected": null,
-      "produced": "I don’t think so… I’m not aware of having done any therapy like CBT or DBT, and nothing is coming to mind right now.; I don’t know — I’m not actually sure I had any therapy, so I can’t give you a time.; I don’t know.",
+      "produced": "I haven’t had any therapy before, no.; I don’t know, because I haven’t had any.; None — I didn’t attend any sessions.",
       "verdict": "fabricated",
       "reason": "scenario provides no value for this field"
     }
