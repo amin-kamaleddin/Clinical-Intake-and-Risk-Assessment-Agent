@@ -3,14 +3,14 @@
   "case_id": "04",
   "scenario_case_id": "04-04",
   "repetition": 0,
-  "persona_id": "confused",
+  "persona_id": "clear",
   "record_score": 0.2683,
-  "flow_score": 0.25,
+  "flow_score": 0.0,
   "record_detail": {
     "record_score": 0.2683,
-    "record_score_contested": 0.8333,
-    "fields_contested": 6,
-    "fields_auto_resolved": 35,
+    "record_score_contested": 0.5,
+    "fields_contested": 2,
+    "fields_auto_resolved": 39,
     "fields_confirmed_absent": 11,
     "fields_scored": 41,
     "fields_unjudged": 0,
@@ -77,12 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer handled the initial intake well, showing patience and effective redirection with a confused patient. However, once the safety protocol was triggered, the system entered a catastrophic loop, repeating the same safety instructions over 50 times despite the patient's consistent compliance, rendering the system unusable.",
+  "flow_summary": "The system entered an infinite, repetitive loop after the patient disclosed suicidal intent. It failed to recognize that the patient was consistently providing 'I don't know' as a response to its repeated inquiries about the status of emergency services, leading to a complete breakdown of the intake process.",
   "issues": [
     {
       "severity": "critical",
       "category": "looping",
-      "evidence": "The system repeated variations of 'Please stay connected with emergency services' over 50 times in a row, ignoring the patient's repeated 'Okay' responses."
+      "evidence": "The system repeated the same sequence of instructions and questions regarding the 911 call status over 100 times, ignoring the patient's consistent 'I don't know' responses."
+    },
+    {
+      "severity": "major",
+      "category": "failure to adapt",
+      "evidence": "Despite the patient repeatedly stating 'I don't know' to questions about whether responders were on the way, the system continued to demand that the patient ask the operator and report back, rather than acknowledging the limitation or providing alternative guidance."
     }
   ],
   "field_verdicts": [
@@ -92,7 +97,7 @@
       "source": "auto",
       "note": "",
       "expected": "SUSAN REISS",
-      "produced": "Susan Reiss"
+      "produced": "SUSAN REISS"
     },
     {
       "ref": "general_information.gender",
@@ -103,12 +108,44 @@
       "produced": "Female"
     },
     {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "03/05/1975",
+      "produced": "03/05/1975"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "47 Bloorview Lane, Toronto, Ontario",
+      "produced": "47 Bloorview Lane, Toronto, Ontario"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M6H2R4",
+      "produced": "M6H2R4"
+    },
+    {
       "ref": "general_information.email",
       "verdict": "match",
       "source": "auto",
       "note": "",
       "expected": "susan.reiss@example.com",
       "produced": "susan.reiss@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550119",
+      "produced": "4165550119"
     },
     {
       "ref": "general_information.has_family_doctor",
@@ -367,52 +404,20 @@
       "produced": null
     },
     {
-      "ref": "general_information.date_of_birth",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "03/05/1975",
-      "produced": "March 5, 1975"
-    },
-    {
-      "ref": "general_information.address",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "47 Bloorview Lane, Toronto, Ontario",
-      "produced": "47 Bloorview Lane, Toronto, M6H 2R4"
-    },
-    {
-      "ref": "general_information.postal_code",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "M6H2R4",
-      "produced": "M6H 2R4"
-    },
-    {
-      "ref": "general_information.phone",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "4165550119",
-      "produced": "416 555 0119"
-    },
-    {
       "ref": "current_concerns.primary_problems",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "depression; guilt; workplace error; wants to die",
-      "produced": "Depression, awful guilt about a workplace error, and recurrent thoughts of wanting to die; patient reported current suicidal thoughts with plan and intent."
+      "produced": "Depression, guilt, and a workplace error. Patient stated, \"I want to die.\""
     },
     {
       "ref": "education_employment_legal_history.employment_history",
       "verdict": "missing",
       "source": "llm",
-      "note": "The system failed to capture the employment details provided in the expected value.",
+      "note": "The system captured a symptom instead of the employment history.",
       "expected": "Administrative coordinator, Lakeshore Pet Nutrition; 2013 to present",
-      "produced": "Workplace error mentioned; further employment history not discussed."
+      "produced": "Patient reported a workplace error."
     }
   ],
   "fabricated": []

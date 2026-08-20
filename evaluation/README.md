@@ -492,12 +492,3 @@ the prompt's effect from sampling.
 Records are checkpointed after every section and again in a `finally` block, so
 an interrupted or crashed case still leaves scoreable artifacts.
 `intake_complete` distinguishes a partial record from a clean one.
-
----
-
-## Before publishing
-
-Plan a small human-agreement check on the record verdicts — two or three
-hand-labelled cases gives you a number for the "you used an LLM judge" question
-at review. The categorical verdicts make that a four-label confusion matrix
-rather than a correlation between two floats.

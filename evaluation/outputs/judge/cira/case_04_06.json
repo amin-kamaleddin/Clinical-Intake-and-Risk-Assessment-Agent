@@ -4,21 +4,21 @@
   "scenario_case_id": "04-06",
   "repetition": 0,
   "persona_id": "clear",
-  "record_score": 1.0,
-  "flow_score": 0.95,
+  "record_score": 0.9565,
+  "flow_score": 0.7,
   "record_detail": {
-    "record_score": 1.0,
-    "record_score_contested": 1.0,
-    "fields_contested": 10,
-    "fields_auto_resolved": 36,
+    "record_score": 0.9565,
+    "record_score_contested": 0.8182,
+    "fields_contested": 11,
+    "fields_auto_resolved": 35,
     "fields_confirmed_absent": 8,
     "fields_scored": 46,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 46,
+      "match": 44,
       "partial": 0,
-      "missing": 0,
+      "missing": 2,
       "contradicted": 0,
       "fabricated": 0
     },
@@ -32,13 +32,13 @@
       },
       "past_psychiatric_history": {
         "fields": 6,
-        "credit": 6.0,
-        "score": 1.0
+        "credit": 5.0,
+        "score": 0.8333
       },
       "medications": {
         "fields": 5,
-        "credit": 5.0,
-        "score": 1.0
+        "credit": 4.0,
+        "score": 0.8
       },
       "medical_history": {
         "fields": 4,
@@ -77,12 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and efficient intake, maintaining a clear, professional tone throughout. The system followed the required structure, handled the questionnaires correctly, and appropriately managed the transition between sections.",
+  "flow_summary": "The interviewer conducted a thorough intake but suffered from significant mechanical redundancy. The most notable issue was the repetitive and unnecessary inclusion of the phrase 'Before we move on, could you answer the question above?' for every single GAD-7 item, which made the interaction feel robotic and cluttered.",
   "issues": [
     {
       "severity": "minor",
       "category": "redundancy",
-      "evidence": "In the employment section, the interviewer asked for details and then immediately followed up with 'Before we move on, could you answer the question above?' despite the patient not having provided an answer yet, which felt slightly mechanical."
+      "evidence": "Thank you. How would you like your gender recorded?"
+    },
+    {
+      "severity": "moderate",
+      "category": "redundancy",
+      "evidence": "Before we move on, could you answer the question above? (Repeated 7 times during the GAD-7 section)"
     }
   ],
   "field_verdicts": [
@@ -220,15 +225,7 @@
       "source": "auto",
       "note": "",
       "expected": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth",
-      "produced": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth. Multivitamin; one tablet daily; start date Unknown; no side effects. Oral contraceptive; name Unknown; one tablet daily; started 2022; no side effects."
-    },
-    {
-      "ref": "medications.current_medications[1]",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Multivitamin; one tablet daily; start date unknown; no side effects",
-      "produced": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth. Multivitamin; one tablet daily; start date Unknown; no side effects. Oral contraceptive; name Unknown; one tablet daily; started 2022; no side effects."
+      "produced": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth. Oral contraceptive, name unknown; dose unknown; one tablet daily; started 2022; no side effects."
     },
     {
       "ref": "medications.has_past_medications",
@@ -380,7 +377,7 @@
       "source": "llm",
       "note": "",
       "expected": "feeling low for years; guilt; underachievement",
-      "produced": "Feeling low for years and experiencing significant guilt about underachieving, affecting functioning at work."
+      "produced": "Feeling low for years, with significant guilt and a sense of underachievement. This has been affecting work; after receiving a positive performance review, I cried."
     },
     {
       "ref": "current_concerns.goals",
@@ -392,11 +389,11 @@
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "The system recorded 'Unknown' instead of the provided details.",
       "expected": "Assessed by a school counsellor and family physician at age 16",
-      "produced": "Assessed by a school counsellor and family physician at age 16."
+      "produced": "Unknown"
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
@@ -407,12 +404,20 @@
       "produced": "Individual psychotherapy; age 16 to 17; approximately 20 sessions; location Unknown"
     },
     {
+      "ref": "medications.current_medications[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The multivitamin entry is missing from the produced list.",
+      "expected": "Multivitamin; one tablet daily; start date unknown; no side effects",
+      "produced": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth. Oral contraceptive, name unknown; dose unknown; one tablet daily; started 2022; no side effects."
+    },
+    {
       "ref": "medications.current_medications[2]",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "Oral contraceptive; one tablet daily; started 2022; no side effects.",
-      "produced": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth. Multivitamin; one tablet daily; start date Unknown; no side effects. Oral contraceptive; name Unknown; one tablet daily; started 2022; no side effects."
+      "produced": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth. Oral contraceptive, name unknown; dose unknown; one tablet daily; started 2022; no side effects."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -420,7 +425,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; depression; treated intermittently with antidepressants",
-      "produced": "Mother; depression; treated intermittently with antidepressants; no additional details provided."
+      "produced": "Mother; depression; treated intermittently with antidepressants; no additional details."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -428,7 +433,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up; shy",
-      "produced": "Born and grew up here; described herself as shy as a child."
+      "produced": "Born and raised here; shy as a child."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -436,7 +441,7 @@
       "source": "llm",
       "note": "",
       "expected": "father hospitalised; leukemia; school",
-      "produced": "Was in school while her father was hospitalized with leukemia."
+      "produced": "My father was hospitalized for leukemia while I was in school."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -444,7 +449,7 @@
       "source": "llm",
       "note": "",
       "expected": "single; dysfunctional relationships",
-      "produced": "Romantic relationships; dates and duration not provided; ended or not current. Currently single; described past relationships as dysfunctional."
+      "produced": "Romantic relationships; dates and current status not specified; described as dysfunctional. Currently single."
     },
     {
       "ref": "personal_history.future_goals",
@@ -452,7 +457,7 @@
       "source": "llm",
       "note": "",
       "expected": "satisfying work; healthier relationships",
-      "produced": "To find more satisfying work and develop healthier relationships."
+      "produced": "Find more satisfying work and develop healthier relationships."
     }
   ],
   "fabricated": []

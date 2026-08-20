@@ -3,23 +3,23 @@
   "case_id": "10",
   "scenario_case_id": "04-10",
   "repetition": 0,
-  "persona_id": "moderate",
-  "record_score": 0.9412,
-  "flow_score": 0.95,
+  "persona_id": "confused",
+  "record_score": 0.9706,
+  "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9412,
-    "record_score_contested": 0.8966,
-    "fields_contested": 29,
-    "fields_auto_resolved": 22,
+    "record_score": 0.9706,
+    "record_score_contested": 0.925,
+    "fields_contested": 20,
+    "fields_auto_resolved": 31,
     "fields_confirmed_absent": 4,
     "fields_scored": 51,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 46,
-      "partial": 4,
+      "match": 48,
+      "partial": 3,
       "missing": 0,
-      "contradicted": 1,
+      "contradicted": 0,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -27,13 +27,13 @@
     "by_section": {
       "general_information": {
         "fields": 11,
-        "credit": 10.5,
-        "score": 0.9545
+        "credit": 11.0,
+        "score": 1.0
       },
       "past_psychiatric_history": {
         "fields": 10,
-        "credit": 8.5,
-        "score": 0.85
+        "credit": 9.0,
+        "score": 0.9
       },
       "medications": {
         "fields": 5,
@@ -55,6 +55,11 @@
         "credit": 3.0,
         "score": 1.0
       },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
       "education_employment_legal_history": {
         "fields": 3,
         "credit": 3.0,
@@ -62,27 +67,27 @@
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 1.0,
-        "score": 0.5
-      },
-      "substance_use": {
-        "fields": 8,
-        "credit": 8.0,
+        "credit": 2.0,
         "score": 1.0
       },
       "personal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.5,
+        "score": 0.875
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and professional intake. It handled the patient's occasional imprecision well by rephrasing questions to elicit clear, actionable answers, and it correctly identified and responded to the patient's safety risk.",
+  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona, demonstrating persistence in gathering necessary clinical data. While the interviewer was effective at redirecting the patient and ensuring completion of the intake, the safety protocol became repetitive and somewhat mechanical, leading to a loop where the patient struggled to understand the interviewer's intent.",
   "issues": [
     {
+      "severity": "moderate",
+      "category": "repetitive_questioning",
+      "evidence": "The interviewer repeated the safety instructions and the question about being alone multiple times, which caused the patient to become more confused rather than providing clarity."
+    },
+    {
       "severity": "minor",
-      "category": "clarity",
-      "evidence": "The patient initially struggled with the GAD-7 questions, requiring the interviewer to rephrase them to get a clear response."
+      "category": "mechanical_interaction",
+      "evidence": "During the GAD-7, the interviewer repeatedly asked the same question about the timeframe despite the patient's confusion, which felt more like a script-enforcement than a helpful clarification."
     }
   ],
   "field_verdicts": [
@@ -109,6 +114,14 @@
       "note": "",
       "expected": "24/04/1999",
       "produced": "24/04/1999"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "220 Danforth Avenue, Toronto, Ontario",
+      "produced": "220 Danforth Avenue, Toronto, Ontario"
     },
     {
       "ref": "general_information.postal_code",
@@ -255,6 +268,70 @@
       "produced": true
     },
     {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
       "ref": "education_employment_legal_history.active_legal_cases",
       "verdict": "match",
       "source": "auto",
@@ -263,20 +340,12 @@
       "produced": false
     },
     {
-      "ref": "general_information.address",
-      "verdict": "partial",
-      "source": "llm",
-      "note": "Missing province information.",
-      "expected": "220 Danforth Avenue, Toronto, Ontario",
-      "produced": "220 Danforth Avenue, Toronto"
-    },
-    {
       "ref": "current_concerns.primary_problems",
-      "verdict": "contradicted",
+      "verdict": "match",
       "source": "llm",
-      "note": "The primary problems listed in the produced value do not include the breakup, hospitalization, or overdose.",
+      "note": "",
       "expected": "depression; after breakup; hospitalisation; overdose",
-      "produced": "Depressed mood, sleeping much less than usual (2–3 hours) without feeling wiped out the next day, and racing thoughts."
+      "produced": "Depression and difficulties following a recent breakup; recent hospitalization after an overdose; wants to stay safe and get back on track."
     },
     {
       "ref": "current_concerns.goals",
@@ -284,15 +353,15 @@
       "source": "llm",
       "note": "",
       "expected": "stay safe; recover; law school",
-      "produced": "Stay safe, get back on track, eventually attend law school, and achieve stability."
+      "produced": "Stay safe, recover, regain stability, and get back toward law school."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the detail that the patient is currently attending an intensive outpatient programme.",
       "expected": "Assessed during first psychiatric admission in June 2026; currently attending an intensive outpatient programme",
-      "produced": "Assessed during first psychiatric admission in June 2026; currently in an intensive outpatient program."
+      "produced": "Assessed during first psychiatric admission in June 2026 after an impulsive overdose following a breakup; admitted to St. Michael’s Hospital for about 7 days."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -308,15 +377,15 @@
       "source": "llm",
       "note": "",
       "expected": "First psychiatric admission; St. Michael's Hospital; June 2026; 7-day stay after an impulsive overdose",
-      "produced": "First psychiatric admission in June 2026 at St. Michael’s Hospital; stayed about 7 days after an impulsive overdose."
+      "produced": "One psychiatric admission: June 2026 at St. Michael’s Hospital for about 7 days after an impulsive overdose. No other admissions."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the detail about no current plan.",
+      "note": "",
       "expected": "One previous suicide attempt after a breakup; no current plan.",
-      "produced": "Suicide attempt by overdose after a breakup in June 2026; hospitalized and received medical care."
+      "produced": "One previous suicide attempt involving an overdose after a breakup in June 2026; no other intentional self-harm or suicide attempts disclosed."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies[0]",
@@ -324,23 +393,23 @@
       "source": "llm",
       "note": "",
       "expected": "Individual psychotherapy in college; approximately 8 sessions",
-      "produced": "Individual psychotherapy in college, approximately 8 sessions; currently in an intensive outpatient CBT program three days per week."
+      "produced": "Individual psychotherapy in college, approximately 8 sessions; currently in intensive outpatient CBT, started June 2026, three days per week."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies[1]",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the start date of June 2026.",
+      "note": "",
       "expected": "Intensive outpatient CBT; started June 2026; currently attending 3 days per week.",
-      "produced": "Individual psychotherapy in college, approximately 8 sessions; currently in an intensive outpatient CBT program three days per week."
+      "produced": "Individual psychotherapy in college, approximately 8 sessions; currently in intensive outpatient CBT, started June 2026, three days per week."
     },
     {
       "ref": "past_psychiatric_history.previous_treatments",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the specific duration of improvement (2 days).",
+      "note": "Missing the detail about the short-lived improvement lasting about 2 days.",
       "expected": "Ketamine treatment; 2 sessions during admission; short-lived improvement lasting about 2 days",
-      "produced": "Ketamine treatment during June 2026 hospital stay, a couple of sessions, with short-term benefit."
+      "produced": "Ketamine treatment during the June 2026 hospital admission, 2 sessions."
     },
     {
       "ref": "medications.current_medications[0]",
@@ -348,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "Vilazodone; 20 mg each morning; started June 2026; nausea during first week",
-      "produced": "Vilazodone 20 mg each morning, started June 2026; nausea during the first week. Quetiapine 50 mg nightly, started June 2026; morning drowsiness."
+      "produced": "Vilazodone 20 mg each morning, started June 2026; caused nausea during the first week. Quetiapine 50 mg nightly, started June 2026; causes morning drowsiness."
     },
     {
       "ref": "medications.current_medications[1]",
@@ -356,7 +425,7 @@
       "source": "llm",
       "note": "",
       "expected": "Quetiapine; 50 mg nightly; started June 2026; morning drowsiness.",
-      "produced": "Vilazodone 20 mg each morning, started June 2026; nausea during the first week. Quetiapine 50 mg nightly, started June 2026; morning drowsiness."
+      "produced": "Vilazodone 20 mg each morning, started June 2026; caused nausea during the first week. Quetiapine 50 mg nightly, started June 2026; causes morning drowsiness."
     },
     {
       "ref": "medications.past_medication_details",
@@ -364,7 +433,7 @@
       "source": "llm",
       "note": "",
       "expected": "Escitalopram; 10 mg daily; taken for about 3 months in college; stopped because she felt emotionally numb",
-      "produced": "Escitalopram 10 mg daily, taken for about 3 months in college; stopped due to emotional numbness."
+      "produced": "Escitalopram 10 mg daily for about 3 months in college; stopped because of emotional numbness."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -372,7 +441,7 @@
       "source": "llm",
       "note": "",
       "expected": "Brother; alcohol and cocaine use disorder",
-      "produced": "Brother has alcohol and cocaine use problems; sister has panic disorder and depression."
+      "produced": "Brother has alcohol and cocaine use problems. Sister has panic disorder and depression."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -380,71 +449,7 @@
       "source": "llm",
       "note": "",
       "expected": "Sister; panic disorder and depression.",
-      "produced": "Brother has alcohol and cocaine use problems; sister has panic disorder and depression."
-    },
-    {
-      "ref": "substance_use.nonmedical_alcohol_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "Does not drink alcohol."
-    },
-    {
-      "ref": "substance_use.nonmedical_nicotine_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "Does not use nicotine."
-    },
-    {
-      "ref": "substance_use.nonmedical_marijuana_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "Does not use marijuana."
-    },
-    {
-      "ref": "substance_use.nonmedical_stimulant_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "Does not use stimulants."
-    },
-    {
-      "ref": "substance_use.nonmedical_opioid_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "Does not use opioids."
-    },
-    {
-      "ref": "substance_use.nonmedical_benzodiazepine_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "Does not use benzodiazepines."
-    },
-    {
-      "ref": "substance_use.nonmedical_hallucinogen_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "Does not use hallucinogens."
-    },
-    {
-      "ref": "substance_use.nonmedical_other_substance_use",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Never",
-      "produced": "Does not use other substances."
+      "produced": "Brother has alcohol and cocaine use problems. Sister has panic disorder and depression."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -452,7 +457,7 @@
       "source": "llm",
       "note": "",
       "expected": "bachelor's degree",
-      "produced": "Bachelor’s degree."
+      "produced": "Bachelor’s degree"
     },
     {
       "ref": "education_employment_legal_history.employment_history",
@@ -460,7 +465,7 @@
       "source": "llm",
       "note": "",
       "expected": "Administrative assistant, Ontario Legal Services; 2021 to present",
-      "produced": "Administrative assistant at Ontario Legal Services since 2021."
+      "produced": "Administrative assistant at Ontario Legal Services since 2021; this is the main job disclosed."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -468,7 +473,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born and grew up here; nothing significant stands out."
+      "produced": "Born and grew up in the area; no further details reported."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -476,15 +481,15 @@
       "source": "llm",
       "note": "",
       "expected": "high school; moodiness; college depression",
-      "produced": "High school was mostly uneventful, though she was moody. Became depressed in college."
+      "produced": "High school was moody. Experienced depression in college."
     },
     {
       "ref": "personal_history.significant_relationships",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "The status of being single is missing.",
       "expected": "single; recently ended; two-year relationship",
-      "produced": "Currently single; recently ended a two-year relationship."
+      "produced": "Recent end of a two-year relationship."
     },
     {
       "ref": "personal_history.future_goals",
@@ -492,7 +497,7 @@
       "source": "llm",
       "note": "",
       "expected": "law school; stability",
-      "produced": "Attend law school and achieve stability."
+      "produced": "Stability and attending law school if possible."
     }
   ],
   "fabricated": []

@@ -3,23 +3,23 @@
   "case_id": "02",
   "scenario_case_id": "04-02",
   "repetition": 0,
-  "persona_id": "clear",
-  "record_score": 0.9659,
+  "persona_id": "confused",
+  "record_score": 0.9091,
   "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9659,
-    "record_score_contested": 0.875,
-    "fields_contested": 12,
-    "fields_auto_resolved": 32,
+    "record_score": 0.9091,
+    "record_score_contested": 0.7857,
+    "fields_contested": 14,
+    "fields_auto_resolved": 30,
     "fields_confirmed_absent": 10,
     "fields_scored": 44,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 41,
-      "partial": 3,
-      "missing": 0,
-      "contradicted": 0,
+      "match": 38,
+      "partial": 4,
+      "missing": 1,
+      "contradicted": 1,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -27,8 +27,8 @@
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 10.0,
-        "score": 1.0
+        "credit": 9.0,
+        "score": 0.9
       },
       "past_psychiatric_history": {
         "fields": 3,
@@ -37,8 +37,8 @@
       },
       "medications": {
         "fields": 3,
-        "credit": 2.5,
-        "score": 0.8333
+        "credit": 2.0,
+        "score": 0.6667
       },
       "medical_history": {
         "fields": 6,
@@ -57,13 +57,13 @@
       },
       "substance_use": {
         "fields": 8,
-        "credit": 8.0,
-        "score": 1.0
+        "credit": 7.5,
+        "score": 0.9375
       },
       "education_employment_legal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.5,
+        "score": 0.875
       },
       "current_concerns": {
         "fields": 2,
@@ -77,17 +77,22 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully completed the intake but suffered from a persistent, repetitive technical glitch where it repeatedly appended 'Before we move on, could you answer the question above?' to its prompts, even when the patient had already answered. This made the interaction feel mechanical and redundant.",
+  "flow_summary": "The interviewer struggled significantly with the patient's confusion, leading to a repetitive and mechanical interaction. While the interviewer was patient and persistent in clarifying questions, the system frequently failed to adapt to the patient's cognitive state, resulting in excessive looping and redundant confirmation prompts that made the intake feel disjointed and frustrating.",
   "issues": [
     {
       "severity": "moderate",
       "category": "redundant_questioning",
-      "evidence": "The interviewer repeatedly appended 'Before we move on, could you answer the question above?' to questions that were being asked for the first time, such as: 'Please tell me about your recent employment history... Before we move on, could you answer the question above?'"
+      "evidence": "The interviewer engaged in a repetitive loop at the end of the medication section, asking 'Before we move on, could you answer the question above?' six consecutive times after the patient had already confirmed the information."
     },
     {
       "severity": "moderate",
-      "category": "redundant_questioning",
-      "evidence": "The same redundant phrase was appended to every single GAD-7 question, despite the patient having provided an answer in the previous turn, creating a repetitive and confusing user experience."
+      "category": "poor_flow",
+      "evidence": "The interviewer repeatedly used the phrase 'Before we move on, could you answer the question above?' even when the patient had just provided a clear answer, creating a mechanical and confusing dialogue."
+    },
+    {
+      "severity": "minor",
+      "category": "lack_of_adaptation",
+      "evidence": "When the patient expressed confusion about the PHQ-9 and GAD-7 scales, the interviewer simply repeated the full list of options multiple times rather than simplifying the delivery or acknowledging the patient's difficulty with the format."
     }
   ],
   "field_verdicts": [
@@ -106,14 +111,6 @@
       "note": "",
       "expected": "Female",
       "produced": "Female"
-    },
-    {
-      "ref": "general_information.date_of_birth",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "09/02/2003",
-      "produced": "09/02/2003"
     },
     {
       "ref": "general_information.address",
@@ -197,11 +194,11 @@
     },
     {
       "ref": "medications.has_current_medications",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": true
+      "produced": null
     },
     {
       "ref": "medications.has_past_medications",
@@ -265,15 +262,7 @@
       "source": "auto",
       "note": "",
       "expected": "Mother; depression after the birth of her second child",
-      "produced": "Mother; depression after the birth of her second child. Maternal aunt; anxiety."
-    },
-    {
-      "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Maternal aunt; anxiety.",
-      "produced": "Mother; depression after the birth of her second child. Maternal aunt; anxiety."
+      "produced": "Mother; depression after the birth of her second child; no further details known. Maternal aunt; anxiety"
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -348,12 +337,20 @@
       "produced": "High school"
     },
     {
+      "ref": "general_information.date_of_birth",
+      "verdict": "contradicted",
+      "source": "llm",
+      "note": "The produced date is 02/09/2003, which contradicts the expected 09/02/2003.",
+      "expected": "09/02/2003",
+      "produced": "02/09/2003"
+    },
+    {
       "ref": "current_concerns.primary_problems",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "low mood; fatigue; postpartum; overwhelmed",
-      "produced": "Low mood, fatigue, and feeling overwhelmed since the postpartum period. These difficulties occur mostly at home while caring for the baby and toddler; the husband being largely absent makes them harder to manage."
+      "produced": "At home, experiencing persistent tiredness, low mood, feeling that everything is heavy, and feeling overwhelmed and guilty while caring for a frequently crying baby and a toddler. Breastfeeding and limited support from her husband contribute to the ongoing strain."
     },
     {
       "ref": "current_concerns.goals",
@@ -361,21 +358,21 @@
       "source": "llm",
       "note": "",
       "expected": "feel like herself; cope; care for children",
-      "produced": "Feel like myself again and cope better so I can care for my children."
+      "produced": "Feel like herself again, cope better, and care for her children without feeling like she is falling apart."
     },
     {
       "ref": "medications.current_medications",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Start date and side effect status missing.",
+      "note": "",
       "expected": "Prenatal multivitamin with iron; one tablet daily; started during pregnancy; no side effects known",
-      "produced": "Prenatal multivitamin with iron; one tablet daily; duration Unknown; side effects Unknown"
+      "produced": "Prenatal multivitamin with iron; one tablet daily; started during pregnancy; no known side effects"
     },
     {
       "ref": "medical_history.medical_conditions",
       "verdict": "partial",
       "source": "llm",
-      "note": "Inhaler usage information missing.",
+      "note": "Missing the detail about using a salbutamol inhaler as needed.",
       "expected": "Asthma; diagnosed in childhood; uses salbutamol inhaler as needed",
       "produced": "Asthma; diagnosed in childhood"
     },
@@ -383,25 +380,33 @@
       "ref": "medical_history.surgical_history",
       "verdict": "partial",
       "source": "llm",
-      "note": "Complication status missing.",
+      "note": "Missing the detail about no ongoing complications.",
       "expected": "Emergency caesarean section; February 2026; no ongoing complications",
       "produced": "Emergency caesarean section; February 2026"
     },
     {
-      "ref": "substance_use.nonmedical_nicotine_use",
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
       "verdict": "match",
       "source": "llm",
       "note": "",
+      "expected": "Maternal aunt; anxiety.",
+      "produced": "Mother; depression after the birth of her second child; no further details known. Maternal aunt; anxiety"
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing the detail that use stopped when pregnancy was confirmed.",
       "expected": "Previous; cigarettes; about 5 per day; used for 4 years; stopped when pregnancy was confirmed",
-      "produced": "Status: Previous; Substance or product: Cigarettes; Quantity or frequency: About 5 cigarettes per day; Duration: 4 years; stopped when pregnancy was confirmed"
+      "produced": "Status: Previous; Substance or product: Cigarettes; Quantity or frequency: About 5 cigarettes per day; Duration: About 4 years"
     },
     {
       "ref": "education_employment_legal_history.employment_history[0]",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the detail that employment stopped during pregnancy.",
       "expected": "Barista at Lakeside Coffee; 2021 to 2025; stopped during pregnancy",
-      "produced": "Barista, Lakeside Coffee; 2021 to 2025. Homemaker; Present"
+      "produced": "Barista, Lakeside Coffee; 2021 to 2025. Homemaker; Unknown to Present"
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
@@ -409,7 +414,7 @@
       "source": "llm",
       "note": "",
       "expected": "Currently homemaker.",
-      "produced": "Barista, Lakeside Coffee; 2021 to 2025. Homemaker; Present"
+      "produced": "Barista, Lakeside Coffee; 2021 to 2025. Homemaker; Unknown to Present"
     },
     {
       "ref": "personal_history.early_childhood",
@@ -417,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Patient does not know or have further details about where they were born, where they grew up, or what they were like as a young child."
+      "produced": "Born and raised in the same place; city or more specific location unknown. Described themselves as a typical child, with nothing particular standing out."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -425,7 +430,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; coffee shop work",
-      "produced": "Patient attended school and later worked at a coffee shop."
+      "produced": "Attended school with no significant difficulties reported. Later worked in a coffee shop, with no significant difficulties at work or home reported."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -433,7 +438,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; husband; unsupportive; absent",
-      "produced": "Marriage; duration and current status not specified; husband described as largely absent and not very supportive."
+      "produced": "Marriage; dates or duration unknown; current. Husband is often absent and described as not very supportive."
     },
     {
       "ref": "personal_history.future_goals",
@@ -441,7 +446,7 @@
       "source": "llm",
       "note": "",
       "expected": "care for children; return to work",
-      "produced": "Patient wants to care for her children and return to work."
+      "produced": "Care for her children properly and possibly return to work in the future."
     }
   ],
   "fabricated": []

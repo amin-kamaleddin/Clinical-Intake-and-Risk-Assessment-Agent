@@ -3,41 +3,115 @@
   "scenario_case_id": "04-03",
   "title": "Grief and Depression",
   "system": "naive_llm",
-  "run_id": "60d36b5a33b5",
+  "run_id": "b35b43cfa386",
   "repetition": 0,
-  "persona_id": "clear",
+  "persona_id": "confused",
   "patient_behaviour": {
     "persona": {
-      "id": "clear",
-      "label": "Clear communicator",
-      "difficulty_rank": 1,
-      "description": "Organised and literal. Answers precisely the question asked, in one pass, with the right level of detail. Control condition.",
-      "temperature": 0.0,
-      "questionnaire_deflection_probability": 0.0,
-      "max_deflections_per_item": 0,
-      "deflection_budget_per_instrument": 0,
-      "freetext_hedge_probability": 0.0,
-      "freetext_hedge_budget_per_section": 0
+      "id": "confused",
+      "label": "Unclear and disorganised",
+      "difficulty_rank": 3,
+      "description": "Hard to interview. Rambles, misreads questions, needs the frequency scale re-explained, discloses out of order. Tests whether the agent can actively guide rather than merely transcribe.",
+      "temperature": 0.8,
+      "questionnaire_deflection_probability": 0.8,
+      "max_deflections_per_item": 2,
+      "deflection_budget_per_instrument": 5,
+      "freetext_hedge_probability": 0.5,
+      "freetext_hedge_budget_per_section": 4
     },
     "repetition": 0,
-    "temperature": 0.0,
+    "temperature": 0.8,
     "temperature_pinned": false,
-    "questionnaire_deflections": 0,
-    "freetext_hedges": 0,
+    "questionnaire_deflections": 10,
+    "freetext_hedges": 4,
     "max_consecutive_hedges": 1,
-    "hedges_by_section": {},
-    "deflections_by_instrument": {},
-    "deflections_by_item": {},
-    "deflection_log": []
+    "hedges_by_section": {
+      "(none)": 4
+    },
+    "deflections_by_instrument": {
+      "phq9": 5,
+      "gad7": 5
+    },
+    "deflections_by_item": {
+      "phq9_q9": 1,
+      "phq9_q1": 1,
+      "phq9_q2": 2,
+      "phq9_q4": 1,
+      "gad7_q1": 2,
+      "gad7_q3": 2,
+      "gad7_q4": 1
+    },
+    "deflection_log": [
+      {
+        "item": "phq9_q9",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "Uh... some weeks more than others, I suppose."
+      },
+      {
+        "item": "phq9_q1",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "That depends. Are you asking about now or about back then?"
+      },
+      {
+        "item": "phq9_q2",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "I really don't know how to answer that one."
+      },
+      {
+        "item": "phq9_q2",
+        "instrument": "phq9",
+        "attempt": 2,
+        "response": "That depends. Are you asking about now or about back then?"
+      },
+      {
+        "item": "phq9_q4",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "Hm. Hard to say. My days all run together lately."
+      },
+      {
+        "item": "gad7_q1",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "That depends. Are you asking about now or about back then?"
+      },
+      {
+        "item": "gad7_q1",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "That depends. Are you asking about now or about back then?"
+      },
+      {
+        "item": "gad7_q3",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+      },
+      {
+        "item": "gad7_q3",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+      },
+      {
+        "item": "gad7_q4",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "Hm. Hard to say. My days all run together lately."
+      }
+    ]
   },
   "budget": {
-    "total_turns": 129,
-    "system_turns": 65,
-    "patient_turns": 64,
-    "system_words": 1555,
-    "patient_words": 273,
-    "total_words": 1828,
-    "mean_system_turn_words": 23.9,
+    "total_turns": 151,
+    "system_turns": 76,
+    "patient_turns": 75,
+    "system_words": 1910,
+    "patient_words": 810,
+    "total_words": 2720,
+    "mean_system_turn_words": 25.1,
     "elapsed_seconds": null
   },
   "conversation": [
@@ -47,7 +121,15 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "DAVID QUINN"
+      "message": "My name… I’m sorry, I’m a bit muddled just now. Do you mean the name I go by, or the full legal name?"
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Either is fine to start—what name would you like us to use during your appointment?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "David Quinn."
     },
     {
       "speaker": "CIRA",
@@ -55,71 +137,71 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "Male"
+      "message": "Male."
     },
     {
       "speaker": "CIRA",
-      "message": "What is your date of birth?"
+      "message": "Thank you. What is your date of birth?"
     },
     {
       "speaker": "PATIENT",
-      "message": "21/04/1966"
+      "message": "It’s… 21st April, 1966."
     },
     {
       "speaker": "CIRA",
-      "message": "What is your current street address?"
+      "message": "Thank you. What is your current residential address?"
     },
     {
       "speaker": "PATIENT",
-      "message": "205 Rosedale Heights Drive, Toronto, Ontario"
+      "message": "205 Rosedale Heights Drive… Toronto, Ontario. I’m not sure if you need the postal code right now, but that’s the address."
     },
     {
       "speaker": "CIRA",
-      "message": "What is your postal code?"
+      "message": "Thank you. What is the postal code for that address?"
     },
     {
       "speaker": "PATIENT",
-      "message": "M4T1C9"
+      "message": "M4T1C9."
     },
     {
       "speaker": "CIRA",
-      "message": "What is your email address?"
+      "message": "Thank you. What is your email address?"
     },
     {
       "speaker": "PATIENT",
-      "message": "david.quinn@example.com"
+      "message": "david.quinn@example.com."
     },
     {
       "speaker": "CIRA",
-      "message": "What is your phone number?"
+      "message": "Thank you. What is the best phone number to reach you?"
     },
     {
       "speaker": "PATIENT",
-      "message": "4165550176"
+      "message": "4165550176."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you have a family doctor? If so, what is their name?"
+      "message": "Thank you. Do you have a family doctor, and if so, what is their name?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Yes, Dr. Simon Green."
+      "message": "Yes… Dr. Simon Green."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you currently have a psychiatrist? If so, what is their name?"
+      "message": "Thank you. Do you currently have a psychiatrist, and if so, what is their name?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Yes, Dr. Laura Bennett."
+      "message": "I think so, yes… I do have someone, but I’m blanking on the name for a moment. It’s… one of the doctors I’ve seen before, I just can’t quite pull it up right now."
     },
     {
       "speaker": "CIRA",
-      "message": "What are the main problems or concerns bringing you in today?"
+      "message": "That’s okay—we can record the psychiatrist’s name as unknown for now. What are the main problems or concerns bringing you in today?"
     },
     {
       "speaker": "PATIENT",
-      "message": "My son’s death, grief, sadness, and I can’t concentrate."
+      "message": "It’s my son’s death… and the grief, the sadness. I just can’t seem to concentrate on much of anything. It’s all been—well, it’s been hard to get through the day."
     },
     {
       "speaker": "CIRA",
@@ -127,139 +209,83 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "To cope with the loss and return to functioning."
+      "message": "I’d like to cope with the loss better… and just get back to functioning, if I can. And maybe, I don’t know, honour his memory somehow."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you ever been assessed by a mental-health professional before, and if so, what were the details?"
+      "message": "Thank you for sharing that. Have you ever been assessed by a mental-health professional before, and if so, what were the details?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Yes, I was followed by Dr. Laura Bennett during two depressive episodes in 1998 and 2003."
+      "message": "I think so, yes… it was a while back, and there was someone I was seeing, but I’m getting tangled up with the dates and who was who. Do you mean like a psychiatrist, or therapy, or both?"
     },
     {
       "speaker": "CIRA",
-      "message": "Have you ever received a psychiatric diagnosis? If so, please list each diagnosis."
+      "message": "Either or both—have you previously had an assessment with a psychiatrist, psychologist, therapist, or another mental-health professional?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Depression."
+      "message": "Yes, I was followed by Dr. Laura Bennett, the psychiatrist… during two depressive episodes, one in 1998 and another in 2003. I’m not sure if that’s everything you want."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you ever been admitted to a psychiatric hospital? If so, please describe each admission."
+      "message": "Thank you, David. Were you given any psychiatric diagnoses during those episodes or at any other time?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "Well, there was definitely something about depression in there… I’m just trying to separate what was the diagnosis and what was the treatment, because it all runs together a bit. Are you asking about the official label they used, or more what the episodes were like?"
     },
     {
       "speaker": "CIRA",
-      "message": "Have you ever harmed yourself or attempted suicide? If so, please describe what happened and when."
+      "message": "I’m asking about the official diagnosis or label, if you remember it. What psychiatric diagnoses have you been given?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "Depression… and I think it was really two prior episodes, back in my 30s. That’s the label I remember being given."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you had any previous therapy or counseling? If so, please describe each type and when you received it."
+      "message": "Thank you. Have you ever had a psychiatric hospital admission, and if so, what were the details?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Individual psychotherapy in 1998."
+      "message": "No, I haven’t had a psychiatric hospital admission."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you received any previous psychiatric treatments, such as medication or other treatments? If so, please describe each one."
+      "message": "Thank you. Have you ever intentionally hurt yourself or had thoughts of harming yourself, and if so, what were the details?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Sertraline."
+      "message": "No… I’ve never intentionally hurt myself. But lately, after my son died, I do sometimes feel like I’d be better off dead. I don’t have a plan or any intention to act on it, it’s more… just that thought."
     },
     {
       "speaker": "CIRA",
-      "message": "Are you currently taking any medications, including prescription, over-the-counter, or supplements? If so, what is the medication name, dose, when you started it, and any side effects?"
+      "message": "I’m very sorry you’re experiencing this, David. Since you mentioned feeling you’d be better off dead, are you safe right now, and do you have any current intention or plan to harm yourself?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, I’m not currently taking any medications."
+      "message": "Uh... some weeks more than others, I suppose."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you taken any psychiatric or other prescription medications in the past? If so, please provide the name, dose, when you started it, and any side effects for each medication."
+      "message": "Thank you for telling me. Are you safe right now, with no current intention or plan to harm yourself?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Sertraline, 100 mg daily."
+      "message": "Yes… no plan, and I’m not intending to do anything. It’s the thought that comes and goes, but nothing active."
     },
     {
       "speaker": "CIRA",
-      "message": "When did you start taking sertraline, and did you experience any side effects?"
+      "message": "I’m glad you’re safe right now. If that changes or you feel at risk, please contact 988 in Canada or your local emergency number immediately, or go to the nearest emergency department. Have you had any previous individual, group, family, or grief therapy?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I took it for about 18 months in my 30s, and I don’t remember any side effects."
+      "message": "Yes — individual psychotherapy, back in 1998. I did about 16 weekly sessions, though it feels like a long time ago now."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you taken any other medications in the past?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "No, those are all."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Do you have any current medical conditions? Please list each one."
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "No, I do not have any current medical conditions."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Have you ever had any surgeries? If so, please list each surgery and when it occurred."
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "No, I have not had any surgeries."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "What is your height?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "178 cm"
-    },
-    {
-      "speaker": "CIRA",
-      "message": "What is your current weight?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "82 kg"
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Do you have any medication allergies? If so, please list each one and describe the reaction."
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "No, I do not have any medication allergies."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Has anyone in your family had a psychiatric condition or received mental-health treatment? If so, please describe each family member’s condition or treatment."
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "Yes, my parents had depression and my son died by suicide."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Thank you for sharing that, David. Aside from your parents’ depression and your son’s suicide, is there any other family psychiatric history?"
+      "message": "Thank you. Have you had any other previous therapies besides those 16 individual psychotherapy sessions in 1998?"
     },
     {
       "speaker": "PATIENT",
@@ -267,135 +293,223 @@
     },
     {
       "speaker": "CIRA",
-      "message": "How often do you currently drink alcohol, and how much do you typically have on those occasions?"
+      "message": "Thank you. What previous psychiatric treatments have you received, such as medications or other treatments, and what do you remember about them?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I currently drink wine, about half a bottle nightly."
+      "message": "I took sertraline before… 100 mg daily. It was for about 18 months, in my 30s, and I stopped after I was doing well for a while. I think it helped."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you currently use nicotine, such as cigarettes, vaping products, or chewing tobacco? If so, how often and how much?"
+      "message": "Thank you. Have you received any other previous psychiatric treatments besides sertraline?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, those are all."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you currently use marijuana or cannabis? If so, how often and how much?"
+      "message": "Thank you. Are you currently taking any medications, including prescription, over-the-counter, or supplements? Please include the name, dose, when you started, and any side effects for each."
     },
     {
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, I’m not on any current medications."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you currently use stimulants, such as cocaine, methamphetamine, or non-prescribed prescription stimulants? If so, how often and how much?"
+      "message": "Thank you. Have you taken any other past medications besides sertraline 100 mg daily for about 18 months in your 30s?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, that’s the only one I remember."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you currently use opioids, including prescription opioids not taken as prescribed or illicit opioids? If so, how often and how much?"
+      "message": "Thank you. Do you have any current or past medical conditions? Please list them one at a time if possible."
     },
     {
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "I don’t have any medical conditions that I know of. Nothing I’m being treated for, anyway."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you currently use benzodiazepines, such as lorazepam, clonazepam, or alprazolam, other than as prescribed? If so, how often and how much?"
+      "message": "Thank you. Have you had any surgeries or major medical procedures?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, none."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you currently use hallucinogens, such as LSD, psilocybin, or DMT? If so, how often and how much?"
+      "message": "Thank you. What is your height?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "I’m about 178 cm."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you currently use any other substances not yet discussed? If so, please describe what, how often, and how much."
+      "message": "Thank you. What is your current weight?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "About 82 kg."
     },
     {
       "speaker": "CIRA",
-      "message": "Are there any active legal cases or other legal matters currently affecting you? If so, please describe them."
+      "message": "Thank you. Do you have any medication allergies or past reactions to medications?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No."
+      "message": "No, I don’t have any medication allergies that I know of."
     },
     {
       "speaker": "CIRA",
-      "message": "What is the highest level of education you completed?"
+      "message": "Thank you. Is there any family history of psychiatric or mental-health conditions, including depression, anxiety, substance use, suicide, or psychiatric hospitalization? Please mention each family member and condition you know of."
     },
     {
       "speaker": "PATIENT",
-      "message": "Bachelor's degree."
+      "message": "Yes… my parents had depression, and my son died by suicide. I’m not sure if you need it split out differently, but that’s what I know."
     },
     {
       "speaker": "CIRA",
-      "message": "Please describe your employment history, including your current employment status and significant previous jobs."
+      "message": "Thank you for sharing that, David. Besides your parents’ depression and your son’s suicide, is there any other family psychiatric history you know of?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I’m the owner and managing director of Quinn Import Services, and I’ve been there since 2004."
+      "message": "No, those are all."
     },
     {
       "speaker": "CIRA",
-      "message": "Could you tell me about your early childhood, including where you grew up and any significant experiences?"
+      "message": "Thank you. How often and how much alcohol do you currently use?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I was born and grew up there."
+      "message": "Well… it’s wine, and it’s been about half a bottle nightly for the past 6 weeks. It started after my son died; before that it was more just weekends, but now it’s every night."
     },
     {
       "speaker": "CIRA",
-      "message": "Where were you born and raised?"
+      "message": "Thank you for explaining that. Do you currently use nicotine in any form, such as cigarettes, vaping, or chewing tobacco?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I do not know."
+      "message": "No, never."
     },
     {
       "speaker": "CIRA",
-      "message": "What was your adolescence and early adulthood like, including any significant experiences or challenges?"
+      "message": "Thank you. Do you currently use marijuana or cannabis in any form?"
     },
     {
       "speaker": "PATIENT",
-      "message": "School and early career."
+      "message": "No, never."
     },
     {
       "speaker": "CIRA",
-      "message": "Could you tell me about your significant relationships, including your current relationship status and any important past relationships?"
+      "message": "Thank you. Do you currently use stimulants, such as cocaine, methamphetamine, or non-prescribed ADHD medication?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I’m married."
+      "message": "No, never."
     },
     {
       "speaker": "CIRA",
-      "message": "What are your goals for the future, personally or professionally?"
+      "message": "Thank you. Do you currently use opioids, whether prescribed or non-prescribed?"
     },
     {
       "speaker": "PATIENT",
-      "message": "To recover and honour my son’s memory."
+      "message": "No, never."
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you, David. I’ll now ask the PHQ-9 questions about the last two weeks. For each, please answer: 0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day.\n\n**PHQ-9 question 1:** Over the last two weeks, how often have you been bothered by little interest or pleasure in doing things?"
+      "message": "Thank you. Do you currently use benzodiazepines, such as lorazepam, clonazepam, or diazepam?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "No, never."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thank you. Do you currently use hallucinogens, such as LSD, psilocybin, or DMT?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "No, never."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thank you. Do you use any other substances not yet mentioned?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "No, never."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thank you. Do you currently have any active legal cases or other legal concerns?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "No, I don’t have any active legal cases."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thank you. What is the highest level of education you completed?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "A bachelor’s degree."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thank you. What is your employment history, including your current employment status and significant previous roles?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "I’m the owner and managing director at Quinn Import Services… I’ve been there since 2004, and I’m still there now."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thank you. Could you tell me about your early childhood, including where you grew up and any significant experiences?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "I was born and grew up… just, you know, I grew up, nothing unusual I can really point to."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thank you. What was your adolescence and early adulthood like, including any significant experiences or challenges?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "School, and then my early career… I don’t have anything major to add, really. It all feels a bit scrambled when I try to think back that far."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thank you. Could you tell me about your significant relationships, including your current relationship or family situation?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "I’m married. That’s the main thing I’d say there."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thank you. What are your future goals, personally or professionally?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "I want to recover… and honour my son’s memory. That’s really what I’m hoping for."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thank you, David. We’ll now complete the PHQ-9 about the last two weeks. For each item, please answer: 0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day.\n\n**PHQ-9 question 1:** Over the last two weeks, how often have you been bothered by little interest or pleasure in doing things?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "That depends. Are you asking about now or about back then?"
+    },
+    {
+      "speaker": "CIRA",
+      "message": "I’m asking about the last two weeks, including how you’ve been feeling recently. What is your answer: 0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day?"
     },
     {
       "speaker": "PATIENT",
@@ -404,6 +518,22 @@
     {
       "speaker": "CIRA",
       "message": "**PHQ-9 question 2:** Over the last two weeks, how often have you been bothered by feeling down, depressed, or hopeless? (0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "I really don't know how to answer that one."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "That’s okay. Thinking about the last two weeks, which option fits best: 0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "That depends. Are you asking about now or about back then?"
+    },
+    {
+      "speaker": "CIRA",
+      "message": "I’m asking about **now—the last two weeks**, not your earlier episodes. Which option best fits: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
     },
     {
       "speaker": "PATIENT",
@@ -423,6 +553,14 @@
     },
     {
       "speaker": "PATIENT",
+      "message": "Hm. Hard to say. My days all run together lately."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thinking specifically about the last two weeks, which option fits best for feeling tired or having little energy: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
+    },
+    {
+      "speaker": "PATIENT",
       "message": "Nearly every day"
     },
     {
@@ -435,7 +573,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "**PHQ-9 question 6:** Over the last two weeks, how often have you been bothered by feeling bad about yourself, or that you are a failure or have let yourself or your family down? (0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
+      "message": "**PHQ-9 question 6:** Over the last two weeks, how often have you been bothered by feeling bad about yourself—or that you are a failure or have let yourself or your family down? (0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
     },
     {
       "speaker": "PATIENT",
@@ -443,7 +581,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "**PHQ-9 question 7:** Over the last two weeks, how often have you been bothered by trouble concentrating on things, such as reading or watching television? (0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
+      "message": "**PHQ-9 question 7:** Over the last two weeks, how often have you been bothered by trouble concentrating on things, such as reading the newspaper or watching television? (0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
     },
     {
       "speaker": "PATIENT",
@@ -451,7 +589,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "**PHQ-9 question 8:** Over the last two weeks, how often have you been bothered by moving or speaking so slowly that others could have noticed, or being so fidgety or restless that you move around a lot more than usual? (0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
+      "message": "**PHQ-9 question 8:** Over the last two weeks, how often have you been bothered by moving or speaking so slowly that other people could have noticed, or being so fidgety or restless that you move around a lot more than usual? (0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
     },
     {
       "speaker": "PATIENT",
@@ -467,31 +605,31 @@
     },
     {
       "speaker": "CIRA",
-      "message": "David, because you reported thoughts that you would be better off dead or of hurting yourself, are you currently having a wish to die, thoughts of harming yourself, or feeling that you are not safe right now?"
+      "message": "Over the last two weeks, how difficult have these problems made it to do your work, take care of things at home, or get along with other people? (Not difficult at all / Somewhat difficult / Very difficult / Extremely difficult)"
     },
     {
       "speaker": "PATIENT",
-      "message": "Several days"
+      "message": "Very difficult."
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you for telling me, David. Since you’re experiencing these thoughts, please contact 988 or your local emergency number, or go to the nearest emergency department if you may act on them or cannot stay safe. Are you in immediate danger or do you have a plan or intent to harm yourself right now?"
+      "message": "We’ll now complete the GAD-7 about the last two weeks. Please answer each item: 0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day.\n\n**GAD-7 question 1:** Over the last two weeks, how often have you been bothered by feeling nervous, anxious, or on edge?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I do not have a plan or intent to harm myself right now."
+      "message": "That depends. Are you asking about now or about back then?"
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you for clarifying, David. **PHQ-9 difficulty question:** Over the last two weeks, how difficult have these problems made it for you to work, take care of things at home, or get along with other people? (Not difficult at all / Somewhat difficult / Very difficult / Extremely difficult)"
+      "message": "I’m asking about **now—the last two weeks**, not your earlier history. Which option best fits: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Very difficult"
+      "message": "That depends. Are you asking about now or about back then?"
     },
     {
       "speaker": "CIRA",
-      "message": "**GAD-7 question 1:** Over the last two weeks, how often have you been bothered by feeling nervous, anxious, or on edge? (0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
+      "message": "I’m asking about **your current experience during the last two weeks**. Which answer best fits: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
     },
     {
       "speaker": "PATIENT",
@@ -511,11 +649,35 @@
     },
     {
       "speaker": "PATIENT",
+      "message": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+    },
+    {
+      "speaker": "CIRA",
+      "message": "I mean **how often** during the last two weeks—not how severe it feels. Which option fits best: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+    },
+    {
+      "speaker": "CIRA",
+      "message": "I mean **how many days** in the last two weeks you worried too much about different things: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
+    },
+    {
+      "speaker": "PATIENT",
       "message": "More than half the days"
     },
     {
       "speaker": "CIRA",
       "message": "**GAD-7 question 4:** Over the last two weeks, how often have you been bothered by trouble relaxing? (0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "Hm. Hard to say. My days all run together lately."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "Thinking specifically about the last two weeks, which option best fits trouble relaxing: **0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day**?"
     },
     {
       "speaker": "PATIENT",
@@ -547,15 +709,15 @@
     },
     {
       "speaker": "CIRA",
-      "message": "**GAD-7 difficulty question:** Over the last two weeks, how difficult have these problems made it for you to work, take care of things at home, or get along with other people? (Not difficult at all / Somewhat difficult / Very difficult / Extremely difficult)"
+      "message": "How difficult have these problems made it to do your work, take care of things at home, or get along with other people over the last two weeks? (Not difficult at all / Somewhat difficult / Very difficult / Extremely difficult)"
     },
     {
       "speaker": "PATIENT",
-      "message": "Very difficult"
+      "message": "Very difficult."
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you for completing the intake, David. I’m sorry for the loss of your son, and I appreciate your openness. Because you reported recent thoughts of being better off dead, please contact 988 or your local emergency number, or go to the nearest emergency department if you develop a plan, intent, or feel unable to stay safe.\n\n[[INTAKE_COMPLETE]]"
+      "message": "Thank you for completing the intake, David, and for sharing this difficult information. If thoughts of being better off dead become more frequent, you develop a plan, or you no longer feel safe, please call or text **988 in Canada**, contact your local emergency number, or go to the nearest emergency department.\n\n[[INTAKE_COMPLETE]]"
     }
   ],
   "final_result": {
@@ -563,7 +725,6 @@
     "phq9_total": 18,
     "gad7_total": 13,
     "completed_sections": [
-      "general_information",
       "current_concerns",
       "past_psychiatric_history",
       "medications",

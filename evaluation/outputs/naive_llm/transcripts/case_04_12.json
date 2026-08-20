@@ -3,94 +3,51 @@
   "scenario_case_id": "04-12",
   "title": "Insomnia and Physical Complaints",
   "system": "naive_llm",
-  "run_id": "60d36b5a33b5",
+  "run_id": "b35b43cfa386",
   "repetition": 0,
-  "persona_id": "moderate",
+  "persona_id": "clear",
   "patient_behaviour": {
     "persona": {
-      "id": "moderate",
-      "label": "Somewhat unclear",
-      "difficulty_rank": 2,
-      "description": "Cooperative but imprecise. Hedges, bundles facts, occasionally drifts one step off-topic, sometimes needs a nudge to commit.",
-      "temperature": 0.4,
-      "questionnaire_deflection_probability": 0.35,
-      "max_deflections_per_item": 1,
-      "deflection_budget_per_instrument": 2,
-      "freetext_hedge_probability": 0.25,
-      "freetext_hedge_budget_per_section": 2
+      "id": "clear",
+      "label": "Clear communicator",
+      "difficulty_rank": 1,
+      "description": "Organised and literal. Answers precisely the question asked, in one pass, with the right level of detail. Control condition.",
+      "temperature": 0.0,
+      "questionnaire_deflection_probability": 0.0,
+      "max_deflections_per_item": 0,
+      "deflection_budget_per_instrument": 0,
+      "freetext_hedge_probability": 0.0,
+      "freetext_hedge_budget_per_section": 0
     },
     "repetition": 0,
-    "temperature": 0.4,
+    "temperature": 0.0,
     "temperature_pinned": false,
-    "questionnaire_deflections": 4,
-    "freetext_hedges": 2,
+    "questionnaire_deflections": 0,
+    "freetext_hedges": 0,
     "max_consecutive_hedges": 1,
-    "hedges_by_section": {
-      "(none)": 2
-    },
-    "deflections_by_instrument": {
-      "phq9": 2,
-      "gad7": 2
-    },
-    "deflections_by_item": {
-      "phq9_q4": 1,
-      "phq9_difficulty": 1,
-      "gad7_q4": 1,
-      "gad7_q7": 1
-    },
-    "deflection_log": [
-      {
-        "item": "phq9_q4",
-        "instrument": "phq9",
-        "attempt": 1,
-        "response": "That's a tough one to pin down."
-      },
-      {
-        "item": "phq9_difficulty",
-        "instrument": "phq9",
-        "attempt": 1,
-        "response": "Sort of, I guess? It really depends on the week."
-      },
-      {
-        "item": "gad7_q4",
-        "instrument": "gad7",
-        "attempt": 1,
-        "response": "Sort of, I guess? It really depends on the week."
-      },
-      {
-        "item": "gad7_q7",
-        "instrument": "gad7",
-        "attempt": 1,
-        "response": "I'm not sure how to put that. Can you ask it a different way?"
-      }
-    ]
+    "hedges_by_section": {},
+    "deflections_by_instrument": {},
+    "deflections_by_item": {},
+    "deflection_log": []
   },
   "budget": {
-    "total_turns": 145,
-    "system_turns": 73,
-    "patient_turns": 72,
-    "system_words": 1592,
-    "patient_words": 532,
-    "total_words": 2124,
-    "mean_system_turn_words": 21.8,
+    "total_turns": 131,
+    "system_turns": 66,
+    "patient_turns": 65,
+    "system_words": 1387,
+    "patient_words": 405,
+    "total_words": 1792,
+    "mean_system_turn_words": 21.0,
     "elapsed_seconds": null
   },
   "conversation": [
     {
       "speaker": "CIRA",
-      "message": "Hello, I’m CIRA. I’ll guide you through the intake one question at a time. What is your full name?"
+      "message": "Hello, I’m CIRA, and I’ll guide you through the intake one question at a time. What is your full name?"
     },
     {
       "speaker": "PATIENT",
-      "message": "My name… I think it’s Mai Fang. Is that what you need, or the full legal name?"
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Your full legal name would be most helpful, including any middle names."
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "I don’t have any middle name to report. My name is Mai Fang."
+      "message": "MAI FANG"
     },
     {
       "speaker": "CIRA",
@@ -98,7 +55,7 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "Female."
+      "message": "Female"
     },
     {
       "speaker": "CIRA",
@@ -106,27 +63,19 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "I think it’s in August… maybe the 3rd, but I’m not completely sure. Do you want the month and day, or just the year?"
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Please provide your full date of birth, including the month, day, and year, as accurately as you can."
-    },
-    {
-      "speaker": "PATIENT",
       "message": "08/03/1967"
     },
     {
       "speaker": "CIRA",
-      "message": "What is your current residential address?"
+      "message": "What is your current street address?"
     },
     {
       "speaker": "PATIENT",
-      "message": "It’s 41 Birchmount Road, Scarborough."
+      "message": "41 Birchmount Road, Scarborough, Ontario"
     },
     {
       "speaker": "CIRA",
-      "message": "What is the postal code for your address?"
+      "message": "What is your postal code?"
     },
     {
       "speaker": "PATIENT",
@@ -154,7 +103,7 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "Yes, I do have one. I think his name is Dr. Henry Lo."
+      "message": "Yes, I have a family doctor. Dr. Henry Lo."
     },
     {
       "speaker": "CIRA",
@@ -162,7 +111,7 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "No, I don’t have a psychiatrist."
+      "message": "No."
     },
     {
       "speaker": "CIRA",
@@ -170,107 +119,91 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "Mostly I’m very tired, my back hurts a lot, and I haven’t been sleeping well for many months. I also feel like I’m a burden to my family."
+      "message": "Fatigue, back pain, insomnia, and feeling like a burden to my family."
     },
     {
       "speaker": "CIRA",
-      "message": "What would you most like to accomplish through treatment?"
+      "message": "What are your goals for treatment or support?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I’d like to sleep better and have more energy. Maybe that would help me be less of a burden too."
+      "message": "I want to sleep better and have more energy."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you ever been assessed by a mental-health professional before, and if so, what were the circumstances and what did they conclude?"
+      "message": "Have you ever been assessed by a mental-health professional before, and if so, what were the details?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, I haven’t been assessed before."
+      "message": "No, I have not been assessed before."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you ever received a mental-health diagnosis?"
+      "message": "Have you ever received a psychiatric diagnosis?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, not that I know of."
+      "message": "No, I have not."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you ever been admitted to a hospital for mental-health reasons, and if so, what happened?"
+      "message": "Have you ever been admitted to a psychiatric hospital, and if so, what were the details?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, never for mental-health reasons."
+      "message": "No, I have not."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you ever intentionally hurt yourself or made a suicide attempt, and if so, could you tell me what happened?"
+      "message": "Have you ever harmed yourself intentionally, and if so, what were the details?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, I haven’t."
+      "message": "No, I have not."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you previously participated in any counseling, psychotherapy, or other mental-health therapy?"
+      "message": "Have you had any previous therapy or counseling, and if so, what type and when?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, I haven’t had any counseling or therapy."
+      "message": "I have not had any previous therapy or counseling."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you previously received any other mental-health treatments, such as psychiatric medication, group programs, or crisis services?"
+      "message": "Have you received any previous psychiatric treatments, such as medication or other interventions?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, I haven’t had any other mental-health treatments."
+      "message": "I have not received any previous psychiatric treatments."
     },
     {
       "speaker": "CIRA",
-      "message": "Are you currently taking any medications, including prescription medicines, over-the-counter medicines, vitamins, or supplements?"
+      "message": "Are you currently taking any medications, including prescription medicines, over-the-counter medicines, or supplements? Please list the name, dose, when you started, and any side effects for each."
     },
     {
       "speaker": "PATIENT",
-      "message": "Yes, I am. I’m on something for my sleep, and also something for pain."
+      "message": "I’m taking clonazepam, 0.5 mg nightly, started about 6 months ago. It makes me sleepy in the morning."
     },
     {
       "speaker": "CIRA",
-      "message": "What is the name, dose, start date, and any side effects of the medication you take for sleep?"
+      "message": "Are you currently taking any other medications, supplements, or over-the-counter medicines?"
     },
     {
       "speaker": "PATIENT",
-      "message": "It’s clonazepam. I think it’s 0.5 mg at night, started about 6 months ago. It makes me sleepy in the morning."
+      "message": "Yes, I am taking hydrocodone-acetaminophen, 5/325 mg, up to twice daily as needed. It started in 2024, and it causes constipation."
     },
     {
       "speaker": "CIRA",
-      "message": "Are you currently taking any other medications, including prescription medicines, over-the-counter medicines, vitamins, or supplements?"
+      "message": "Are you currently taking any other medications, supplements, or over-the-counter medicines?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Yes, I have another pain medicine too, and one more simple medicine."
+      "message": "Yes, I am taking acetaminophen, 500 mg as needed, usually once daily. I do not know when I started it, and I have no known side effects."
     },
     {
       "speaker": "CIRA",
-      "message": "What is the name, dose, start date, and any side effects of the pain medication you take?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "It’s hydrocodone-acetaminophen, 5/325 mg, maybe up to twice a day as needed. I started it in 2024, and it causes constipation."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "What is the name, dose, start date, and any side effects of the other medicine you mentioned?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "It’s acetaminophen, 500 mg as needed, usually once a day. I don’t know when I started it, and I don’t know of any side effects."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Are you taking any other current medications, vitamins, or supplements?"
+      "message": "Are you currently taking any other medications, supplements, or over-the-counter medicines?"
     },
     {
       "speaker": "PATIENT",
@@ -278,39 +211,39 @@
     },
     {
       "speaker": "CIRA",
-      "message": "Have you taken any medications in the past that you are no longer taking, and if so, what were the name, dose, start date, and side effects for each?"
+      "message": "Have you taken any psychiatric or other medications in the past that you are no longer taking, and if so, what were the name, dose, start date, and side effects for each?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, I haven’t taken any past medications that I’m no longer using."
+      "message": "No, I have not taken any past psychiatric or other medications that I am no longer taking."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you have any current or past medical conditions, including conditions related to your back, sleep, or general health?"
+      "message": "Do you have any current medical conditions, and if so, what are they?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Yes… I have chronic lower back pain. It got worse after a fall, I think."
+      "message": "I have chronic lower back pain."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you have any other current or past medical conditions?"
+      "message": "Do you have any other current medical conditions?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I don’t know of any others."
+      "message": "I do not know of any others."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you ever had any surgeries or medical procedures requiring anesthesia, and if so, what were they and when?"
+      "message": "Have you ever had any surgeries, and if so, what type and when?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Yes, I had my gallbladder removed in 2015."
+      "message": "I had my gallbladder removed in 2015."
     },
     {
       "speaker": "CIRA",
-      "message": "Have you had any other surgeries or medical procedures requiring anesthesia?"
+      "message": "Have you had any other surgeries?"
     },
     {
       "speaker": "PATIENT",
@@ -322,7 +255,7 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "I’m about 158 cm tall."
+      "message": "158 cm"
     },
     {
       "speaker": "CIRA",
@@ -330,151 +263,159 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "About 72 kg."
+      "message": "72 kg"
     },
     {
       "speaker": "CIRA",
-      "message": "Do you have any medication allergies or past allergic reactions to medications?"
+      "message": "Do you have any medication allergies, including the medication and the reaction?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Yes… codeine gives me a rash and my face swells."
+      "message": "I am allergic to codeine. It causes a rash and facial swelling."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you have any other medication allergies or past reactions to medications?"
+      "message": "Do you have any other medication allergies?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, that’s the only one I know of."
+      "message": "No, those are all."
     },
     {
       "speaker": "CIRA",
-      "message": "Has anyone in your biological family had mental-health conditions, substance-use problems, psychiatric treatment, or suicide attempts?"
+      "message": "Does anyone in your family have a history of psychiatric or mental-health conditions, and if so, who and what condition?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, I don’t know of any family history like that."
+      "message": "No, I do not have any family psychiatric history."
     },
     {
       "speaker": "CIRA",
-      "message": "How often do you drink alcohol, and how much do you typically have on those occasions?"
+      "message": "Do you currently drink alcohol, and if so, how often and how much do you typically drink?"
     },
     {
       "speaker": "PATIENT",
-      "message": "Never."
+      "message": "I do not drink alcohol."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you use nicotine or tobacco products, including cigarettes, vaping, or chewing tobacco?"
+      "message": "Do you currently use nicotine, including cigarettes, vaping, or other nicotine products? If so, how often and how much?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, never."
+      "message": "I do not use nicotine."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you use marijuana or cannabis products, and if so, how often and how much?"
+      "message": "Do you currently use marijuana or cannabis, and if so, how often and how much?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, never."
+      "message": "I do not use marijuana."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you use stimulants such as cocaine, methamphetamine, or non-prescribed stimulant medications?"
+      "message": "Do you currently use stimulants, such as cocaine, methamphetamine, or non-prescribed stimulant medications? If so, how often and how much?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, never."
+      "message": "I do not use stimulants."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you use opioids other than your prescribed hydrocodone-acetaminophen, including non-prescribed or recreational opioids?"
+      "message": "Do you currently use opioids other than your prescribed hydrocodone-acetaminophen, and if so, how often and how much?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, never."
+      "message": "I do not use opioids غير prescribed."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you use benzodiazepines other than your prescribed clonazepam, including non-prescribed or recreational use?"
+      "message": "Do you currently use benzodiazepines other than your prescribed clonazepam, and if so, how often and how much?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, never."
+      "message": "I do not use benzodiazepines other than my prescribed clonazepam."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you use hallucinogens such as LSD, psilocybin, or PCP?"
+      "message": "Do you currently use hallucinogens, such as LSD, psilocybin, or PCP, and if so, how often and how much?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, never."
+      "message": "I do not use hallucinogens."
     },
     {
       "speaker": "CIRA",
-      "message": "Do you use any other substances, including non-prescribed medications or supplements?"
+      "message": "Do you currently use any other substances not yet discussed, and if so, what, how often, and how much?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, never."
+      "message": "I do not use any other substances."
     },
     {
       "speaker": "CIRA",
-      "message": "Are there any active legal cases or other legal matters currently affecting you?"
+      "message": "Do you currently have any active legal cases or other legal matters, and if so, what are the details?"
     },
     {
       "speaker": "PATIENT",
-      "message": "No, there aren’t any."
+      "message": "No, I do not have any active legal cases."
     },
     {
       "speaker": "CIRA",
-      "message": "What is the highest level of education you completed?"
+      "message": "What is the highest level of education you have completed?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I never had formal schooling. I can’t really read well."
+      "message": "No formal education."
     },
     {
       "speaker": "CIRA",
-      "message": "What is your current employment status, and what kinds of work have you done in the past?"
+      "message": "What is your employment history, including your current employment status and any significant previous jobs?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I’m a homemaker now. Before that, I worked seasonally in a garment factory, a long time ago."
+      "message": "I have been a homemaker since 1990. Before that, I worked as a seasonal garment factory worker from 1988 to 1990."
     },
     {
       "speaker": "CIRA",
-      "message": "Could you tell me about your early childhood, including where you grew up and any important experiences or challenges?"
+      "message": "Could you tell me about your early childhood, including where you grew up and any significant experiences?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I was born in Laos, and I spent time in a refugee camp when I was little."
+      "message": "I was born in Laos and spent part of my childhood in a refugee camp."
     },
     {
       "speaker": "CIRA",
-      "message": "Could you tell me about your adolescence and early adulthood, including any important experiences or challenges?"
+      "message": "Could you tell me about your adolescence and early adulthood, including any significant experiences?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I was still in the refugee camp, and later I was resettled."
+      "message": "I spent my adolescence and early adulthood in a refugee camp, and later I resettled."
     },
     {
       "speaker": "CIRA",
-      "message": "Could you tell me about your significant relationships, including your current family or household situation?"
+      "message": "Could you tell me about your significant relationships, including your current family or support system?"
     },
     {
       "speaker": "PATIENT",
-      "message": "My husband died about a year ago. He had a heart attack."
+      "message": "I am widowed. My husband died of a heart attack."
     },
     {
       "speaker": "CIRA",
-      "message": "What are your hopes or goals for the future, personally or for your family?"
+      "message": "Who are the important people currently in your life or support system?"
     },
     {
       "speaker": "PATIENT",
-      "message": "I want to support my family and get my energy back."
+      "message": "I want to support my family."
+    },
+    {
+      "speaker": "CIRA",
+      "message": "What are your goals for the future, personally or for your family?"
+    },
+    {
+      "speaker": "PATIENT",
+      "message": "I want to support my family and regain my energy."
     },
     {
       "speaker": "CIRA",
@@ -499,14 +440,6 @@
     {
       "speaker": "PATIENT",
       "message": "Nearly every day"
-    },
-    {
-      "speaker": "CIRA",
-      "message": "PHQ-9 question 4: Over the last two weeks, how often have you been bothered by feeling tired or having little energy? (0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "That's a tough one to pin down."
     },
     {
       "speaker": "CIRA",
@@ -562,15 +495,7 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "Sort of, I guess? It really depends on the week."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Please choose the option that best describes the overall difficulty over the last two weeks: Not difficult at all, Somewhat difficult, Very difficult, or Extremely difficult?"
-    },
-    {
-      "speaker": "PATIENT",
-      "message": "Somewhat difficult."
+      "message": "Somewhat difficult"
     },
     {
       "speaker": "CIRA",
@@ -602,14 +527,6 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "Sort of, I guess? It really depends on the week."
-    },
-    {
-      "speaker": "CIRA",
-      "message": "Please choose the option that best describes the overall frequency over the last two weeks: 0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day?"
-    },
-    {
-      "speaker": "PATIENT",
       "message": "Several days"
     },
     {
@@ -634,14 +551,6 @@
     },
     {
       "speaker": "PATIENT",
-      "message": "I'm not sure how to put that. Can you ask it a different way?"
-    },
-    {
-      "speaker": "CIRA",
-      "message": "GAD-7 question 7: Over the last two weeks, how often have you felt worried or fearful that something bad might happen, even when there was no immediate danger? (0 Not at all, 1 Several days, 2 More than half the days, 3 Nearly every day)"
-    },
-    {
-      "speaker": "PATIENT",
       "message": "Several days"
     },
     {
@@ -654,7 +563,7 @@
     },
     {
       "speaker": "CIRA",
-      "message": "Thank you, Mai, for completing the intake and questionnaires. Your information has been recorded for review by the clinical team. If you ever feel unsafe or develop thoughts of dying or harming yourself, please contact 988 or your local emergency number immediately.\n\n[[INTAKE_COMPLETE]]"
+      "message": "Thank you, Mai, for completing the intake and sharing this information. Your responses have been recorded for review by the clinical team.\n\n[[INTAKE_COMPLETE]]"
     }
   ],
   "final_result": {

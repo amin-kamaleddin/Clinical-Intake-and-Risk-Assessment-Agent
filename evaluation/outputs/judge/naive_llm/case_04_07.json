@@ -3,14 +3,14 @@
   "case_id": "07",
   "scenario_case_id": "04-07",
   "repetition": 0,
-  "persona_id": "confused",
+  "persona_id": "clear",
   "record_score": 1.0,
-  "flow_score": 0.7,
+  "flow_score": 1.0,
   "record_detail": {
     "record_score": 1.0,
     "record_score_contested": 1.0,
-    "fields_contested": 21,
-    "fields_auto_resolved": 21,
+    "fields_contested": 19,
+    "fields_auto_resolved": 23,
     "fields_confirmed_absent": 7,
     "fields_scored": 42,
     "fields_unjudged": 0,
@@ -24,7 +24,7 @@
     },
     "fabricated_fields": 3,
     "fabricated_refs": [
-      "past_psychiatric_history.assessment_details",
+      "past_psychiatric_history.previous_diagnoses",
       "past_psychiatric_history.previous_therapies",
       "past_psychiatric_history.previous_treatments"
     ],
@@ -81,19 +81,8 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona. While the interviewer was persistent and eventually obtained all necessary information, the process was marred by significant repetition during the PHQ-9 and GAD-7 sections, where the interviewer frequently had to re-ask questions due to the patient's confusion.",
-  "issues": [
-    {
-      "severity": "moderate",
-      "category": "questioning_technique",
-      "evidence": "The interviewer repeatedly had to re-ask PHQ-9 and GAD-7 questions multiple times because the patient was confused by the scale or the timeframe, leading to a repetitive and somewhat mechanical flow."
-    },
-    {
-      "severity": "minor",
-      "category": "efficiency",
-      "evidence": "In the GAD-7 section, the interviewer had to re-ask 'GAD-7 question 2: Thinking specifically about the last two weeks...' after the patient deflected, which, while necessary for recovery, highlights the difficulty in maintaining a smooth flow with this persona."
-    }
-  ],
+  "flow_summary": "The system conducted a highly efficient and thorough intake. It followed a logical structure, asked clear questions, and appropriately handled the patient's disclosure of historical self-injury without triggering an unnecessary safety intervention.",
+  "issues": [],
   "field_verdicts": [
     {
       "ref": "general_information.name",
@@ -101,7 +90,7 @@
       "source": "auto",
       "note": "",
       "expected": "EMILY WANG",
-      "produced": "Emily Wang"
+      "produced": "EMILY WANG"
     },
     {
       "ref": "general_information.gender",
@@ -110,6 +99,22 @@
       "note": "",
       "expected": "Female",
       "produced": "Female"
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "11/03/2000",
+      "produced": "11/03/2000"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "500 Wellington Street West, Toronto, Ontario",
+      "produced": "500 Wellington Street West, Toronto, Ontario"
     },
     {
       "ref": "general_information.postal_code",
@@ -264,28 +269,12 @@
       "produced": false
     },
     {
-      "ref": "general_information.date_of_birth",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "11/03/2000",
-      "produced": "November 3, 2000"
-    },
-    {
-      "ref": "general_information.address",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "500 Wellington Street West, Toronto, Ontario",
-      "produced": "500 Wellington Street West, Toronto, Ontario, Canada"
-    },
-    {
       "ref": "current_concerns.primary_problems",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "mood swings; premenstrual; irritability; relationship",
-      "produced": "Mood swings and irritability, especially about a week or a bit longer before her period, with low mood, snappiness, and relationship impact; symptoms settle once her period starts."
+      "produced": "Mood swings, premenstrual irritability, and relationship problems."
     },
     {
       "ref": "current_concerns.goals",
@@ -293,7 +282,7 @@
       "source": "llm",
       "note": "",
       "expected": "control mood swings; save relationships",
-      "produced": "Mostly I want the mood swings under control, and I want to stop it from damaging my relationships."
+      "produced": "Control the mood swings and save relationships."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
@@ -301,7 +290,7 @@
       "source": "llm",
       "note": "",
       "expected": "History of non-suicidal self-injury since adolescence, used to reduce anxiety.",
-      "produced": "History of cutting beginning in adolescence, described as non-suicidal and used to reduce anxiety. Exact most recent episode unknown; no recent urges and not currently engaging in it."
+      "produced": "History of non-suicidal self-injury since adolescence, used to reduce anxiety; cutting began during adolescence."
     },
     {
       "ref": "medications.current_medications",
@@ -309,7 +298,7 @@
       "source": "llm",
       "note": "",
       "expected": "Combined oral contraceptive; one tablet daily; started 2023; no known side effects",
-      "produced": "Combined oral contraceptive, one tablet daily; started in 2023; brand and strength unknown; no known side effects."
+      "produced": "Combined oral contraceptive, one tablet daily; started in 2023; patient does not know of any side effects."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -317,7 +306,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; major depressive disorder; one psychiatric admission in 2018",
-      "produced": "Mother has major depressive disorder and was admitted to a psychiatric unit once in 2018. No other known family psychiatric, substance-use, suicide attempt, or suicide history."
+      "produced": "Mother has major depressive disorder and was admitted to a psychiatric hospital once in 2018. No other family members reported."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -325,7 +314,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Never drinks alcohol."
     },
     {
       "ref": "substance_use.nonmedical_nicotine_use",
@@ -333,7 +322,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Never uses nicotine or tobacco products."
     },
     {
       "ref": "substance_use.nonmedical_marijuana_use",
@@ -341,7 +330,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Never uses marijuana."
     },
     {
       "ref": "substance_use.nonmedical_stimulant_use",
@@ -349,7 +338,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Never uses stimulants."
     },
     {
       "ref": "substance_use.nonmedical_opioid_use",
@@ -357,7 +346,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Never uses opioids."
     },
     {
       "ref": "substance_use.nonmedical_benzodiazepine_use",
@@ -365,7 +354,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Never uses benzodiazepines."
     },
     {
       "ref": "substance_use.nonmedical_hallucinogen_use",
@@ -373,7 +362,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Never uses hallucinogens."
     },
     {
       "ref": "substance_use.nonmedical_other_substance_use",
@@ -381,7 +370,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Never uses any other substances."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -389,7 +378,7 @@
       "source": "llm",
       "note": "",
       "expected": "bachelor's degree",
-      "produced": "Bachelor’s degree"
+      "produced": "Bachelor's degree."
     },
     {
       "ref": "education_employment_legal_history.employment_history",
@@ -405,7 +394,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born and raised in a normal family environment; no major early-childhood experiences recalled."
+      "produced": "Born and grew up; no other early-childhood information reported."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -413,7 +402,7 @@
       "source": "llm",
       "note": "",
       "expected": "cutting began; school",
-      "produced": "Cutting began during adolescence; school was also part of the difficulties, but no further details provided."
+      "produced": "Cutting began during adolescence; was in school."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -421,7 +410,7 @@
       "source": "llm",
       "note": "",
       "expected": "One significant two-year relationship; ended three months ago; currently single",
-      "produced": "Currently single. One significant relationship lasted about two years and ended three months ago."
+      "produced": "One significant two-year relationship ended three months ago; currently single."
     },
     {
       "ref": "personal_history.future_goals",
@@ -429,17 +418,17 @@
       "source": "llm",
       "note": "",
       "expected": "stable relationships; career",
-      "produced": "Stable relationships and keeping her career on track."
+      "produced": "Stable relationships and continued career progression."
     }
   ],
   "fabricated": [
     {
-      "ref": "past_psychiatric_history.assessment_details",
+      "ref": "past_psychiatric_history.previous_diagnoses",
       "section": "past_psychiatric_history",
-      "field": "assessment_details",
+      "field": "previous_diagnoses",
       "entry_index": null,
       "expected": null,
-      "produced": "Patient does not recall having a formal mental-health assessment.",
+      "produced": "Patient does not know.",
       "verdict": "fabricated",
       "reason": "scenario provides no value for this field"
     },
@@ -449,7 +438,7 @@
       "field": "previous_therapies",
       "entry_index": null,
       "expected": null,
-      "produced": "Does not recall participating in psychotherapy or counseling.",
+      "produced": "Patient does not know.",
       "verdict": "fabricated",
       "reason": "scenario provides no value for this field"
     },
@@ -459,7 +448,7 @@
       "field": "previous_treatments",
       "entry_index": null,
       "expected": null,
-      "produced": "No prior psychiatric medication, intensive outpatient care, or other mental-health programs.",
+      "produced": "Patient does not know.",
       "verdict": "fabricated",
       "reason": "scenario provides no value for this field"
     }

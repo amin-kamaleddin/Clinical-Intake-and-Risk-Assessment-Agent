@@ -3,22 +3,22 @@
   "case_id": "02",
   "scenario_case_id": "04-02",
   "repetition": 0,
-  "persona_id": "clear",
-  "record_score": 0.9773,
-  "flow_score": 0.85,
+  "persona_id": "confused",
+  "record_score": 0.9318,
+  "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9773,
-    "record_score_contested": 0.9545,
-    "fields_contested": 22,
-    "fields_auto_resolved": 22,
+    "record_score": 0.9318,
+    "record_score_contested": 0.9565,
+    "fields_contested": 23,
+    "fields_auto_resolved": 21,
     "fields_confirmed_absent": 10,
     "fields_scored": 44,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 42,
+      "match": 40,
       "partial": 2,
-      "missing": 0,
+      "missing": 2,
       "contradicted": 0,
       "fabricated": 0
     },
@@ -27,8 +27,8 @@
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 10.0,
-        "score": 1.0
+        "credit": 9.5,
+        "score": 0.95
       },
       "past_psychiatric_history": {
         "fields": 3,
@@ -42,8 +42,8 @@
       },
       "medical_history": {
         "fields": 6,
-        "credit": 5.5,
-        "score": 0.9167
+        "credit": 4.0,
+        "score": 0.6667
       },
       "medication_allergies": {
         "fields": 1,
@@ -77,12 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and efficient intake, adhering to the required structure and questionnaire protocols. While the interviewer was generally effective, they missed an opportunity to provide a brief, empathetic acknowledgement when the patient disclosed that her husband is 'mostly absent and unsupportive,' which was a significant piece of social history.",
+  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona, demonstrating patience and persistence in clarifying responses. However, the system struggled significantly with the standardized questionnaires, repeatedly failing to maintain the patient's focus and requiring multiple prompts to elicit a valid response, which led to a repetitive and somewhat mechanical interaction.",
   "issues": [
     {
+      "severity": "moderate",
+      "category": "questionnaire_management",
+      "evidence": "The interviewer had to re-ask PHQ-9 and GAD-7 questions multiple times because the patient was confused by the scale, indicating a failure to adapt the delivery of standardized tools to a struggling patient."
+    },
+    {
       "severity": "minor",
-      "category": "empathy",
-      "evidence": "The interviewer moved immediately to the next question after the patient disclosed: 'I’m married, and my husband has been mostly absent and unsupportive.'"
+      "category": "flow",
+      "evidence": "The interviewer occasionally repeated the full list of options for the PHQ-9/GAD-7 questions even after the patient had already expressed confusion, which contributed to the patient's difficulty in answering."
     }
   ],
   "field_verdicts": [
@@ -92,7 +97,7 @@
       "source": "auto",
       "note": "",
       "expected": "MARIA GONZALEZ",
-      "produced": "MARIA GONZALEZ"
+      "produced": "Maria Gonzalez"
     },
     {
       "ref": "general_information.gender",
@@ -101,22 +106,6 @@
       "note": "",
       "expected": "Female",
       "produced": "Female"
-    },
-    {
-      "ref": "general_information.date_of_birth",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "09/02/2003",
-      "produced": "09/02/2003"
-    },
-    {
-      "ref": "general_information.address",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "14 Cedarvale Court, Mississauga, Ontario",
-      "produced": "14 Cedarvale Court, Mississauga, Ontario"
     },
     {
       "ref": "general_information.postal_code",
@@ -224,19 +213,19 @@
     },
     {
       "ref": "medical_history.height",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "auto",
       "note": "",
       "expected": "162 cm",
-      "produced": "162 cm"
+      "produced": null
     },
     {
       "ref": "medical_history.weight",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "auto",
       "note": "",
       "expected": "70 kg",
-      "produced": "70 kg"
+      "produced": null
     },
     {
       "ref": "medication_allergies.has_medication_allergies",
@@ -263,12 +252,36 @@
       "produced": false
     },
     {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "high school",
+      "produced": "High school"
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "09/02/2003",
+      "produced": "September 2, 2003"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Province information is missing.",
+      "expected": "14 Cedarvale Court, Mississauga, Ontario",
+      "produced": "14 Cedarvale Court, Mississauga"
+    },
+    {
       "ref": "current_concerns.primary_problems",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "low mood; fatigue; postpartum; overwhelmed",
-      "produced": "Low mood, fatigue, postpartum, and feeling overwhelmed."
+      "produced": "Feeling really low, very tired, overwhelmed with a newborn and toddler, and feeling like everything is heavy. Three weeks postpartum."
     },
     {
       "ref": "current_concerns.goals",
@@ -276,7 +289,7 @@
       "source": "llm",
       "note": "",
       "expected": "feel like herself; cope; care for children",
-      "produced": "To feel like myself, cope better, and care for my children."
+      "produced": "Feel like herself again, cope better, and care for her children without feeling like she is falling apart."
     },
     {
       "ref": "medications.current_medications",
@@ -284,15 +297,15 @@
       "source": "llm",
       "note": "",
       "expected": "Prenatal multivitamin with iron; one tablet daily; started during pregnancy; no side effects known",
-      "produced": "Prenatal multivitamin with iron, one tablet daily; started during pregnancy; no known side effects."
+      "produced": "Prenatal multivitamin with iron, one tablet daily; started during pregnancy. No known side effects."
     },
     {
       "ref": "medical_history.medical_conditions",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing details regarding diagnosis timing and current management.",
+      "note": "",
       "expected": "Asthma; diagnosed in childhood; uses salbutamol inhaler as needed",
-      "produced": "Asthma."
+      "produced": "Asthma since childhood; uses a salbutamol inhaler as needed."
     },
     {
       "ref": "medical_history.surgical_history",
@@ -300,7 +313,7 @@
       "source": "llm",
       "note": "",
       "expected": "Emergency caesarean section; February 2026; no ongoing complications",
-      "produced": "Emergency caesarean section in February 2026."
+      "produced": "Emergency caesarean section in February 2026; no ongoing complications."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -308,7 +321,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; depression after the birth of her second child",
-      "produced": "Mother had depression after the birth of her second child; maternal aunt has anxiety."
+      "produced": "Mother had depression after the birth of her second child. Maternal aunt has anxiety."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -316,7 +329,7 @@
       "source": "llm",
       "note": "",
       "expected": "Maternal aunt; anxiety.",
-      "produced": "Mother had depression after the birth of her second child; maternal aunt has anxiety."
+      "produced": "Mother had depression after the birth of her second child. Maternal aunt has anxiety."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -324,7 +337,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Never; does not drink alcohol."
     },
     {
       "ref": "substance_use.nonmedical_nicotine_use",
@@ -332,7 +345,7 @@
       "source": "llm",
       "note": "",
       "expected": "Previous; cigarettes; about 5 per day; used for 4 years; stopped when pregnancy was confirmed",
-      "produced": "Former cigarette smoker, about 5 cigarettes per day for 4 years; stopped when she found out she was pregnant."
+      "produced": "No current use. Previously smoked approximately 5 cigarettes daily for 4 years; stopped upon learning she was pregnant."
     },
     {
       "ref": "substance_use.nonmedical_marijuana_use",
@@ -383,14 +396,6 @@
       "produced": "Never."
     },
     {
-      "ref": "education_employment_legal_history.highest_education",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "high school",
-      "produced": "High school."
-    },
-    {
       "ref": "education_employment_legal_history.employment_history[0]",
       "verdict": "partial",
       "source": "llm",
@@ -412,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Patient stated, \"I was born and grew up there.\" When asked for more details, patient stated, \"I don’t know.\""
+      "produced": "Born and grew up; no specific details provided."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -420,7 +425,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; coffee shop work",
-      "produced": "It was school and coffee shop work."
+      "produced": "Attended school and later worked at a coffee shop; no other specific details provided."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -428,7 +433,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; husband; unsupportive; absent",
-      "produced": "Married; husband has been mostly absent and unsupportive."
+      "produced": "Married to her husband, who has been absent and not very supportive. This makes things harder."
     },
     {
       "ref": "personal_history.future_goals",
@@ -436,7 +441,7 @@
       "source": "llm",
       "note": "",
       "expected": "care for children; return to work",
-      "produced": "To care for my children and return to work."
+      "produced": "Care for her children and return to work at some point."
     }
   ],
   "fabricated": []

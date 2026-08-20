@@ -5,13 +5,13 @@
   "repetition": 0,
   "persona_id": "moderate",
   "record_score": 0.9556,
-  "flow_score": 0.7,
+  "flow_score": 0.95,
   "record_detail": {
     "record_score": 0.9556,
-    "record_score_contested": 0.8889,
-    "fields_contested": 18,
-    "fields_auto_resolved": 27,
-    "fields_confirmed_absent": 7,
+    "record_score_contested": 0.9231,
+    "fields_contested": 26,
+    "fields_auto_resolved": 19,
+    "fields_confirmed_absent": 8,
     "fields_scored": 45,
     "fields_unjudged": 0,
     "unjudged_refs": [],
@@ -20,11 +20,10 @@
       "partial": 4,
       "missing": 0,
       "contradicted": 0,
-      "fabricated": 2
+      "fabricated": 1
     },
-    "fabricated_fields": 2,
+    "fabricated_fields": 1,
     "fabricated_refs": [
-      "past_psychiatric_history.self_harm_details",
       "past_psychiatric_history.previous_treatments"
     ],
     "by_section": {
@@ -58,11 +57,6 @@
         "credit": 3.0,
         "score": 1.0
       },
-      "substance_use": {
-        "fields": 8,
-        "credit": 8.0,
-        "score": 1.0
-      },
       "education_employment_legal_history": {
         "fields": 4,
         "credit": 3.0,
@@ -73,6 +67,11 @@
         "credit": 2.0,
         "score": 1.0
       },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
       "personal_history": {
         "fields": 4,
         "credit": 4.0,
@@ -80,17 +79,12 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough intake and handled the safety disclosure appropriately by escalating to a direct yes/no question when the patient provided non-responsive answers. However, the system struggled with the patient's tendency to provide non-numeric answers to the PHQ-9 and GAD-7 scales, leading to a repetitive loop where the interviewer had to re-ask the same questions multiple times.",
+  "flow_summary": "The interviewer conducted a thorough and professional intake. It handled the patient's imprecision well, particularly by clarifying the safety response and re-prompting for specific questionnaire responses when the patient provided vague answers.",
   "issues": [
     {
-      "severity": "moderate",
-      "category": "clarity",
-      "evidence": "The interviewer failed to effectively manage the patient's confusion regarding the PHQ-9 scale, resulting in the patient repeating 'Several days' as an answer to a safety question instead of addressing the risk assessment."
-    },
-    {
       "severity": "minor",
-      "category": "efficiency",
-      "evidence": "The system required three attempts to get a clear 'yes/no' response regarding immediate safety, which, while necessary for safety, highlighted a lack of conversational adaptability to the patient's confusion."
+      "category": "clarification",
+      "evidence": "The interviewer had to re-prompt for the GAD-7 question 6 because the patient asked for clarification on the timeframe, though this was handled efficiently."
     }
   ],
   "field_verdicts": [
@@ -103,12 +97,20 @@
       "produced": "Angela Smith"
     },
     {
-      "ref": "general_information.gender",
+      "ref": "general_information.date_of_birth",
       "verdict": "match",
       "source": "auto",
       "note": "",
-      "expected": "Female",
-      "produced": "Female"
+      "expected": "17/06/1993",
+      "produced": "17/06/1993"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M6N3P7",
+      "produced": "M6N3P7"
     },
     {
       "ref": "general_information.email",
@@ -117,6 +119,14 @@
       "note": "",
       "expected": "angela.smith@example.com",
       "produced": "angela.smith@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550163",
+      "produced": "4165550163"
     },
     {
       "ref": "general_information.has_family_doctor",
@@ -149,14 +159,6 @@
       "note": "",
       "expected": true,
       "produced": true
-    },
-    {
-      "ref": "past_psychiatric_history.previous_diagnoses",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "depression",
-      "produced": "Depression"
     },
     {
       "ref": "past_psychiatric_history.hospital_admission",
@@ -207,22 +209,6 @@
       "produced": false
     },
     {
-      "ref": "medical_history.height",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "168 cm",
-      "produced": "168 cm"
-    },
-    {
-      "ref": "medical_history.weight",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "59 kg",
-      "produced": "59 kg"
-    },
-    {
       "ref": "medication_allergies.has_medication_allergies",
       "verdict": "match",
       "source": "auto",
@@ -237,62 +223,6 @@
       "note": "",
       "expected": true,
       "produced": true
-    },
-    {
-      "ref": "substance_use.nonmedical_nicotine_use",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Never",
-      "produced": "Never"
-    },
-    {
-      "ref": "substance_use.nonmedical_marijuana_use",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Never",
-      "produced": "Never"
-    },
-    {
-      "ref": "substance_use.nonmedical_stimulant_use",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Never",
-      "produced": "Never"
-    },
-    {
-      "ref": "substance_use.nonmedical_opioid_use",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Never",
-      "produced": "Never"
-    },
-    {
-      "ref": "substance_use.nonmedical_benzodiazepine_use",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Never",
-      "produced": "Never"
-    },
-    {
-      "ref": "substance_use.nonmedical_hallucinogen_use",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Never",
-      "produced": "Never"
-    },
-    {
-      "ref": "substance_use.nonmedical_other_substance_use",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Never",
-      "produced": "Never"
     },
     {
       "ref": "education_employment_legal_history.active_legal_cases",
@@ -311,36 +241,20 @@
       "produced": "High school"
     },
     {
-      "ref": "general_information.date_of_birth",
+      "ref": "general_information.gender",
       "verdict": "match",
       "source": "llm",
       "note": "",
-      "expected": "17/06/1993",
-      "produced": "17 June 1993"
+      "expected": "Female",
+      "produced": "Woman"
     },
     {
       "ref": "general_information.address",
       "verdict": "partial",
       "source": "llm",
-      "note": "City and province information missing.",
+      "note": "Province information is missing.",
       "expected": "330 Weston Road, Toronto, Ontario",
-      "produced": "330 Weston Road"
-    },
-    {
-      "ref": "general_information.postal_code",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "M6N3P7",
-      "produced": "M6N 3P7"
-    },
-    {
-      "ref": "general_information.phone",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "4165550163",
-      "produced": "416-555-0163"
+      "produced": "330 Weston Road, Toronto"
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -348,7 +262,7 @@
       "source": "llm",
       "note": "",
       "expected": "despair; irritability; no pleasure; burden",
-      "produced": "Despair, irritability, little enjoyment, and feeling like a burden."
+      "produced": "Heavy despair, irritability, little enjoyment, and feeling like a burden."
     },
     {
       "ref": "current_concerns.goals",
@@ -356,7 +270,7 @@
       "source": "llm",
       "note": "",
       "expected": "someone to talk to; feel better",
-      "produced": "To have someone to talk to and feel better again."
+      "produced": "Would like someone to talk to and wants to feel better."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -364,15 +278,23 @@
       "source": "llm",
       "note": "",
       "expected": "Assessed by an outpatient psychiatrist in 2025",
-      "produced": "Seen by an outpatient psychiatrist in 2025 and diagnosed with depression."
+      "produced": "Seen by an outpatient psychiatrist in 2025; depression was assessed/discussed."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "depression",
+      "produced": "Depression."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing details regarding the number of sessions and reason for discontinuation.",
+      "note": "Reason for stopping therapy is missing.",
       "expected": "Supportive psychotherapy; 2025; attended 3 sessions and stopped because she did not feel understood",
-      "produced": "Supportive psychotherapy in 2025."
+      "produced": "Supportive psychotherapy in 2025; attended 3 sessions."
     },
     {
       "ref": "medications.past_medication_details",
@@ -380,7 +302,23 @@
       "source": "llm",
       "note": "",
       "expected": "Fluoxetine; 20 mg daily; taken for 6 weeks in 2025; stopped because of marked fatigue",
-      "produced": "Fluoxetine 20 mg daily for approximately 6 weeks in 2025; caused tiredness. Patient reported this was the only past medication."
+      "produced": "Fluoxetine 20 mg daily for about 6 weeks in 2025; caused significant fatigue. Patient recalls no other medications."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "168 cm",
+      "produced": "About 168 cm"
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "59 kg",
+      "produced": "About 59 kg; recently lost some weight unintentionally."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -388,7 +326,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; recurrent depression",
-      "produced": "Mother has recurrent depression; older brother has anxiety. No other family psychiatric or substance-use history or suicide attempts reported."
+      "produced": "Mother has recurrent depression; older brother has anxiety."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -396,7 +334,7 @@
       "source": "llm",
       "note": "",
       "expected": "Older brother; anxiety.",
-      "produced": "Mother has recurrent depression; older brother has anxiety. No other family psychiatric or substance-use history or suicide attempts reported."
+      "produced": "Mother has recurrent depression; older brother has anxiety."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -404,7 +342,63 @@
       "source": "llm",
       "note": "",
       "expected": "previous; none since pregnancy",
-      "produced": "Does not drink currently; used to drink before pregnancy but not since then."
+      "produced": "Used to drink alcohol, but not since pregnancy."
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never."
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never."
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never."
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never."
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never."
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never."
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never."
     },
     {
       "ref": "education_employment_legal_history.employment_history[0]",
@@ -428,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born and grew up in an ordinary environment; no further details provided."
+      "produced": "Born and grew up; reports possible childhood depression and parents' divorce. Described childhood as difficult."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -436,7 +430,7 @@
       "source": "llm",
       "note": "",
       "expected": "possible childhood depression; parents' divorce",
-      "produced": "Reported possible childhood depression and parents' divorce as a significant experience."
+      "produced": "Hard stretch, with possible childhood depression carrying on and parents' divorce in the background; no other details provided."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -444,7 +438,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; 13 years; husband critical; children",
-      "produced": "Married for about 13 years. Husband can be critical sometimes. Has children."
+      "produced": "Married for 13 years; husband can be pretty critical; has children."
     },
     {
       "ref": "personal_history.future_goals",
@@ -452,27 +446,17 @@
       "source": "llm",
       "note": "",
       "expected": "feel like herself; family",
-      "produced": "To feel like herself again and be there for her family."
+      "produced": "Wants to feel like herself again and keep her family going okay."
     }
   ],
   "fabricated": [
-    {
-      "ref": "past_psychiatric_history.self_harm_details",
-      "section": "past_psychiatric_history",
-      "field": "self_harm_details",
-      "entry_index": null,
-      "expected": null,
-      "produced": "No history of intentionally hurting herself or attempting suicide. Currently reports sometimes thinking she would be better off dead, without plan or intent.",
-      "verdict": "fabricated",
-      "reason": "scenario provides no value for this field"
-    },
     {
       "ref": "past_psychiatric_history.previous_treatments",
       "section": "past_psychiatric_history",
       "field": "previous_treatments",
       "entry_index": null,
       "expected": null,
-      "produced": "Supportive psychotherapy in 2025; fluoxetine trial in 2025.",
+      "produced": "Unsure of any other previous psychiatric treatments besides therapy.",
       "verdict": "fabricated",
       "reason": "scenario provides no value for this field"
     }

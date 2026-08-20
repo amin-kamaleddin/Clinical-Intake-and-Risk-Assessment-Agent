@@ -3,34 +3,32 @@
   "case_id": "12",
   "scenario_case_id": "04-12",
   "repetition": 0,
-  "persona_id": "moderate",
-  "record_score": 0.9444,
-  "flow_score": 0.95,
+  "persona_id": "clear",
+  "record_score": 0.9667,
+  "flow_score": 1.0,
   "record_detail": {
-    "record_score": 0.9444,
-    "record_score_contested": 0.9038,
-    "fields_contested": 26,
-    "fields_auto_resolved": 19,
-    "fields_confirmed_absent": 9,
+    "record_score": 0.9667,
+    "record_score_contested": 0.9348,
+    "fields_contested": 23,
+    "fields_auto_resolved": 22,
+    "fields_confirmed_absent": 10,
     "fields_scored": 45,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 40,
-      "partial": 5,
+      "match": 42,
+      "partial": 3,
       "missing": 0,
       "contradicted": 0,
-      "fabricated": 1
+      "fabricated": 0
     },
-    "fabricated_fields": 1,
-    "fabricated_refs": [
-      "family_psychiatric_history.family_psychiatric_history_details"
-    ],
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 9.5,
-        "score": 0.95
+        "credit": 10.0,
+        "score": 1.0
       },
       "past_psychiatric_history": {
         "fields": 3,
@@ -59,8 +57,8 @@
       },
       "education_employment_legal_history": {
         "fields": 4,
-        "credit": 3.0,
-        "score": 0.75
+        "credit": 3.5,
+        "score": 0.875
       },
       "current_concerns": {
         "fields": 2,
@@ -79,14 +77,8 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and professional intake. They effectively managed the patient's occasional imprecision by rephrasing questions and guiding the patient to provide specific answers, particularly during the medication and questionnaire sections.",
-  "issues": [
-    {
-      "severity": "minor",
-      "category": "clarification",
-      "evidence": "The interviewer had to re-ask the PHQ-9 question 4 and GAD-7 question 4 due to the patient's initial vague responses, which is appropriate given the persona, but the flow was slightly interrupted."
-    }
-  ],
+  "flow_summary": "The interviewer conducted a highly efficient and structured intake. It followed a logical progression, correctly handled repeatable fields by checking for additional entries, and administered the PHQ-9 and GAD-7 questionnaires accurately.",
+  "issues": [],
   "field_verdicts": [
     {
       "ref": "general_information.name",
@@ -94,7 +86,7 @@
       "source": "auto",
       "note": "",
       "expected": "MAI FANG",
-      "produced": "Mai Fang"
+      "produced": "MAI FANG"
     },
     {
       "ref": "general_information.gender",
@@ -111,6 +103,14 @@
       "note": "",
       "expected": "08/03/1967",
       "produced": "08/03/1967"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "41 Birchmount Road, Scarborough, Ontario",
+      "produced": "41 Birchmount Road, Scarborough, Ontario"
     },
     {
       "ref": "general_information.postal_code",
@@ -217,6 +217,22 @@
       "produced": true
     },
     {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "158 cm",
+      "produced": "158 cm"
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "72 kg",
+      "produced": "72 kg"
+    },
+    {
       "ref": "medication_allergies.has_medication_allergies",
       "verdict": "match",
       "source": "auto",
@@ -241,20 +257,12 @@
       "produced": false
     },
     {
-      "ref": "general_information.address",
-      "verdict": "partial",
-      "source": "llm",
-      "note": "Missing province.",
-      "expected": "41 Birchmount Road, Scarborough, Ontario",
-      "produced": "41 Birchmount Road, Scarborough"
-    },
-    {
       "ref": "current_concerns.primary_problems",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "fatigue; back pain; insomnia; burden to family",
-      "produced": "Very tired, significant back pain, poor sleep for many months, and feeling like a burden to family."
+      "produced": "Fatigue, back pain, insomnia, and feeling like a burden to my family."
     },
     {
       "ref": "current_concerns.goals",
@@ -262,7 +270,7 @@
       "source": "llm",
       "note": "",
       "expected": "sleep better; have more energy",
-      "produced": "Sleep better, have more energy, and be less of a burden to family."
+      "produced": "I want to sleep better and have more energy."
     },
     {
       "ref": "medications.current_medications[0]",
@@ -270,7 +278,7 @@
       "source": "llm",
       "note": "",
       "expected": "Clonazepam; 0.5 mg nightly; started about 6 months ago; morning sleepiness",
-      "produced": "Clonazepam 0.5 mg at night for sleep, started about 6 months ago; causes morning sleepiness. Hydrocodone-acetaminophen 5/325 mg, up to twice daily as needed for pain, started in 2024; causes constipation. Acetaminophen 500 mg as needed, usually once daily; start date unknown and no known side effects."
+      "produced": "Clonazepam 0.5 mg nightly, started about 6 months ago; causes morning sleepiness. Hydrocodone-acetaminophen 5/325 mg up to twice daily as needed, started in 2024; causes constipation. Acetaminophen 500 mg as needed, usually once daily; start date unknown; no known side effects."
     },
     {
       "ref": "medications.current_medications[1]",
@@ -278,7 +286,7 @@
       "source": "llm",
       "note": "",
       "expected": "Hydrocodone-acetaminophen; 5/325 mg, one tablet up to twice daily as needed; started 2024; constipation",
-      "produced": "Clonazepam 0.5 mg at night for sleep, started about 6 months ago; causes morning sleepiness. Hydrocodone-acetaminophen 5/325 mg, up to twice daily as needed for pain, started in 2024; causes constipation. Acetaminophen 500 mg as needed, usually once daily; start date unknown and no known side effects."
+      "produced": "Clonazepam 0.5 mg nightly, started about 6 months ago; causes morning sleepiness. Hydrocodone-acetaminophen 5/325 mg up to twice daily as needed, started in 2024; causes constipation. Acetaminophen 500 mg as needed, usually once daily; start date unknown; no known side effects."
     },
     {
       "ref": "medications.current_medications[2]",
@@ -286,39 +294,23 @@
       "source": "llm",
       "note": "",
       "expected": "Acetaminophen; 500 mg as needed, usually once daily; duration unknown; no known side effects.",
-      "produced": "Clonazepam 0.5 mg at night for sleep, started about 6 months ago; causes morning sleepiness. Hydrocodone-acetaminophen 5/325 mg, up to twice daily as needed for pain, started in 2024; causes constipation. Acetaminophen 500 mg as needed, usually once daily; start date unknown and no known side effects."
+      "produced": "Clonazepam 0.5 mg nightly, started about 6 months ago; causes morning sleepiness. Hydrocodone-acetaminophen 5/325 mg up to twice daily as needed, started in 2024; causes constipation. Acetaminophen 500 mg as needed, usually once daily; start date unknown; no known side effects."
     },
     {
       "ref": "medical_history.medical_conditions",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing diagnosis year.",
+      "note": "Missing diagnosis date and context regarding the fall.",
       "expected": "Chronic lower back pain; diagnosed 2023; worsened after a fall",
-      "produced": "Chronic lower back pain, worsened after a fall."
+      "produced": "Chronic lower back pain."
     },
     {
       "ref": "medical_history.surgical_history",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing information about complications.",
+      "note": "Missing information regarding lack of ongoing complications.",
       "expected": "Gallbladder removal; 2015; no ongoing complications",
       "produced": "Gallbladder removal in 2015."
-    },
-    {
-      "ref": "medical_history.height",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "158 cm",
-      "produced": "About 158 cm"
-    },
-    {
-      "ref": "medical_history.weight",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "72 kg",
-      "produced": "About 72 kg"
     },
     {
       "ref": "medication_allergies.medication_allergies",
@@ -326,7 +318,7 @@
       "source": "llm",
       "note": "",
       "expected": "Codeine; causes rash and facial swelling",
-      "produced": "Codeine causes a rash and facial swelling."
+      "produced": "Codeine; causes rash and facial swelling."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -334,7 +326,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Does not drink alcohol."
     },
     {
       "ref": "substance_use.nonmedical_nicotine_use",
@@ -342,7 +334,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Does not use nicotine."
     },
     {
       "ref": "substance_use.nonmedical_marijuana_use",
@@ -350,7 +342,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Does not use marijuana."
     },
     {
       "ref": "substance_use.nonmedical_stimulant_use",
@@ -358,7 +350,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Does not use stimulants."
     },
     {
       "ref": "substance_use.nonmedical_opioid_use",
@@ -366,7 +358,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No non-prescribed or recreational opioid use; takes prescribed hydrocodone-acetaminophen."
+      "produced": "Does not use opioids other than prescribed hydrocodone-acetaminophen."
     },
     {
       "ref": "substance_use.nonmedical_benzodiazepine_use",
@@ -374,7 +366,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "No non-prescribed or recreational benzodiazepine use; takes prescribed clonazepam."
+      "produced": "Does not use benzodiazepines other than prescribed clonazepam."
     },
     {
       "ref": "substance_use.nonmedical_hallucinogen_use",
@@ -382,7 +374,7 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Does not use hallucinogens."
     },
     {
       "ref": "substance_use.nonmedical_other_substance_use",
@@ -390,31 +382,31 @@
       "source": "llm",
       "note": "",
       "expected": "Never",
-      "produced": "Never."
+      "produced": "Does not use any other substances."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing information regarding functional illiteracy.",
       "expected": "no formal education; functionally illiterate",
-      "produced": "No formal schooling; cannot read well."
+      "produced": "No formal education."
     },
     {
       "ref": "education_employment_legal_history.employment_history[0]",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Dates of employment are missing.",
+      "note": "",
       "expected": "Homemaker; 1990 to present",
-      "produced": "Currently a homemaker; previously worked seasonally in a garment factory a long time ago."
+      "produced": "Homemaker since 1990; seasonal garment factory worker from 1988 to 1990."
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Dates of employment are missing.",
+      "note": "",
       "expected": "Seasonal garment factory worker; 1988 to 1990.",
-      "produced": "Currently a homemaker; previously worked seasonally in a garment factory a long time ago."
+      "produced": "Homemaker since 1990; seasonal garment factory worker from 1988 to 1990."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -422,7 +414,7 @@
       "source": "llm",
       "note": "",
       "expected": "born in Laos; refugee camp",
-      "produced": "Born in Laos and spent time in a refugee camp as a child."
+      "produced": "Born in Laos and spent part of childhood in a refugee camp."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -430,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "refugee camp; resettled",
-      "produced": "Spent adolescence in a refugee camp and was later resettled."
+      "produced": "Spent adolescence and early adulthood in a refugee camp, and later resettled."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -438,7 +430,7 @@
       "source": "llm",
       "note": "",
       "expected": "widowed; husband died; heart attack",
-      "produced": "Husband died about a year ago from a heart attack."
+      "produced": "Widowed; husband died of a heart attack. Wants to support her family."
     },
     {
       "ref": "personal_history.future_goals",
@@ -446,19 +438,8 @@
       "source": "llm",
       "note": "",
       "expected": "support family; regain energy",
-      "produced": "Support family and regain energy."
+      "produced": "Wants to support her family and regain her energy."
     }
   ],
-  "fabricated": [
-    {
-      "ref": "family_psychiatric_history.family_psychiatric_history_details",
-      "section": "family_psychiatric_history",
-      "field": "family_psychiatric_history_details",
-      "entry_index": null,
-      "expected": null,
-      "produced": "No known family history of mental-health conditions, substance-use problems, psychiatric treatment, or suicide attempts.",
-      "verdict": "fabricated",
-      "reason": "scenario provides no value for this field"
-    }
-  ]
+  "fabricated": []
 }

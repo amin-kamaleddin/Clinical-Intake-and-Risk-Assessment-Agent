@@ -3,32 +3,34 @@
   "case_id": "12",
   "scenario_case_id": "04-12",
   "repetition": 0,
-  "persona_id": "moderate",
-  "record_score": 0.9333,
+  "persona_id": "clear",
+  "record_score": 0.9667,
   "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9333,
-    "record_score_contested": 0.85,
-    "fields_contested": 20,
-    "fields_auto_resolved": 25,
-    "fields_confirmed_absent": 10,
+    "record_score": 0.9667,
+    "record_score_contested": 0.9,
+    "fields_contested": 15,
+    "fields_auto_resolved": 30,
+    "fields_confirmed_absent": 9,
     "fields_scored": 45,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 40,
-      "partial": 4,
-      "missing": 1,
+      "match": 42,
+      "partial": 3,
+      "missing": 0,
       "contradicted": 0,
-      "fabricated": 0
+      "fabricated": 1
     },
-    "fabricated_fields": 0,
-    "fabricated_refs": [],
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_therapies"
+    ],
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 9.5,
-        "score": 0.95
+        "credit": 10.0,
+        "score": 1.0
       },
       "past_psychiatric_history": {
         "fields": 3,
@@ -72,25 +74,36 @@
       },
       "personal_history": {
         "fields": 4,
-        "credit": 3.0,
-        "score": 0.75
+        "credit": 4.0,
+        "score": 1.0
       }
     }
   },
-  "flow_summary": "The system conducted a thorough and accurate intake, demonstrating strong recovery skills when the patient provided vague or hesitant answers. It successfully navigated the patient's tendency to hedge by re-prompting for specific choices, ensuring all required data points were captured.",
+  "flow_summary": "The interviewer conducted a thorough and efficient intake, maintaining a clear and logical structure throughout. The system handled the patient's responses well, though it failed to recognize that the patient had already stated she had not received any therapy, leading to redundant and confusing follow-up questions.",
   "issues": [
     {
-      "severity": "minor",
-      "category": "clarity",
-      "evidence": "The interviewer asked 'What is your full home address, including street address, city, and province?' which was a bit long, leading the patient to ask for clarification."
-    },
-    {
-      "severity": "minor",
-      "category": "efficiency",
-      "evidence": "The interviewer asked 'Do you currently have a family doctor?' followed immediately by 'What is your family doctor's full first and last name?' which could have been combined or handled more fluidly."
+      "severity": "moderate",
+      "category": "redundant_questioning",
+      "evidence": "The interviewer asked 'When did you receive that therapy?' and 'Approximately how many sessions did you attend?' immediately after the patient clearly stated, 'I have not had any previous therapy.'"
     }
   ],
   "field_verdicts": [
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "MAI FANG",
+      "produced": "MAI FANG"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female"
+    },
     {
       "ref": "general_information.date_of_birth",
       "verdict": "match",
@@ -98,6 +111,14 @@
       "note": "",
       "expected": "08/03/1967",
       "produced": "08/03/1967"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "41 Birchmount Road, Scarborough, Ontario",
+      "produced": "41 Birchmount Road, Scarborough, Ontario"
     },
     {
       "ref": "general_information.postal_code",
@@ -204,6 +225,22 @@
       "produced": true
     },
     {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "158 cm",
+      "produced": "158 cm"
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "72 kg",
+      "produced": "72 kg"
+    },
+    {
       "ref": "medication_allergies.has_medication_allergies",
       "verdict": "match",
       "source": "auto",
@@ -292,36 +329,12 @@
       "produced": false
     },
     {
-      "ref": "general_information.name",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "MAI FANG",
-      "produced": "I THINK IT’S MAI FANG, BUT DO YOU MEAN THE NAME ON THE PAPERS?"
-    },
-    {
-      "ref": "general_information.gender",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Female",
-      "produced": "Female."
-    },
-    {
-      "ref": "general_information.address",
-      "verdict": "partial",
-      "source": "llm",
-      "note": "Missing house number and city/province details.",
-      "expected": "41 Birchmount Road, Scarborough, Ontario",
-      "produced": "I think it’s on Birchmount Road in Scarborough… could you repeat the part you need?"
-    },
-    {
       "ref": "current_concerns.primary_problems",
       "verdict": "partial",
       "source": "llm",
       "note": "Missing the concern about being a burden to family.",
       "expected": "fatigue; back pain; insomnia; burden to family",
-      "produced": "Mostly I’ve been feeling tired, and my back hurts a lot. I’m also not sleeping well."
+      "produced": "Fatigue, back pain, and insomnia."
     },
     {
       "ref": "current_concerns.goals",
@@ -329,7 +342,7 @@
       "source": "llm",
       "note": "",
       "expected": "sleep better; have more energy",
-      "produced": "I want to sleep better and have more energy."
+      "produced": "Sleep better and have more energy."
     },
     {
       "ref": "medications.current_medications[0]",
@@ -337,7 +350,7 @@
       "source": "llm",
       "note": "",
       "expected": "Clonazepam; 0.5 mg nightly; started about 6 months ago; morning sleepiness",
-      "produced": "Medication 1: Name Or Description: Clonazepam.; Dose: 0.5 mg at night, I think.; Start Or Duration: About 6 months ago.; Side Effects: It makes me sleepy in the morning.\nMedication 2: Name Or Description: Yes — I’m also taking hydrocodone-acetaminophen.; Dose: 5/325 mg, one tablet up to twice a day as needed.; Start Or Duration: In 2024, I think.; Side Effects: It causes constipation.\nMedication 3: Name Or Description: Yes, acetaminophen.; Dose: 500 mg as needed, usually once daily.; Start Or Duration: I don’t know.; Side Effects: None that I know of."
+      "produced": "Medication 1: Name Or Description: Clonazepam.; Dose: 0.5 mg nightly.; Start Or Duration: About 6 months ago.; Side Effects: Morning sleepiness.\nMedication 2: Name Or Description: Yes, hydrocodone-acetaminophen.; Dose: 5/325 mg, one tablet up to twice daily as needed.; Start Or Duration: Started in 2024.; Side Effects: Constipation.\nMedication 3: Name Or Description: Yes, acetaminophen.; Dose: 500 mg as needed, usually once daily.; Start Or Duration: Unknown; Side Effects: None that I know of."
     },
     {
       "ref": "medications.current_medications[1]",
@@ -345,7 +358,7 @@
       "source": "llm",
       "note": "",
       "expected": "Hydrocodone-acetaminophen; 5/325 mg, one tablet up to twice daily as needed; started 2024; constipation",
-      "produced": "Medication 1: Name Or Description: Clonazepam.; Dose: 0.5 mg at night, I think.; Start Or Duration: About 6 months ago.; Side Effects: It makes me sleepy in the morning.\nMedication 2: Name Or Description: Yes — I’m also taking hydrocodone-acetaminophen.; Dose: 5/325 mg, one tablet up to twice a day as needed.; Start Or Duration: In 2024, I think.; Side Effects: It causes constipation.\nMedication 3: Name Or Description: Yes, acetaminophen.; Dose: 500 mg as needed, usually once daily.; Start Or Duration: I don’t know.; Side Effects: None that I know of."
+      "produced": "Medication 1: Name Or Description: Clonazepam.; Dose: 0.5 mg nightly.; Start Or Duration: About 6 months ago.; Side Effects: Morning sleepiness.\nMedication 2: Name Or Description: Yes, hydrocodone-acetaminophen.; Dose: 5/325 mg, one tablet up to twice daily as needed.; Start Or Duration: Started in 2024.; Side Effects: Constipation.\nMedication 3: Name Or Description: Yes, acetaminophen.; Dose: 500 mg as needed, usually once daily.; Start Or Duration: Unknown; Side Effects: None that I know of."
     },
     {
       "ref": "medications.current_medications[2]",
@@ -353,15 +366,15 @@
       "source": "llm",
       "note": "",
       "expected": "Acetaminophen; 500 mg as needed, usually once daily; duration unknown; no known side effects.",
-      "produced": "Medication 1: Name Or Description: Clonazepam.; Dose: 0.5 mg at night, I think.; Start Or Duration: About 6 months ago.; Side Effects: It makes me sleepy in the morning.\nMedication 2: Name Or Description: Yes — I’m also taking hydrocodone-acetaminophen.; Dose: 5/325 mg, one tablet up to twice a day as needed.; Start Or Duration: In 2024, I think.; Side Effects: It causes constipation.\nMedication 3: Name Or Description: Yes, acetaminophen.; Dose: 500 mg as needed, usually once daily.; Start Or Duration: I don’t know.; Side Effects: None that I know of."
+      "produced": "Medication 1: Name Or Description: Clonazepam.; Dose: 0.5 mg nightly.; Start Or Duration: About 6 months ago.; Side Effects: Morning sleepiness.\nMedication 2: Name Or Description: Yes, hydrocodone-acetaminophen.; Dose: 5/325 mg, one tablet up to twice daily as needed.; Start Or Duration: Started in 2024.; Side Effects: Constipation.\nMedication 3: Name Or Description: Yes, acetaminophen.; Dose: 500 mg as needed, usually once daily.; Start Or Duration: Unknown; Side Effects: None that I know of."
     },
     {
       "ref": "medical_history.medical_conditions",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the diagnosis year (2023).",
+      "note": "Missing diagnosis date and context regarding the fall.",
       "expected": "Chronic lower back pain; diagnosed 2023; worsened after a fall",
-      "produced": "I have chronic lower back pain, and it got worse after a fall."
+      "produced": "Chronic lower back pain."
     },
     {
       "ref": "medical_history.surgical_history",
@@ -369,23 +382,7 @@
       "source": "llm",
       "note": "",
       "expected": "Gallbladder removal; 2015; no ongoing complications",
-      "produced": "Surgery: Gallbladder removal.; Date: 2015, I think.; Details: No, no ongoing problems from it."
-    },
-    {
-      "ref": "medical_history.height",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "158 cm",
-      "produced": "158 cm."
-    },
-    {
-      "ref": "medical_history.weight",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "72 kg",
-      "produced": "72 kg."
+      "produced": "Surgery: Gallbladder removal.; Date: 2015.; Details: No ongoing complications."
     },
     {
       "ref": "medication_allergies.medication_allergies",
@@ -393,7 +390,7 @@
       "source": "llm",
       "note": "",
       "expected": "Codeine; causes rash and facial swelling",
-      "produced": "Allergy 1: Name Or Description: Codeine.; Reaction: I got a rash and my face swelled up.; Date Or Age: I don’t remember."
+      "produced": "Allergy 1: Name Or Description: Codeine.; Reaction: Rash and facial swelling.; Date Or Age: Unknown"
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -401,7 +398,7 @@
       "source": "llm",
       "note": "Missing the detail about functional illiteracy.",
       "expected": "no formal education; functionally illiterate",
-      "produced": "I don’t have any formal schooling."
+      "produced": "No formal education."
     },
     {
       "ref": "education_employment_legal_history.employment_history[0]",
@@ -409,7 +406,7 @@
       "source": "llm",
       "note": "",
       "expected": "Homemaker; 1990 to present",
-      "produced": "Job 1: Name Or Description: Home.; Job Title: Homemaker.; Dates: 1990 to present.\nJob 2: Name Or Description: Yes, I used to do seasonal work at a garment factory.; Job Title: Seasonal worker.; Dates: 1988 to 1990."
+      "produced": "Job 1: Name Or Description: Home.; Job Title: Homemaker.; Dates: 1990 to present.\nJob 2: Name Or Description: Yes, garment factory.; Job Title: Seasonal worker.; Dates: 1988 to 1990."
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
@@ -417,15 +414,15 @@
       "source": "llm",
       "note": "",
       "expected": "Seasonal garment factory worker; 1988 to 1990.",
-      "produced": "Job 1: Name Or Description: Home.; Job Title: Homemaker.; Dates: 1990 to present.\nJob 2: Name Or Description: Yes, I used to do seasonal work at a garment factory.; Job Title: Seasonal worker.; Dates: 1988 to 1990."
+      "produced": "Job 1: Name Or Description: Home.; Job Title: Homemaker.; Dates: 1990 to present.\nJob 2: Name Or Description: Yes, garment factory.; Job Title: Seasonal worker.; Dates: 1988 to 1990."
     },
     {
       "ref": "personal_history.early_childhood",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "llm",
-      "note": "System recorded unknown instead of birth location and refugee camp history.",
+      "note": "",
       "expected": "born in Laos; refugee camp",
-      "produced": "Unknown"
+      "produced": "I was born in Laos and spent part of my childhood in a refugee camp."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -433,7 +430,7 @@
       "source": "llm",
       "note": "",
       "expected": "refugee camp; resettled",
-      "produced": "Mostly in the refugee camp, and then we resettled later. It was a hard time."
+      "produced": "I spent that time in a refugee camp and later resettled."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -441,7 +438,7 @@
       "source": "llm",
       "note": "",
       "expected": "widowed; husband died; heart attack",
-      "produced": "I was married, but my husband died of a heart attack. I’m widowed now."
+      "produced": "I am widowed. My husband died of a heart attack."
     },
     {
       "ref": "personal_history.future_goals",
@@ -449,8 +446,19 @@
       "source": "llm",
       "note": "",
       "expected": "support family; regain energy",
-      "produced": "I want to support my family and regain my energy."
+      "produced": "Support my family and regain my energy."
     }
   ],
-  "fabricated": []
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "section": "past_psychiatric_history",
+      "field": "previous_therapies",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I have not had any previous therapy.; Unknown; Unknown",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
 }

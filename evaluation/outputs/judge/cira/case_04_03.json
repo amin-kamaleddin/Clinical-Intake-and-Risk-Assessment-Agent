@@ -3,21 +3,21 @@
   "case_id": "03",
   "scenario_case_id": "04-03",
   "repetition": 0,
-  "persona_id": "clear",
-  "record_score": 0.9667,
-  "flow_score": 0.7,
+  "persona_id": "confused",
+  "record_score": 0.9778,
+  "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9667,
-    "record_score_contested": 0.8846,
-    "fields_contested": 13,
-    "fields_auto_resolved": 32,
+    "record_score": 0.9778,
+    "record_score_contested": 0.9286,
+    "fields_contested": 14,
+    "fields_auto_resolved": 31,
     "fields_confirmed_absent": 7,
     "fields_scored": 45,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 43,
-      "partial": 1,
+      "match": 44,
+      "partial": 0,
       "missing": 0,
       "contradicted": 1,
       "fabricated": 0
@@ -32,8 +32,8 @@
       },
       "past_psychiatric_history": {
         "fields": 7,
-        "credit": 5.5,
-        "score": 0.7857
+        "credit": 6.0,
+        "score": 0.8571
       },
       "medications": {
         "fields": 3,
@@ -77,27 +77,22 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough intake but struggled with repetitive and unnecessary phrasing, particularly in the personal history section. While the safety protocol was triggered correctly following the PHQ-9, the interviewer frequently appended 'Before we move on, could you answer the question above?' to questions that had not yet been answered, which was redundant and slightly confusing.",
+  "flow_summary": "The interviewer was generally thorough and persistent in gathering information from a challenging, disorganized patient. However, the system struggled significantly with the PHQ-9 and GAD-7 sections, repeatedly asking the same questions and failing to maintain a smooth flow when the patient expressed confusion, leading to a repetitive and mechanical interaction.",
   "issues": [
     {
-      "severity": "minor",
-      "category": "redundant_phrasing",
-      "evidence": "Before we move on, could you answer the question above?"
+      "severity": "moderate",
+      "category": "repetition",
+      "evidence": "In the PHQ-9 and GAD-7 sections, the interviewer repeatedly re-asked the same questions multiple times when the patient expressed confusion, rather than adapting the delivery or moving forward after a reasonable attempt at clarification."
     },
     {
       "severity": "minor",
-      "category": "redundant_phrasing",
-      "evidence": "Before we move on, could you answer the question above?"
+      "category": "flow",
+      "evidence": "The interviewer frequently used the phrase 'Before we move on, could you answer the question above?' which felt robotic and redundant given the patient had often already provided the information or was in the middle of a clarification process."
     },
     {
       "severity": "minor",
-      "category": "redundant_phrasing",
-      "evidence": "Before we move on, could you answer the question above?"
-    },
-    {
-      "severity": "minor",
-      "category": "redundant_phrasing",
-      "evidence": "Before we move on, could you answer the question above?"
+      "category": "empathy",
+      "evidence": "The safety response in turn 4 of the current_concerns section was somewhat jarring, as it included a standard safety script followed immediately by 'I’m going to continue with the intake questions,' which felt dismissive of the patient's distress."
     }
   ],
   "field_verdicts": [
@@ -350,20 +345,12 @@
       "produced": "Bachelor's degree"
     },
     {
-      "ref": "education_employment_legal_history.employment_history",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Owner and managing director, Quinn Import Services; 2004 to present",
-      "produced": "Owner and managing director, Quinn Import Services; 2004 to Present"
-    },
-    {
       "ref": "current_concerns.primary_problems",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "son's death; grief; sadness; cannot concentrate",
-      "produced": "Grief and constant sadness following the patient's son's death by suicide six weeks ago; difficulty concentrating."
+      "produced": "Since his son died, the patient has felt persistently sad and very low, with poor concentration, early-morning waking around 4:30 a.m., and daytime exhaustion. These difficulties occur at home and work, where he is the owner and managing director and reports not functioning properly. He also reports guilt and feeling that he should have died instead."
     },
     {
       "ref": "current_concerns.goals",
@@ -371,7 +358,7 @@
       "source": "llm",
       "note": "",
       "expected": "cope with loss; return to functioning",
-      "produced": "Cope with the loss and return to functioning."
+      "produced": "The patient hopes to cope with the loss better, return to functioning, honour his son’s memory in some way, and get through the days without feeling this way."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -379,15 +366,15 @@
       "source": "llm",
       "note": "",
       "expected": "Followed by DR. LAURA BENNETT, psychiatrist, during two depressive episodes in 1998 and 2003",
-      "produced": "Dr. Laura Bennett; during depressive episodes in 1998 and 2003."
+      "produced": "Dr. Laura Bennett, psychiatrist; assessed during two depressive episodes in 1998 and 2003."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing details regarding the number of episodes and age of onset.",
+      "note": "",
       "expected": "depression; two prior episodes; 30s",
-      "produced": "Depression"
+      "produced": "Depression; two prior episodes in the patient's 30s."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
@@ -395,13 +382,13 @@
       "source": "llm",
       "note": "",
       "expected": "Individual psychotherapy; 1998; approximately 16 weekly sessions",
-      "produced": "Individual psychotherapy; 1998; approximately 16 weekly sessions; location: Unknown"
+      "produced": "Individual psychotherapy (specific type unknown); 1998; approximately 16 weekly sessions; location unknown."
     },
     {
       "ref": "past_psychiatric_history.previous_treatments",
       "verdict": "contradicted",
       "source": "llm",
-      "note": "System states none reported, but patient had prior treatment with Sertraline.",
+      "note": "System states none reported, but patient had prior sertraline use.",
       "expected": "Sertraline during two prior depressive episodes; good response",
       "produced": "None reported."
     },
@@ -411,7 +398,7 @@
       "source": "llm",
       "note": "",
       "expected": "Sertraline; 100 mg daily; taken for about 18 months in his 30s; stopped after sustained recovery",
-      "produced": "Sertraline; 100 mg daily; taken for approximately 18 months in his 30s; stopped after sustained recovery."
+      "produced": "Sertraline; 100 mg daily; started in patient's 30s; taken for approximately 18 months; stopped after recovery and sustained improvement; exact start and stop dates Unknown."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -419,7 +406,7 @@
       "source": "llm",
       "note": "",
       "expected": "parents; depression; son; suicide",
-      "produced": "Mother; depression. Father; depression. Son; died by suicide."
+      "produced": "Mother; depression. Father; depression. Son; died by suicide; diagnosis unknown"
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -427,7 +414,15 @@
       "source": "llm",
       "note": "",
       "expected": "Current; wine; about half a bottle nightly; increased from weekends only after son's death; current duration 6 weeks",
-      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: About half a bottle nightly; Duration: About 6 weeks"
+      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: About half a bottle nightly; Duration: About 6 weeks at this level"
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Owner and managing director, Quinn Import Services; 2004 to present",
+      "produced": "Quinn Import Services; Owner and Managing Director; 2004 to Present. In progress: recent job; employer, job title, and dates not yet provided."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -435,7 +430,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Patient does not know where they were born or grew up, or how they would describe themselves as a young child."
+      "produced": "Patient reports being born and growing up, with no further specific details to report."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -443,7 +438,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; early career",
-      "produced": "School and early career."
+      "produced": "Patient reports that adolescence and early adulthood consisted mostly of school followed by work; details are unclear."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -451,7 +446,7 @@
       "source": "llm",
       "note": "",
       "expected": "married",
-      "produced": "Marriage; duration and current status unknown."
+      "produced": "Marriage; duration unknown; current."
     },
     {
       "ref": "personal_history.future_goals",
@@ -459,7 +454,7 @@
       "source": "llm",
       "note": "",
       "expected": "recover; honour son's memory",
-      "produced": "To recover and honour my son's memory."
+      "produced": "Recover and honour his son's memory."
     }
   ],
   "fabricated": []

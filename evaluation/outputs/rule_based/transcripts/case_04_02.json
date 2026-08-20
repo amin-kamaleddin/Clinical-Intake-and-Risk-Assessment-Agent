@@ -3,41 +3,114 @@
   "scenario_case_id": "04-02",
   "title": "Postpartum Sadness",
   "system": "rule_based",
-  "run_id": "60d36b5a33b5",
+  "run_id": "b35b43cfa386",
   "repetition": 0,
-  "persona_id": "clear",
+  "persona_id": "confused",
   "patient_behaviour": {
     "persona": {
-      "id": "clear",
-      "label": "Clear communicator",
-      "difficulty_rank": 1,
-      "description": "Organised and literal. Answers precisely the question asked, in one pass, with the right level of detail. Control condition.",
-      "temperature": 0.0,
-      "questionnaire_deflection_probability": 0.0,
-      "max_deflections_per_item": 0,
-      "deflection_budget_per_instrument": 0,
-      "freetext_hedge_probability": 0.0,
-      "freetext_hedge_budget_per_section": 0
+      "id": "confused",
+      "label": "Unclear and disorganised",
+      "difficulty_rank": 3,
+      "description": "Hard to interview. Rambles, misreads questions, needs the frequency scale re-explained, discloses out of order. Tests whether the agent can actively guide rather than merely transcribe.",
+      "temperature": 0.8,
+      "questionnaire_deflection_probability": 0.8,
+      "max_deflections_per_item": 2,
+      "deflection_budget_per_instrument": 5,
+      "freetext_hedge_probability": 0.5,
+      "freetext_hedge_budget_per_section": 4
     },
     "repetition": 0,
-    "temperature": 0.0,
+    "temperature": 0.8,
     "temperature_pinned": false,
-    "questionnaire_deflections": 0,
-    "freetext_hedges": 0,
+    "questionnaire_deflections": 10,
+    "freetext_hedges": 4,
     "max_consecutive_hedges": 1,
-    "hedges_by_section": {},
-    "deflections_by_instrument": {},
-    "deflections_by_item": {},
-    "deflection_log": []
+    "hedges_by_section": {
+      "(none)": 4
+    },
+    "deflections_by_instrument": {
+      "phq9": 5,
+      "gad7": 5
+    },
+    "deflections_by_item": {
+      "phq9_q1": 2,
+      "phq9_q2": 2,
+      "phq9_q3": 1,
+      "gad7_q1": 2,
+      "gad7_q2": 2,
+      "gad7_q3": 1
+    },
+    "deflection_log": [
+      {
+        "item": "phq9_q1",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "Uh... some weeks more than others, I suppose."
+      },
+      {
+        "item": "phq9_q1",
+        "instrument": "phq9",
+        "attempt": 2,
+        "response": "Uh... some weeks more than others, I suppose."
+      },
+      {
+        "item": "phq9_q2",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+      },
+      {
+        "item": "phq9_q2",
+        "instrument": "phq9",
+        "attempt": 2,
+        "response": "Uh... some weeks more than others, I suppose."
+      },
+      {
+        "item": "phq9_q3",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "Uh... some weeks more than others, I suppose."
+      },
+      {
+        "item": "gad7_q1",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "Which of those was the middle one? I've forgotten the list."
+      },
+      {
+        "item": "gad7_q1",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+      },
+      {
+        "item": "gad7_q2",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "I really don't know how to answer that one."
+      },
+      {
+        "item": "gad7_q2",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "Uh... some weeks more than others, I suppose."
+      },
+      {
+        "item": "gad7_q3",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "Which of those was the middle one? I've forgotten the list."
+      }
+    ]
   },
   "budget": {
-    "total_turns": 164,
-    "system_turns": 82,
-    "patient_turns": 82,
-    "system_words": 1338,
-    "patient_words": 308,
-    "total_words": 1646,
-    "mean_system_turn_words": 16.3,
+    "total_turns": 188,
+    "system_turns": 94,
+    "patient_turns": 94,
+    "system_words": 1512,
+    "patient_words": 668,
+    "total_words": 2180,
+    "mean_system_turn_words": 16.1,
     "elapsed_seconds": null
   },
   "conversation": [
@@ -51,7 +124,7 @@
       "section": "general_information",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "MARIA GONZALEZ"
+      "message": "Sorry — do you mean the name on my documents? I’m not sure if you want the whole thing all at once. It’s Maria… um, I think that’s the first part."
     },
     {
       "section": "general_information",
@@ -63,7 +136,7 @@
       "section": "general_information",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Female"
+      "message": "Female."
     },
     {
       "section": "general_information",
@@ -75,91 +148,127 @@
       "section": "general_information",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "09/02/2003"
+      "message": "It’s 09/02/2003."
     },
     {
       "section": "general_information",
       "turn": 4,
+      "speaker": "CIRA",
+      "message": "Please repeat your date of birth in DD/MM/YYYY format."
+    },
+    {
+      "section": "general_information",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "09/02/2003"
+    },
+    {
+      "section": "general_information",
+      "turn": 5,
       "speaker": "CIRA",
       "message": "What is your full home address, including street address, city, and province?"
     },
     {
       "section": "general_information",
-      "turn": 4,
+      "turn": 5,
       "speaker": "PATIENT",
-      "message": "14 Cedarvale Court, Mississauga, Ontario"
+      "message": "14 Cedarvale Court… Mississauga, Ontario."
     },
     {
       "section": "general_information",
-      "turn": 5,
+      "turn": 6,
       "speaker": "CIRA",
       "message": "What is your Canadian postal code?"
     },
     {
       "section": "general_information",
-      "turn": 5,
+      "turn": 6,
       "speaker": "PATIENT",
       "message": "L5B4K2"
     },
     {
       "section": "general_information",
-      "turn": 6,
+      "turn": 7,
       "speaker": "CIRA",
       "message": "What is your email address?"
     },
     {
       "section": "general_information",
-      "turn": 6,
+      "turn": 7,
       "speaker": "PATIENT",
       "message": "maria.gonzalez@example.com"
     },
     {
       "section": "general_information",
-      "turn": 7,
+      "turn": 8,
       "speaker": "CIRA",
       "message": "What is your phone number, including area code?"
     },
     {
       "section": "general_information",
-      "turn": 7,
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "Sorry, do you mean the one I use now? I’m a bit mixed up. It starts with 905 and then… I don’t know if you want me to say the rest all at once."
+    },
+    {
+      "section": "general_information",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "Please repeat your 10-digit phone number."
+    },
+    {
+      "section": "general_information",
+      "turn": 9,
       "speaker": "PATIENT",
       "message": "9055550188"
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 10,
       "speaker": "CIRA",
       "message": "Do you currently have a family doctor?"
     },
     {
       "section": "general_information",
-      "turn": 8,
+      "turn": 10,
       "speaker": "PATIENT",
-      "message": "Yes, I do."
+      "message": "Um… I think so, yes, but I’m not sure if that’s what you mean. There’s a doctor I see, Dr. Anna Weiss… or at least that’s the name I have written down."
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "Please answer yes or no."
+    },
+    {
+      "section": "general_information",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "Yes."
+    },
+    {
+      "section": "general_information",
+      "turn": 12,
       "speaker": "CIRA",
       "message": "What is your family doctor's full first and last name?"
     },
     {
       "section": "general_information",
-      "turn": 9,
+      "turn": 12,
       "speaker": "PATIENT",
-      "message": "DR. ANNA WEISS"
+      "message": "Sorry, can you repeat that? I’m getting a bit tangled up. You mean the doctor’s name — I have it written as Dr. Anna… but I’m not sure if you want the whole thing."
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 13,
       "speaker": "CIRA",
       "message": "Do you currently have a psychiatrist?"
     },
     {
       "section": "general_information",
-      "turn": 10,
+      "turn": 13,
       "speaker": "PATIENT",
-      "message": "No, I don't."
+      "message": "No."
     },
     {
       "section": "current_concerns",
@@ -171,7 +280,7 @@
       "section": "current_concerns",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Low mood, fatigue, postpartum, and feeling overwhelmed."
+      "message": "It’s… been low mood mostly, and I’m so tired all the time. Everything feels overwhelming. I’m three weeks after having the baby, and I’m breastfeeding, and there’s my toddler too, and my husband is barely around, so it all sort of piles up."
     },
     {
       "section": "current_concerns",
@@ -183,7 +292,7 @@
       "section": "current_concerns",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Feel like myself, cope better, and care for my children."
+      "message": "I just want to feel like myself again, and be able to cope better… and look after the kids without feeling like I’m drowning all the time."
     },
     {
       "section": "past_psychiatric_history",
@@ -195,7 +304,7 @@
       "section": "past_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I have not."
+      "message": "No, never."
     },
     {
       "section": "past_psychiatric_history",
@@ -207,7 +316,7 @@
       "section": "past_psychiatric_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "No, I have not."
+      "message": "No, I haven’t been diagnosed with anything like that before."
     },
     {
       "section": "past_psychiatric_history",
@@ -219,7 +328,7 @@
       "section": "past_psychiatric_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "No, I have not."
+      "message": "No."
     },
     {
       "section": "past_psychiatric_history",
@@ -231,7 +340,7 @@
       "section": "past_psychiatric_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "No, I have not."
+      "message": "No, never."
     },
     {
       "section": "past_psychiatric_history",
@@ -243,7 +352,7 @@
       "section": "past_psychiatric_history",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "No, I have not."
+      "message": "No, I haven’t had any therapy before."
     },
     {
       "section": "past_psychiatric_history",
@@ -255,7 +364,7 @@
       "section": "past_psychiatric_history",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "No, I have not."
+      "message": "No, I haven’t had any of those treatments."
     },
     {
       "section": "medications",
@@ -267,7 +376,7 @@
       "section": "medications",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, I am taking a prenatal multivitamin with iron."
+      "message": "Yes — just one. It’s the prenatal multivitamin with iron."
     },
     {
       "section": "medications",
@@ -279,7 +388,7 @@
       "section": "medications",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Prenatal multivitamin with iron."
+      "message": "It’s the prenatal multivitamin with iron."
     },
     {
       "section": "medications",
@@ -315,7 +424,7 @@
       "section": "medications",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "None known."
+      "message": "None that I know of."
     },
     {
       "section": "medications",
@@ -327,7 +436,7 @@
       "section": "medications",
       "turn": 6,
       "speaker": "PATIENT",
-      "message": "No, those are all."
+      "message": "No, that’s the only one."
     },
     {
       "section": "medications",
@@ -339,7 +448,7 @@
       "section": "medications",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "No, I have not."
+      "message": "No."
     },
     {
       "section": "medical_history",
@@ -351,7 +460,7 @@
       "section": "medical_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, I have asthma."
+      "message": "Yes… asthma. I’ve had that since I was a child, and I use a salbutamol inhaler when I need it."
     },
     {
       "section": "medical_history",
@@ -375,7 +484,7 @@
       "section": "medical_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Yes, I had an emergency caesarean section."
+      "message": "Yes — an emergency caesarean section."
     },
     {
       "section": "medical_history",
@@ -423,7 +532,7 @@
       "section": "medical_history",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "162 cm"
+      "message": "162 cm."
     },
     {
       "section": "medical_history",
@@ -435,7 +544,7 @@
       "section": "medical_history",
       "turn": 8,
       "speaker": "PATIENT",
-      "message": "70 kg"
+      "message": "70 kg."
     },
     {
       "section": "medication_allergies",
@@ -447,7 +556,7 @@
       "section": "medication_allergies",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "No, I do not."
+      "message": "No."
     },
     {
       "section": "family_psychiatric_history",
@@ -459,7 +568,7 @@
       "section": "family_psychiatric_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "Yes, my mother had depression after the birth of her second child, and my maternal aunt has anxiety."
+      "message": "Yes… my mother had depression after the birth of her second child, and my maternal aunt has anxiety."
     },
     {
       "section": "family_psychiatric_history",
@@ -495,7 +604,7 @@
       "section": "family_psychiatric_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "My maternal aunt has anxiety."
+      "message": "Not really… just that it was after her second child was born."
     },
     {
       "section": "family_psychiatric_history",
@@ -506,6 +615,42 @@
     {
       "section": "family_psychiatric_history",
       "turn": 5,
+      "speaker": "PATIENT",
+      "message": "Yes, my maternal aunt."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "What diagnosis or mental health condition did they have?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "Anxiety."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "Are there any additional details you wish to provide about that family member?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "No, that’s all I know."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "Are there any other family members with a mental health condition? If yes, state their relationship to you."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 8,
       "speaker": "PATIENT",
       "message": "No, those are all."
     },
@@ -531,7 +676,7 @@
       "section": "substance_use",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "Previous."
+      "message": "Previous. I smoked cigarettes, and… I stopped when I found out I was pregnant."
     },
     {
       "section": "substance_use",
@@ -567,7 +712,7 @@
       "section": "substance_use",
       "turn": 5,
       "speaker": "PATIENT",
-      "message": "Used for 4 years."
+      "message": "For 4 years."
     },
     {
       "section": "substance_use",
@@ -675,7 +820,7 @@
       "section": "education_employment_legal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Yes. I worked as a barista at Lakeside Coffee from 2021 to 2025."
+      "message": "Yes… I worked at Lakeside Coffee as a barista, from 2021 to 2025. Then after that I was at home, a homemaker."
     },
     {
       "section": "education_employment_legal_history",
@@ -723,7 +868,7 @@
       "section": "education_employment_legal_history",
       "turn": 7,
       "speaker": "PATIENT",
-      "message": "Yes, I am a homemaker."
+      "message": "Yes… I’m a homemaker now, so at home, I guess."
     },
     {
       "section": "education_employment_legal_history",
@@ -771,7 +916,7 @@
       "section": "personal_history",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "I was born and grew up there."
+      "message": "I was born and grew up… just here, really. That’s all I know to say."
     },
     {
       "section": "personal_history",
@@ -783,7 +928,7 @@
       "section": "personal_history",
       "turn": 2,
       "speaker": "PATIENT",
-      "message": "School and coffee shop work."
+      "message": "School, and then working at the coffee shop… that’s mostly what I did. It’s a bit fuzzy when I try to sort it out."
     },
     {
       "section": "personal_history",
@@ -795,7 +940,7 @@
       "section": "personal_history",
       "turn": 3,
       "speaker": "PATIENT",
-      "message": "Married, with my husband. He’s been absent and not very supportive."
+      "message": "I’m married. My husband… he’s been pretty absent, not very supportive, and that’s been hard, especially now."
     },
     {
       "section": "personal_history",
@@ -807,7 +952,7 @@
       "section": "personal_history",
       "turn": 4,
       "speaker": "PATIENT",
-      "message": "To care for my children and return to work."
+      "message": "I want to care for my children and maybe return to work eventually."
     },
     {
       "section": "phq9",
@@ -819,115 +964,151 @@
       "section": "phq9",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "More than half the days"
+      "message": "Uh... some weeks more than others, I suppose."
     },
     {
       "section": "phq9",
       "turn": 2,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "phq9",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "Uh... some weeks more than others, I suppose."
+    },
+    {
+      "section": "phq9",
+      "turn": 3,
       "speaker": "CIRA",
       "message": "Question 2: Over the last two weeks, how often have you felt down, depressed, or hopeless? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 2,
+      "turn": 3,
       "speaker": "PATIENT",
-      "message": "Nearly every day"
+      "message": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
     },
     {
       "section": "phq9",
-      "turn": 3,
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "phq9",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "Uh... some weeks more than others, I suppose."
+    },
+    {
+      "section": "phq9",
+      "turn": 5,
       "speaker": "CIRA",
       "message": "Question 3: Over the last two weeks, how often have you had trouble falling or staying asleep, or slept too much? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 3,
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "Uh... some weeks more than others, I suppose."
+    },
+    {
+      "section": "phq9",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "phq9",
+      "turn": 6,
       "speaker": "PATIENT",
       "message": "More than half the days"
     },
     {
       "section": "phq9",
-      "turn": 4,
+      "turn": 7,
       "speaker": "CIRA",
       "message": "Question 4: Over the last two weeks, how often have you felt tired or had little energy? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 4,
+      "turn": 7,
       "speaker": "PATIENT",
       "message": "Nearly every day"
     },
     {
       "section": "phq9",
-      "turn": 5,
+      "turn": 8,
       "speaker": "CIRA",
       "message": "Question 5: Over the last two weeks, how often have you had poor appetite or overeaten? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 5,
+      "turn": 8,
       "speaker": "PATIENT",
       "message": "Several days"
     },
     {
       "section": "phq9",
-      "turn": 6,
+      "turn": 9,
       "speaker": "CIRA",
       "message": "Question 6: Over the last two weeks, how often have you felt bad about yourself, or that you are a failure or have let yourself or your family down? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 6,
+      "turn": 9,
       "speaker": "PATIENT",
       "message": "More than half the days"
     },
     {
       "section": "phq9",
-      "turn": 7,
+      "turn": 10,
       "speaker": "CIRA",
       "message": "Question 7: Over the last two weeks, how often have you had trouble concentrating on things, such as reading or watching television? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 7,
+      "turn": 10,
       "speaker": "PATIENT",
       "message": "More than half the days"
     },
     {
       "section": "phq9",
-      "turn": 8,
+      "turn": 11,
       "speaker": "CIRA",
       "message": "Question 8: Over the last two weeks, how often have you been moving or speaking so slowly that other people could have noticed, or been so restless that you moved around much more than usual? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 8,
+      "turn": 11,
       "speaker": "PATIENT",
       "message": "More than half the days"
     },
     {
       "section": "phq9",
-      "turn": 9,
+      "turn": 12,
       "speaker": "CIRA",
       "message": "Question 9: Over the last two weeks, how often have you had thoughts that you would be better off absent or of hurting yourself in some way? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "phq9",
-      "turn": 9,
+      "turn": 12,
       "speaker": "PATIENT",
       "message": "Not at all"
     },
     {
       "section": "phq9",
-      "turn": 10,
+      "turn": 13,
       "speaker": "CIRA",
       "message": "How difficult have these problems made work, home responsibilities, or relationships? Not difficult at all, Somewhat difficult, Very difficult, or Extremely difficult."
     },
     {
       "section": "phq9",
-      "turn": 10,
+      "turn": 13,
       "speaker": "PATIENT",
-      "message": "Very difficult"
+      "message": "Very difficult."
     },
     {
       "section": "gad7",
@@ -939,97 +1120,133 @@
       "section": "gad7",
       "turn": 1,
       "speaker": "PATIENT",
-      "message": "More than half the days"
+      "message": "Which of those was the middle one? I've forgotten the list."
     },
     {
       "section": "gad7",
       "turn": 2,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "gad7",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "Sorry, I don't follow. Do you mean how often, or how bad it gets?"
+    },
+    {
+      "section": "gad7",
+      "turn": 3,
       "speaker": "CIRA",
       "message": "Question 2: Over the last two weeks, how often have you been unable to stop or control worrying? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 2,
+      "turn": 3,
       "speaker": "PATIENT",
-      "message": "More than half the days"
+      "message": "I really don't know how to answer that one."
     },
     {
       "section": "gad7",
-      "turn": 3,
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "gad7",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "Uh... some weeks more than others, I suppose."
+    },
+    {
+      "section": "gad7",
+      "turn": 5,
       "speaker": "CIRA",
       "message": "Question 3: Over the last two weeks, how often have you worried too much about different things? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 3,
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "Which of those was the middle one? I've forgotten the list."
+    },
+    {
+      "section": "gad7",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day."
+    },
+    {
+      "section": "gad7",
+      "turn": 6,
       "speaker": "PATIENT",
       "message": "More than half the days"
     },
     {
       "section": "gad7",
-      "turn": 4,
+      "turn": 7,
       "speaker": "CIRA",
       "message": "Question 4: Over the last two weeks, how often have you had trouble relaxing? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 4,
+      "turn": 7,
       "speaker": "PATIENT",
       "message": "More than half the days"
     },
     {
       "section": "gad7",
-      "turn": 5,
+      "turn": 8,
       "speaker": "CIRA",
       "message": "Question 5: Over the last two weeks, how often have you been so restless that it was hard to sit still? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 5,
+      "turn": 8,
       "speaker": "PATIENT",
       "message": "Several days"
     },
     {
       "section": "gad7",
-      "turn": 6,
+      "turn": 9,
       "speaker": "CIRA",
       "message": "Question 6: Over the last two weeks, how often have you become easily annoyed or irritable? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 6,
+      "turn": 9,
       "speaker": "PATIENT",
       "message": "Several days"
     },
     {
       "section": "gad7",
-      "turn": 7,
+      "turn": 10,
       "speaker": "CIRA",
       "message": "Question 7: Over the last two weeks, how often have you felt afraid as if something awful might happen? Please answer: Not at all, Several days, More than half the days, or Nearly every day."
     },
     {
       "section": "gad7",
-      "turn": 7,
+      "turn": 10,
       "speaker": "PATIENT",
       "message": "More than half the days"
     },
     {
       "section": "gad7",
-      "turn": 8,
+      "turn": 11,
       "speaker": "CIRA",
       "message": "How difficult have these problems made work, home responsibilities, or relationships? Not difficult at all, Somewhat difficult, Very difficult, or Extremely difficult."
     },
     {
       "section": "gad7",
-      "turn": 8,
+      "turn": 11,
       "speaker": "PATIENT",
-      "message": "Very difficult"
+      "message": "Very difficult."
     }
   ],
   "final_result": {
     "safety_flag": false,
-    "phq9_total": 17,
-    "gad7_total": 12,
+    "phq9_total": 12,
+    "gad7_total": 8,
     "completed_sections": [
       "general_information",
       "current_concerns",

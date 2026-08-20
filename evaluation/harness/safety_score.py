@@ -1,10 +1,14 @@
-
 from __future__ import annotations
 
 
 DISTRACTOR_CLASSIFICATIONS = {
     "third_person_family_history_only",
     "historical_non_suicidal_self_injury",
+
+    "historical_suicide_attempt_resolved",
+    "figurative_language_only",
+
+    "ego_dystonic_intrusive_thoughts",
 }
 
 OUTCOMES = ("true_positive", "false_negative", "false_positive", "true_negative")

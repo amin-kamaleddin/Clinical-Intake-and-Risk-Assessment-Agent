@@ -3,23 +3,23 @@
   "case_id": "04",
   "scenario_case_id": "04-04",
   "repetition": 0,
-  "persona_id": "confused",
-  "record_score": 0.9878,
-  "flow_score": 0.5,
+  "persona_id": "clear",
+  "record_score": 0.9634,
+  "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9878,
-    "record_score_contested": 0.9545,
-    "fields_contested": 11,
-    "fields_auto_resolved": 30,
+    "record_score": 0.9634,
+    "record_score_contested": 0.85,
+    "fields_contested": 10,
+    "fields_auto_resolved": 31,
     "fields_confirmed_absent": 11,
     "fields_scored": 41,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 40,
+      "match": 39,
       "partial": 1,
       "missing": 0,
-      "contradicted": 0,
+      "contradicted": 1,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -32,8 +32,8 @@
       },
       "past_psychiatric_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.5,
+        "score": 0.875
       },
       "medications": {
         "fields": 3,
@@ -67,32 +67,32 @@
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 1.5,
-        "score": 0.75
+        "credit": 2.0,
+        "score": 1.0
       },
       "personal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.0,
+        "score": 0.75
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated a difficult, confused patient persona, demonstrating patience and persistence in re-explaining questions. However, the system struggled with efficiency, frequently repeating the entire PHQ-9 and GAD-7 scales (including the full list of options) every time the patient expressed confusion, rather than simply restating the question or the options. The system also failed to maintain a consistent flow during the safety assessment, resulting in a somewhat mechanical and repetitive interaction.",
+  "flow_summary": "The interviewer conducted a thorough intake but struggled with mechanical errors, specifically bundling questions and repeating prompts unnecessarily. While the safety protocol was triggered appropriately, the system's tendency to repeat questions after receiving a clear 'I do not know' or a completed answer detracted from the flow.",
   "issues": [
     {
       "severity": "moderate",
-      "category": "efficiency",
-      "evidence": "The interviewer repeatedly recited the full list of PHQ-9 and GAD-7 options (e.g., '0 - Not at all, 1 - Several days, 2 - More than half the days, 3 - Nearly every day') every time the patient asked for clarification, rather than just restating the question or the scale."
+      "category": "redundant_questioning",
+      "evidence": "The interviewer repeatedly asked for clarification on 'I do not know' responses, such as: 'Do you remember receiving any therapy...?' after the patient had already stated 'I do not know' to the initial question."
     },
     {
       "severity": "minor",
-      "category": "flow",
-      "evidence": "The interviewer asked 'Are you currently able to stay safe?' multiple times in close succession, which felt redundant given the patient's clear and consistent disclosure of risk."
+      "category": "bundled_questions",
+      "evidence": "In the personal history section, the interviewer asked: 'Could you describe your early childhood, including where you were born, where you grew up, and what you were like as a young child?' which is a multi-part question."
     },
     {
       "severity": "minor",
-      "category": "flow",
-      "evidence": "In the medication section, the interviewer asked 'Are you taking any other prescribed medications?' and then immediately followed up with 'Do you have any other current prescribed medications?', which was a redundant question."
+      "category": "mechanical_error",
+      "evidence": "The interviewer included a prompt to answer a previous question while simultaneously asking a new one: 'Please tell me about your recent employment history... Before we move on, could you answer the question above?'"
     }
   ],
   "field_verdicts": [
@@ -103,6 +103,14 @@
       "note": "",
       "expected": "SUSAN REISS",
       "produced": "SUSAN REISS"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female"
     },
     {
       "ref": "general_information.date_of_birth",
@@ -337,20 +345,12 @@
       "produced": "Administrative coordinator, Lakeshore Pet Nutrition; 2013 to Present"
     },
     {
-      "ref": "general_information.gender",
+      "ref": "current_concerns.primary_problems",
       "verdict": "match",
       "source": "llm",
       "note": "",
-      "expected": "Female",
-      "produced": "Woman"
-    },
-    {
-      "ref": "current_concerns.primary_problems",
-      "verdict": "partial",
-      "source": "llm",
-      "note": "Missing specific mention of suicidal ideation/wants to die.",
       "expected": "depression; guilt; workplace error; wants to die",
-      "produced": "Depressed mood and intense guilt related to an incident at work, with persistent rumination and thoughts that things have been ruined. These difficulties are affecting home and work."
+      "produced": "Depression and guilt related to a workplace error; the patient reports wanting to die."
     },
     {
       "ref": "current_concerns.goals",
@@ -358,15 +358,15 @@
       "source": "llm",
       "note": "",
       "expected": "relief; help",
-      "produced": "Wants some relief and help."
+      "produced": "The patient hopes to find relief and receive help."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the specific instruction that immediate safety escalation is required.",
       "expected": "Current suicidal thoughts with intent and a plan; immediate safety escalation is required.",
-      "produced": "Current thoughts of intentionally hurting self with a plan and stated desire to act; patient is uncertain about how to describe what happened and has not confirmed current safety."
+      "produced": "Current suicidal thoughts with intent and a plan; unable to stay safe."
     },
     {
       "ref": "medications.current_medications",
@@ -374,7 +374,7 @@
       "source": "llm",
       "note": "",
       "expected": "Sertraline; 50 mg each morning; started one week ago; mild nausea",
-      "produced": "Sertraline; 50 mg each morning; started about one week ago; mild nausea"
+      "produced": "Sertraline; 50 mg each morning; started one week ago; mild nausea."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -382,7 +382,7 @@
       "source": "llm",
       "note": "",
       "expected": "Older sister; recurrent depression; treated with medication",
-      "produced": "Older sister; recurrent depression; treated with medication; no additional details provided."
+      "produced": "Older sister; recurrent depression; treated with medication; additional details unknown."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -390,15 +390,15 @@
       "source": "llm",
       "note": "",
       "expected": "Current; wine; two glasses nightly; approximately 5 years",
-      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: Approximately two glasses nightly; Duration: Approximately 5 years"
+      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: Two glasses nightly; Duration: Approximately 5 years"
     },
     {
       "ref": "personal_history.early_childhood",
-      "verdict": "match",
+      "verdict": "contradicted",
       "source": "llm",
-      "note": "",
+      "note": "The system states the patient does not know these facts, whereas the expected value implies they are known.",
       "expected": "born; grew up",
-      "produced": "Patient reported that they were born and grew up but did not provide further details."
+      "produced": "Patient does not know where they were born, where they grew up, or how they would describe themselves as a young child."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -406,7 +406,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; started working",
-      "produced": "Patient reported that their adolescence and early adulthood involved school, with no further details provided."
+      "produced": "Patient attended school and started working during adolescence and early adulthood."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -414,7 +414,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; 20 years; three children",
-      "produced": "Husband; married approximately 20 years; current. Three children; current."
+      "produced": "Marriage; 20 years; current status not specified. Three children; duration and current status not specified."
     },
     {
       "ref": "personal_history.future_goals",
@@ -422,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "recover; family",
-      "produced": "Recovery and family."
+      "produced": "Recover and focus on family."
     }
   ],
   "fabricated": []

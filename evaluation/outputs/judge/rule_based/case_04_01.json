@@ -3,12 +3,12 @@
   "case_id": "01",
   "scenario_case_id": "04-01",
   "repetition": 0,
-  "persona_id": "confused",
-  "record_score": 0.913,
-  "flow_score": 0.5,
+  "persona_id": "moderate",
+  "record_score": 0.8913,
+  "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.913,
-    "record_score_contested": 0.8182,
+    "record_score": 0.8913,
+    "record_score_contested": 0.7727,
     "fields_contested": 22,
     "fields_auto_resolved": 24,
     "fields_confirmed_absent": 8,
@@ -16,8 +16,8 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 41,
-      "partial": 2,
+      "match": 39,
+      "partial": 4,
       "missing": 3,
       "contradicted": 0,
       "fabricated": 0
@@ -27,13 +27,13 @@
     "by_section": {
       "general_information": {
         "fields": 11,
-        "credit": 9.0,
-        "score": 0.8182
+        "credit": 10.5,
+        "score": 0.9545
       },
       "past_psychiatric_history": {
         "fields": 6,
-        "credit": 5.0,
-        "score": 0.8333
+        "credit": 4.5,
+        "score": 0.75
       },
       "medications": {
         "fields": 3,
@@ -52,8 +52,8 @@
       },
       "family_psychiatric_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 2.0,
+        "score": 0.5
       },
       "substance_use": {
         "fields": 8,
@@ -77,17 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully completed the intake but struggled significantly with the patient's confusion during the PHQ-9 and GAD-7 sections. While the interviewer was persistent, they failed to adapt their communication style to help the patient understand the rating scales, leading to repetitive, mechanical loops that did not resolve the patient's confusion.",
+  "flow_summary": "The interviewer conducted a thorough and structured intake, effectively managing a patient who was occasionally imprecise or hesitant. The system successfully navigated the patient's tendency to hedge by re-prompting for specific answers, and it maintained a professional tone throughout the standardized questionnaires.",
   "issues": [
     {
-      "severity": "moderate",
-      "category": "communication_style",
-      "evidence": "The interviewer repeatedly used the exact same prompt ('Please choose one response option...') when the patient expressed confusion, rather than rephrasing or simplifying the instructions to assist the patient."
+      "severity": "minor",
+      "category": "communication",
+      "evidence": "The interviewer used a somewhat rigid, robotic approach when the patient offered extra information, such as 'Please answer yes or no' in response to the patient's conversational offer to provide the doctor's name."
     },
     {
       "severity": "minor",
-      "category": "flow",
-      "evidence": "In the GAD-7 section, the interviewer failed to address the patient's specific question ('Do you mean how often, or how bad it gets?') and instead simply repeated the list of options, which did not resolve the patient's underlying misunderstanding."
+      "category": "redundancy",
+      "evidence": "The interviewer asked 'When were you assessed, and by whom?' immediately after the patient had already provided that exact information in the previous turn."
     }
   ],
   "field_verdicts": [
@@ -289,31 +289,31 @@
       "source": "llm",
       "note": "",
       "expected": "WYATT MORGAN",
-      "produced": "UH—MY NAME IS WYATT MORGAN. THAT’S WHAT’S ON THE DOCUMENTS, I THINK."
+      "produced": "IT’S WYATT MORGAN."
     },
     {
       "ref": "general_information.gender",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "The produced value does not contain the gender information.",
-      "expected": "Male",
-      "produced": "Sorry, do you mean like on the form, or…? I’m getting a bit mixed up. I can say it, just not sure what you want me to put."
-    },
-    {
-      "ref": "general_information.address",
-      "verdict": "missing",
-      "source": "llm",
-      "note": "The produced value is 'Unknown'.",
-      "expected": "88 Fairlawn Avenue, Toronto, Ontario",
-      "produced": "Unknown"
-    },
-    {
-      "ref": "general_information.family_doctor_name",
       "verdict": "match",
       "source": "llm",
       "note": "",
+      "expected": "Male",
+      "produced": "Male."
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "88 Fairlawn Avenue, Toronto, Ontario",
+      "produced": "88 Fairlawn Avenue, Toronto, Ontario."
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "First name missing.",
       "expected": "DR. HELEN CHU",
-      "produced": "DR. HELEN CHU."
+      "produced": "IT’S DR. CHU, I THINK. NOT TOTALLY SURE IF YOU WANTED THE FULL NAME SPELLING OR JUST WHO WE USUALLY SEE."
     },
     {
       "ref": "general_information.psychiatrist_name",
@@ -329,7 +329,7 @@
       "source": "llm",
       "note": "",
       "expected": "temper outbursts; irritable; conflicts at home and school; suspension",
-      "produced": "Mostly the temper stuff. I get irritable and then it turns into these outbursts, and it’s causing fights at home and at school… and I got suspended once because of it. I do feel bad after, though."
+      "produced": "Mostly I’ve been getting really angry and having temper outbursts. It’s been causing fights at home and school, and I even got suspended once."
     },
     {
       "ref": "current_concerns.goals",
@@ -337,31 +337,31 @@
       "source": "llm",
       "note": "",
       "expected": "more friends; do better in school; stop getting angry",
-      "produced": "I just want to stop getting so angry, and maybe do better at school and, um, have more friends. That’d be good."
+      "produced": "I want to stop getting so angry, do better in school, and maybe have more friends."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the reason for the assessment (school inattention and impulsivity).",
+      "note": "Reason for assessment (school inattention and impulsivity) is missing.",
       "expected": "Assessed at age 10 by DR. RAJ PATEL, child psychiatrist, for school inattention and impulsivity",
-      "produced": "When I was 10… by Dr. Raj Patel, I think. Child psychiatrist."
+      "produced": "When I was about 10, by Dr. Raj Patel, the child psychiatrist."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Subtype (combined) is missing.",
       "expected": "ADHD; combined",
-      "produced": "Uh, yes — ADHD, combined type. I don’t know if there were any others."
+      "produced": "Yeah — ADHD."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the setting (outpatient clinic).",
+      "note": "Setting (outpatient clinic) is missing.",
       "expected": "Behavioural therapy; age 10 to 11; approximately 12 sessions; outpatient clinic",
-      "produced": "Yeah… I had behavioural therapy, I think that’s what it was called.; Uh, when I was 10 to 11, around there.; About 12 sessions, I think."
+      "produced": "Yeah, I had behavioural therapy for a while.; I think it was when I was about 10 to 11.; Maybe around 12 sessions."
     },
     {
       "ref": "medications.current_medications",
@@ -369,7 +369,7 @@
       "source": "llm",
       "note": "",
       "expected": "Methylphenidate short-acting; 10 mg each morning and 5 mg at noon; started September 2024; reduced appetite at lunch",
-      "produced": "Medication 1: Name Or Description: Methylphenidate short-acting.; Dose: It’s the morning one and then the noon one… 10 mg in the morning and 5 mg at noon.; Start Or Duration: I started it in September 2024.; Side Effects: It kind of makes me not very hungry at lunch. That’s the main one."
+      "produced": "Medication 1: Name Or Description: Methylphenidate short-acting.; Dose: I take 10 mg in the morning and 5 mg at noon.; Start Or Duration: I started it in September 2024, I think.; Side Effects: It cuts my appetite at lunch a bit."
     },
     {
       "ref": "medical_history.height",
@@ -377,7 +377,7 @@
       "source": "llm",
       "note": "",
       "expected": "152 cm",
-      "produced": "152 cm."
+      "produced": "About 152 cm."
     },
     {
       "ref": "medical_history.weight",
@@ -385,7 +385,7 @@
       "source": "llm",
       "note": "",
       "expected": "43 kg",
-      "produced": "43 kg."
+      "produced": "About 43 kg."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -393,23 +393,23 @@
       "source": "llm",
       "note": "",
       "expected": "Father; anxiety and depression",
-      "produced": "Family member 1: Name Or Description: My father.; Diagnosis Or Condition: Anxiety and depression.; Additional Details: My mother has ADHD too, and my maternal grandfather had alcohol use disorder."
+      "produced": "Family member 1: Name Or Description: My father.; Diagnosis Or Condition: Anxiety and depression.; Additional Details: My mother has ADHD, and my maternal grandfather had alcohol use disorder."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "The system failed to create a separate entry for the mother.",
       "expected": "Mother; ADHD",
-      "produced": "Family member 1: Name Or Description: My father.; Diagnosis Or Condition: Anxiety and depression.; Additional Details: My mother has ADHD too, and my maternal grandfather had alcohol use disorder."
+      "produced": "Family member 1: Name Or Description: My father.; Diagnosis Or Condition: Anxiety and depression.; Additional Details: My mother has ADHD, and my maternal grandfather had alcohol use disorder."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[2]",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "The system failed to create a separate entry for the maternal grandfather.",
       "expected": "Maternal grandfather; alcohol use disorder.",
-      "produced": "Family member 1: Name Or Description: My father.; Diagnosis Or Condition: Anxiety and depression.; Additional Details: My mother has ADHD too, and my maternal grandfather had alcohol use disorder."
+      "produced": "Family member 1: Name Or Description: My father.; Diagnosis Or Condition: Anxiety and depression.; Additional Details: My mother has ADHD, and my maternal grandfather had alcohol use disorder."
     },
     {
       "ref": "education_employment_legal_history.highest_education",
@@ -417,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "Grade 6; currently attending Northview Middle School",
-      "produced": "Grade 6… I’m at Northview Middle School right now."
+      "produced": "Grade 6, and I’m at Northview Middle School right now."
     },
     {
       "ref": "education_employment_legal_history.employment_history",
@@ -433,7 +433,7 @@
       "source": "llm",
       "note": "",
       "expected": "irritability; early childhood; outbursts",
-      "produced": "I don’t really know about the born part, but when I was little I was irritable and had outbursts… that’s kind of been around for a while."
+      "produced": "I was pretty irritable even when I was little, and I’d have outbursts sometimes. That’s kind of been around for a while."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -441,15 +441,15 @@
       "source": "llm",
       "note": "",
       "expected": "grade 6; school difficulties",
-      "produced": "Well, I’m in grade 6 now, and school’s been hard… I get into trouble with the anger stuff. I don’t really have jobs or anything."
+      "produced": "I’m still in grade 6, so mostly it’s just been school difficulties and that sort of thing."
     },
     {
       "ref": "personal_history.significant_relationships",
       "verdict": "missing",
       "source": "llm",
-      "note": "The system only captured romantic relationships, missing the information about siblings and friends.",
+      "note": "The system captured romantic relationships but missed the sibling and friend information.",
       "expected": "siblings avoid; few friends",
-      "produced": "I don’t have any romantic relationships to talk about."
+      "produced": "I don’t really have any romantic relationships to report."
     },
     {
       "ref": "personal_history.future_goals",
@@ -457,7 +457,7 @@
       "source": "llm",
       "note": "",
       "expected": "more friends; school; manage anger",
-      "produced": "Mostly I want more friends, and I want to do better at school and not get so angry all the time."
+      "produced": "Mostly I want more friends, do better in school, and get a better handle on my anger."
     }
   ],
   "fabricated": []

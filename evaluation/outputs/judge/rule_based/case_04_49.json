@@ -1,0 +1,458 @@
+{
+  "system": "rule_based",
+  "case_id": "49",
+  "scenario_case_id": "04-49",
+  "repetition": 0,
+  "persona_id": "moderate",
+  "record_score": 0.9302,
+  "flow_score": 0.7,
+  "record_detail": {
+    "record_score": 0.9302,
+    "record_score_contested": 0.8421,
+    "fields_contested": 19,
+    "fields_auto_resolved": 24,
+    "fields_confirmed_absent": 10,
+    "fields_scored": 43,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 39,
+      "partial": 2,
+      "missing": 2,
+      "contradicted": 0,
+      "fabricated": 1
+    },
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_diagnoses"
+    ],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 9.0,
+        "score": 0.9
+      },
+      "past_psychiatric_history": {
+        "fields": 4,
+        "credit": 3.5,
+        "score": 0.875
+      },
+      "medications": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 5,
+        "credit": 5.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 4,
+        "credit": 3.5,
+        "score": 0.875
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 5,
+        "credit": 4.0,
+        "score": 0.8
+      }
+    }
+  },
+  "flow_summary": "The system successfully completed the intake and gathered all necessary clinical information. However, it struggled with the patient's imprecision, often failing to clarify vague responses and instead defaulting to rigid, repetitive prompts that felt mechanical.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "recovery_and_redirection",
+      "evidence": "When the patient asked for clarification on gender and address, the system ignored the request for help and simply moved to the next question or repeated the prompt, failing to address the patient's confusion."
+    },
+    {
+      "severity": "minor",
+      "category": "mechanical_interaction",
+      "evidence": "The system's handling of the PHQ-9 and GAD-7 was overly rigid; when the patient expressed difficulty answering, the system simply repeated the list of options rather than acknowledging the difficulty or rephrasing the question."
+    },
+    {
+      "severity": "minor",
+      "category": "redundant_question",
+      "evidence": "The system asked 'What type of surgery did you have?' immediately after the patient had already stated 'I had a Caesarean section' in the previous turn."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "05/12/1997",
+      "produced": "05/12/1997"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M5V2R4",
+      "produced": "M5V2R4"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "hannah.goldstein@example.com",
+      "produced": "hannah.goldstein@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550554",
+      "produced": "4165550554"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. GRACE ODUYA",
+      "produced": "DR. GRACE ODUYA"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "HANNAH GOLDSTEIN",
+      "produced": "I THINK IT’S HANNAH GOLDSTEIN."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Female",
+      "produced": "Uh, could you clarify what you mean by that? I’m a woman, I guess."
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The address was not provided in the produced value.",
+      "expected": "210 Bathurst Street, Toronto, Ontario",
+      "produced": "I’m not totally sure what format you need there—do you want the mailing address or just the street part?"
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Persistent worry about her four-month-old son's health; checking his breathing many times each night; exhaustion; reluctant to let anyone else care for him.",
+      "produced": "I’ve been really worried about my baby’s breathing and health, and I keep checking him a lot at night. I’m exhausted from it, and I have a hard time letting anyone else look after him."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Sleep more than three hours; let my mother babysit without panicking.",
+      "produced": "Mostly I want to sleep more than three hours, and I’d like to be able to let my mother babysit without panicking."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing the location (community health centre).",
+      "expected": "Postnatal support group; 2026; approximately 4 sessions; community health centre.",
+      "produced": "Yes — I went to a postnatal support group for a bit.; I think it was in 2026.; Maybe around 4 sessions."
+    },
+    {
+      "ref": "medical_history.surgical_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Caesarean section; 2025; no ongoing complications.",
+      "produced": "Surgery: A Caesarean section.; Date: I think it was in 2025.; Details: No, no ongoing complications."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "163 cm",
+      "produced": "163 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "65 kg",
+      "produced": "65 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Mother; anxiety; never formally treated.",
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Anxiety.; Additional Details: She was never formally treated."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Previous; wine; occasionally; stopped during pregnancy",
+      "produced": "Status: Previous; Substance or product: Wine.; Quantity or frequency: Occasionally.; Duration: I stopped during pregnancy."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "College diploma",
+      "produced": "A college diploma."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Dental hygienist, Brightsmile Dental; 2019 to 2025",
+      "produced": "Job 1: Name Or Description: Brightsmile Dental.; Job Title: Dental hygienist.; Dates: I worked there from 2019 to 2025. I’m on parental leave now."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[1]",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The dates for the current parental leave are missing.",
+      "expected": "Currently on parental leave; 2025 to present",
+      "produced": "Job 1: Name Or Description: Brightsmile Dental.; Job Title: Dental hygienist.; Dates: I worked there from 2019 to 2025. I’m on parental leave now."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Toronto; describes a close, protective family.",
+      "produced": "I was born and raised in Toronto, and I had a pretty close, protective family growing up."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Completed a dental hygiene diploma; no significant difficulties.",
+      "produced": "I completed a dental hygiene diploma, and I don’t think I had any significant difficulties back then."
+    },
+    {
+      "ref": "personal_history.significant_relationships[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Marriage; 3 years; current and supportive",
+      "produced": "I’m married, and it’s been about 3 years. It’s current and supportive."
+    },
+    {
+      "ref": "personal_history.significant_relationships[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The information about the infant son is not present in the produced field.",
+      "expected": "One infant son.",
+      "produced": "I’m married, and it’s been about 3 years. It’s current and supportive."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Enjoy my son and return to work part time.",
+      "produced": "I’d like to enjoy my son and eventually go back to work part time."
+    }
+  ],
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "section": "past_psychiatric_history",
+      "field": "previous_diagnoses",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I don’t think I’ve ever been given a formal psychiatric diagnosis.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
+}

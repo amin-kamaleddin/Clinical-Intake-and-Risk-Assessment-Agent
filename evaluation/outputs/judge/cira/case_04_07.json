@@ -3,23 +3,23 @@
   "case_id": "07",
   "scenario_case_id": "04-07",
   "repetition": 0,
-  "persona_id": "confused",
-  "record_score": 0.9524,
-  "flow_score": 0.5,
+  "persona_id": "clear",
+  "record_score": 0.9762,
+  "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9524,
-    "record_score_contested": 0.7778,
-    "fields_contested": 9,
-    "fields_auto_resolved": 33,
+    "record_score": 0.9762,
+    "record_score_contested": 0.9091,
+    "fields_contested": 11,
+    "fields_auto_resolved": 31,
     "fields_confirmed_absent": 10,
     "fields_scored": 42,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 39,
-      "partial": 2,
-      "missing": 1,
-      "contradicted": 0,
+      "match": 41,
+      "partial": 0,
+      "missing": 0,
+      "contradicted": 1,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -27,8 +27,8 @@
     "by_section": {
       "general_information": {
         "fields": 11,
-        "credit": 11.0,
-        "score": 1.0
+        "credit": 10.0,
+        "score": 0.9091
       },
       "past_psychiatric_history": {
         "fields": 4,
@@ -37,8 +37,8 @@
       },
       "medications": {
         "fields": 3,
-        "credit": 2.5,
-        "score": 0.8333
+        "credit": 3.0,
+        "score": 1.0
       },
       "medical_history": {
         "fields": 4,
@@ -52,8 +52,8 @@
       },
       "family_psychiatric_history": {
         "fields": 2,
-        "credit": 1.5,
-        "score": 0.75
+        "credit": 2.0,
+        "score": 1.0
       },
       "substance_use": {
         "fields": 8,
@@ -72,27 +72,22 @@
       },
       "personal_history": {
         "fields": 4,
-        "credit": 3.0,
-        "score": 0.75
+        "credit": 4.0,
+        "score": 1.0
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated a challenging, confused patient persona by consistently redirecting and clarifying questions. However, the system struggled significantly with the PHQ-9 and GAD-7 sections, repeatedly looping on questions and failing to maintain a smooth flow when the patient expressed confusion, leading to a mechanical and frustrating experience.",
+  "flow_summary": "The interviewer conducted a thorough and efficient intake, maintaining a professional tone throughout. The system handled the patient's clear responses well, though it struggled with repetitive questioning when the patient provided 'I don't know' answers regarding historical psychiatric treatments.",
   "issues": [
     {
-      "severity": "moderate",
-      "category": "repetition",
-      "evidence": "The interviewer repeatedly re-asked the same PHQ-9 and GAD-7 questions multiple times in response to the patient's confusion, rather than adapting the delivery to be more conversational or concise."
-    },
-    {
       "severity": "minor",
-      "category": "flow",
-      "evidence": "The interviewer frequently used a rigid, two-part structure ('Please provide X... Before we move on, could you answer the question above?') which felt robotic and redundant given the patient had already provided the information."
+      "category": "redundant_questioning",
+      "evidence": "The interviewer repeatedly asked for details about past therapy and biological treatments after the patient had already stated they did not know or remember, effectively looping on the same information."
     },
     {
       "severity": "minor",
       "category": "clarity",
-      "evidence": "In the personal history section, the interviewer asked a complex, multi-part question about childhood, which the patient struggled to parse, requiring the interviewer to break it down only after the patient failed to answer."
+      "evidence": "In the personal history section, the interviewer asked 'Could you describe your early childhood...' and when the patient gave a vague answer, the follow-up was slightly clunky, though it did eventually elicit the necessary information."
     }
   ],
   "field_verdicts": [
@@ -111,14 +106,6 @@
       "note": "",
       "expected": "Female",
       "produced": "Female"
-    },
-    {
-      "ref": "general_information.date_of_birth",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "11/03/2000",
-      "produced": "11/03/2000"
     },
     {
       "ref": "general_information.address",
@@ -353,12 +340,12 @@
       "produced": "Bachelor's degree"
     },
     {
-      "ref": "education_employment_legal_history.employment_history",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Investment banking analyst, Harbour Capital; 2022 to present",
-      "produced": "Investment banking analyst, Harbour Capital; 2022 to Present"
+      "ref": "general_information.date_of_birth",
+      "verdict": "contradicted",
+      "source": "llm",
+      "note": "The date of birth was captured as March 11th instead of November 3rd.",
+      "expected": "11/03/2000",
+      "produced": "03/11/2000"
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -366,7 +353,7 @@
       "source": "llm",
       "note": "",
       "expected": "mood swings; premenstrual; irritability; relationship",
-      "produced": "Mood swings and irritability that worsen before my period, affecting my relationships. Work is generally fine, but during that time everything feels much harder."
+      "produced": "Mood swings, especially before my period. I become irritable, which affects my relationships."
     },
     {
       "ref": "current_concerns.goals",
@@ -374,7 +361,7 @@
       "source": "llm",
       "note": "",
       "expected": "control mood swings; save relationships",
-      "produced": "Manage mood swings and improve or preserve relationships, which feels most urgent."
+      "produced": "Gain better control of my mood swings and preserve my relationships."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
@@ -382,31 +369,39 @@
       "source": "llm",
       "note": "",
       "expected": "History of non-suicidal self-injury since adolescence, used to reduce anxiety.",
-      "produced": "Cutting; began during adolescence; used to settle anxiety rather than to die; historical; denies current suicidal thoughts; generally safe now."
+      "produced": "Non-suicidal self-injury began in adolescence; used to reduce anxiety; no current urge to self-harm or immediate safety concern."
     },
     {
       "ref": "medications.current_medications",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing dose, start date, and side effect information.",
+      "note": "",
       "expected": "Combined oral contraceptive; one tablet daily; started 2023; no known side effects",
-      "produced": "Combined oral contraceptive; dose: Unknown; start date/duration: Unknown; side effects: Unknown"
+      "produced": "Combined oral contraceptive; one tablet daily; dose Unknown; started 2023; no known side effects"
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the specific year of the psychiatric admission.",
+      "note": "",
       "expected": "Mother; major depressive disorder; one psychiatric admission in 2018",
-      "produced": "Mother; major depressive disorder; psychiatric admission at an unknown time; no further details known."
+      "produced": "Mother; major depressive disorder; admitted to hospital once in 2018."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Investment banking analyst, Harbour Capital; 2022 to present",
+      "produced": "Harbour Capital; Investment Banking Analyst; 2022 to Present"
     },
     {
       "ref": "personal_history.early_childhood",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "llm",
-      "note": "The system recorded a refusal rather than the expected facts.",
+      "note": "",
       "expected": "born; grew up",
-      "produced": "Patient declined to provide further details about early childhood."
+      "produced": "Patient does not know where they were born or grew up, and did not provide a description of themselves as a young child."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -414,7 +409,7 @@
       "source": "llm",
       "note": "",
       "expected": "cutting began; school",
-      "produced": "School was okay. Self-harm by cutting began during this period. No paid jobs or regular responsibilities recalled."
+      "produced": "Self-harm by cutting began during adolescence or early adulthood while the patient was in school."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -422,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "One significant two-year relationship; ended three months ago; currently single",
-      "produced": "Romantic relationship; approximately two years; ended three months ago. Currently single."
+      "produced": "Romantic relationship; lasted two years; ended three months ago. Currently single."
     },
     {
       "ref": "personal_history.future_goals",
@@ -430,7 +425,7 @@
       "source": "llm",
       "note": "",
       "expected": "stable relationships; career",
-      "produced": "Developing stable relationships and building a career."
+      "produced": "Build stable relationships and continue developing their career."
     }
   ],
   "fabricated": []

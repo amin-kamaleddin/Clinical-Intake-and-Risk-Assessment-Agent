@@ -4,11 +4,11 @@
   "scenario_case_id": "04-08",
   "repetition": 0,
   "persona_id": "clear",
-  "record_score": 0.9605,
+  "record_score": 0.9474,
   "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9605,
-    "record_score_contested": 0.8333,
+    "record_score": 0.9474,
+    "record_score_contested": 0.7778,
     "fields_contested": 9,
     "fields_auto_resolved": 29,
     "fields_confirmed_absent": 14,
@@ -17,9 +17,9 @@
     "unjudged_refs": [],
     "verdict_counts": {
       "match": 36,
-      "partial": 1,
+      "partial": 0,
       "missing": 0,
-      "contradicted": 1,
+      "contradicted": 2,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -67,27 +67,32 @@
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 1.5,
-        "score": 0.75
+        "credit": 2.0,
+        "score": 1.0
       },
       "personal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.0,
+        "score": 0.75
       }
     }
   },
-  "flow_summary": "The system successfully collected the required intake information but suffered from significant mechanical failures in the latter half of the interview. It repeatedly appended a redundant 'Before we move on, could you answer the question above?' prompt to almost every question in the PHQ-9 section, and it looped the final confirmation question twice.",
+  "flow_summary": "The interviewer performed well on structured questionnaires but struggled significantly with the personal history section, where it became trapped in a repetitive loop with a patient who was unable to provide specific details. The system failed to accept the patient's 'I don't know' response, leading to redundant and frustrating questioning.",
   "issues": [
     {
-      "severity": "moderate",
-      "category": "redundancy",
-      "evidence": "The interviewer appended 'Before we move on, could you answer the question above?' to almost every PHQ-9 question, despite the patient having already answered the question in the same turn."
+      "severity": "major",
+      "category": "repetition",
+      "evidence": "The interviewer asked 'Where were you born and where did you grow up?' three times despite the patient stating 'I don't know' or 'I was born and grew up there' in previous turns."
     },
     {
       "severity": "minor",
-      "category": "redundancy",
-      "evidence": "The interviewer repeated the final confirmation question ('All done! Please take a look at the panel...') twice in succession."
+      "category": "flow",
+      "evidence": "The interviewer included a technical error message '(tool call failed)' in the chat output, which disrupted the professional tone of the interaction."
+    },
+    {
+      "severity": "minor",
+      "category": "flow",
+      "evidence": "In the personal history section, the interviewer bundled a new question with a demand to answer a previous, unresolved question: 'Please describe your adolescence... Before we move on, could you answer the question above?'"
     }
   ],
   "field_verdicts": [
@@ -321,23 +326,23 @@
       "source": "auto",
       "note": "",
       "expected": "Vice-president of sales, Meridian Logistics; 2016 to present",
-      "produced": "Vice-President of Sales, Meridian Logistics; 2016 to Present"
+      "produced": "Vice-president of sales, Meridian Logistics; 2016 to Present"
     },
     {
       "ref": "general_information.date_of_birth",
       "verdict": "contradicted",
       "source": "llm",
-      "note": "The produced date is February 6th, while the expected date is June 2nd.",
+      "note": "The produced date is June 2nd, while the expected date is February 6th.",
       "expected": "06/02/1986",
       "produced": "02/06/1986"
     },
     {
       "ref": "current_concerns.primary_problems",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Work stress is missing from the produced list of problems.",
+      "note": "",
       "expected": "depressed; irritable; withdrawn; work stress",
-      "produced": "Feeling depressed, irritable, and withdrawn, affecting my marriage and how I interact with my family."
+      "produced": "Depressed, irritable, and withdrawn. These difficulties are affecting the patient's marriage, and work-related stress has been worsening them."
     },
     {
       "ref": "current_concerns.goals",
@@ -345,7 +350,7 @@
       "source": "llm",
       "note": "",
       "expected": "feel better; save marriage",
-      "produced": "Feel better and save my marriage."
+      "produced": "Feel better and save the marriage."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -353,7 +358,7 @@
       "source": "llm",
       "note": "",
       "expected": "Current; whisky and beer; 5 to 7 drinks nightly; about 9 months",
-      "produced": "Status: Current; Substance or product: Whisky and beer; Quantity or frequency: About 5 to 7 drinks nightly; Duration: About 9 months"
+      "produced": "Status: Current; Substance or product: Whisky and beer; Quantity or frequency: 5 to 7 drinks nightly; Duration: About 9 months"
     },
     {
       "ref": "substance_use.nonmedical_stimulant_use",
@@ -365,11 +370,11 @@
     },
     {
       "ref": "personal_history.early_childhood",
-      "verdict": "match",
+      "verdict": "contradicted",
       "source": "llm",
-      "note": "",
+      "note": "The system captured that the patient does not know these facts, whereas the expected value implies they exist.",
       "expected": "born; grew up",
-      "produced": "Patient was born and grew up; no other early childhood information reported."
+      "produced": "Patient does not know where they were born or grew up, and does not recall how they described themselves as a young child."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -377,7 +382,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; early career",
-      "produced": "Patient went through school and began an early career; no other adolescence or early adulthood information reported."
+      "produced": "The patient described their adolescence and early adulthood as involving school and early career."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -385,7 +390,7 @@
       "source": "llm",
       "note": "",
       "expected": "Married for 14 years; two children; significant marital tension during the past 6 months",
-      "produced": "Marriage; 14 years to present; current, with significant marital tension over the past 6 months. Two children."
+      "produced": "Marriage; 14 years to present; current; two children; significant marital tension over the past 6 months."
     },
     {
       "ref": "personal_history.future_goals",
@@ -393,7 +398,7 @@
       "source": "llm",
       "note": "",
       "expected": "recover; repair family",
-      "produced": "Patient wants to recover and repair their family."
+      "produced": "Recover and repair my family."
     }
   ],
   "fabricated": []

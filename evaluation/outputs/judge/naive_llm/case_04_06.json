@@ -11,7 +11,7 @@
     "record_score_contested": 0.9783,
     "fields_contested": 23,
     "fields_auto_resolved": 23,
-    "fields_confirmed_absent": 6,
+    "fields_confirmed_absent": 7,
     "fields_scored": 46,
     "fields_unjudged": 0,
     "unjudged_refs": [],
@@ -20,12 +20,11 @@
       "partial": 1,
       "missing": 0,
       "contradicted": 0,
-      "fabricated": 2
+      "fabricated": 1
     },
-    "fabricated_fields": 2,
+    "fabricated_fields": 1,
     "fabricated_refs": [
-      "past_psychiatric_history.previous_treatments",
-      "medications.past_medication_details"
+      "past_psychiatric_history.previous_treatments"
     ],
     "by_section": {
       "general_information": {
@@ -80,7 +79,7 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a highly efficient and structured intake. It followed a logical progression, handled repeatable items correctly by checking for additional entries, and accurately administered the PHQ-9 and GAD-7 questionnaires.",
+  "flow_summary": "The interviewer conducted a highly efficient and thorough intake. It followed a logical structure, handled repeatable items (medications) correctly by checking for additional entries, and accurately administered the PHQ-9 and GAD-7 questionnaires.",
   "issues": [],
   "field_verdicts": [
     {
@@ -303,9 +302,9 @@
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the patient's assessment that the therapy was helpful.",
+      "note": "Missing number of sessions and patient's assessment of the therapy.",
       "expected": "Individual psychotherapy; age 16 to 17; about 20 sessions; found it helpful",
-      "produced": "Individual psychotherapy from age 16 to 17, about 20 sessions."
+      "produced": "Individual psychotherapy from age 16 to 17."
     },
     {
       "ref": "medications.current_medications[0]",
@@ -313,7 +312,7 @@
       "source": "llm",
       "note": "",
       "expected": "Citalopram; 20 mg each morning; started March 2025; mild dry mouth",
-      "produced": "Citalopram 20 mg each morning, started March 2025; mild dry mouth. Multivitamin, one tablet daily; no side effects. Oral contraceptive, one tablet daily, started in 2022; no side effects."
+      "produced": "Citalopram 20 mg each morning, started March 2025; mild dry mouth. Multivitamin, one tablet daily; start date unknown, no side effects. Oral contraceptive, one tablet daily, started in 2022; name not provided, no side effects."
     },
     {
       "ref": "medications.current_medications[1]",
@@ -321,7 +320,7 @@
       "source": "llm",
       "note": "",
       "expected": "Multivitamin; one tablet daily; start date unknown; no side effects",
-      "produced": "Citalopram 20 mg each morning, started March 2025; mild dry mouth. Multivitamin, one tablet daily; no side effects. Oral contraceptive, one tablet daily, started in 2022; no side effects."
+      "produced": "Citalopram 20 mg each morning, started March 2025; mild dry mouth. Multivitamin, one tablet daily; start date unknown, no side effects. Oral contraceptive, one tablet daily, started in 2022; name not provided, no side effects."
     },
     {
       "ref": "medications.current_medications[2]",
@@ -329,7 +328,7 @@
       "source": "llm",
       "note": "",
       "expected": "Oral contraceptive; one tablet daily; started 2022; no side effects.",
-      "produced": "Citalopram 20 mg each morning, started March 2025; mild dry mouth. Multivitamin, one tablet daily; no side effects. Oral contraceptive, one tablet daily, started in 2022; no side effects."
+      "produced": "Citalopram 20 mg each morning, started March 2025; mild dry mouth. Multivitamin, one tablet daily; start date unknown, no side effects. Oral contraceptive, one tablet daily, started in 2022; name not provided, no side effects."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -337,7 +336,7 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; depression; treated intermittently with antidepressants",
-      "produced": "Mother has depression and has been treated intermittently with antidepressants. No other family psychiatric or substance-use conditions reported."
+      "produced": "Mother had depression and was treated intermittently with antidepressants."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -417,7 +416,7 @@
       "source": "llm",
       "note": "",
       "expected": "Laboratory technician, Northstar Pharmaceuticals; 2018 to present",
-      "produced": "Laboratory technician at Northstar Pharmaceuticals since 2018; prior employment history unknown."
+      "produced": "Laboratory technician at Northstar Pharmaceuticals since 2018."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -433,7 +432,7 @@
       "source": "llm",
       "note": "",
       "expected": "father hospitalised; leukemia; school",
-      "produced": "Father was hospitalised for leukemia during that time; patient was in school."
+      "produced": "Father was hospitalized with leukemia while patient was in school."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -441,7 +440,7 @@
       "source": "llm",
       "note": "",
       "expected": "single; dysfunctional relationships",
-      "produced": "Single; relationships have been dysfunctional."
+      "produced": "Single; has had dysfunctional relationships."
     },
     {
       "ref": "personal_history.future_goals",
@@ -459,17 +458,7 @@
       "field": "previous_treatments",
       "entry_index": null,
       "expected": null,
-      "produced": "Patient does not know of other psychiatric or psychological treatments.",
-      "verdict": "fabricated",
-      "reason": "scenario provides no value for this field"
-    },
-    {
-      "ref": "medications.past_medication_details",
-      "section": "medications",
-      "field": "past_medication_details",
-      "entry_index": null,
-      "expected": null,
-      "produced": "No past psychiatric or other medications that are no longer being taken.",
+      "produced": "Patient does not know.",
       "verdict": "fabricated",
       "reason": "scenario provides no value for this field"
     }
