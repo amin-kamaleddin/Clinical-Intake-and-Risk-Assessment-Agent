@@ -4,11 +4,11 @@
   "scenario_case_id": "04-32",
   "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9783,
+  "record_score": 0.9891,
   "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9783,
-    "record_score_contested": 0.9583,
+    "record_score": 0.9891,
+    "record_score_contested": 0.9792,
     "fields_contested": 24,
     "fields_auto_resolved": 22,
     "fields_confirmed_absent": 7,
@@ -16,8 +16,8 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 44,
-      "partial": 2,
+      "match": 45,
+      "partial": 1,
       "missing": 0,
       "contradicted": 0,
       "fabricated": 0
@@ -67,8 +67,8 @@
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 1.5,
-        "score": 0.75
+        "credit": 2.0,
+        "score": 1.0
       },
       "substance_use": {
         "fields": 8,
@@ -77,17 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona, maintaining a professional tone and ensuring all required data points were collected. However, the system struggled significantly with the standardized questionnaires, repeatedly failing to manage the patient's confusion regarding the timeframes and response scales, which led to a repetitive and somewhat mechanical interaction during the PHQ-9 and GAD-7 sections.",
+  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona. While the interviewer was patient and persistent in clarifying questions, the intake became repetitive during the PHQ-9 and GAD-7 sections, where the patient frequently lost the thread or questioned the timeframe, leading to multiple re-statements of the same questions.",
   "issues": [
     {
       "severity": "moderate",
-      "category": "questionnaire_management",
-      "evidence": "The interviewer repeatedly had to re-explain the timeframe for PHQ-9 and GAD-7 questions, and the patient frequently asked for clarification on the response scales, indicating the system's inability to adapt its communication style to the patient's cognitive state during these sections."
+      "category": "clarity",
+      "evidence": "The interviewer had to repeat PHQ-9 and GAD-7 questions multiple times due to the patient's confusion, which, while necessary for the persona, resulted in a somewhat mechanical and repetitive flow during the assessment phase."
     },
     {
       "severity": "minor",
-      "category": "repetitive_interaction",
-      "evidence": "During the GAD-7 section, the interviewer had to ask the same question three times because the patient lost the thread, which, while necessary for data collection, highlighted a lack of conversational fluidity."
+      "category": "efficiency",
+      "evidence": "The interviewer occasionally struggled to redirect the patient's confusion about the timeframe of the PHQ-9/GAD-7 questions, requiring several turns to ensure the patient understood the 'last two weeks' constraint."
     }
   ],
   "field_verdicts": [
@@ -279,15 +279,15 @@
       "ref": "general_information.address",
       "verdict": "partial",
       "source": "llm",
-      "note": "Province (Ontario) is missing.",
+      "note": "Missing province information.",
       "expected": "41 Spadina Road, Toronto, Ontario",
       "produced": "41 Spadina Road, Toronto"
     },
     {
       "ref": "current_concerns.primary_problems",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Onset age (18) is missing.",
+      "note": "",
       "expected": "Restrictive eating and calorie counting since age 18; weight partially restored over the past year; persistent preoccupation with body shape; avoids eating with others.",
       "produced": "Restrictive eating, calorie counting, persistent preoccupation with body shape, partially restored weight, and avoiding eating with other people."
     },

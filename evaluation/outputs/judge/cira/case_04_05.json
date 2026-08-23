@@ -4,20 +4,20 @@
   "scenario_case_id": "04-05",
   "repetition": 0,
   "persona_id": "moderate",
-  "record_score": 0.9667,
+  "record_score": 0.9889,
   "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9667,
-    "record_score_contested": 0.8929,
-    "fields_contested": 14,
-    "fields_auto_resolved": 31,
+    "record_score": 0.9889,
+    "record_score_contested": 0.9583,
+    "fields_contested": 12,
+    "fields_auto_resolved": 33,
     "fields_confirmed_absent": 9,
     "fields_scored": 45,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 42,
-      "partial": 3,
+      "match": 44,
+      "partial": 1,
       "missing": 0,
       "contradicted": 0,
       "fabricated": 0
@@ -57,8 +57,8 @@
       },
       "substance_use": {
         "fields": 8,
-        "credit": 7.5,
-        "score": 0.9375
+        "credit": 8.0,
+        "score": 1.0
       },
       "education_employment_legal_history": {
         "fields": 4,
@@ -67,8 +67,8 @@
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 1.5,
-        "score": 0.75
+        "credit": 2.0,
+        "score": 1.0
       },
       "personal_history": {
         "fields": 4,
@@ -77,17 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer managed a somewhat imprecise patient effectively, using gentle nudges and clarifications to obtain necessary information. The safety protocol was triggered appropriately following a positive response to PHQ-9 question 9, and the interviewer maintained a professional, supportive tone throughout.",
+  "flow_summary": "The interviewer conducted a thorough and professional intake, effectively managing a patient who was occasionally imprecise or hesitant. The system successfully navigated the patient's vagueness through gentle redirection and clarification, and it correctly identified and responded to the safety disclosure regarding PHQ-9 item 9.",
   "issues": [
     {
       "severity": "minor",
       "category": "clarity",
-      "evidence": "The interviewer occasionally used slightly wordy or repetitive phrasing when the patient was hesitant, such as 'Before we move on, could you answer the question above?'"
+      "evidence": "In the personal history section, the interviewer bundled two distinct questions: 'Could you describe your early childhood, including where you were born, where you grew up, and what you were like as a young child?'"
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "The interviewer had to re-ask several GAD-7 and PHQ-9 questions because the patient was hesitant or asked for clarification, though this was handled correctly by the interviewer."
+      "evidence": "The interviewer repeated the full PHQ-9 and GAD-7 question text when the patient asked for clarification, which was slightly mechanical, though it ensured the patient understood the specific timeframe."
     }
   ],
   "field_verdicts": [
@@ -244,6 +244,14 @@
       "produced": "168 cm"
     },
     {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "59 kg",
+      "produced": "59 kg"
+    },
+    {
       "ref": "medication_allergies.has_medication_allergies",
       "verdict": "match",
       "source": "auto",
@@ -340,12 +348,20 @@
       "produced": "High school"
     },
     {
+      "ref": "education_employment_legal_history.employment_history[0]",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Retail sales associate, Westgate Department Store; 2010 to 2013",
+      "produced": "Homemaker; duration Unknown. Retail sales associate, Westgate Department Store; 2010 to 2013. Homemaker; 2013 to Present"
+    },
+    {
       "ref": "current_concerns.primary_problems",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing 'no pleasure' and 'burden' concepts.",
+      "note": "",
       "expected": "despair; irritability; no pleasure; burden",
-      "produced": "Feeling very low and irritable lately, mainly at home. When feeling this way, Angela paces around and sometimes snaps at her family."
+      "produced": "Feeling really down and irritable, with reduced enjoyment or interest in activities. At home, Angela feels like she is just getting through the day, snaps at her family more than she would like, wakes up too early, and finds everything feels like a chore."
     },
     {
       "ref": "current_concerns.goals",
@@ -353,7 +369,7 @@
       "source": "llm",
       "note": "",
       "expected": "someone to talk to; feel better",
-      "produced": "Talk with someone and feel better."
+      "produced": "Have someone to talk to, feel better, and feel like herself again."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -361,15 +377,15 @@
       "source": "llm",
       "note": "",
       "expected": "Assessed by an outpatient psychiatrist in 2025",
-      "produced": "Outpatient psychiatrist; 2025 (patient recalls)."
+      "produced": "2025; outpatient psychiatrist; other details unknown"
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the reason for stopping (did not feel understood).",
+      "note": "Reason for stopping therapy is missing.",
       "expected": "Supportive psychotherapy; 2025; attended 3 sessions and stopped because she did not feel understood",
-      "produced": "Supportive psychotherapy; 2025 (patient recalls); 3 sessions; location Unknown"
+      "produced": "Supportive psychotherapy; sometime in 2025; approximately 3 sessions; outpatient setting"
     },
     {
       "ref": "medications.past_medication_details",
@@ -377,15 +393,7 @@
       "source": "llm",
       "note": "",
       "expected": "Fluoxetine; 20 mg daily; taken for 6 weeks in 2025; stopped because of marked fatigue",
-      "produced": "Fluoxetine; 20 mg daily; taken for about 6 weeks in 2025; marked fatigue; reason for discontinuation: fatigue"
-    },
-    {
-      "ref": "medical_history.weight",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "59 kg",
-      "produced": "Approximately 59 kg"
+      "produced": "Fluoxetine; 20 mg daily; taken for about 6 weeks in 2025; stopped because it caused significant tiredness."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
@@ -397,19 +405,11 @@
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
-      "verdict": "partial",
-      "source": "llm",
-      "note": "Missing the specific detail that she has had none since pregnancy.",
-      "expected": "previous; none since pregnancy",
-      "produced": "Status: Previous; Substance or product: Alcohol; Quantity or frequency: Unknown; Duration: Unknown"
-    },
-    {
-      "ref": "education_employment_legal_history.employment_history[0]",
       "verdict": "match",
       "source": "llm",
       "note": "",
-      "expected": "Retail sales associate, Westgate Department Store; 2010 to 2013",
-      "produced": "Sales associate, Westgate Department Store; 2010 to 2013. Homemaker; 2013 to Present"
+      "expected": "previous; none since pregnancy",
+      "produced": "Status: Previous; Substance or product: Alcohol; Quantity or frequency: Unknown; Duration: Unknown; No use since pregnancy."
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
@@ -417,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "Homemaker; 2013 to present.",
-      "produced": "Sales associate, Westgate Department Store; 2010 to 2013. Homemaker; 2013 to Present"
+      "produced": "Homemaker; duration Unknown. Retail sales associate, Westgate Department Store; 2010 to 2013. Homemaker; 2013 to Present"
     },
     {
       "ref": "personal_history.early_childhood",
@@ -425,7 +425,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born and grew up in the same area; described herself as sometimes feeling a bit down as a child."
+      "produced": "Born and grew up here; described herself as a sensitive child; no further details provided."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -433,7 +433,7 @@
       "source": "llm",
       "note": "",
       "expected": "possible childhood depression; parents' divorce",
-      "produced": "Experienced family changes, including parents' divorce; reported possible childhood depression."
+      "produced": "Experienced possible depression when younger; parents divorced. No further details about school, jobs, responsibilities, or other experiences provided."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -441,7 +441,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; 13 years; husband critical; children",
-      "produced": "Marriage; approximately 13 years; current. Has children. Husband can be critical."
+      "produced": "Marriage; approximately 13 years to present; current. They have children. Patient reports that her husband can be critical sometimes."
     },
     {
       "ref": "personal_history.future_goals",
@@ -449,7 +449,7 @@
       "source": "llm",
       "note": "",
       "expected": "feel like herself; family",
-      "produced": "To feel like herself again and maintain stability for her family."
+      "produced": "Wants to feel like herself again and be there for her family."
     }
   ],
   "fabricated": []

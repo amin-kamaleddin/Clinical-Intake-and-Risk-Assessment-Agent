@@ -1,3 +1,5 @@
+import re
+
 from typing import Dict, TypedDict, Optional, List
 
 
@@ -175,6 +177,9 @@ class AliceState(TypedDict):
     safety_history_cleared: bool
     entries_confirmed: List[str]
     repeatable_followups: Dict[str, int]
+    # Consecutive turns the stall prompt has fired on the same pending field.
+    # Drives the escalation ladder in graph.nodes._stall_prompt.
+    stall_streak: Dict[str, int]
 
 
 # ── Required fields per section (controls collection order + completion) ─────────
@@ -366,6 +371,7 @@ initial_state: AliceState = {
     "entries_confirmed": [],
     # field -> how many times we have already asked "any more?" for it.
     "repeatable_followups": {},
+    "stall_streak":         {},
 }
 
 
@@ -420,3 +426,111 @@ CONDITIONAL_FIELDS = {
     "family_psychiatric_history_details": ("has_family_psychiatric_history", False),
     "legal_case_details": ("active_legal_cases", False),
 }
+
+
+# ── Gate/detail reconciliation ─────────────────────────────────────────────────
+#
+# Every conditional field is half of a pair: a yes/no gate and its detail
+# (has_past_medications / past_medication_details). Both are written only by
+# model tool calls, and until this helper existed nothing reconciled the two.
+
+GATE_OF_DETAIL = {detail: gate for detail, (gate, _) in CONDITIONAL_FIELDS.items()}
+
+
+_NEGATION_PATTERN = re.compile(
+    r"^(?:none|no|n/?a|nil|nothing|never|unknown|not applicable|not reported"
+    r"|not discussed|not provided|not identified|denies|denied"
+    r"|patient declined|declined)\b[a-z0-9\s,'\-]*$"
+)
+
+
+def reports_absence(value) -> bool:
+    """True when a free-text value is really an answer of "no"."""
+    text = " ".join(str(value or "").split()).strip().lower().rstrip(".!;: ")
+    if not text or len(text) > 70:
+        return False
+    return bool(_NEGATION_PATTERN.match(text))
+
+
+def infer_gate_from_detail(section_data: dict, field: str) -> Optional[str]:
+    """Fill a conditional field's gate boolean when only the detail was written.
+
+    A patient who answers the gate question with content rather than a bare yes
+    - "Have you previously tried any psychiatric medications?" / "Yes,
+    olanzapine." - answers two fields in one utterance. The model writes the
+    detail and drops the boolean.
+
+    Nothing used to reconcile the pair, and every escape route is closed: a gate
+    has no CONDITIONAL_FIELDS parent so it can never be hidden, and it is not a
+    REPEATABLE_TEXT_FIELD so _auto_confirm_exhausted_followups skips it. The
+    gate stayed None, get_pending_fields returned it forever, and the section
+    could never complete - the model has the information and believes it is
+    finished, so it never asks again and the intake stalls until the driver's
+    stall guard ends the section. Six of fifty evaluation intakes ended exactly
+    this way, all six with a correct questionnaire and a PASS status.
+
+    The inference is sound rather than a guess: apply_tool_calls REJECTS a
+    detail write while its gate is False, so a detail that exists at all can
+    only sit under a gate that is None or True. True is the only value the
+    missing boolean can take.
+
+    Two guards keep this from touching a healthy record:
+      * it writes only into a gate that is None, so an answer the patient
+        actually gave is never overwritten;
+      * a detail holding an absence marker ("None reported.") is an answer of
+        no stored in the detail field. Reading it as evidence the thing exists
+        would invert the record, so it is left alone.
+
+    Returns the gate field name when one was filled, otherwise None.
+    """
+    gate = GATE_OF_DETAIL.get(field)
+    if gate is None:
+        return None
+    detail_value = section_data.get(field)
+    if detail_value is None or section_data.get(gate) is not None:
+        return None
+    if reports_absence(detail_value):
+        return None
+    section_data[gate] = True
+    return gate
+
+
+# How many consecutive stall prompts a single empty conditional detail may
+# absorb before it is recorded as "Unknown" and the interview moves on.
+#
+# Measured, not guessed. Across the 50-case evaluation, inside the seven
+# sections that actually contain a conditional detail, the deepest run of
+# consecutive stall prompts in a healthy intake was 2. The two intakes that
+# never completed ran to 5 and 7. Four sits clear of both: double the healthy
+# maximum, below the lowest stalled one, and under the driver's stall guard of
+# 8 so a section still has turns left to recover on its own.
+#
+# The deep loops in the corpus - up to 9 - were all in phq9/gad7, and neither
+# section contains a conditional field, so this ladder cannot reach them. No
+# questionnaire item can ever be resolved to "Unknown" by this path.
+MAX_EMPTY_DETAIL_FOLLOWUPS = 4
+
+
+def is_unanswered_conditional_detail(section_data: dict, field: str) -> bool:
+    """True when a detail's own gate says it exists but the detail is empty.
+
+    The mirror image of the orphan gate that infer_gate_from_detail repairs, and
+    the harder half: a missing boolean can be deduced from the detail, but no
+    rule can invent the detail itself.
+
+    This state pins a section open forever. The field cannot be hidden - its
+    gate is True, not False - and it cannot be auto-confirmed, because
+    _auto_confirm_exhausted_followups closes repeatable fields that already hold
+    a value and this one holds nothing. get_pending_fields therefore returns it
+    on every turn while the model, which believes it already captured the
+    answer, replies with a closing phrase. Two of fifty evaluation intakes ended
+    exactly this way.
+    """
+    dependency = CONDITIONAL_FIELDS.get(field)
+    if dependency is None:
+        return False
+    gate, hidden_value = dependency
+    if section_data.get(field) is not None:
+        return False
+    gate_value = section_data.get(gate)
+    return gate_value is not None and gate_value is not hidden_value

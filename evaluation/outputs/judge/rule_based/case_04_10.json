@@ -77,22 +77,22 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated the intake but struggled significantly with the patient's confusion during the PHQ-9 and GAD-7 sections. The system repeatedly looped the same prompt when the patient expressed difficulty, failing to adapt its communication style to help the patient understand the questions.",
+  "flow_summary": "The interviewer struggled significantly with the patient's disorganized communication style. While it successfully navigated the intake, it frequently failed to adapt to the patient's confusion, resulting in repetitive, mechanical loops during the PHQ-9 and GAD-7 sections rather than providing necessary clarification or support.",
   "issues": [
     {
       "severity": "moderate",
-      "category": "recovery_failure",
-      "evidence": "When the patient expressed confusion about the PHQ-9 and GAD-7 questions, the interviewer simply repeated the exact same list of options multiple times, which led to further confusion and frustration."
-    },
-    {
-      "severity": "minor",
-      "category": "repetitive_questioning",
-      "evidence": "The interviewer asked 'What is the name of your current medication' immediately after the patient had already provided the name in the previous turn."
+      "category": "poor_recovery",
+      "evidence": "When the patient expressed confusion about the PHQ-9 and GAD-7 questions, the interviewer simply repeated the exact same list of options multiple times instead of rephrasing or offering assistance. For example: 'Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day.'"
     },
     {
       "severity": "moderate",
-      "category": "safety_protocol",
-      "evidence": "The patient disclosed 'I still sometimes feel I would be better off dead' and scored positive on PHQ-9 Q9, but the interviewer did not trigger a safety response or provide resources, failing to acknowledge the clinical risk."
+      "category": "mechanical_interaction",
+      "evidence": "The interviewer failed to acknowledge the patient's distress or confusion, instead rigidly adhering to the script. When the patient said 'Hm. Hard to say. My days all run together lately,' the interviewer ignored the emotional content and simply repeated the prompt."
+    },
+    {
+      "severity": "minor",
+      "category": "inadequate_follow_up",
+      "evidence": "The interviewer did not address the patient's disclosure of a recent overdose and current passive suicidal ideation with any acknowledgement, moving immediately to the next section of the intake."
     }
   ],
   "field_verdicts": [
@@ -316,7 +316,7 @@
       "ref": "general_information.address",
       "verdict": "missing",
       "source": "llm",
-      "note": "The system recorded the address as unknown.",
+      "note": "The system failed to capture the address.",
       "expected": "220 Danforth Avenue, Toronto, Ontario",
       "produced": "Unknown"
     },
@@ -324,7 +324,7 @@
       "ref": "general_information.family_doctor_name",
       "verdict": "missing",
       "source": "llm",
-      "note": "The patient was unable to provide the name.",
+      "note": "The patient could not recall the name and the system did not capture it.",
       "expected": "DR. IAN COLE",
       "produced": "UH, SORRY, I’M MIXING THAT UP WITH THE PSYCHIATRIST MAYBE. I KNOW I HAVE A FAMILY DOCTOR, BUT THE NAME IS SLIPPING ME RIGHT NOW — I CAN’T QUITE PULL IT OUT."
     },
@@ -364,7 +364,7 @@
       "ref": "past_psychiatric_history.hospital_details",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the reason for the admission (impulsive overdose).",
+      "note": "Missing the context that it was an impulsive overdose.",
       "expected": "First psychiatric admission; St. Michael's Hospital; June 2026; 7-day stay after an impulsive overdose",
       "produced": "June 2026, St. Michael's Hospital, for 7 days."
     },
@@ -388,7 +388,7 @@
       "ref": "past_psychiatric_history.previous_therapies[1]",
       "verdict": "missing",
       "source": "llm",
-      "note": "The system failed to capture the intensive outpatient CBT details.",
+      "note": "The intensive outpatient CBT details are not present in the produced field.",
       "expected": "Intensive outpatient CBT; started June 2026; currently attending 3 days per week.",
       "produced": "Yes, individual psychotherapy in college.; In college.; About 8 sessions."
     },

@@ -77,22 +77,22 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully completed the intake but struggled significantly with the patient's confusion during the PHQ-9 and GAD-7 sections. The system repeatedly failed to adapt its questioning style when the patient expressed confusion, instead simply re-stating the same list of options, which led to a frustrating and repetitive loop.",
+  "flow_summary": "The interviewer successfully navigated the intake but struggled significantly with the patient's confusion during the PHQ-9 and GAD-7 sections. While the interviewer was patient, they frequently failed to adapt their communication style to help the patient understand the required response format, leading to repetitive, circular exchanges.",
   "issues": [
     {
       "severity": "moderate",
-      "category": "recovery_failure",
-      "evidence": "When the patient expressed confusion about the PHQ-9 options, the interviewer simply repeated the list: 'Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day.'"
+      "category": "communication_style",
+      "evidence": "The interviewer repeatedly relied on the exact same script when the patient expressed confusion, rather than rephrasing or simplifying the instructions. For example, in GAD-7, the interviewer repeated the list of options twice after the patient stated, 'Sorry, I don't follow. Do you mean how often, or how bad it gets?'"
     },
     {
-      "severity": "moderate",
-      "category": "recovery_failure",
-      "evidence": "The interviewer failed to address the patient's repeated confusion regarding the GAD-7 questions, instead looping the same response: 'Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day.'"
+      "severity": "minor",
+      "category": "efficiency",
+      "evidence": "The interviewer accepted an ambiguous answer ('Uh... some weeks more than others, I suppose') for multiple PHQ-9 and GAD-7 items, failing to guide the patient to a definitive choice from the provided scale, which resulted in poor data quality."
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "The interviewer missed an opportunity to clarify the patient's confusion in the general information section, relying on the patient to eventually provide the information after multiple prompts."
+      "evidence": "The interviewer failed to address the patient's confusion regarding the 'middle' option in the PHQ-9, simply repeating the full list instead of clarifying the specific option requested."
     }
   ],
   "field_verdicts": [
@@ -284,7 +284,7 @@
       "ref": "general_information.name",
       "verdict": "partial",
       "source": "llm",
-      "note": "Only captured first name, missing surname.",
+      "note": "Only first name captured; surname missing.",
       "expected": "MICHAEL O'ROURKE",
       "produced": "UH… MY NAME? I MEAN, I’M MICHAEL, THAT MUCH I KNOW, BUT YOU WANT THE FULL, EXACT LEGAL VERSION…? I’M NOT SURE IF YOU MEAN THE NAME ON MY CARD OR THE PAPERWORK. COULD YOU SAY IT A DIFFERENT WAY?"
     },
@@ -300,7 +300,7 @@
       "ref": "general_information.address",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing street number and specific province/postal details.",
+      "note": "Street and city captured, but house number and province missing.",
       "expected": "22 Fallingbrook Road, Toronto, Ontario",
       "produced": "Well, I’ve got the road part in my head, but the whole address all at once always gets muddled for me. It’s on Fallingbrook… somewhere in Toronto, I think. Or maybe you meant the mailing one? Could you say which part you want first?"
     },
@@ -340,7 +340,7 @@
       "ref": "medical_history.medical_conditions",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing diagnosis year.",
+      "note": "Diagnosis year missing.",
       "expected": "High cholesterol; diagnosed 2016.",
       "produced": "Just the high cholesterol, that’s the only one I know about."
     },

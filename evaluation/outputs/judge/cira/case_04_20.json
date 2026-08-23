@@ -4,11 +4,11 @@
   "scenario_case_id": "04-20",
   "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9634,
+  "record_score": 0.9878,
   "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9634,
-    "record_score_contested": 0.8125,
+    "record_score": 0.9878,
+    "record_score_contested": 0.9375,
     "fields_contested": 8,
     "fields_auto_resolved": 33,
     "fields_confirmed_absent": 11,
@@ -16,10 +16,10 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 39,
+      "match": 40,
       "partial": 1,
       "missing": 0,
-      "contradicted": 1,
+      "contradicted": 0,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -27,8 +27,8 @@
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 9.0,
-        "score": 0.9
+        "credit": 10.0,
+        "score": 1.0
       },
       "past_psychiatric_history": {
         "fields": 5,
@@ -77,22 +77,22 @@
       }
     }
   },
-  "flow_summary": "The system successfully navigated a challenging, disorganized patient persona, but it struggled significantly with the structured questionnaires. While it was persistent in gathering information, it frequently became trapped in loops when the patient expressed confusion, and it failed to adhere to the requirement of asking each PHQ-9 and GAD-7 item exactly once, often repeating questions multiple times due to the patient's hesitation.",
+  "flow_summary": "The interviewer struggled to manage a confused patient, frequently resorting to rigid, repetitive questioning that failed to address the patient's confusion. While the system successfully captured the required clinical data, it often looped on questions when the patient expressed uncertainty, rather than adapting its communication style to be more supportive or clear.",
   "issues": [
     {
       "severity": "moderate",
-      "category": "questionnaire_administration",
-      "evidence": "The system repeated PHQ-9 Question 3 three times and GAD-7 Questions 1, 2, and 3 multiple times, failing to maintain a clean, single-pass administration of the scales."
-    },
-    {
-      "severity": "minor",
       "category": "repetitive_questioning",
-      "evidence": "In the GAD-7 section, the system repeatedly asked the patient to choose an option after the patient had already expressed difficulty, leading to a repetitive loop rather than a more efficient clarification."
+      "evidence": "In the GAD-7 section, the interviewer repeated the same question three times (turns 4, 5, and 6) despite the patient clearly stating she was confused about the timeframe, rather than clarifying the instruction once and moving on."
+    },
+    {
+      "severity": "moderate",
+      "category": "lack_of_adaptation",
+      "evidence": "When the patient expressed confusion about the PHQ-9 and GAD-7 scales, the interviewer simply re-pasted the entire list of options multiple times instead of simplifying the explanation or acknowledging the patient's difficulty."
     },
     {
       "severity": "minor",
-      "category": "flow_management",
-      "evidence": "The system often used a rigid, two-part structure (e.g., 'Please provide the complete email address... Before we move on, could you answer the question above?') which felt mechanical and redundant given the patient's previous input."
+      "category": "mechanical_flow",
+      "evidence": "The interviewer's responses were highly formulaic, often ignoring the patient's conversational cues (e.g., 'My days all run together lately') and immediately reverting to the next script item."
     }
   ],
   "field_verdicts": [
@@ -111,6 +111,14 @@
       "note": "",
       "expected": "Female",
       "produced": "Female"
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "05/04/2009",
+      "produced": "05/04/2009"
     },
     {
       "ref": "general_information.address",
@@ -337,14 +345,6 @@
       "produced": false
     },
     {
-      "ref": "education_employment_legal_history.highest_education",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "Grade 11, currently attending Glenforest Secondary School",
-      "produced": "Grade 11, currently attending Glenforest Secondary School"
-    },
-    {
       "ref": "education_employment_legal_history.employment_history",
       "verdict": "match",
       "source": "auto",
@@ -361,20 +361,12 @@
       "produced": "Finish school and study animation."
     },
     {
-      "ref": "general_information.date_of_birth",
-      "verdict": "contradicted",
-      "source": "llm",
-      "note": "The date of birth is captured as May 4th in the expected value, but April 5th in the produced value.",
-      "expected": "05/04/2009",
-      "produced": "04/05/2009"
-    },
-    {
       "ref": "current_concerns.primary_problems",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the specific mention of suicidal ideation (wishing not to wake up).",
+      "note": "Missing information regarding grades slipping, sleeping habits, and suicidal ideation.",
       "expected": "Low mood, tearfulness and withdrawal from friends for six months; grades slipping; sleeping most of the weekend; thoughts that she wishes she would not wake up.",
-      "produced": "At home, I often become quiet and stay in my room. I feel tired much of the time and do not really want to talk. At school, my grades have been slipping. I have also been withdrawing from friends. No suspensions, injuries, or other major consequences reported."
+      "produced": "Low mood and tearfulness for approximately six months, with withdrawal from friends."
     },
     {
       "ref": "current_concerns.goals",
@@ -382,7 +374,7 @@
       "source": "llm",
       "note": "",
       "expected": "Feel something again; get through the school year.",
-      "produced": "I want to feel something again and get through the school year."
+      "produced": "Feel emotions again and get through the school year."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -390,7 +382,7 @@
       "source": "llm",
       "note": "",
       "expected": "2025; school social worker; assessed for low mood.",
-      "produced": "School social worker; 2025; secondary school, approximately Grade 11; assessed for low mood."
+      "produced": "School social worker; 2025; assessed due to low mood."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -398,7 +390,15 @@
       "source": "llm",
       "note": "",
       "expected": "Mother; recurrent depression; treated with medication.",
-      "produced": "Mother; depression, described as recurring or intermittent; takes medication, medication name unknown."
+      "produced": "Mother; recurrent depression; medication taken, name unknown."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Grade 11, currently attending Glenforest Secondary School",
+      "produced": "Grade 11 (currently attending Glenforest Secondary School)"
     },
     {
       "ref": "personal_history.early_childhood",
@@ -406,7 +406,7 @@
       "source": "llm",
       "note": "",
       "expected": "Born and raised in Toronto; described as a shy, sensitive child.",
-      "produced": "Born and raised in Toronto; described herself as a shy, sensitive child."
+      "produced": "Born and raised in Toronto; described herself as a shy and sensitive child."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -414,7 +414,7 @@
       "source": "llm",
       "note": "",
       "expected": "Currently in Grade 11; friendships narrowed over the past year.",
-      "produced": "Currently in Grade 11. Friendships have narrowed over the past year, and things have been more difficult lately."
+      "produced": "Currently in Grade 11. Over the past year, friendships have narrowed. No other significant experiences reported."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -422,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "Lives with both parents and a younger brother; one close friend.",
-      "produced": "Lives with both parents and a younger brother; has one close friend."
+      "produced": "Both parents; current household relationship. Younger brother; current household relationship. One close friend; current friendship."
     }
   ],
   "fabricated": []

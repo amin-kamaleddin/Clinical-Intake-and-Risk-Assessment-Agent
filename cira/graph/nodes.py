@@ -10,6 +10,10 @@ from core.state import (
     MAX_REPEATABLE_FOLLOWUPS,
     REPEATABLE_TEXT_FIELDS,
     REQUIRED_FIELDS,
+    MAX_EMPTY_DETAIL_FOLLOWUPS,
+    infer_gate_from_detail,
+    is_unanswered_conditional_detail,
+    reports_absence as _reports_absence,
 )
 from core.tools import tools
 from core.validators import FIELD_VALIDATORS
@@ -46,20 +50,6 @@ def _merge_repeatable_value(existing, incoming):
     if preserved:
         return str(incoming).rstrip(". ") + ". " + ". ".join(preserved)
     return incoming
-
-
-_NEGATION_PATTERN = re.compile(
-    r"^(?:none|no|n/?a|nil|nothing|never|unknown|not applicable|not reported"
-    r"|not discussed|not provided|not identified|denies|denied"
-    r"|patient declined|declined)\b[a-z0-9\s,'\-]*$"
-)
-
-
-def _reports_absence(value) -> bool:
-    text = " ".join(str(value or "").split()).strip().lower().rstrip(".!;: ")
-    if not text or len(text) > 70:
-        return False
-    return bool(_NEGATION_PATTERN.match(text))
 
 
 # ── Guards against recording an answer the patient never gave ─────────────────
@@ -263,6 +253,11 @@ def apply_tool_calls(state: AliceState, section: str, response):
 
             if saved_value is not None:
                 values_saved.add(field)
+                # A detail cannot exist unless the thing it details exists. When
+                # the patient answered the gate question with content instead of
+                # a bare yes, the boolean was never written and the section
+                # could never complete. See infer_gate_from_detail.
+                infer_gate_from_detail(state[target_section], field)
                 _implicitly_confirm_earlier_fields(state, target_section, field)
                 if field in REPEATABLE_TEXT_FIELDS and _reports_absence(saved_value):
                     _confirm_entries(state, field)
@@ -426,15 +421,12 @@ def section_node(state: AliceState) -> AliceState:
         # Announcing completion while a field is open is the tell. Append the
         # pending question rather than replacing the text, so a safety message
         # is still delivered in full.
-        # Phrased WITHOUT the raw field key. "could you tell me about gad7 q1"
-        # both reads badly to a patient and, because it contains "q1", was
-        # matched by the simulator's bare-question-number pattern - which
-        # resolved a GAD-7 item to phq9_q1 and made the GAD-7 record a copy of
-        # the PHQ-9 record. Field names must not leak into patient-facing text.
-        reply = (
-            reply.rstrip()
-            + "\n\nBefore we move on, could you answer the question above?"
-        )
+        # _stall_prompt may resolve the field it is stuck on; Stage 7 below
+        # re-runs update_completion for this section either way.
+        reply = reply.rstrip() + "\n\n" + _stall_prompt(state, section, pending)
+    else:
+        # A real question is progress; the ladder starts from the bottom again.
+        state["stall_streak"] = {}
 
     # ── Stage 7: completion for every section this turn touched ──
     for touched in touched_sections:
@@ -467,6 +459,89 @@ _CLOSING_PHRASES = (
 _QUESTIONNAIRE_KEY = re.compile(r"^(?:phq9|gad7)_(?:q\d+|difficulty)$")
 
 
+# The wording of the first stall prompt, unchanged from when it was inlined.
+# Every healthy turn that needs a nudge still gets exactly this, so the common
+# path is untouched.
+_GENERIC_NUDGE = "Before we move on, could you answer the question above?"
+
+
+# Patient-facing phrasing for the conditional details, used once the generic
+# nudge has already failed. _pending_field_question falls back to the raw field
+# name, which renders as "Could you tell me about hospital details?" - the same
+# class of leak the questionnaire guard below exists to prevent, and clumsy
+# enough on its own to be worth avoiding on a re-ask that is already awkward.
+_DETAIL_REASK = {
+    "family_doctor_name":      "What is your family doctor's name?",
+    "psychiatrist_name":       "What is your psychiatrist's name?",
+    "assessment_details":      "When were you assessed, and by whom?",
+    "hospital_details":        "What year were you admitted, where, and how long was the stay?",
+    "self_harm_details":       "Could you briefly describe what happened?",
+    "current_medications":     "What is the name of one medication you are currently taking?",
+    "past_medication_details": "What is the name of one psychiatric medication you have taken before?",
+    "medical_conditions":      "What medical condition have you been diagnosed with?",
+    "surgical_history":        "What surgery have you had, and roughly when?",
+    "medication_allergies":    "Which medication are you allergic to, and what happens?",
+    "family_psychiatric_history_details":
+                               "Which family member, and what were they diagnosed with?",
+    "legal_case_details":      "Could you tell me about the legal matter?",
+}
+
+
+def _stall_prompt(state: AliceState, section: str, pending: list) -> str:
+    """The stall prompt, escalating each time it fails on the same field.
+
+    The generic nudge points at "the question above". After it has failed once
+    that question is one the patient has already answered - often several times
+    - so repeating it verbatim cannot break the deadlock. Eight consecutive
+    copies of it is what the flow judge quoted back on the stalled intakes, and
+    what burned the section turn budget until the driver's stall guard fired.
+
+    The ladder:
+
+      1st  the generic nudge, byte-identical to before. A single stall is
+           normal and usually self-corrects, so the common case is unchanged.
+      2nd+ a specific question naming the field that is actually missing.
+      4th  for an empty conditional detail only, record "Unknown" and move on.
+
+    The last rung is deliberately narrow. It fires only for a detail whose own
+    gate says it exists, because that is the one state no other valve can clear
+    and the only one that can hold a section open indefinitely. Anything else -
+    a questionnaire item above all - escalates to a better question and stops
+    there; no rung of this ladder can write a PHQ-9 or GAD-7 score.
+
+    "Unknown" is not invented: the section prompts already instruct the model to
+    record exactly that for a detail the patient cannot supply.
+    """
+    field = pending[0] if pending else None
+    if field is None:
+        state["stall_streak"] = {}
+        return _GENERIC_NUDGE
+
+    streak = state.get("stall_streak") or {}
+    count = streak.get(field, 0) + 1
+    state["stall_streak"] = {field: count}
+
+    if count == 1:
+        return _GENERIC_NUDGE
+
+    if (
+        count >= MAX_EMPTY_DETAIL_FOLLOWUPS
+        and is_unanswered_conditional_detail(state[section], field)
+    ):
+        # The interview cannot reach this one. Record it as unknown rather than
+        # lose the rest of the section to it, and say so plainly - the patient
+        # should never be left thinking an answer was captured when it was not.
+        state[section][field] = "Unknown"
+        state["stall_streak"] = {}
+        update_completion(state, section)
+        return (
+            "I was not able to record that detail, so I have noted it as "
+            "unknown. We can come back to it later if you remember more."
+        )
+
+    return _DETAIL_REASK.get(field) or _pending_field_question(pending)
+
+
 def _pending_field_question(pending: list) -> str:
     """A patient-facing prompt for the next pending field."""
     if not pending:
@@ -478,19 +553,63 @@ def _pending_field_question(pending: list) -> str:
     return f"Could you tell me about {field.replace('_', ' ')}?"
 
 
+# CIRA asks for most fields imperatively - "Please provide your phone number,
+# including the area code" - and never punctuates those with a question mark.
+_IMPERATIVE_REQUEST = re.compile(
+    r"\b(?:please|kindly)\s+(?:\w+\s+){0,2}?"
+    r"(?:provide|describe|tell|list|share|state|give|choose|select|confirm|"
+    r"specify|name|enter|indicate|answer|report)\b"
+)
+
+# A questionnaire item is a statement followed by its option list, so it carries
+# no question mark either. Both option sets are matched by their first and last
+# option in order, which is unambiguous and cannot be produced by prose.
+# When the patient is confused, CIRA restates the question as an offer rather
+# than an interrogative - "Either format is fine: you can tell me your height in
+# centimetres, or in feet and inches." That is the recovery behaviour the flow
+# rubric asks for, and it was being nudged for its trouble.
+_CLARIFYING_RESTATEMENT = re.compile(
+    r"\byou can (?:tell me|start with|state|give|share|say|use|list|include)\b"
+    r"|\bi mean\b"
+    r"|\bplease include\b"
+    r"|\b(?:either|any) (?:one|order|format|is fine)\b"
+)
+
+_SCALE_PROMPT = re.compile(r"not at all\b.*\bnearly every day")
+_DIFFICULTY_PROMPT = re.compile(r"not difficult at all\b.*\bextremely difficult")
+
+
 def _looks_like_a_question(reply: str) -> bool:
     """True when the reply actually asks the patient something.
 
     A question mark alone is not enough: "All done! Anything to change?" reads
     as a question but asks nothing about the pending field. Closing phrases are
     therefore treated as non-questions even when punctuated as one.
+
+    A question mark is not *necessary* either, which is the more expensive half.
+    Requiring one classified 281 of the 284 stall prompts in the 50-case
+    evaluation as "not a question" - they were imperative requests and
+    questionnaire items that the patient went on to answer normally. Each one
+    had a redundant "could you answer the question above?" stapled to a question
+    it was already answering, and the flow judge quoted that phrase back as
+    robotic and mechanical across the corpus, mostly on healthy intakes.
+
+    Order matters: a closing phrase still wins over everything, so "All done!
+    Please take a look at the panel" is not rescued by its imperative.
     """
     text = " ".join(str(reply or "").split()).lower()
     if not text:
         return False
     if any(phrase in text for phrase in _CLOSING_PHRASES):
         return False
-    return "?" in text
+    if "?" in text:
+        return True
+    return bool(
+        _IMPERATIVE_REQUEST.search(text)
+        or _CLARIFYING_RESTATEMENT.search(text)
+        or _SCALE_PROMPT.search(text)
+        or _DIFFICULTY_PROMPT.search(text)
+    )
 
 
 def _safety_text_already_sent(state: AliceState) -> bool:

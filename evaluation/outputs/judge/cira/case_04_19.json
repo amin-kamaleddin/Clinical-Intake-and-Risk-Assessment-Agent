@@ -4,22 +4,22 @@
   "scenario_case_id": "04-19",
   "repetition": 0,
   "persona_id": "clear",
-  "record_score": 0.9694,
-  "flow_score": 0.5,
+  "record_score": 0.9592,
+  "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9694,
-    "record_score_contested": 0.9737,
-    "fields_contested": 19,
-    "fields_auto_resolved": 30,
+    "record_score": 0.9592,
+    "record_score_contested": 0.8824,
+    "fields_contested": 17,
+    "fields_auto_resolved": 32,
     "fields_confirmed_absent": 4,
     "fields_scored": 49,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 47,
-      "partial": 1,
-      "missing": 1,
-      "contradicted": 0,
+      "match": 46,
+      "partial": 2,
+      "missing": 0,
+      "contradicted": 1,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -37,8 +37,8 @@
       },
       "medications": {
         "fields": 4,
-        "credit": 3.0,
-        "score": 0.75
+        "credit": 4.0,
+        "score": 1.0
       },
       "medical_history": {
         "fields": 5,
@@ -52,8 +52,8 @@
       },
       "family_psychiatric_history": {
         "fields": 2,
-        "credit": 2.0,
-        "score": 1.0
+        "credit": 1.5,
+        "score": 0.75
       },
       "substance_use": {
         "fields": 8,
@@ -62,8 +62,8 @@
       },
       "education_employment_legal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.0,
+        "score": 0.75
       },
       "current_concerns": {
         "fields": 2,
@@ -77,17 +77,12 @@
       }
     }
   },
-  "flow_summary": "The interviewer performed well during the initial intake and history-taking sections but suffered a critical failure in the medication section, where it entered an infinite loop of asking the patient to confirm their entries. This repetitive behavior persisted for eight consecutive turns despite the patient providing the same negative response each time.",
+  "flow_summary": "The system conducted a thorough intake, but the user experience was marred by repetitive and unnecessary prompts. The interviewer frequently appended a redundant 'Before we move on, could you answer the question above?' to every question in the personal history and PHQ-9 sections, despite the patient providing clear answers in the previous turn.",
   "issues": [
     {
-      "severity": "major",
-      "category": "repetition",
-      "evidence": "The interviewer repeatedly asked 'Before we move on, could you answer the question above?' eight times in the medication section, despite the patient confirming they had no changes."
-    },
-    {
-      "severity": "minor",
-      "category": "flow",
-      "evidence": "The interviewer appended the phrase 'Before we move on, could you answer the question above?' to almost every question in the personal history and GAD-7 sections, which was redundant and unnecessary given the patient's clear communication style."
+      "severity": "moderate",
+      "category": "redundant_questioning",
+      "evidence": "In the personal history and PHQ-9 sections, the interviewer consistently appended 'Before we move on, could you answer the question above?' to every single question, which was unnecessary and disrupted the flow."
     }
   ],
   "field_verdicts": [
@@ -213,11 +208,11 @@
     },
     {
       "ref": "medications.has_past_medications",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": null
+      "produced": true
     },
     {
       "ref": "medical_history.has_medical_conditions",
@@ -226,6 +221,14 @@
       "note": "",
       "expected": true,
       "produced": true
+    },
+    {
+      "ref": "medical_history.medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Hypothyroidism; diagnosed 2023.",
+      "produced": "Hypothyroidism; diagnosed 2023."
     },
     {
       "ref": "medical_history.has_surgical_history",
@@ -332,12 +335,20 @@
       "produced": "Bachelor's degree"
     },
     {
+      "ref": "education_employment_legal_history.employment_history[0]",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Accountant, Meridian Partners; 2008 to 2022",
+      "produced": "Accountant, Meridian Partners; 2008 to 2022. Accountant, Meridian Partners; Present. Unknown job title, Meridian Partners; Present"
+    },
+    {
       "ref": "current_concerns.primary_problems",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "Low mood, heavy fatigue and social withdrawal for four months; struggling to return to work after a manic episode and admission in 2022.",
-      "produced": "Low mood, heavy fatigue, and social withdrawal for four months. Struggling to return to work after a manic episode and hospital admission in 2022."
+      "produced": "Low mood, heavy fatigue, and social withdrawal for four months. Difficulty returning to work after a manic episode and hospital admission in 2022."
     },
     {
       "ref": "current_concerns.goals",
@@ -353,7 +364,7 @@
       "source": "llm",
       "note": "",
       "expected": "2022; inpatient psychiatry team; assessed during a manic episode.",
-      "produced": "2022; inpatient psychiatry team; during a manic episode; exact location unknown"
+      "produced": "2022; inpatient psychiatry team; during a manic episode"
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -369,7 +380,7 @@
       "source": "llm",
       "note": "",
       "expected": "Toronto General Hospital; 2022; three weeks; admitted during a manic episode.",
-      "produced": "2022; Toronto General Hospital; three-week stay; admitted during a manic episode"
+      "produced": "2022; Toronto General Hospital; three weeks"
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
@@ -385,7 +396,7 @@
       "source": "llm",
       "note": "",
       "expected": "Electroconvulsive therapy; 2022; hospital inpatient unit; approximately 8 sessions; benefit lasted about a year.",
-      "produced": "ECT; 2022; hospital inpatient unit; approximately 8 sessions; benefit lasted about a year"
+      "produced": "Electroconvulsive therapy; 2022; hospital inpatient unit; approximately 8 sessions; benefit lasted about a year"
     },
     {
       "ref": "medications.current_medications",
@@ -393,7 +404,7 @@
       "source": "llm",
       "note": "",
       "expected": "Lithium carbonate; 900 mg nightly; started 2022; tremor in the hands",
-      "produced": "Lithium carbonate; 900 mg nightly; started 2022; hand tremor"
+      "produced": "Lithium carbonate; 900 mg nightly; started in 2022; hand tremor"
     },
     {
       "ref": "medications.past_medication_details",
@@ -401,29 +412,21 @@
       "source": "llm",
       "note": "",
       "expected": "Olanzapine; 10 mg nightly; about 18 months from 2022; stopped because of weight gain",
-      "produced": "Olanzapine; 10 mg nightly; taken for approximately 18 months starting in 2022; stopped due to weight gain"
-    },
-    {
-      "ref": "medical_history.medical_conditions",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Hypothyroidism; diagnosed 2023.",
-      "produced": "Hypothyroidism; diagnosed 2023"
+      "produced": "Olanzapine; 10 mg nightly; taken for approximately 18 months starting in 2022; stopped because of weight gain"
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing information regarding multiple admissions for the father.",
       "expected": "Father; bipolar disorder; multiple admissions.",
-      "produced": "Father; bipolar disorder; multiple admissions; no additional details reported."
+      "produced": "Father; bipolar disorder."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the stop date of 2022.",
+      "note": "Missing the fact that alcohol use stopped in 2022.",
       "expected": "Previous; spirits; heavy use; stopped in 2022",
       "produced": "Status: Previous; Substance or product: Spirits; Quantity or frequency: Heavy use; Duration: Unknown"
     },
@@ -436,20 +439,12 @@
       "produced": "Status: Current; Substance or product: Cigarettes; Quantity or frequency: About 10 cigarettes per day; Duration: 25 years"
     },
     {
-      "ref": "education_employment_legal_history.employment_history[0]",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Accountant, Meridian Partners; 2008 to 2022",
-      "produced": "Accountant, Meridian Partners; 2008 to Present (on medical leave since 2022)"
-    },
-    {
       "ref": "education_employment_legal_history.employment_history[1]",
-      "verdict": "match",
+      "verdict": "contradicted",
       "source": "llm",
-      "note": "",
+      "note": "The produced value lists the patient as an accountant, not on medical leave.",
       "expected": "Currently on medical leave; 2022 to present",
-      "produced": "Accountant, Meridian Partners; 2008 to Present (on medical leave since 2022)"
+      "produced": "Accountant, Meridian Partners; 2008 to 2022. Accountant, Meridian Partners; Present. Unknown job title, Meridian Partners; Present"
     },
     {
       "ref": "personal_history.early_childhood",
@@ -457,7 +452,7 @@
       "source": "llm",
       "note": "",
       "expected": "Born in Winnipeg; moved to Toronto at 22; describes a chaotic household.",
-      "produced": "Born in Winnipeg; moved to Toronto at age 22. Described childhood household as chaotic."
+      "produced": "Born in Winnipeg; moved to Toronto at age 22; grew up in a chaotic household."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -465,7 +460,7 @@
       "source": "llm",
       "note": "",
       "expected": "Completed a commerce degree; first mood episode at 24.",
-      "produced": "Completed a commerce degree. Experienced a first mood episode at age 24."
+      "produced": "Completed a commerce degree; experienced a first mood episode at age 24."
     },
     {
       "ref": "personal_history.significant_relationships",

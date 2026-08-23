@@ -4,22 +4,22 @@
   "scenario_case_id": "04-31",
   "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9519,
+  "record_score": 0.9615,
   "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9519,
-    "record_score_contested": 0.9211,
-    "fields_contested": 19,
-    "fields_auto_resolved": 33,
+    "record_score": 0.9615,
+    "record_score_contested": 0.8889,
+    "fields_contested": 18,
+    "fields_auto_resolved": 34,
     "fields_confirmed_absent": 3,
     "fields_scored": 52,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
       "match": 49,
-      "partial": 1,
+      "partial": 2,
       "missing": 1,
-      "contradicted": 1,
+      "contradicted": 0,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -32,13 +32,13 @@
       },
       "past_psychiatric_history": {
         "fields": 9,
-        "credit": 8.0,
-        "score": 0.8889
+        "credit": 8.5,
+        "score": 0.9444
       },
       "medications": {
         "fields": 5,
-        "credit": 3.5,
-        "score": 0.7
+        "credit": 4.5,
+        "score": 0.9
       },
       "medical_history": {
         "fields": 5,
@@ -72,27 +72,27 @@
       },
       "personal_history": {
         "fields": 5,
-        "credit": 5.0,
-        "score": 1.0
+        "credit": 4.0,
+        "score": 0.8
       }
     }
   },
-  "flow_summary": "The interviewer was generally thorough and handled the patient's confusion with patience. However, the system suffered from significant mechanical failures, particularly in the medication and questionnaire sections, where it repeatedly asked the same questions despite the patient having already provided the information or confirmed there was nothing left to add.",
+  "flow_summary": "The interviewer successfully navigated a complex, disorganized patient persona, demonstrating patience and effective redirection. However, the system frequently fell into repetitive loops during the PHQ-9 and GAD-7 sections, failing to recognize when the patient was struggling with the format and instead repeatedly re-asking the same questions without adjusting the approach.",
   "issues": [
     {
-      "severity": "major",
-      "category": "redundancy",
-      "evidence": "In the medication section, the interviewer asked 'Before we move on, could you answer the question above?' eight consecutive times after the patient had already confirmed there were no further medications."
-    },
-    {
       "severity": "moderate",
-      "category": "flow_management",
-      "evidence": "The interviewer repeatedly failed to recognize that the patient had already answered the question, leading to a repetitive loop in the PHQ-9 and GAD-7 sections where the patient was asked to clarify their answer multiple times."
+      "category": "repetition",
+      "evidence": "The interviewer repeated PHQ-9 Question 2 three times and GAD-7 Question 1 three times, despite the patient clearly indicating confusion with the format rather than a lack of information."
     },
     {
       "severity": "minor",
-      "category": "clarity",
-      "evidence": "The interviewer occasionally bundled instructions with questions, such as in the employment section: 'Please tell me about your recent employment history. For each job, include the employer, your job title, and the dates you worked there—or an approximate duration. Before we move on, could you answer the question above?'"
+      "category": "flow",
+      "evidence": "In the 'past_psychiatric_history' section, the interviewer asked the patient to answer a question they had already answered while simultaneously flagging a safety concern, which was confusing for the patient."
+    },
+    {
+      "severity": "minor",
+      "category": "efficiency",
+      "evidence": "The interviewer often used long, multi-part questions (e.g., 'What year was the admission, where did it take place, and how long did you stay?') which the patient explicitly stated were difficult to process, forcing the interviewer to break them down anyway."
     }
   ],
   "field_verdicts": [
@@ -185,6 +185,14 @@
       "produced": true
     },
     {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Major depressive disorder, recurrent, severe",
+      "produced": "Major depressive disorder, recurrent, severe"
+    },
+    {
       "ref": "past_psychiatric_history.hospital_admission",
       "verdict": "match",
       "source": "auto",
@@ -210,11 +218,11 @@
     },
     {
       "ref": "medications.has_past_medications",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": null
+      "produced": true
     },
     {
       "ref": "medical_history.has_medical_conditions",
@@ -270,7 +278,7 @@
       "source": "auto",
       "note": "",
       "expected": "Mother; recurrent depression; treated with medication",
-      "produced": "Mother; recurrent depression; treated with medication; depression was longstanding. Brother; depression; admitted to hospital once."
+      "produced": "Mother; recurrent depression; treated with medication. Brother; depression; admitted once."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -374,7 +382,7 @@
       "source": "llm",
       "note": "",
       "expected": "Persistent low mood, anhedonia and fatigue for three years despite four antidepressant trials and rTMS; currently thinks often that she would be better off dead.",
-      "produced": "Persistent low mood for years, loss of interest in activities, and ongoing fatigue occurring at home and work. These difficulties are making it hard to keep going. The patient reports recurrent thoughts of being better off dead and has tried multiple treatments without lasting benefit."
+      "produced": "Heavy low mood, loss of enjoyment, and persistent tiredness for about three years despite treatment. Patient continues working at the Ontario Public Service but feels they are dragging themselves through the day. At home, patient feels emotionally absent and not as present as they would like. Patient reports frequently thinking they would be better off dead."
     },
     {
       "ref": "current_concerns.goals",
@@ -382,7 +390,7 @@
       "source": "llm",
       "note": "",
       "expected": "Find something that works; stop feeling like a lost cause.",
-      "produced": "Find an effective treatment that provides lasting improvement, stop feeling like a lost cause, and be more present and supportive for her daughter."
+      "produced": "Find an effective, lasting treatment rather than another dead end, and be more present for her daughter without feeling like a lost cause."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -390,23 +398,15 @@
       "source": "llm",
       "note": "",
       "expected": "2018; DR. LAURA BENNETT, psychiatrist; assessed after an overdose.",
-      "produced": "2018; Dr. Laura Bennett, psychiatrist; assessment followed an overdose."
-    },
-    {
-      "ref": "past_psychiatric_history.previous_diagnoses",
-      "verdict": "contradicted",
-      "source": "llm",
-      "note": "The system reported none, but the expected value provided a specific diagnosis.",
-      "expected": "Major depressive disorder, recurrent, severe",
-      "produced": "None reported."
+      "produced": "2018; assessed by Dr. Laura Bennett, psychiatrist, following an overdose."
     },
     {
       "ref": "past_psychiatric_history.hospital_details",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing hospital name, duration, and reason for admission.",
       "expected": "St. Michael's Hospital; 2018; five days; admitted after an intentional overdose.",
-      "produced": "2018; St. Michael’s Hospital; approximately five days; following an intentional overdose."
+      "produced": "2018"
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
@@ -414,7 +414,7 @@
       "source": "llm",
       "note": "",
       "expected": "Intentional overdose in 2018 requiring admission; no self-harm since; no current urge to act.",
-      "produced": "Intentional overdose in 2018; hospitalized afterward; no self-harm since and no current urge to act."
+      "produced": "Intentional overdose in 2018; only self-harm event. Currently reports passive thoughts of being better off dead, without plan, intent, or preparatory actions."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
@@ -422,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "Cognitive behavioural therapy; 2019; approximately 16 sessions; hospital outpatient clinic.",
-      "produced": "Cognitive Behavioural Therapy (CBT); 2019; approximately 16 sessions; hospital outpatient clinic."
+      "produced": "Cognitive behavioural therapy; 2019; approximately 16 sessions; hospital outpatient clinic"
     },
     {
       "ref": "past_psychiatric_history.previous_treatments",
@@ -430,15 +430,15 @@
       "source": "llm",
       "note": "",
       "expected": "Repetitive transcranial magnetic stimulation; 2023; hospital neuromodulation clinic; approximately 30 sessions; benefit lasted about three months.",
-      "produced": "rTMS; 2023; hospital neuromodulation clinic; approximately 30 sessions; benefit lasted approximately three months."
+      "produced": "rTMS; 2023; hospital neuromodulation clinic; approximately 30 sessions; benefit lasted about three months"
     },
     {
       "ref": "medications.current_medications",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the frequency of administration (each morning).",
+      "note": "Missing start date and side effects.",
       "expected": "Venlafaxine; 225 mg each morning; started 2024; sweating and raised blood pressure",
-      "produced": "Venlafaxine; 225 mg; started 2024; sweating and increased blood pressure."
+      "produced": "Venlafaxine; 225 mg each morning; start date/duration: Unknown; side effects: Unknown"
     },
     {
       "ref": "medications.past_medication_details[0]",
@@ -446,7 +446,7 @@
       "source": "llm",
       "note": "",
       "expected": "Sertraline; 200 mg daily; about 12 months from 2019; stopped for lack of benefit",
-      "produced": "Sertraline; 200 mg daily; started 2019; taken for about 12 months; stopped due to lack of benefit. Escitalopram; 20 mg daily; started 2021; taken for about 9 months; stopped due to lack of benefit."
+      "produced": "Sertraline; 200 mg daily; taken for approximately 12 months starting in 2019; stopped due to insufficient benefit; no side effects remembered. Escitalopram; 20 mg daily; taken for approximately 9 months in 2021; stopped due to insufficient benefit; no side effects remembered"
     },
     {
       "ref": "medications.past_medication_details[1]",
@@ -454,7 +454,7 @@
       "source": "llm",
       "note": "",
       "expected": "Escitalopram; 20 mg daily; about 9 months in 2021; stopped for lack of benefit",
-      "produced": "Sertraline; 200 mg daily; started 2019; taken for about 12 months; stopped due to lack of benefit. Escitalopram; 20 mg daily; started 2021; taken for about 9 months; stopped due to lack of benefit."
+      "produced": "Sertraline; 200 mg daily; taken for approximately 12 months starting in 2019; stopped due to insufficient benefit; no side effects remembered. Escitalopram; 20 mg daily; taken for approximately 9 months in 2021; stopped due to insufficient benefit; no side effects remembered"
     },
     {
       "ref": "medical_history.medical_conditions",
@@ -462,7 +462,7 @@
       "source": "llm",
       "note": "",
       "expected": "Migraine; diagnosed 2005.",
-      "produced": "Migraine; diagnosed 2005"
+      "produced": "Migraine; diagnosed approximately 2005."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -470,7 +470,7 @@
       "source": "llm",
       "note": "",
       "expected": "Brother; depression; one admission.",
-      "produced": "Mother; recurrent depression; treated with medication; depression was longstanding. Brother; depression; admitted to hospital once."
+      "produced": "Mother; recurrent depression; treated with medication. Brother; depression; admitted once."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -478,7 +478,7 @@
       "source": "llm",
       "note": "",
       "expected": "Born in Hong Kong; moved to Toronto at 6; describes high family expectations.",
-      "produced": "Born in Hong Kong; moved to Toronto at age 6. Describes significant pressure and high expectations at home; was a serious child."
+      "produced": "Born in Hong Kong and moved to Toronto at age 6. Experienced significant family pressure and high expectations while growing up. Was a strong student during childhood."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -486,7 +486,7 @@
       "source": "llm",
       "note": "",
       "expected": "Strong student; first depressive episode at 23.",
-      "produced": "Was mostly a strong student. Experienced a first depressive episode at age 23, which marked the beginning of increasing complexity in her life."
+      "produced": "Remained a strong student during adolescence and early adulthood. Experienced a first depressive episode at age 23, which was when things began to feel off track."
     },
     {
       "ref": "personal_history.significant_relationships[0]",
@@ -494,7 +494,7 @@
       "source": "llm",
       "note": "",
       "expected": "Divorced; marriage lasted 12 years",
-      "produced": "Daughter; close relationship; current. Marriage; lasted 12 years; ended in divorce."
+      "produced": "Marriage; lasted 12 years; ended; divorced. Daughter; close relationship."
     },
     {
       "ref": "personal_history.significant_relationships[1]",
@@ -502,15 +502,15 @@
       "source": "llm",
       "note": "",
       "expected": "One adult daughter; they are close.",
-      "produced": "Daughter; close relationship; current. Marriage; lasted 12 years; ended in divorce."
+      "produced": "Marriage; lasted 12 years; ended; divorced. Daughter; close relationship."
     },
     {
       "ref": "personal_history.future_goals",
-      "verdict": "match",
+      "verdict": "missing",
       "source": "llm",
-      "note": "",
+      "note": "The produced value describes relationships instead of the patient's future goals.",
       "expected": "Find a treatment that lasts and be present for my daughter.",
-      "produced": "Find a lasting treatment and be present for her daughter."
+      "produced": "No significant friendships or other family relationships reported; patient reports a close relationship with her daughter."
     }
   ],
   "fabricated": []

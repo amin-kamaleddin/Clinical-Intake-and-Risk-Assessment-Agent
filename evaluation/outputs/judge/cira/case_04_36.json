@@ -4,26 +4,29 @@
   "scenario_case_id": "04-36",
   "repetition": 0,
   "persona_id": "moderate",
-  "record_score": 0.9111,
-  "flow_score": 0.5,
+  "record_score": 0.9222,
+  "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9111,
-    "record_score_contested": 0.7692,
-    "fields_contested": 13,
-    "fields_auto_resolved": 32,
-    "fields_confirmed_absent": 9,
+    "record_score": 0.9222,
+    "record_score_contested": 0.75,
+    "fields_contested": 14,
+    "fields_auto_resolved": 31,
+    "fields_confirmed_absent": 7,
     "fields_scored": 45,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 40,
-      "partial": 2,
-      "missing": 2,
-      "contradicted": 1,
-      "fabricated": 0
+      "match": 41,
+      "partial": 1,
+      "missing": 1,
+      "contradicted": 2,
+      "fabricated": 2
     },
-    "fabricated_fields": 0,
-    "fabricated_refs": [],
+    "fabricated_fields": 2,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_diagnoses",
+      "past_psychiatric_history.previous_therapies"
+    ],
     "by_section": {
       "general_information": {
         "fields": 10,
@@ -52,8 +55,8 @@
       },
       "family_psychiatric_history": {
         "fields": 2,
-        "credit": 1.0,
-        "score": 0.5
+        "credit": 2.0,
+        "score": 1.0
       },
       "substance_use": {
         "fields": 8,
@@ -67,8 +70,8 @@
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 0.5,
-        "score": 0.25
+        "credit": 0.0,
+        "score": 0.0
       },
       "personal_history": {
         "fields": 5,
@@ -77,17 +80,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated the intake and appropriately identified the patient's safety risk. However, the system suffered from a severe technical failure in the family psychiatric history section, where it became trapped in a repetitive loop, asking the same question seven times despite the patient's clear responses.",
+  "flow_summary": "The interviewer successfully navigated a complex intake, including a critical safety disclosure. While the interviewer was generally effective at managing the patient's imprecision, the flow was marred by repetitive questioning during the PHQ-9 and GAD-7 sections, where the system repeatedly re-asked questions after the patient provided a vague answer, rather than accepting the response or clarifying more efficiently.",
   "issues": [
     {
-      "severity": "major",
-      "category": "repetition",
-      "evidence": "The interviewer asked 'Before we move on, could you answer the question above?' seven consecutive times in the family_psychiatric_history section, despite the patient repeatedly stating 'No, those are all.'"
+      "severity": "moderate",
+      "category": "redundant_questioning",
+      "evidence": "In the PHQ-9 section, the interviewer re-asked questions 2 and 3 after the patient gave a response ('Sort of, I guess? It really depends on the week.'), which, while vague, was a valid attempt to answer. The system then repeated the full question text, which was unnecessary."
     },
     {
       "severity": "minor",
-      "category": "clarity",
-      "evidence": "The interviewer occasionally bundled instructions with questions, such as 'Before we move on, could you answer the question above?' which created confusion and led to the aforementioned loop."
+      "category": "mechanical_flow",
+      "evidence": "The transition to the safety protocol was slightly jarring: 'Before we move on, could you answer the question above?' immediately after the patient had just disclosed suicidal ideation and the system had provided a safety resource."
     }
   ],
   "field_verdicts": [
@@ -260,14 +263,6 @@
       "produced": true
     },
     {
-      "ref": "family_psychiatric_history.family_psychiatric_history_details",
-      "verdict": "missing",
-      "source": "auto",
-      "note": "",
-      "expected": "Mother; depression; treated with medication.",
-      "produced": null
-    },
-    {
       "ref": "substance_use.nonmedical_nicotine_use",
       "verdict": "match",
       "source": "auto",
@@ -349,19 +344,19 @@
     },
     {
       "ref": "current_concerns.primary_problems",
-      "verdict": "partial",
+      "verdict": "contradicted",
       "source": "llm",
-      "note": "Missing the severity, hopelessness, specific plan, and intent.",
+      "note": "System failed to capture the suicidal plan/intent and the context of marital separation.",
       "expected": "Severe low mood, hopelessness and insomnia for three months following redundancy and marital separation; has a specific plan to end her life and says she intends to act on it.",
-      "produced": "Difficulty with mood and sleep lately, affecting day-to-day functioning."
+      "produced": "The patient reports low mood and difficulty sleeping nearly every day, affecting them mostly at home. No specific concrete consequence or event was reported."
     },
     {
       "ref": "current_concerns.goals",
       "verdict": "contradicted",
       "source": "llm",
-      "note": "The patient stated she does not know if she wants anything, which is not captured.",
+      "note": "Patient expressed a specific sentiment regarding goals which the system ignored.",
       "expected": "I do not know that I want anything any more.",
-      "produced": "Get help with how severe the current difficulties have become."
+      "produced": "No specific goals identified for this appointment."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -369,15 +364,15 @@
       "source": "llm",
       "note": "",
       "expected": "2025; family physician; assessed for low mood after redundancy.",
-      "produced": "2025; family physician; assessed for low mood after job loss."
+      "produced": "Assessed by family doctor; sometime in 2025; exact timing uncertain; following redundancy."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the specific plan and stated intent.",
+      "note": "Missing the specific mention of a plan and intent.",
       "expected": "Current suicidal thoughts with a specific plan and stated intent; no previous attempt.",
-      "produced": "Current thoughts of intentionally hurting self; no previous attempt; unable to stay safe."
+      "produced": "Current thoughts of intentionally hurting self; patient does not feel safe."
     },
     {
       "ref": "medications.current_medications",
@@ -385,7 +380,7 @@
       "source": "llm",
       "note": "",
       "expected": "Zopiclone; 7.5 mg at night; started January 2026; bitter taste",
-      "produced": "Zopiclone; 7.5 mg at night; started January 2026; bitter taste."
+      "produced": "Zopiclone; 7.5 mg at night; started January 2026 (approximate); bitter taste."
     },
     {
       "ref": "medical_history.medical_conditions",
@@ -393,7 +388,15 @@
       "source": "llm",
       "note": "",
       "expected": "Hypothyroidism; diagnosed 2012.",
-      "produced": "Hypothyroidism; diagnosed 2012"
+      "produced": "Hypothyroidism; diagnosed approximately 2012."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Mother; depression; treated with medication.",
+      "produced": "Mother; depression; treated with medication; no further details known."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -401,13 +404,13 @@
       "source": "llm",
       "note": "",
       "expected": "Current; wine; three or four glasses most evenings; increased over three months",
-      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: Approximately three or four glasses most evenings; Duration: Increased over the last few months"
+      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: Approximately three or four glasses on most evenings; Duration: Increased over the last three months."
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
       "verdict": "missing",
       "source": "llm",
-      "note": "The produced value lists a previous job, not the current unemployment status.",
+      "note": "System captured previous employment instead of current unemployment status.",
       "expected": "Currently unemployed; 2025 to present",
       "produced": "Human resources manager, Corbett Manufacturing; 2011 to 2025"
     },
@@ -417,7 +420,7 @@
       "source": "llm",
       "note": "",
       "expected": "Born and raised in Kingston, Ontario; describes a stable childhood.",
-      "produced": "Born and raised in Kingston, Ontario. Described childhood as stable."
+      "produced": "Grew up in Kingston, Ontario. Childhood was generally stable. Described herself as fairly normal as a young child; nothing major stood out. Birthplace was not provided."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -425,7 +428,7 @@
       "source": "llm",
       "note": "",
       "expected": "Completed a commerce degree; no significant difficulties.",
-      "produced": "Completed a commerce degree. Does not recall any major difficulties during adolescence or early adulthood."
+      "produced": "Completed a commerce degree and did not experience any major difficulties during adolescence or early adulthood. Jobs, responsibilities, and other important experiences were not provided."
     },
     {
       "ref": "personal_history.significant_relationships[0]",
@@ -433,7 +436,7 @@
       "source": "llm",
       "note": "",
       "expected": "Separated three months ago; marriage lasted 19 years",
-      "produced": "Marriage; approximately 19 years; ended three months ago. Two teenage children; currently live with their father."
+      "produced": "Marriage; lasted 19 years; ended approximately three months ago following separation. Two teenage children; currently live with their father."
     },
     {
       "ref": "personal_history.significant_relationships[1]",
@@ -441,7 +444,7 @@
       "source": "llm",
       "note": "",
       "expected": "Two teenage children living with their father.",
-      "produced": "Marriage; approximately 19 years; ended three months ago. Two teenage children; currently live with their father."
+      "produced": "Marriage; lasted 19 years; ended approximately three months ago following separation. Two teenage children; currently live with their father."
     },
     {
       "ref": "personal_history.future_goals",
@@ -452,5 +455,26 @@
       "produced": "No specific future goals identified."
     }
   ],
-  "fabricated": []
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "section": "past_psychiatric_history",
+      "field": "previous_diagnoses",
+      "entry_index": null,
+      "expected": null,
+      "produced": "Unknown; patient is unsure whether a formal psychiatric diagnosis was given and does not recall a specific diagnosis.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "section": "past_psychiatric_history",
+      "field": "previous_therapies",
+      "entry_index": null,
+      "expected": null,
+      "produced": "Unknown; patient does not know of any previous therapies.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
 }

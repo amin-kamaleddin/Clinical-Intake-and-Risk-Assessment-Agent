@@ -4,22 +4,22 @@
   "scenario_case_id": "04-08",
   "repetition": 0,
   "persona_id": "clear",
-  "record_score": 0.9474,
-  "flow_score": 0.5,
+  "record_score": 0.9737,
+  "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9474,
-    "record_score_contested": 0.7778,
-    "fields_contested": 9,
-    "fields_auto_resolved": 29,
+    "record_score": 0.9737,
+    "record_score_contested": 0.875,
+    "fields_contested": 8,
+    "fields_auto_resolved": 30,
     "fields_confirmed_absent": 14,
     "fields_scored": 38,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 36,
+      "match": 37,
       "partial": 0,
       "missing": 0,
-      "contradicted": 2,
+      "contradicted": 1,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -27,8 +27,8 @@
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 9.0,
-        "score": 0.9
+        "credit": 10.0,
+        "score": 1.0
       },
       "past_psychiatric_history": {
         "fields": 3,
@@ -77,22 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer performed well on structured questionnaires but struggled significantly with the personal history section, where it became trapped in a repetitive loop with a patient who was unable to provide specific details. The system failed to accept the patient's 'I don't know' response, leading to redundant and frustrating questioning.",
+  "flow_summary": "The interviewer conducted a thorough and well-structured intake. The system handled the safety disclosure appropriately and followed up on vague responses in the personal history section, though it struggled to elicit specific details when the patient was unable to provide them.",
   "issues": [
     {
-      "severity": "major",
-      "category": "repetition",
-      "evidence": "The interviewer asked 'Where were you born and where did you grow up?' three times despite the patient stating 'I don't know' or 'I was born and grew up there' in previous turns."
+      "severity": "minor",
+      "category": "follow_up",
+      "evidence": "When the patient stated 'I don't know' regarding their birthplace, the interviewer re-asked the question, which was reasonable, but the patient remained unable to provide the information. The system then moved on, which was correct, but the initial attempt to clarify felt slightly repetitive given the patient's clear lack of knowledge."
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "The interviewer included a technical error message '(tool call failed)' in the chat output, which disrupted the professional tone of the interaction."
-    },
-    {
-      "severity": "minor",
-      "category": "flow",
-      "evidence": "In the personal history section, the interviewer bundled a new question with a demand to answer a previous, unresolved question: 'Please describe your adolescence... Before we move on, could you answer the question above?'"
+      "evidence": "The transition after the PHQ-9 safety disclosure was slightly abrupt, as the system immediately pivoted to the functional difficulty question without a brief pause or transition, though it remained within the bounds of a professional intake."
     }
   ],
   "field_verdicts": [
@@ -111,6 +106,14 @@
       "note": "",
       "expected": "Male",
       "produced": "Male"
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "06/02/1986",
+      "produced": "06/02/1986"
     },
     {
       "ref": "general_information.address",
@@ -326,15 +329,7 @@
       "source": "auto",
       "note": "",
       "expected": "Vice-president of sales, Meridian Logistics; 2016 to present",
-      "produced": "Vice-president of sales, Meridian Logistics; 2016 to Present"
-    },
-    {
-      "ref": "general_information.date_of_birth",
-      "verdict": "contradicted",
-      "source": "llm",
-      "note": "The produced date is June 2nd, while the expected date is February 6th.",
-      "expected": "06/02/1986",
-      "produced": "02/06/1986"
+      "produced": "Vice-President of Sales, Meridian Logistics; 2016 to Present"
     },
     {
       "ref": "current_concerns.primary_problems",
@@ -342,7 +337,7 @@
       "source": "llm",
       "note": "",
       "expected": "depressed; irritable; withdrawn; work stress",
-      "produced": "Depressed, irritable, and withdrawn. These difficulties are affecting the patient's marriage, and work-related stress has been worsening them."
+      "produced": "Feeling depressed, irritable, and withdrawn, affecting work and relationships at home."
     },
     {
       "ref": "current_concerns.goals",
@@ -350,7 +345,7 @@
       "source": "llm",
       "note": "",
       "expected": "feel better; save marriage",
-      "produced": "Feel better and save the marriage."
+      "produced": "Feel better and preserve my marriage."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -358,7 +353,7 @@
       "source": "llm",
       "note": "",
       "expected": "Current; whisky and beer; 5 to 7 drinks nightly; about 9 months",
-      "produced": "Status: Current; Substance or product: Whisky and beer; Quantity or frequency: 5 to 7 drinks nightly; Duration: About 9 months"
+      "produced": "Status: Current; Substance or product: Whisky and beer; Quantity or frequency: Approximately 5 to 7 drinks nightly; Duration: Approximately 9 months"
     },
     {
       "ref": "substance_use.nonmedical_stimulant_use",
@@ -366,15 +361,15 @@
       "source": "llm",
       "note": "",
       "expected": "Current; cocaine; approximately 0.5 gram per use; 3 to 4 times per week; about 9 months",
-      "produced": "Status: Current; Substance or product: Cocaine; Quantity or frequency: About 0.5 gram per use, 3 to 4 times weekly; Duration: About 9 months"
+      "produced": "Status: Current; Substance or product: Cocaine; Quantity or frequency: Approximately 0.5 gram per use, 3 to 4 times weekly; Duration: Approximately 9 months"
     },
     {
       "ref": "personal_history.early_childhood",
       "verdict": "contradicted",
       "source": "llm",
-      "note": "The system captured that the patient does not know these facts, whereas the expected value implies they exist.",
+      "note": "System explicitly stated information as unknown.",
       "expected": "born; grew up",
-      "produced": "Patient does not know where they were born or grew up, and does not recall how they described themselves as a young child."
+      "produced": "Born: Unknown. Grew up: Unknown. Description as a young child: Unknown."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -382,7 +377,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; early career",
-      "produced": "The patient described their adolescence and early adulthood as involving school and early career."
+      "produced": "School and early career."
     },
     {
       "ref": "personal_history.significant_relationships",

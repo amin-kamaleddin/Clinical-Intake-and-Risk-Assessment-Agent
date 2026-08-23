@@ -4,11 +4,11 @@
   "scenario_case_id": "04-31",
   "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9231,
+  "record_score": 0.9327,
   "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9231,
-    "record_score_contested": 0.8462,
+    "record_score": 0.9327,
+    "record_score_contested": 0.8654,
     "fields_contested": 26,
     "fields_auto_resolved": 26,
     "fields_confirmed_absent": 3,
@@ -16,8 +16,8 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 46,
-      "partial": 4,
+      "match": 47,
+      "partial": 3,
       "missing": 2,
       "contradicted": 0,
       "fabricated": 0
@@ -32,8 +32,8 @@
       },
       "past_psychiatric_history": {
         "fields": 9,
-        "credit": 6.0,
-        "score": 0.6667
+        "credit": 6.5,
+        "score": 0.7222
       },
       "medications": {
         "fields": 5,
@@ -77,22 +77,22 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully gathered the necessary clinical information but struggled significantly with the patient's confusion during the PHQ-9 and GAD-7 sections. While the interviewer correctly persisted in obtaining the required data, they failed to adapt their communication style to the patient's expressed confusion, leading to a repetitive and mechanical interaction that felt like a script rather than a conversation.",
+  "flow_summary": "The interviewer was effective at gathering factual data but struggled significantly with the patient's confusion during the PHQ-9 and GAD-7 sections. The system failed to adapt its communication style to help the patient understand the rating scales, leading to repetitive, mechanical questioning that frustrated the patient.",
   "issues": [
     {
       "severity": "moderate",
       "category": "communication_style",
-      "evidence": "The interviewer repeatedly forced the patient to choose from the list of options without acknowledging the patient's confusion or rephrasing the question to be more accessible. For example: 'Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day.'"
+      "evidence": "The interviewer repeatedly forced the patient to choose from the list of options without acknowledging the patient's confusion or rephrasing the instructions, leading to a breakdown in the flow: 'Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day.'"
     },
     {
       "severity": "minor",
       "category": "redundant_questioning",
-      "evidence": "The interviewer asked for the psychiatrist's name twice in immediate succession: 'Do you currently have a psychiatrist?' followed by 'What is your psychiatrist's full first and last name?'"
+      "evidence": "In the past psychiatric history section, the interviewer asked for the year and the person who performed the assessment twice: 'When were you assessed, and by whom?' followed by 'It was in 2018, by Dr. Laura Bennett.'"
     },
     {
-      "severity": "moderate",
-      "category": "lack_of_empathy",
-      "evidence": "The interviewer ignored the patient's disclosure of suicidal ideation in the 'current_concerns' section, failing to provide a brief, proportionate acknowledgement before immediately moving to the next question."
+      "severity": "minor",
+      "category": "flow",
+      "evidence": "The interviewer failed to address the patient's specific question about the timeframe of the GAD-7, instead simply repeating the list of options: 'That depends. Are you asking about now or about back then?'"
     }
   ],
   "field_verdicts": [
@@ -348,7 +348,7 @@
       "ref": "past_psychiatric_history.assessment_details",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the context that the assessment was after an overdose.",
+      "note": "Missing the context of the overdose.",
       "expected": "2018; DR. LAURA BENNETT, psychiatrist; assessed after an overdose.",
       "produced": "It was in 2018, by Dr. Laura Bennett."
     },
@@ -356,7 +356,7 @@
       "ref": "past_psychiatric_history.previous_diagnoses",
       "verdict": "missing",
       "source": "llm",
-      "note": "System recorded unknown instead of the diagnosis.",
+      "note": "System recorded unknown.",
       "expected": "Major depressive disorder, recurrent, severe",
       "produced": "Unknown"
     },
@@ -364,7 +364,7 @@
       "ref": "past_psychiatric_history.hospital_details",
       "verdict": "missing",
       "source": "llm",
-      "note": "System recorded unknown instead of the hospital details.",
+      "note": "System recorded unknown.",
       "expected": "St. Michael's Hospital; 2018; five days; admitted after an intentional overdose.",
       "produced": "Unknown"
     },
@@ -378,9 +378,9 @@
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the year 2019.",
+      "note": "",
       "expected": "Cognitive behavioural therapy; 2019; approximately 16 sessions; hospital outpatient clinic.",
       "produced": "Yes… CBT, I think that’s the one. It was at the hospital outpatient clinic.; Oh, the therapy… I’m blanking on the exact timing for a second. It was some time after the overdose, I think, and at the outpatient clinic, but I’d have to think a bit to pin down the year exactly. Could you ask that one again?; About 16 sessions."
     },

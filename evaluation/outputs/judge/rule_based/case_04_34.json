@@ -4,11 +4,11 @@
   "scenario_case_id": "04-34",
   "repetition": 0,
   "persona_id": "clear",
-  "record_score": 0.9444,
-  "flow_score": 0.95,
+  "record_score": 0.9333,
+  "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9444,
-    "record_score_contested": 0.8611,
+    "record_score": 0.9333,
+    "record_score_contested": 0.8333,
     "fields_contested": 18,
     "fields_auto_resolved": 27,
     "fields_confirmed_absent": 9,
@@ -16,8 +16,8 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 41,
-      "partial": 3,
+      "match": 40,
+      "partial": 4,
       "missing": 1,
       "contradicted": 0,
       "fabricated": 0
@@ -32,8 +32,8 @@
       },
       "past_psychiatric_history": {
         "fields": 6,
-        "credit": 5.5,
-        "score": 0.9167
+        "credit": 5.0,
+        "score": 0.8333
       },
       "medications": {
         "fields": 3,
@@ -77,12 +77,12 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and efficient intake, maintaining a clear, professional, and logical flow throughout. The system successfully navigated all sections, including standardized questionnaires, and handled the patient's clear responses appropriately without unnecessary repetition.",
+  "flow_summary": "The system conducted a thorough and efficient intake. It followed the script well and maintained a professional tone throughout. The only notable issue was a redundant follow-up question regarding the patient's psychiatric assessment, which had already been answered in the previous turn.",
   "issues": [
     {
       "severity": "minor",
       "category": "redundancy",
-      "evidence": "In the medications section, the interviewer asked 'What is the name of your current medication...' immediately after the patient had already stated 'Yes, I am taking sertraline.'"
+      "evidence": "The interviewer asked 'When were you assessed, and by whom?' immediately after the patient had already provided that information in the previous turn."
     }
   ],
   "field_verdicts": [
@@ -336,9 +336,9 @@
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the location of the therapy.",
       "expected": "Narrative exposure therapy; 2024; approximately 10 sessions; refugee mental health clinic.",
       "produced": "Yes, I had narrative exposure therapy.; In 2024.; About 10 sessions."
     },

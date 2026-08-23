@@ -77,22 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully completed the intake and managed the patient's imprecision well, particularly during the substance use and medical history sections. However, the system frequently appended a redundant 'Before we move on, could you answer the question above?' prompt to its questions, which was unnecessary and repetitive given the patient had not yet had a chance to respond.",
+  "flow_summary": "The interviewer successfully completed the intake and managed the patient's occasional vagueness well. However, the system frequently appended a redundant 'Before we move on, could you answer the question above?' prompt even when the patient had already provided a clear answer, which was unnecessary and repetitive.",
   "issues": [
     {
       "severity": "minor",
-      "category": "redundant_questioning",
-      "evidence": "Before we move on, could you answer the question above?"
+      "category": "redundancy",
+      "evidence": "In multiple instances, such as turn 5, turn 4 of substance use, and throughout the PHQ-9, the interviewer added 'Before we move on, could you answer the question above?' after the patient had already provided the requested information."
     },
     {
       "severity": "minor",
-      "category": "redundant_questioning",
-      "evidence": "Before we move on, could you answer the question above?"
-    },
-    {
-      "severity": "minor",
-      "category": "redundant_questioning",
-      "evidence": "Before we move on, could you answer the question above?"
+      "category": "flow",
+      "evidence": "The interviewer occasionally struggled with the patient's initial vagueness, requiring a second, more direct prompt to get the required information (e.g., turn 5, turn 4 of substance use), though the recovery was ultimately successful."
     }
   ],
   "field_verdicts": [
@@ -348,7 +343,7 @@
       "ref": "past_psychiatric_history.previous_therapies",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the number of sessions and the location.",
+      "note": "Missing number of sessions and location.",
       "expected": "Postnatal support group; 2026; approximately 4 sessions; community health centre.",
       "produced": "Postnatal support group; 2026"
     },

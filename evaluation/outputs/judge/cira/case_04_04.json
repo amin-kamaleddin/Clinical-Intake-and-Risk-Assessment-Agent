@@ -32,8 +32,8 @@
       },
       "past_psychiatric_history": {
         "fields": 4,
-        "credit": 3.5,
-        "score": 0.875
+        "credit": 4.0,
+        "score": 1.0
       },
       "medications": {
         "fields": 3,
@@ -52,8 +52,8 @@
       },
       "family_psychiatric_history": {
         "fields": 2,
-        "credit": 2.0,
-        "score": 1.0
+        "credit": 1.5,
+        "score": 0.75
       },
       "substance_use": {
         "fields": 8,
@@ -77,22 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough intake but struggled with mechanical errors, specifically bundling questions and repeating prompts unnecessarily. While the safety protocol was triggered appropriately, the system's tendency to repeat questions after receiving a clear 'I do not know' or a completed answer detracted from the flow.",
+  "flow_summary": "The system conducted a thorough intake but struggled with the patient's brief, repetitive responses during the personal history section. While it correctly identified and responded to the patient's acute safety risk, it failed to adapt its questioning style when the patient provided minimal, repetitive answers, leading to a frustrating loop of ineffective questioning.",
   "issues": [
     {
       "severity": "moderate",
+      "category": "ineffective_recovery",
+      "evidence": "The system repeatedly asked for details about childhood and adolescence despite the patient providing the same minimal, non-descriptive answers ('Born. Grew up.' / 'School. Started working.') three times in a row."
+    },
+    {
+      "severity": "minor",
       "category": "redundant_questioning",
-      "evidence": "The interviewer repeatedly asked for clarification on 'I do not know' responses, such as: 'Do you remember receiving any therapy...?' after the patient had already stated 'I do not know' to the initial question."
-    },
-    {
-      "severity": "minor",
-      "category": "bundled_questions",
-      "evidence": "In the personal history section, the interviewer asked: 'Could you describe your early childhood, including where you were born, where you grew up, and what you were like as a young child?' which is a multi-part question."
-    },
-    {
-      "severity": "minor",
-      "category": "mechanical_error",
-      "evidence": "The interviewer included a prompt to answer a previous question while simultaneously asking a new one: 'Please tell me about your recent employment history... Before we move on, could you answer the question above?'"
+      "evidence": "The system asked the same question about psychiatric diagnoses and therapy history twice in immediate succession, even after the patient had already provided a clear 'I do not know' response."
     }
   ],
   "field_verdicts": [
@@ -350,7 +345,7 @@
       "source": "llm",
       "note": "",
       "expected": "depression; guilt; workplace error; wants to die",
-      "produced": "Depression and guilt related to a workplace error; the patient reports wanting to die."
+      "produced": "Depression and guilt about a workplace error; currently wants to die."
     },
     {
       "ref": "current_concerns.goals",
@@ -358,15 +353,15 @@
       "source": "llm",
       "note": "",
       "expected": "relief; help",
-      "produced": "The patient hopes to find relief and receive help."
+      "produced": "Relief and help."
     },
     {
       "ref": "past_psychiatric_history.self_harm_details",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the specific instruction that immediate safety escalation is required.",
+      "note": "",
       "expected": "Current suicidal thoughts with intent and a plan; immediate safety escalation is required.",
-      "produced": "Current suicidal thoughts with intent and a plan; unable to stay safe."
+      "produced": "Current suicidal thoughts with a plan and intent; patient reports they are not safe right now."
     },
     {
       "ref": "medications.current_medications",
@@ -378,11 +373,11 @@
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing information regarding the sister's treatment with medication.",
       "expected": "Older sister; recurrent depression; treated with medication",
-      "produced": "Older sister; recurrent depression; treated with medication; additional details unknown."
+      "produced": "Older sister; recurrent depression."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -396,9 +391,9 @@
       "ref": "personal_history.early_childhood",
       "verdict": "contradicted",
       "source": "llm",
-      "note": "The system states the patient does not know these facts, whereas the expected value implies they are known.",
+      "note": "The system states no details were provided, whereas the expected value indicates they were.",
       "expected": "born; grew up",
-      "produced": "Patient does not know where they were born, where they grew up, or how they would describe themselves as a young child."
+      "produced": "Patient provided no specific details about where they were born, where they grew up, or what they were like as a young child."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -406,7 +401,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; started working",
-      "produced": "Patient attended school and started working during adolescence and early adulthood."
+      "produced": "Attended school and started working."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -414,7 +409,7 @@
       "source": "llm",
       "note": "",
       "expected": "married; 20 years; three children",
-      "produced": "Marriage; 20 years; current status not specified. Three children; duration and current status not specified."
+      "produced": "Marriage; 20 years; three children; current status not specified."
     },
     {
       "ref": "personal_history.future_goals",
@@ -422,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "recover; family",
-      "produced": "Recover and focus on family."
+      "produced": "To recover and focus on family."
     }
   ],
   "fabricated": []

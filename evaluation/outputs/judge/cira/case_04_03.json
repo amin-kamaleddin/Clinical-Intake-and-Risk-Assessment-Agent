@@ -4,22 +4,22 @@
   "scenario_case_id": "04-03",
   "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9778,
-  "flow_score": 0.5,
+  "record_score": 0.9,
+  "flow_score": 0.7,
   "record_detail": {
-    "record_score": 0.9778,
-    "record_score_contested": 0.9286,
-    "fields_contested": 14,
-    "fields_auto_resolved": 31,
+    "record_score": 0.9,
+    "record_score_contested": 0.8077,
+    "fields_contested": 13,
+    "fields_auto_resolved": 32,
     "fields_confirmed_absent": 7,
     "fields_scored": 45,
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 44,
-      "partial": 0,
-      "missing": 0,
-      "contradicted": 1,
+      "match": 39,
+      "partial": 3,
+      "missing": 1,
+      "contradicted": 2,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -32,13 +32,13 @@
       },
       "past_psychiatric_history": {
         "fields": 7,
-        "credit": 6.0,
-        "score": 0.8571
+        "credit": 5.5,
+        "score": 0.7857
       },
       "medications": {
         "fields": 3,
-        "credit": 3.0,
-        "score": 1.0
+        "credit": 1.0,
+        "score": 0.3333
       },
       "medical_history": {
         "fields": 4,
@@ -62,13 +62,13 @@
       },
       "education_employment_legal_history": {
         "fields": 3,
-        "credit": 3.0,
-        "score": 1.0
+        "credit": 2.5,
+        "score": 0.8333
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 2.0,
-        "score": 1.0
+        "credit": 1.5,
+        "score": 0.75
       },
       "personal_history": {
         "fields": 4,
@@ -77,22 +77,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer was generally thorough and persistent in gathering information from a challenging, disorganized patient. However, the system struggled significantly with the PHQ-9 and GAD-7 sections, repeatedly asking the same questions and failing to maintain a smooth flow when the patient expressed confusion, leading to a repetitive and mechanical interaction.",
+  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona by consistently rephrasing questions and providing necessary guidance. While the interviewer was patient and effective at redirection, the process was hampered by the patient's frequent confusion, leading to a somewhat mechanical and repetitive interaction style. The safety protocol was correctly triggered following the PHQ-9 disclosure.",
   "issues": [
     {
-      "severity": "moderate",
-      "category": "repetition",
-      "evidence": "In the PHQ-9 and GAD-7 sections, the interviewer repeatedly re-asked the same questions multiple times when the patient expressed confusion, rather than adapting the delivery or moving forward after a reasonable attempt at clarification."
+      "severity": "minor",
+      "category": "clarity",
+      "evidence": "The interviewer frequently had to re-ask questions multiple times due to the patient's confusion, such as in the GAD-7 section: 'GAD-7 Question 2: Over the last two weeks, how often have you had difficulty stopping or controlling worrying? ... For example, would you choose 0, 1, 2, or 3?'"
     },
     {
       "severity": "minor",
       "category": "flow",
-      "evidence": "The interviewer frequently used the phrase 'Before we move on, could you answer the question above?' which felt robotic and redundant given the patient had often already provided the information or was in the middle of a clarification process."
-    },
-    {
-      "severity": "minor",
-      "category": "empathy",
-      "evidence": "The safety response in turn 4 of the current_concerns section was somewhat jarring, as it included a standard safety script followed immediately by 'I’m going to continue with the intake questions,' which felt dismissive of the patient's distress."
+      "evidence": "The interaction felt somewhat robotic during the standardized questionnaire sections, where the interviewer repeatedly had to prompt the patient to choose from the provided scale, which, while necessary, made the flow feel disjointed."
     }
   ],
   "field_verdicts": [
@@ -218,11 +213,19 @@
     },
     {
       "ref": "medications.has_past_medications",
-      "verdict": "match",
+      "verdict": "contradicted",
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": true
+      "produced": false
+    },
+    {
+      "ref": "medications.past_medication_details",
+      "verdict": "missing",
+      "source": "auto",
+      "note": "",
+      "expected": "Sertraline; 100 mg daily; taken for about 18 months in his 30s; stopped after sustained recovery",
+      "produced": null
     },
     {
       "ref": "medical_history.has_medical_conditions",
@@ -350,15 +353,15 @@
       "source": "llm",
       "note": "",
       "expected": "son's death; grief; sadness; cannot concentrate",
-      "produced": "Since his son died, the patient has felt persistently sad and very low, with poor concentration, early-morning waking around 4:30 a.m., and daytime exhaustion. These difficulties occur at home and work, where he is the owner and managing director and reports not functioning properly. He also reports guilt and feeling that he should have died instead."
+      "produced": "Constant sadness, difficulty concentrating, early-morning waking around 4:30 a.m., and feeling exhausted. These difficulties occur at home and at work and have been present since the patient's son died."
     },
     {
       "ref": "current_concerns.goals",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the goal of returning to functioning.",
       "expected": "cope with loss; return to functioning",
-      "produced": "The patient hopes to cope with the loss better, return to functioning, honour his son’s memory in some way, and get through the days without feeling this way."
+      "produced": "Receive help making sense of what has been happening and difficulty thinking clearly since the loss."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -366,7 +369,7 @@
       "source": "llm",
       "note": "",
       "expected": "Followed by DR. LAURA BENNETT, psychiatrist, during two depressive episodes in 1998 and 2003",
-      "produced": "Dr. Laura Bennett, psychiatrist; assessed during two depressive episodes in 1998 and 2003."
+      "produced": "Dr. Laura Bennett; in the patient's 30s; exact setting unknown; follow-up during depressive episodes."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -378,27 +381,19 @@
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the specific detail of approximately 16 weekly sessions.",
       "expected": "Individual psychotherapy; 1998; approximately 16 weekly sessions",
-      "produced": "Individual psychotherapy (specific type unknown); 1998; approximately 16 weekly sessions; location unknown."
+      "produced": "Individual psychotherapy; therapy type beyond individual psychotherapy: Unknown; 1998; number of sessions: Unknown; location: Unknown."
     },
     {
       "ref": "past_psychiatric_history.previous_treatments",
       "verdict": "contradicted",
       "source": "llm",
-      "note": "System states none reported, but patient had prior sertraline use.",
+      "note": "System states none reported, but patient had prior sertraline treatment.",
       "expected": "Sertraline during two prior depressive episodes; good response",
       "produced": "None reported."
-    },
-    {
-      "ref": "medications.past_medication_details",
-      "verdict": "match",
-      "source": "llm",
-      "note": "",
-      "expected": "Sertraline; 100 mg daily; taken for about 18 months in his 30s; stopped after sustained recovery",
-      "produced": "Sertraline; 100 mg daily; started in patient's 30s; taken for approximately 18 months; stopped after recovery and sustained improvement; exact start and stop dates Unknown."
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
@@ -406,7 +401,7 @@
       "source": "llm",
       "note": "",
       "expected": "parents; depression; son; suicide",
-      "produced": "Mother; depression. Father; depression. Son; died by suicide; diagnosis unknown"
+      "produced": "Mother; depression. Father; depression. Son; died by suicide."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -414,15 +409,15 @@
       "source": "llm",
       "note": "",
       "expected": "Current; wine; about half a bottle nightly; increased from weekends only after son's death; current duration 6 weeks",
-      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: About half a bottle nightly; Duration: About 6 weeks at this level"
+      "produced": "Status: Current; Substance or product: Wine; Quantity or frequency: About half a bottle most nights; Duration: Approximately 6 weeks at this level; Increased drinking since son died."
     },
     {
       "ref": "education_employment_legal_history.employment_history",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing job title and dates.",
       "expected": "Owner and managing director, Quinn Import Services; 2004 to present",
-      "produced": "Quinn Import Services; Owner and Managing Director; 2004 to Present. In progress: recent job; employer, job title, and dates not yet provided."
+      "produced": "Quinn Import Services; Job title: Unknown; Dates or duration: Unknown"
     },
     {
       "ref": "personal_history.early_childhood",
@@ -430,7 +425,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Patient reports being born and growing up, with no further specific details to report."
+      "produced": "Patient was born and grew up at home and in the surrounding area; they have little else to add about their early childhood."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -438,7 +433,7 @@
       "source": "llm",
       "note": "",
       "expected": "school; early career",
-      "produced": "Patient reports that adolescence and early adulthood consisted mostly of school followed by work; details are unclear."
+      "produced": "Patient described adolescence and early adulthood as involving school and early career; no specific difficulties or other important experiences were identified."
     },
     {
       "ref": "personal_history.significant_relationships",
@@ -446,7 +441,7 @@
       "source": "llm",
       "note": "",
       "expected": "married",
-      "produced": "Marriage; duration unknown; current."
+      "produced": "Marriage; duration and whether current or ended not specified."
     },
     {
       "ref": "personal_history.future_goals",
@@ -454,7 +449,7 @@
       "source": "llm",
       "note": "",
       "expected": "recover; honour son's memory",
-      "produced": "Recover and honour his son's memory."
+      "produced": "Recover and honour my son's memory."
     }
   ],
   "fabricated": []

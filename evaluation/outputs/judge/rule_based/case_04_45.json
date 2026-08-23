@@ -77,22 +77,22 @@
       }
     }
   },
-  "flow_summary": "The interviewer successfully navigated the intake but struggled significantly with the patient's confusion during the PHQ-9 and GAD-7 sections. While the interviewer correctly attempted to redirect the patient, they often relied on rigid, repetitive prompts rather than clarifying the scale or acknowledging the patient's difficulty, leading to a mechanical and frustrating experience for the user.",
+  "flow_summary": "The interviewer successfully navigated a challenging, confused patient persona but struggled with the structured questionnaires. While the interviewer was patient and persistent in gathering information, they failed to effectively manage the patient's confusion during the PHQ-9 and GAD-7, leading to repetitive, mechanical questioning that did not resolve the patient's inability to understand the scale.",
   "issues": [
     {
       "severity": "moderate",
-      "category": "recovery_failure",
-      "evidence": "When the patient expressed confusion about the GAD-7 scale, the interviewer simply repeated the prompt: 'Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day.' This failed to address the patient's underlying confusion."
+      "category": "questionnaire_management",
+      "evidence": "The interviewer repeatedly forced the patient to choose from the list without re-explaining or simplifying the options when the patient expressed confusion: 'Please choose one response option: Not at all, Several days, More than half the days, or Nearly every day.'"
     },
     {
       "severity": "minor",
-      "category": "mechanical_interaction",
-      "evidence": "The interviewer repeatedly used the exact same phrasing to force a response when the patient was struggling, such as: 'Please answer yes or no' and 'Please choose one response option...'. This felt robotic and lacked the necessary flexibility for a confused patient."
+      "category": "questionnaire_management",
+      "evidence": "The interviewer failed to address the patient's confusion regarding the timeframe of the questions, simply repeating the prompt: 'That depends. Are you asking about now or about back then?' followed by 'Please choose one response option...'"
     },
     {
       "severity": "minor",
-      "category": "redundant_question",
-      "evidence": "The interviewer asked for the date of birth and then immediately asked: 'Please repeat your date of birth in DD/MM/YYYY format.' This was unnecessary as the patient had already provided the correct format."
+      "category": "flow",
+      "evidence": "The interviewer missed the patient's initial confusion about the address, failing to break it down into smaller, manageable parts: 'Sorry, I’m not quite following all of that. Do you mean the whole mailing address, or just the street part?'"
     }
   ],
   "field_verdicts": [
@@ -268,7 +268,7 @@
       "ref": "general_information.name",
       "verdict": "missing",
       "source": "llm",
-      "note": "The system failed to extract the name and instead recorded a conversational error message.",
+      "note": "The system failed to extract the name from the conversational filler.",
       "expected": "DOUGLAS FENWICK",
       "produced": "SORRY, COULD YOU SAY THAT AGAIN? I’M NOT SURE IF YOU MEAN THE NAME ON MY HEALTH CARD OR SOMETHING ELSE. I DO HAVE A FULL NAME, BUT I’M GETTING A BIT MIXED UP WITH THE DOCUMENTS SIDE OF IT."
     },
@@ -284,7 +284,7 @@
       "ref": "general_information.date_of_birth",
       "verdict": "missing",
       "source": "llm",
-      "note": "The system recorded 'Unknown' instead of the provided date.",
+      "note": "The system recorded unknown instead of the provided date.",
       "expected": "13/06/1970",
       "produced": "Unknown"
     },
@@ -292,7 +292,7 @@
       "ref": "general_information.address",
       "verdict": "missing",
       "source": "llm",
-      "note": "The system failed to extract the address and instead recorded a conversational error message.",
+      "note": "The system failed to extract the address.",
       "expected": "68 Glen Manor Drive, Toronto, Ontario",
       "produced": "Sorry, I’m not quite following all of that. Do you mean the whole mailing address, or just the street part? I can usually remember the street okay, but the rest I get a bit tangled up with."
     },
@@ -300,7 +300,7 @@
       "ref": "general_information.postal_code",
       "verdict": "missing",
       "source": "llm",
-      "note": "The system recorded 'Unknown' instead of the provided postal code.",
+      "note": "The system recorded unknown.",
       "expected": "M4E2X2",
       "produced": "Unknown"
     },
@@ -316,7 +316,7 @@
       "ref": "general_information.family_doctor_name",
       "verdict": "partial",
       "source": "llm",
-      "note": "Captured the surname but missed the first name.",
+      "note": "Only the surname was captured, missing the first name.",
       "expected": "DR. OMAR SIDDIQUI",
       "produced": "OH, THE DOCTOR’S NAME… I KNOW I’VE GOT ONE, BUT I’M DRAWING A BLANK ON THE FULL NAME RIGHT NOW. IT’S SOMETHING LIKE DR. SIDDIQUI, I THINK, BUT I DON’T WANT TO MUDDLE IT UP."
     },

@@ -4,11 +4,11 @@
   "scenario_case_id": "04-15",
   "repetition": 0,
   "persona_id": "moderate",
-  "record_score": 0.9457,
-  "flow_score": 0.5,
+  "record_score": 0.9783,
+  "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9457,
-    "record_score_contested": 0.8929,
+    "record_score": 0.9783,
+    "record_score_contested": 0.9286,
     "fields_contested": 14,
     "fields_auto_resolved": 32,
     "fields_confirmed_absent": 7,
@@ -16,9 +16,9 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 43,
-      "partial": 1,
-      "missing": 2,
+      "match": 44,
+      "partial": 2,
+      "missing": 0,
       "contradicted": 0,
       "fabricated": 0
     },
@@ -37,8 +37,8 @@
       },
       "medications": {
         "fields": 4,
-        "credit": 3.0,
-        "score": 0.75
+        "credit": 4.0,
+        "score": 1.0
       },
       "medical_history": {
         "fields": 6,
@@ -67,32 +67,27 @@
       },
       "personal_history": {
         "fields": 5,
-        "credit": 4.0,
-        "score": 0.8
+        "credit": 5.0,
+        "score": 1.0
       },
       "current_concerns": {
         "fields": 2,
-        "credit": 1.5,
-        "score": 0.75
+        "credit": 1.0,
+        "score": 0.5
       }
     }
   },
-  "flow_summary": "The interviewer successfully gathered most of the required clinical information but struggled significantly with the safety protocol and repetitive questioning. The system became trapped in a loop after the patient disclosed passive suicidal ideation, repeatedly asking for confirmation of the intake status despite the patient's clear responses.",
+  "flow_summary": "The interviewer conducted a thorough and professional intake, effectively managing a patient who was occasionally imprecise. The system successfully navigated the patient's vague responses through gentle redirection and clarification. A safety response was appropriately triggered following the patient's disclosure on PHQ-9 question 9.",
   "issues": [
     {
-      "severity": "major",
-      "category": "repetition",
-      "evidence": "The interviewer repeated the phrase 'Before we move on, could you answer the question above?' four times in a row (turns 18-21) despite the patient clearly stating there was nothing else to add."
-    },
-    {
-      "severity": "moderate",
-      "category": "safety_handling",
-      "evidence": "The safety response was triggered appropriately, but the system failed to exit the loop after the patient confirmed they were safe, continuing to ask for confirmation of the intake status."
+      "severity": "minor",
+      "category": "redundancy",
+      "evidence": "In the current_concerns section, the interviewer repeated the exact same question twice in a single turn: 'When you have trouble sleeping or feel on edge, what specifically happens, and where does it affect you most—at home, work, or in relationships? What specifically happens when you have trouble sleeping or feel on edge, and where does it affect you most—at home, work, or in relationships?'"
     },
     {
       "severity": "minor",
-      "category": "question_clarity",
-      "evidence": "In the GAD-7 section, the interviewer had to rephrase questions multiple times because the initial phrasing was not understood by the patient, though the recovery was ultimately successful."
+      "category": "redundancy",
+      "evidence": "In the medications section, the interviewer asked 'Were there any other psychiatric medications you tried in the past?' twice in immediate succession (turns 13 and 15), despite the patient having already answered."
     }
   ],
   "field_verdicts": [
@@ -210,11 +205,11 @@
     },
     {
       "ref": "medications.has_past_medications",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": null
+      "produced": true
     },
     {
       "ref": "medical_history.has_medical_conditions",
@@ -342,7 +337,7 @@
       "source": "auto",
       "note": "",
       "expected": "Logistics supervisor, Harbourfront Freight; 2021 to present",
-      "produced": "Logistics supervisor, Harbourfront Freight; 2021 to Present"
+      "produced": "Logistics supervisor, Harbourfront Freight; 2021 to present"
     },
     {
       "ref": "personal_history.significant_relationships[1]",
@@ -350,23 +345,23 @@
       "source": "auto",
       "note": "",
       "expected": "Two children.",
-      "produced": "Marriage; approximately 12 years to present; current, though somewhat strained. Two children."
+      "produced": "Marriage; approximately 12 years to present; current, recently strained. Two children."
     },
     {
       "ref": "current_concerns.primary_problems",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing specific mention of nightmares, flashbacks, and suicidal ideation.",
+      "note": "Missing the duration of symptoms (eight months) and the suicidal ideation.",
       "expected": "Nightmares and flashbacks about a deployment; hypervigilance; avoiding crowds; irritability with his wife; poor sleep for about eight months; thoughts that he would rather not wake up.",
-      "produced": "The patient has been feeling on edge lately, mostly at home and around other people. This has been affecting sleep, and family relationships have become strained."
+      "produced": "At home, I have nightmares and flashbacks related to a deployment, feel jumpy and constantly watchful, avoid crowds, and snap at my wife more than I should."
     },
     {
       "ref": "current_concerns.goals",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing the goal of stopping snapping at family.",
       "expected": "Sleep through the night; stop snapping at my family; feel less on edge.",
-      "produced": "Sleep through the night; stop snapping at family; feel less on edge."
+      "produced": "I hope to find help with sleep and feel less wound up day to day."
     },
     {
       "ref": "past_psychiatric_history.assessment_details",
@@ -374,7 +369,7 @@
       "source": "llm",
       "note": "",
       "expected": "2019; military mental health service; assessed after returning from deployment.",
-      "produced": "Assessed in 2019 by the military mental health service."
+      "produced": "2019; assessed by military mental health services after returning from deployment due to symptoms; further details unknown."
     },
     {
       "ref": "past_psychiatric_history.previous_diagnoses",
@@ -382,7 +377,7 @@
       "source": "llm",
       "note": "",
       "expected": "Post-traumatic stress disorder",
-      "produced": "PTSD"
+      "produced": "Post-traumatic stress disorder (PTSD)."
     },
     {
       "ref": "past_psychiatric_history.previous_therapies",
@@ -390,7 +385,7 @@
       "source": "llm",
       "note": "",
       "expected": "Trauma-focused cognitive behavioural therapy; 2019 to 2020; approximately 20 sessions; veterans clinic.",
-      "produced": "Trauma-focused CBT; around 2019 to 2020; approximately 20 sessions; veterans clinic"
+      "produced": "Trauma-focused cognitive behavioural therapy (CBT); 2019 to 2020; approximately 20 or slightly more sessions; veterans clinic."
     },
     {
       "ref": "medications.current_medications",
@@ -398,7 +393,7 @@
       "source": "llm",
       "note": "",
       "expected": "Prazosin; 2 mg nightly; started January 2025; light-headed on standing",
-      "produced": "Prazosin; 2 mg nightly; started January 2025; light-headedness when standing"
+      "produced": "Prazosin; 2 mg at night; started January 2025; light-headedness when standing up."
     },
     {
       "ref": "medications.past_medication_details",
@@ -406,7 +401,7 @@
       "source": "llm",
       "note": "",
       "expected": "Paroxetine; 20 mg daily; about 14 months from 2019; stopped because of sexual side effects",
-      "produced": "Paroxetine; 20 mg daily; started in 2019; taken for approximately 14 months; stopped due to sexual side effects"
+      "produced": "Paroxetine; 20 mg daily; started in 2019; taken for approximately 14 months; stopped due to sexual side effects."
     },
     {
       "ref": "medical_history.surgical_history",
@@ -422,7 +417,7 @@
       "source": "llm",
       "note": "",
       "expected": "Current; beer; four or five drinks most evenings; increased over the past year",
-      "produced": "Status: Current; Substance or product: Beer; Quantity or frequency: Approximately four or five drinks most evenings; Duration: Years, with increased use over the past year."
+      "produced": "Status: Current; Substance or product: Beer; Quantity or frequency: Approximately 4–5 drinks most evenings; Duration: Increasing over approximately the past year; Exact duration: Unknown."
     },
     {
       "ref": "substance_use.nonmedical_nicotine_use",
@@ -438,7 +433,7 @@
       "source": "llm",
       "note": "",
       "expected": "Born and raised in Hamilton; describes a stable but strict household.",
-      "produced": "Born and raised in Hamilton; grew up in a stable but strict household."
+      "produced": "Born and raised in Hamilton. Described childhood as stable but in a strict household."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -446,7 +441,7 @@
       "source": "llm",
       "note": "",
       "expected": "Joined the forces at 19 after college; two overseas deployments.",
-      "produced": "Attended college and joined the armed forces at age 19. Had two overseas deployments."
+      "produced": "Attended college and joined the military at age 19. Had two overseas deployments."
     },
     {
       "ref": "personal_history.significant_relationships[0]",
@@ -454,15 +449,15 @@
       "source": "llm",
       "note": "",
       "expected": "Marriage; 12 years; current, though strained",
-      "produced": "Marriage; approximately 12 years to present; current, though somewhat strained. Two children."
+      "produced": "Marriage; approximately 12 years to present; current, recently strained. Two children."
     },
     {
       "ref": "personal_history.future_goals",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "llm",
-      "note": "The system failed to capture the patient's specific goals regarding their children and sleep.",
+      "note": "",
       "expected": "Be present for my kids and get back to sleeping normally.",
-      "produced": "Wants to get things back on track; specific area not identified."
+      "produced": "Be present for my children and return to sleeping normally."
     }
   ],
   "fabricated": []

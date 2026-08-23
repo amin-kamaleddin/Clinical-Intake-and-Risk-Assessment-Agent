@@ -4,11 +4,11 @@
   "scenario_case_id": "04-02",
   "repetition": 0,
   "persona_id": "confused",
-  "record_score": 0.9091,
+  "record_score": 0.9205,
   "flow_score": 0.5,
   "record_detail": {
-    "record_score": 0.9091,
-    "record_score_contested": 0.7857,
+    "record_score": 0.9205,
+    "record_score_contested": 0.75,
     "fields_contested": 14,
     "fields_auto_resolved": 30,
     "fields_confirmed_absent": 10,
@@ -17,9 +17,9 @@
     "unjudged_refs": [],
     "verdict_counts": {
       "match": 38,
-      "partial": 4,
+      "partial": 5,
       "missing": 1,
-      "contradicted": 1,
+      "contradicted": 0,
       "fabricated": 0
     },
     "fabricated_fields": 0,
@@ -27,8 +27,8 @@
     "by_section": {
       "general_information": {
         "fields": 10,
-        "credit": 9.0,
-        "score": 0.9
+        "credit": 10.0,
+        "score": 1.0
       },
       "past_psychiatric_history": {
         "fields": 3,
@@ -37,13 +37,13 @@
       },
       "medications": {
         "fields": 3,
-        "credit": 2.0,
-        "score": 0.6667
+        "credit": 2.5,
+        "score": 0.8333
       },
       "medical_history": {
         "fields": 6,
-        "credit": 5.0,
-        "score": 0.8333
+        "credit": 4.0,
+        "score": 0.6667
       },
       "medication_allergies": {
         "fields": 1,
@@ -62,8 +62,8 @@
       },
       "education_employment_legal_history": {
         "fields": 4,
-        "credit": 3.5,
-        "score": 0.875
+        "credit": 4.0,
+        "score": 1.0
       },
       "current_concerns": {
         "fields": 2,
@@ -72,27 +72,27 @@
       },
       "personal_history": {
         "fields": 4,
-        "credit": 4.0,
-        "score": 1.0
+        "credit": 3.5,
+        "score": 0.875
       }
     }
   },
-  "flow_summary": "The interviewer struggled significantly with the patient's confusion, leading to a repetitive and mechanical interaction. While the interviewer was patient and persistent in clarifying questions, the system frequently failed to adapt to the patient's cognitive state, resulting in excessive looping and redundant confirmation prompts that made the intake feel disjointed and frustrating.",
+  "flow_summary": "The interviewer was persistent and thorough in gathering information, but the interaction was significantly hampered by a rigid, repetitive, and overly formal questioning style. While the interviewer successfully navigated the patient's confusion, the reliance on repeating full, complex question blocks—rather than simplifying the language—led to a tedious and inefficient interview process.",
   "issues": [
     {
       "severity": "moderate",
-      "category": "redundant_questioning",
-      "evidence": "The interviewer engaged in a repetitive loop at the end of the medication section, asking 'Before we move on, could you answer the question above?' six consecutive times after the patient had already confirmed the information."
+      "category": "communication_style",
+      "evidence": "The interviewer repeatedly used long, complex, and formal phrasing (e.g., 'Apart from any stimulant prescribed to you and taken as directed, have you ever used stimulants nonmedically...') which consistently confused the patient."
     },
     {
       "severity": "moderate",
-      "category": "poor_flow",
-      "evidence": "The interviewer repeatedly used the phrase 'Before we move on, could you answer the question above?' even when the patient had just provided a clear answer, creating a mechanical and confusing dialogue."
+      "category": "efficiency",
+      "evidence": "The interviewer frequently repeated the entire questionnaire item, including the full list of options, when the patient expressed confusion, rather than simplifying the question or focusing on the core inquiry."
     },
     {
       "severity": "minor",
-      "category": "lack_of_adaptation",
-      "evidence": "When the patient expressed confusion about the PHQ-9 and GAD-7 scales, the interviewer simply repeated the full list of options multiple times rather than simplifying the delivery or acknowledging the patient's difficulty with the format."
+      "category": "flow",
+      "evidence": "In the PHQ-9 and GAD-7 sections, the interviewer failed to adapt to the patient's clear struggle with the scale, repeatedly re-reading the full list of options instead of providing a more concise prompt."
     }
   ],
   "field_verdicts": [
@@ -111,6 +111,14 @@
       "note": "",
       "expected": "Female",
       "produced": "Female"
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "09/02/2003",
+      "produced": "09/02/2003"
     },
     {
       "ref": "general_information.address",
@@ -194,11 +202,11 @@
     },
     {
       "ref": "medications.has_current_medications",
-      "verdict": "missing",
+      "verdict": "match",
       "source": "auto",
       "note": "",
       "expected": true,
-      "produced": null
+      "produced": true
     },
     {
       "ref": "medications.has_past_medications",
@@ -223,14 +231,6 @@
       "note": "",
       "expected": true,
       "produced": true
-    },
-    {
-      "ref": "medical_history.height",
-      "verdict": "match",
-      "source": "auto",
-      "note": "",
-      "expected": "162 cm",
-      "produced": "162 cm"
     },
     {
       "ref": "medical_history.weight",
@@ -262,7 +262,7 @@
       "source": "auto",
       "note": "",
       "expected": "Mother; depression after the birth of her second child",
-      "produced": "Mother; depression after the birth of her second child; no further details known. Maternal aunt; anxiety"
+      "produced": "Mother; depression after the birth of her second child; duration unknown. Aunt; anxiety."
     },
     {
       "ref": "substance_use.nonmedical_alcohol_use",
@@ -337,20 +337,12 @@
       "produced": "High school"
     },
     {
-      "ref": "general_information.date_of_birth",
-      "verdict": "contradicted",
-      "source": "llm",
-      "note": "The produced date is 02/09/2003, which contradicts the expected 09/02/2003.",
-      "expected": "09/02/2003",
-      "produced": "02/09/2003"
-    },
-    {
       "ref": "current_concerns.primary_problems",
       "verdict": "match",
       "source": "llm",
       "note": "",
       "expected": "low mood; fatigue; postpartum; overwhelmed",
-      "produced": "At home, experiencing persistent tiredness, low mood, feeling that everything is heavy, and feeling overwhelmed and guilty while caring for a frequently crying baby and a toddler. Breastfeeding and limited support from her husband contribute to the ongoing strain."
+      "produced": "Since the baby was born, I have been feeling very low, tired all the time, overwhelmed with responsibilities at home caring for the baby and toddler, and not like myself. Breastfeeding contributes to the constant demands."
     },
     {
       "ref": "current_concerns.goals",
@@ -358,31 +350,39 @@
       "source": "llm",
       "note": "",
       "expected": "feel like herself; cope; care for children",
-      "produced": "Feel like herself again, cope better, and care for her children without feeling like she is falling apart."
+      "produced": "Feel like myself again, cope better, and care for the children without feeling like I am dragging through everything."
     },
     {
       "ref": "medications.current_medications",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Missing dosage frequency.",
       "expected": "Prenatal multivitamin with iron; one tablet daily; started during pregnancy; no side effects known",
-      "produced": "Prenatal multivitamin with iron; one tablet daily; started during pregnancy; no known side effects"
+      "produced": "Prenatal vitamin with iron; dose Unknown; started at the beginning of pregnancy; no side effects"
     },
     {
       "ref": "medical_history.medical_conditions",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the detail about using a salbutamol inhaler as needed.",
+      "note": "Missing information about salbutamol inhaler use.",
       "expected": "Asthma; diagnosed in childhood; uses salbutamol inhaler as needed",
-      "produced": "Asthma; diagnosed in childhood"
+      "produced": "Asthma; since childhood"
     },
     {
       "ref": "medical_history.surgical_history",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the detail about no ongoing complications.",
+      "note": "Missing information about the emergency nature of the procedure and lack of complications.",
       "expected": "Emergency caesarean section; February 2026; no ongoing complications",
-      "produced": "Emergency caesarean section; February 2026"
+      "produced": "Caesarean section; February 2026"
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "Height was not captured.",
+      "expected": "162 cm",
+      "produced": "Unknown"
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
@@ -390,23 +390,23 @@
       "source": "llm",
       "note": "",
       "expected": "Maternal aunt; anxiety.",
-      "produced": "Mother; depression after the birth of her second child; no further details known. Maternal aunt; anxiety"
+      "produced": "Mother; depression after the birth of her second child; duration unknown. Aunt; anxiety."
     },
     {
       "ref": "substance_use.nonmedical_nicotine_use",
       "verdict": "partial",
       "source": "llm",
-      "note": "Missing the detail that use stopped when pregnancy was confirmed.",
+      "note": "Missing information about cessation upon pregnancy confirmation.",
       "expected": "Previous; cigarettes; about 5 per day; used for 4 years; stopped when pregnancy was confirmed",
-      "produced": "Status: Previous; Substance or product: Cigarettes; Quantity or frequency: About 5 cigarettes per day; Duration: About 4 years"
+      "produced": "Status: Previous; Substance or product: Cigarettes; Quantity or frequency: About 5 cigarettes per day; Duration: 4 years"
     },
     {
       "ref": "education_employment_legal_history.employment_history[0]",
-      "verdict": "partial",
+      "verdict": "match",
       "source": "llm",
-      "note": "Missing the detail that employment stopped during pregnancy.",
+      "note": "",
       "expected": "Barista at Lakeside Coffee; 2021 to 2025; stopped during pregnancy",
-      "produced": "Barista, Lakeside Coffee; 2021 to 2025. Homemaker; Unknown to Present"
+      "produced": "Homemaker, own household; since 2025. Barista, Lakeside Coffee; 2021 to 2025."
     },
     {
       "ref": "education_employment_legal_history.employment_history[1]",
@@ -414,7 +414,7 @@
       "source": "llm",
       "note": "",
       "expected": "Currently homemaker.",
-      "produced": "Barista, Lakeside Coffee; 2021 to 2025. Homemaker; Unknown to Present"
+      "produced": "Homemaker, own household; since 2025. Barista, Lakeside Coffee; 2021 to 2025."
     },
     {
       "ref": "personal_history.early_childhood",
@@ -422,7 +422,7 @@
       "source": "llm",
       "note": "",
       "expected": "born; grew up",
-      "produced": "Born and raised in the same place; city or more specific location unknown. Described themselves as a typical child, with nothing particular standing out."
+      "produced": "Patient was born and grew up in the same place, referred to as here. As a young child, the patient described themselves as possibly quiet but was unsure."
     },
     {
       "ref": "personal_history.adolescence_early_adulthood",
@@ -430,15 +430,15 @@
       "source": "llm",
       "note": "",
       "expected": "school; coffee shop work",
-      "produced": "Attended school with no significant difficulties reported. Later worked in a coffee shop, with no significant difficulties at work or home reported."
+      "produced": "During adolescence, school was okay, and nothing else about that experience stood out to the patient. In early adulthood, the patient worked as a barista at Lakeside Coffee. No significant difficulties or other important experiences were reported."
     },
     {
       "ref": "personal_history.significant_relationships",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "The unsupportive nature of the relationship is missing.",
       "expected": "married; husband; unsupportive; absent",
-      "produced": "Marriage; dates or duration unknown; current. Husband is often absent and described as not very supportive."
+      "produced": "Marriage; duration and dates not provided; current, though the patient's husband is often absent."
     },
     {
       "ref": "personal_history.future_goals",
@@ -446,7 +446,7 @@
       "source": "llm",
       "note": "",
       "expected": "care for children; return to work",
-      "produced": "Care for her children properly and possibly return to work in the future."
+      "produced": "The patient wants to care for their children and may return to work eventually."
     }
   ],
   "fabricated": []

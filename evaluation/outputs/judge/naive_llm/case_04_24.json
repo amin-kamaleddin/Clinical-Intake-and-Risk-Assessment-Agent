@@ -4,11 +4,11 @@
   "scenario_case_id": "04-24",
   "repetition": 0,
   "persona_id": "moderate",
-  "record_score": 0.9767,
+  "record_score": 0.9651,
   "flow_score": 0.85,
   "record_detail": {
-    "record_score": 0.9767,
-    "record_score_contested": 0.9565,
+    "record_score": 0.9651,
+    "record_score_contested": 0.9348,
     "fields_contested": 23,
     "fields_auto_resolved": 20,
     "fields_confirmed_absent": 7,
@@ -16,8 +16,8 @@
     "fields_unjudged": 0,
     "unjudged_refs": [],
     "verdict_counts": {
-      "match": 41,
-      "partial": 2,
+      "match": 40,
+      "partial": 3,
       "missing": 0,
       "contradicted": 0,
       "fabricated": 2
@@ -55,8 +55,8 @@
       },
       "family_psychiatric_history": {
         "fields": 2,
-        "credit": 2.0,
-        "score": 1.0
+        "credit": 1.5,
+        "score": 0.75
       },
       "education_employment_legal_history": {
         "fields": 3,
@@ -80,17 +80,17 @@
       }
     }
   },
-  "flow_summary": "The interviewer conducted a thorough and professional intake, effectively managing a patient who occasionally provided imprecise or hedged answers. The system successfully navigated the patient's need for clarification on questionnaire items and maintained a clear, logical structure throughout the session.",
+  "flow_summary": "The interviewer conducted a thorough and professional intake. It handled the patient's occasional imprecision well by re-asking questions clearly when necessary. The transition between the intake and the standardized questionnaires was smooth, and the interviewer effectively managed the patient's confusion regarding specific questionnaire items.",
   "issues": [
     {
       "severity": "minor",
-      "category": "clarity",
-      "evidence": "The interviewer repeated the GAD-7 question 5 after the patient gave a vague answer, which was necessary for recovery, but the repetition of the full question text felt slightly mechanical."
+      "category": "repetition",
+      "evidence": "The interviewer repeated GAD-7 question 5 after the patient gave a vague answer, which was necessary for clarity, but the repetition of the full question text felt slightly mechanical."
     },
     {
       "severity": "minor",
-      "category": "flow",
-      "evidence": "The interviewer had to re-ask the GAD-7 difficulty question because the patient forgot the options, though the system handled this gracefully by restating the choices."
+      "category": "clarity",
+      "evidence": "The patient struggled with the phrasing of PHQ-9 questions 3 and 6, requiring the interviewer to rephrase them. While the interviewer successfully recovered, the initial phrasing was slightly complex for the patient."
     }
   ],
   "field_verdicts": [
@@ -266,7 +266,7 @@
       "ref": "general_information.address",
       "verdict": "partial",
       "source": "llm",
-      "note": "City and province information is missing.",
+      "note": "City and province are missing.",
       "expected": "1150 Bathurst Street, Toronto, Ontario",
       "produced": "1150 Bathurst Street"
     },
@@ -328,9 +328,9 @@
     },
     {
       "ref": "family_psychiatric_history.family_psychiatric_history_details",
-      "verdict": "match",
+      "verdict": "partial",
       "source": "llm",
-      "note": "",
+      "note": "Childhood diagnosis timing is missing.",
       "expected": "Brother; attention-deficit/hyperactivity disorder; diagnosed in childhood.",
       "produced": "Brother has ADHD; no other psychiatric or mental-health conditions reported."
     },
