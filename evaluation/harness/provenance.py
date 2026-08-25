@@ -55,7 +55,7 @@ def _prompt_hashes() -> dict:
     return hashes
 
 
-def build_manifest(run_id: str | None = None) -> dict:
+def build_manifest(run_id: str | None = None, repetitions: int | None = None) -> dict:
     """Everything needed to reproduce a result set."""
     return {
         "run_id": run_id or uuid.uuid4().hex[:12],
@@ -74,8 +74,24 @@ def build_manifest(run_id: str | None = None) -> dict:
             "patient_simulator": config.OPENROUTER_BASE_URL,
             "judge": config.JUDGE_BASE_URL,
         },
+        # Every sampling temperature in the pipeline, recorded together so a
+        # reader can see at a glance that the arms were matched. CIRA used to
+        # send none at all and ran at the provider default while the baseline
+        # was pinned at 0; that is not visible unless it is written down.
+        "temperatures": {
+            "cira": cira_temperature(),
+            "naive_llm": config.NAIVE_TEMPERATURE,
+            "patient_simulator": config.PATIENT_TEMPERATURE,
+            "judge": config.JUDGE_TEMPERATURE,
+            "patient_temperature_pinned": config.PATIENT_TEMPERATURE_IS_PINNED,
+        },
         "judge_temperature": config.JUDGE_TEMPERATURE,
-        "repetitions": config.REPETITIONS,
+        # The EFFECTIVE count, not the environment default. --repetitions N used
+        # to run N repetitions while the manifest recorded config.REPETITIONS,
+        # so a repeated run could be filed as a single realisation.
+        "repetitions": (
+            repetitions if repetitions is not None else config.REPETITIONS
+        ),
         "personas": {
             "seed": config.PERSONA_SEED,
             "strategy": config.PERSONA_ASSIGNMENT_STRATEGY,
@@ -115,8 +131,21 @@ def _cira_model_name() -> str | None:
         return None
 
 
-def write_manifest(run_id: str | None = None) -> dict:
-    manifest = build_manifest(run_id)
+def cira_temperature():
+    """CIRA's own sampling temperature, or None if the agent cannot be imported."""
+    try:
+        import sys
+        cira_root = str(config.PROJECT_ROOT.parent / "cira")
+        if cira_root not in sys.path:
+            sys.path.insert(0, cira_root)
+        from core.config import TEMPERATURE
+        return TEMPERATURE
+    except Exception:  # noqa: BLE001 - provenance must never block a run
+        return None
+
+
+def write_manifest(run_id: str | None = None, repetitions: int | None = None) -> dict:
+    manifest = build_manifest(run_id, repetitions)
     config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     MANIFEST_PATH.write_text(
         json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8"

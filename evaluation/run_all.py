@@ -62,13 +62,19 @@ def stage_judge(systems, case_filter):
         print(f"[judge] SKIPPED: {error}")
 
 
-def stage_summary(systems):
+def stage_summary(systems, repetitions=None):
     """Combine the deterministic and judge reports into one file."""
     summary = {"generated_at": time.strftime("%Y-%m-%d %H:%M:%S"), "systems": {}}
 
     # Provenance: which models, prompts, scenarios and code produced this.
     summary["provenance"] = provenance.load_manifest()
-    summary["repetitions"] = config.REPETITIONS
+    # Read the count this run actually used. Reading config.REPETITIONS here
+    # meant `--repetitions 3` produced three realisations per scenario and then
+    # filed them as one, which silently understates the evidence behind every
+    # interval in the report.
+    summary["repetitions"] = (
+        repetitions if repetitions is not None else config.REPETITIONS
+    )
     freshness = provenance.check_artifact_freshness(systems)
     summary["artifact_freshness"] = freshness
     if not freshness["clean"]:
@@ -234,7 +240,7 @@ def main() -> None:
     }
 
 
-    manifest = provenance.write_manifest()
+    manifest = provenance.write_manifest(repetitions=args.repetitions)
 
     persona_report = personas.write_assignment(
         seed=args.persona_seed,
@@ -269,7 +275,7 @@ def main() -> None:
     if "judge" in stages:
         stage_judge(systems, args.case)
     if "summary" in stages:
-        stage_summary(systems)
+        stage_summary(systems, repetitions=repetitions)
 
 
 if __name__ == "__main__":

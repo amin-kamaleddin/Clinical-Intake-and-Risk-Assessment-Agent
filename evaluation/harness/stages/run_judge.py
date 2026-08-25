@@ -420,7 +420,7 @@ def run(systems=None, case_filter: str | None = None) -> dict:
         "cases": all_cases,
     }
 
-    config.JUDGE_REPORT_PATH.write_text(
+    config.judge_report_path().write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
@@ -480,7 +480,7 @@ def run(systems=None, case_filter: str | None = None) -> dict:
                   f"{stats.format_difference(metrics[name])}")
 
     print()
-    print("Saved comparison report:", config.JUDGE_REPORT_PATH)
+    print("Saved comparison report:", config.judge_report_path())
     print("=" * 72)
     return report
 

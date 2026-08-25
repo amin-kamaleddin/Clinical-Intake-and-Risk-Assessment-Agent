@@ -212,10 +212,77 @@ def provenance_note(data: dict) -> str:
     )
 
 
+# Conditions under which these tables must not be produced. Manuscript tables
+# look authoritative no matter what they were built from, so the check belongs
+# here rather than in a reviewer's head: this script previously turned a
+# contaminated single run - stale artifacts, a dirty tree, six different CIRA
+# run ids - into clean-looking publication tables with no warning at all.
+MIN_REPETITIONS = 1
+
+
+def publication_blockers(data: dict, min_repetitions: int = MIN_REPETITIONS) -> list:
+    """Reasons this result set must not become manuscript tables."""
+    summary = data.get("summary") or {}
+    prov = summary.get("provenance") or {}
+    blockers = []
+
+    revision = str(prov.get("code_revision") or "")
+    if revision.endswith("-dirty"):
+        blockers.append(
+            f"code revision is '{revision}': the working tree had uncommitted "
+            "changes, so this result cannot be traced to a commit"
+        )
+    if not revision:
+        blockers.append("no code revision recorded in the manifest")
+
+    freshness = summary.get("artifact_freshness") or {}
+    if freshness and not freshness.get("clean", True):
+        stale = freshness.get("stale_artifacts") or {}
+        counts = ", ".join(
+            f"{system}: {len(items) if hasattr(items, '__len__') else items}"
+            for system, items in stale.items()
+        )
+        blockers.append(
+            f"artifacts are stale relative to run {freshness.get('run_id')} "
+            f"({counts}); the reports mix more than one run"
+        )
+
+    reps = summary.get("repetitions")
+    if reps is None:
+        blockers.append("repetition count missing from the summary")
+    elif reps < min_repetitions:
+        blockers.append(
+            f"{reps} repetition(s) per scenario, below the required "
+            f"{min_repetitions}"
+        )
+
+    temps = prov.get("temperatures") or {}
+    if temps:
+        arms = {k: temps.get(k) for k in ("cira", "naive_llm")}
+        if None not in arms.values() and len(set(arms.values())) > 1:
+            blockers.append(
+                f"the compared arms used different sampling temperatures "
+                f"({arms}); a flow or completeness difference cannot be "
+                "attributed to architecture"
+            )
+    else:
+        blockers.append(
+            "no temperatures recorded in the manifest - cannot confirm the "
+            "arms were sampled alike (re-run with the current harness)"
+        )
+
+    return blockers
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--format", choices=("markdown", "latex"), default="markdown")
     parser.add_argument("--out", default=None, help="Directory to write files into.")
+    parser.add_argument("--min-repetitions", type=int, default=MIN_REPETITIONS,
+                        help="Refuse to build tables below this many repetitions.")
+    parser.add_argument("--force", action="store_true",
+                        help="Emit tables anyway, stamped NOT PUBLICATION READY. "
+                             "For inspecting a development run only.")
     args = parser.parse_args()
 
     data = collect()
@@ -223,10 +290,34 @@ def main() -> None:
         print("No summary.json found. Run the evaluation first.")
         return
 
+    blockers = publication_blockers(data, args.min_repetitions)
+    if blockers:
+        header = (
+            "REFUSING to generate manuscript tables from this result set:\n\n"
+            + "\n".join(f"  - {reason}" for reason in blockers)
+        )
+        if not args.force:
+            print(header)
+            print(
+                "\nFix by freezing a clean revision, clearing outputs/ and "
+                "running the pipeline once:\n"
+                "    git status --short          # commit or stash everything\n"
+                "    rm -rf outputs\n"
+                "    python run_all.py --repetitions N\n"
+                "\nTo inspect a development run anyway: --force"
+            )
+            raise SystemExit(1)
+        print(header + "\n")
+
     render = to_markdown if args.format == "markdown" else to_latex
     parts = [render(title, builder(data)) for title, builder in TABLES]
     document = (
-        "# Manuscript tables\n\n" + provenance_note(data) + "\n"
+        ("# Manuscript tables\n\n"
+         if not blockers else
+         "# Manuscript tables — NOT PUBLICATION READY\n\n"
+         + "".join(f"> BLOCKER: {reason}\n>\n" for reason in blockers)
+         + "\n")
+        + provenance_note(data) + "\n"
         + "\n".join(parts)
         + "\nPaired differences are the basis for comparative claims; a "
           "difference whose interval includes zero is not evidence of "

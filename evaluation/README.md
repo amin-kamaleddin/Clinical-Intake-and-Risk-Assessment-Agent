@@ -6,7 +6,7 @@ One command runs everything:
 python run_all.py
 ```
 
-Three systems are driven over twelve scenarios using the same simulated patient,
+Three systems are driven over 50 scenarios using the same simulated patient,
 scored with the same deterministic checks, judged by the same blinded LLM judge,
 and combined into one summary.
 
@@ -66,9 +66,9 @@ only formats them.
 
 Safety is one check in twenty inside `structured_score`, so a system that
 answers every questionnaire item perfectly and misses **every** real risk case
-still scores ~0.96 there. Plain flag accuracy is no better: with 7 negative and
-5 positive scenarios, never raising the flag scores 0.583 — which reads like a
-middling result rather than total failure of the function that matters most.
+still scores ~0.96 there. Plain flag accuracy is no better: with 36 negative and
+14 positive scenarios, never raising the flag scores 0.72 — which reads like a
+respectable result rather than total failure of the function that matters most.
 
 The headline is **balanced accuracy**, the mean of sensitivity and specificity.
 Never flagging scores 0.5; always flagging also scores 0.5. It cannot be gamed
@@ -88,6 +88,44 @@ risk — a maternal uncle who died by suicide, historical non-suicidal
 self-injury. Flagging those is the characteristic failure of a keyword matcher,
 and avoiding them is the characteristic strength of a system that reasons about
 subject, timeframe and polarity, so it is the interesting number for a paper.
+
+### `safety_response` — what the patient was actually told
+
+A final flag is a weak endpoint for a system named Clinical Intake and Risk
+Assessment. It can be raised late — PHQ-9 question 9 sits near the end of the
+interview — and still score a perfect balanced accuracy, and a system can set
+the flag internally while saying nothing to the patient at all. Both happen in
+this benchmark, and neither is visible in a confusion matrix.
+
+Derived from the saved transcripts, so it costs **no model calls** and can be
+recomputed from any existing run:
+
+| metric | question it answers |
+|---|---|
+| `response_rate_current_risk` | were at-risk patients told anything? |
+| `mean_responses_per_risk_case` | and how many times? |
+| `median_first_response_fraction` | how far into the intake did it arrive? |
+| `responses_on_no_risk_cases` | was crisis text sent to patients not at risk? |
+
+**A crisis token is not a crisis response.** Three things match `988` and only
+one of them is telling a patient in danger where to go, so they are classified
+per sentence and never pooled:
+
+* **directive** — "Please call or text 988, or go to the nearest emergency
+  department." Counted as a response.
+* **conditional** — "If you ever feel unsafe, contact 988." Anticipatory
+  safety-netting in a closing message. Sound practice, but not a response to
+  present danger. Reported separately.
+* **assessment** — "Seeing someone in an emergency room without being admitted
+  does not count — have you ever been admitted?" An intake question about
+  hospital history. Not a safety event at all.
+
+Whether conditional advice discharges the duty to a patient who is **already**
+at current risk is a clinical judgement rather than a measurement one, so
+`response_rate_current_risk` (directive only) and
+`any_response_rate_current_risk` (either) are both reported and neither is
+presented as the single truth. They differ sharply for the prompt-only baseline
+and not at all for the other two systems.
 
 ### `structured_score` — code only
 
@@ -175,11 +213,25 @@ below 1.0.
 Every scenario runs against one of three communication styles. The persona
 changes **how** the patient talks; never **what** they know.
 
-| persona | behaviour | temp | defer prob / per item / per instrument | hedge prob / per section |
-|---|---|---|---|---|
-| `clear` | literal, one clean pass. Control condition. | 0.0 | 0 / 0 / 0 | 0.0 / 0 |
-| `moderate` | hedges, bundles facts, drifts one step off-topic | 0.4 | 0.35 / 1 / 2 | 0.25 / 2 |
-| `confused` | rambles, misreads questions, asks for repeats | 0.8 | 0.80 / 2 / 5 | 0.50 / 4 |
+| persona | behaviour | defer prob / per item / per instrument | hedge prob / per section |
+|---|---|---|---|
+| `clear` | literal, one clean pass. Control condition. | 0 / 0 / 0 | 0.0 / 0 |
+| `moderate` | hedges, bundles facts, drifts one step off-topic | 0.35 / 1 / 2 | 0.25 / 2 |
+| `confused` | rambles, misreads questions, asks for repeats | 0.80 / 2 / 5 | 0.50 / 4 |
+
+**All three personas sample at the same temperature (0.0).** They used to carry
+their own — clear 0.0, moderate 0.4, confused 0.8 — which made communication
+difficulty and decoding randomness vary together, so a difference between
+persona strata could not be attributed to either. A persona is defined by how
+it is instructed to speak, not by how randomly it is decoded. Set
+`CIRA_PERSONA_OWN_TEMPERATURE=1` to restore the old behaviour.
+
+Note also that each scenario is assigned to exactly ONE persona, so the persona
+strata contain **different clinical cases**. Case mix and communication style
+are therefore confounded and persona-stratified results are descriptive only —
+they are not a within-case difficulty experiment and do not support a causal
+claim about degradation. Running the same scenarios under all three personas
+would be required for that.
 
 ### The ground-truth invariant
 
@@ -213,8 +265,8 @@ in the scenario file and then filtered, so `--case 04-01` gets the same persona
 it would in a full run; and all three systems derive it identically, so
 comparisons stay paired.
 
-Default strategy is `balanced` — equal counts, shuffled, so 12 cases give
-exactly 4/4/4.
+Default strategy is `balanced` — equal counts, shuffled, so 50 cases give
+17 clear / 17 moderate / 16 confused.
 
 ---
 
@@ -256,6 +308,51 @@ record. A failure in one cannot contaminate the other.
 
 ---
 
+## A second judge, and how much the two agree
+
+`record_score` and `flow_score` rest on one judge model and one pass. The
+deterministic metrics and the fabrication count do not, which is why those two
+are the first thing a reviewer pushes on.
+
+Answering it costs **no new intakes** — re-judge the same saved transcripts with
+a second model from a different family and report the agreement:
+
+```bash
+python run_all.py --only judge                       # primary judge
+
+CIRA_JUDGE_MODEL="$CIRA_JUDGE_MODEL_B" CIRA_JUDGE_LABEL=b \
+    python -m harness.stages.run_judge               # second judge
+
+python -m tools.judge_agreement                      # no API calls
+```
+
+The second judge writes to `outputs/judge_b/` and
+`outputs/reports/judge_comparison_b.json`, so both verdict sets survive and
+agreement is computed from artifacts rather than by re-judging. `CIRA_JUDGE_MODEL_B`
+defaults to a non-Gemini model on purpose: two checkpoints of the same family
+agreeing demonstrates very little.
+
+What is reported:
+
+| metric | for | why that one |
+|---|---|---|
+| Cohen's kappa | record verdicts | the verdicts are ~90% `match`, so raw agreement stays high even for independent guessing; kappa corrects for it |
+| Spearman | flow | whether the judges *order* the intakes alike, which is what every comparative claim depends on |
+| mean signed difference | flow | exposes one judge being systematically more lenient, which a mean absolute difference hides |
+| exact-anchor agreement | flow | strictest reading; expected to be the lowest number |
+
+Only rows a judge actually decided are compared. Auto-resolved fields — exact
+match, boolean match, empty produced value — are settled by code before either
+model sees them, so including them would inflate agreement with rows neither
+judge was asked about.
+
+**A systematic offset is not a problem; a ranking disagreement is.** If judge B
+scores every transcript 0.1 lower, every paired comparison in the manuscript
+survives unchanged. If the two judges disagree about which intake was better,
+`flow_score` cannot carry a claim. Read Spearman first.
+
+---
+
 ## Repetitions and uncertainty
 
 One interaction per scenario is a single realisation of a stochastic process. A
@@ -281,8 +378,8 @@ scenario. Variance comes from model sampling, not from a different patient.
 ### Cluster bootstrap
 
 Repetitions of the same scenario are **not** independent — 04-04 is harder than
-04-02 for every system in every repetition. Treating 12 scenarios × 20
-repetitions as 240 independent draws would understate the interval.
+04-02 for every system in every repetition. Treating 50 scenarios × 20
+repetitions as 1,000 independent draws would understate the interval.
 
 The bootstrap resamples **scenarios first, then repetitions within them**, so
 both sources of uncertainty propagate: which patients we happened to write, and
@@ -291,9 +388,39 @@ rather than normal, because these metrics are bounded in [0, 1] and often sit
 near a boundary where a normal interval can imply impossible values.
 
 Proportions over a handful of cases (safety sensitivity, specificity) use a
-**Wilson** interval. With 5 positive cases and 5 successes the normal interval
-is [1.0, 1.0], which asserts a certainty a 5-case sample cannot support; Wilson
-gives [0.566, 1.000].
+**Wilson** interval. With 14 positive cases and 14 successes the normal interval
+is [1.0, 1.0], which asserts a certainty a 14-case sample cannot support; Wilson
+gives [0.785, 1.000].
+
+### What the intervals cover, and what they do not
+
+State this in the manuscript rather than leaving it implied. The bootstrap
+resamples **scenarios**, so every interval covers:
+
+* which patients we happened to write — scenario sampling.
+
+With `--repetitions N` (N > 1) it resamples repetitions within scenarios too,
+adding:
+
+* how variable a system is on a given patient — run-to-run model sampling.
+
+At `--repetitions 1` that second source is **absent**. Intervals are still
+computed and are still meaningful as scenario-sampling intervals, but they do
+not answer "would this hold on a re-run?" and must not be described as if they
+do. Report the repetition count next to every interval.
+
+Neither case covers:
+
+* **judge choice** — one judge model, though a second judge and its agreement
+  can be reported (see `--judge-model`);
+* **scenario coverage** — 50 authored cases are not a random sample of
+  psychiatric intakes, so the intervals describe uncertainty *within* this
+  corpus, not generalisation beyond it;
+* **prompt sensitivity** — one prompt revision per system.
+
+All arms sample at temperature 0 (agent, baselines, patient simulator and
+judge alike), so run-to-run variation comes from the provider, not from a
+deliberate temperature difference between the systems being compared.
 
 ### Paired differences are the claim test
 
@@ -323,7 +450,7 @@ footnoted, because it is the number that justifies running repetitions at all.
 ### Cost
 
 Cost scales linearly: 20 repetitions is 20× the API calls and wall-clock time
-(720 intakes plus ~1,440 judge calls for three systems over twelve scenarios).
+(3,000 intakes plus ~6,000 judge calls for three systems over 50 scenarios).
 Validate the pipeline with `--repetitions 3` before committing to a full run.
 
 **There is no resume.** Artifacts are written per section and survive a crash,

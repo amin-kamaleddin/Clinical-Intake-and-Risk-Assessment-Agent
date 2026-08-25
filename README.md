@@ -6,7 +6,7 @@ Two things live here:
   conversational agent that collects a structured psychiatric intake record
   before a patient's appointment and flags current safety risk while doing it.
 - **`evaluation/`** — a benchmark that runs CIRA against two baselines over
-  twelve simulated patients and scores all three on the same measures.
+  50 simulated patients and scores all three on the same measures.
 
 Built for the Interventional Psychiatry Program, Unity Health Toronto
 (St. Michael's Hospital).

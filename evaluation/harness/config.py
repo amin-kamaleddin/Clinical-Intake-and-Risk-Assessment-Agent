@@ -119,7 +119,17 @@ def record_path(system: str, case_id: str, repetition: int = 0) -> Path:
 
 
 def judge_dir(system: str) -> Path:
-    return JUDGE_DIR / system
+    """Judge output directory, namespaced by judge label.
+
+    A second judge writes to outputs/judge_<label>/ so both verdict sets exist
+    side by side and inter-rater agreement can be computed from artifacts
+    rather than by re-judging. The primary judge keeps the original unlabelled
+    path, so older output sets still score.
+    """
+    root = JUDGE_DIR if not JUDGE_LABEL else JUDGE_DIR.with_name(
+        f"{JUDGE_DIR.name}_{JUDGE_LABEL}"
+    )
+    return root / system
 
 
 def judge_path(system: str, case_id: str, repetition: int = 0) -> Path:
@@ -133,7 +143,15 @@ def deterministic_report_path(system: str) -> Path:
     return REPORTS_DIR / f"{system}_deterministic.json"
 
 
+def judge_report_path(label: str | None = None) -> Path:
+    """Judge comparison report, namespaced by judge label."""
+    label = JUDGE_LABEL if label is None else label
+    name = "judge_comparison" + (f"_{label}" if label else "")
+    return REPORTS_DIR / f"{name}.json"
+
+
 JUDGE_REPORT_PATH = REPORTS_DIR / "judge_comparison.json"
+JUDGE_AGREEMENT_PATH = REPORTS_DIR / "judge_agreement.json"
 SUMMARY_REPORT_PATH = REPORTS_DIR / "summary.json"
 # Provenance for the seeded persona assignment: which patient style each case
 # was run against. Written once per run so a result set can always be traced
@@ -179,12 +197,22 @@ OPENROUTER_BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/ap
 OPENROUTER_API_KEY = os.getenv("OPEN_ROUTER")
 PATIENT_MODEL_NAME = os.getenv("CIRA_PATIENT_MODEL", "openai/gpt-5.4-mini")
 
-# Each persona carries its own temperature (a confused patient needs looser
-# sampling than a crisp one). Setting CIRA_EVAL_TEMPERATURE explicitly pins one
-# temperature for every persona instead - useful when you want to isolate the
-# effect of the prompt from the effect of sampling.
+# One temperature for every persona, pinned by DEFAULT.
+#
+# The personas used to carry their own sampling temperatures (clear 0.0,
+# moderate 0.4, confused 0.8). That made communication difficulty and sampling
+# temperature vary together, so any difference between persona strata mixed the
+# effect of the persona PROMPT with the effect of looser decoding and neither
+# could be attributed. A persona is defined by how it is instructed to speak,
+# not by how randomly it is decoded.
+#
+# Set CIRA_PERSONA_OWN_TEMPERATURE=1 to restore the old per-persona behaviour;
+# the persona definitions still carry their temperatures for that path.
 _PATIENT_TEMPERATURE_ENV = os.getenv("CIRA_EVAL_TEMPERATURE")
-PATIENT_TEMPERATURE_IS_PINNED = _PATIENT_TEMPERATURE_ENV is not None
+_PERSONA_OWN_TEMPERATURE = (
+    os.getenv("CIRA_PERSONA_OWN_TEMPERATURE", "").strip().lower() in {"1", "true", "yes"}
+)
+PATIENT_TEMPERATURE_IS_PINNED = not _PERSONA_OWN_TEMPERATURE
 PATIENT_TEMPERATURE = float(_PATIENT_TEMPERATURE_ENV or "0")
 
 # --------------------------------------------------------------------------- #
@@ -208,6 +236,20 @@ PERSONA_OVERRIDE = os.getenv("CIRA_PERSONA_OVERRIDE") or None
 # Defaults to Gemini 3.1 Flash Lite (GA) routed through OpenRouter. Override the
 # model, endpoint, or key per-variable if you want the judge somewhere else.
 JUDGE_MODEL_NAME = os.getenv("CIRA_JUDGE_MODEL", "google/gemini-3.1-flash-lite")
+
+# A second, independent judge for inter-rater reliability. record_score and
+# flow_score otherwise rest on one model and one pass, which is the first thing
+# a reviewer asks about. Deliberately a different family from the primary judge:
+# two checkpoints of the same model agreeing tells you very little.
+#
+#   CIRA_JUDGE_MODEL=$CIRA_JUDGE_MODEL_B CIRA_JUDGE_LABEL=b \
+#       python -m harness.stages.run_judge --system cira
+#   python -m tools.judge_agreement
+#
+JUDGE_MODEL_B = os.getenv("CIRA_JUDGE_MODEL_B", "x-ai/grok-4-fast")
+
+# Namespaces judge artifacts so two judges can coexist. Empty = primary judge.
+JUDGE_LABEL = os.getenv("CIRA_JUDGE_LABEL", "").strip()
 JUDGE_BASE_URL = os.getenv("CIRA_JUDGE_BASE_URL", OPENROUTER_BASE_URL)
 JUDGE_API_KEY = os.getenv("CIRA_JUDGE_API_KEY", OPENROUTER_API_KEY)
 JUDGE_TEMPERATURE = float(os.getenv("CIRA_JUDGE_TEMPERATURE", "0"))

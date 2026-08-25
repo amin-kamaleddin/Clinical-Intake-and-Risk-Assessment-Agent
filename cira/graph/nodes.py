@@ -2,7 +2,7 @@ import re
 
 from langchain_openai import ChatOpenAI
 
-from core.config import MODEL_NAME
+from core.config import MODEL_NAME, TEMPERATURE
 from core.state import (
     AliceState,
     CONDITIONAL_FIELDS,
@@ -23,8 +23,15 @@ from core.storage import save_record
 from prompts.builder import build_system_prompt, get_pending_fields
 
 
-model = ChatOpenAI(model=MODEL_NAME, reasoning_effort="none").bind_tools(tools)
-llm   = ChatOpenAI(model=MODEL_NAME, reasoning_effort="none")
+# temperature is passed explicitly on both clients. See core.config.TEMPERATURE:
+# omitting it silently ran CIRA at the provider default while every other
+# component in the evaluation was pinned.
+model = ChatOpenAI(
+    model=MODEL_NAME, temperature=TEMPERATURE, reasoning_effort="none"
+).bind_tools(tools)
+llm   = ChatOpenAI(
+    model=MODEL_NAME, temperature=TEMPERATURE, reasoning_effort="none"
+)
 
 
 def _merge_repeatable_value(existing, incoming):

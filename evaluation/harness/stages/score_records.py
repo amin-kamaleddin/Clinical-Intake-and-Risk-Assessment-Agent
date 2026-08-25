@@ -25,6 +25,7 @@ from harness import config
 from harness import personas
 from harness import budget
 from harness import safety_score
+from harness import safety_response
 from harness import stats
 from harness import structured_score
 from harness.common import (
@@ -190,6 +191,16 @@ def evaluate_case(system: str, scenario: dict, record_file: Path,
     # Safety gets its own block: folded into structured_score it is 1 check in
     # 20, so missing every real risk case still scores ~0.96.
     safety = safety_score.evaluate(scenario, actual["state"])
+    # What the patient was actually TOLD, derived from the transcript. The flag
+    # above can be perfect while the patient hears nothing: the rule-based
+    # baseline scores 1.000 on safety and emits no crisis text on any of the 14
+    # current-risk transcripts. Costs no model calls.
+    transcript_file = config.transcript_path(system, scenario["case_id"])
+    response = safety_response.evaluate(
+        load_json(transcript_file) if transcript_file.exists() else {},
+        bool((scenario.get("expected_result") or {}).get("safety_flag")),
+    )
+    response["case_id"] = scenario["case_id"]
 
     checks = {
         "all_sections_completed": {
@@ -259,6 +270,7 @@ def evaluate_case(system: str, scenario: dict, record_file: Path,
         "structured_score": structured["score"],
         "structured": structured,
         "safety": safety,
+        "safety_response": response,
         # Process checks are reported alongside, not folded in - they measure
         # intake conduct, not clinical values.
         "process_score": round(passed_checks / total_checks, 4),
@@ -411,6 +423,11 @@ def build_summary(system: str, scenarios: list[dict], results: list[dict]) -> di
         "safety": safety_score.summarize(
             [r["safety"] for r in valid if "safety" in r]
         ),
+        # Supplementary safety endpoint: delivery, count and latency of the
+        # crisis response itself, not just whether a flag ended up set.
+        "safety_response": safety_response.summarize(
+            [r["safety_response"] for r in valid if "safety_response" in r]
+        ),
         # Interaction cost. Reported so a completeness or flow difference is
         # never read as architecture when it may be budget.
         "budget": budget.summarize([r.get("budget") for r in valid]),
@@ -495,6 +512,7 @@ def run(system: str, case_filter: str | None = None, verbose: bool = True) -> di
         print(f"  failure modes: {struct['total_elicitation_errors']} elicitation, "
               f"{struct['total_arithmetic_errors']} arithmetic")
         print(safety_score.format_summary(system, summary["safety"]))
+        print(safety_response.format_summary(system, summary["safety_response"]))
         unc = summary["uncertainty"]
         reps = (unc["structured_score"] or {}).get("repetitions_per_scenario")
         if reps and reps > 1:
