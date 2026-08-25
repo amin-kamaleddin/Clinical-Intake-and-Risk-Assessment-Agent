@@ -316,7 +316,28 @@ Style is yours to control; content is not.
         # phq9_q1, and the whole GAD-7 record came back as a copy of the PHQ-9
         # record. It only showed up in repetitions where deflections caused that
         # hint to be appended, which is why it was intermittent: 4 of 24 records.
-        by_text = identify_item_by_text(question)
+        # Resolve by wording ONLY where a questionnaire is actually being
+        # administered. The signatures are item TEXT - "trouble concentrating",
+        # "feeling nervous, anxious, or on edge" - and an intake question that
+        # offers examples of symptoms contains them verbatim:
+        #
+        #   "When school feels overwhelming, what happens - do you feel anxious
+        #    or low, have trouble concentrating or sleeping, or miss classes?"
+        #
+        # Exactly one signature matched that, so the ambiguity guard below let
+        # it through and the patient answered a free-text question about their
+        # presenting problem with "More than half the days" - four times, until
+        # the section hit the stall guard and was abandoned. CIRA lost
+        # primary_problems and goals and was scored down for a simulator fault.
+        #
+        # The gate is the section, not the wording: _current_instrument is set
+        # only inside phq9/gad7 (see begin_section), and a question naming the
+        # instrument explicitly is admitted from anywhere.
+        in_questionnaire = (
+            self._current_instrument is not None
+            or self._looks_like_questionnaire(question)
+        )
+        by_text = identify_item_by_text(question) if in_questionnaire else None
         if by_text is not None:
             self._current_item = by_text
             self._current_instrument = by_text.split("_", 1)[0]
