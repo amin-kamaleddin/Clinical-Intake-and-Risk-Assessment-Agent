@@ -23,6 +23,29 @@ def _sha256(path: Path) -> str | None:
         return None
 
 
+# Paths a run produces itself. Changes here say nothing about whether the code
+# that produced a result is reproducible.
+_ARTIFACT_PREFIXES = (
+    "evaluation/outputs/",
+    "evaluation/records/",
+    "cira/records/",
+    "paper/tables/",
+)
+_ARTIFACT_SUFFIXES = (".log",)
+
+
+def _is_artifact(status_line: str) -> bool:
+    """True when a porcelain line refers to a file the run itself writes."""
+    # "XY path" or "XY old -> new"; take the final path.
+    path = status_line[3:].strip().strip('"')
+    if " -> " in path:
+        path = path.split(" -> ", 1)[1].strip().strip('"')
+    return (
+        path.startswith(_ARTIFACT_PREFIXES)
+        or path.endswith(_ARTIFACT_SUFFIXES)
+    )
+
+
 def _git_revision() -> str | None:
     """Short commit hash, or None outside a repository."""
     try:
@@ -34,11 +57,22 @@ def _git_revision() -> str | None:
         revision = result.stdout.strip()
         if not revision:
             return None
-        dirty = subprocess.run(
+        status = subprocess.run(
             ["git", "status", "--porcelain"],
             cwd=str(config.PROJECT_ROOT),
             capture_output=True, text=True, timeout=5, check=False,
-        ).stdout.strip()
+        ).stdout
+        # A run writes its own artifacts, so a plain porcelain check marks the
+        # tree dirty the moment the first output file lands - the run would
+        # brand itself unreproducible before it had finished starting, and no
+        # run could ever record a clean revision.
+        #
+        # Only files that could CHANGE the result count. Artifacts are output,
+        # not input.
+        dirty = [
+            line for line in status.splitlines()
+            if line.strip() and not _is_artifact(line)
+        ]
         return revision + ("-dirty" if dirty else "")
     except (OSError, subprocess.SubprocessError):
         return None
