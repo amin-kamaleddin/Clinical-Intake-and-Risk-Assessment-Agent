@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import hashlib
+import os
 import json
+from datetime import datetime
 import platform
 import subprocess
 import sys
@@ -249,3 +251,85 @@ def format_freshness(report: dict) -> str:
         )
     lines.append("  Scores below therefore mix runs. Re-run, or note it.")
     return "\n".join(lines)
+
+# --------------------------------------------------------------------------- #
+# Concurrency guard
+# --------------------------------------------------------------------------- #
+#
+# Two runs sharing outputs/ is the single most damaging thing that can happen
+# to this benchmark, and it is silent: each writes over the other's artifacts
+# case by case, the reports end up mixing run ids, and every number is a blend
+# of two configurations. That is exactly the contamination the freshness check
+# was added to detect after the fact - this stops it happening at all.
+#
+# It is not hypothetical. A judge process from an earlier session was found
+# still running after 1 day 18 hours, writing into a directory a new run had
+# just been pointed at.
+
+LOCK_PATH = config.REPORTS_DIR / ".run_lock"
+
+
+def _process_alive(pid: int) -> bool:
+    """True when a process with this pid exists (signal 0 probes, never kills)."""
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        # Exists but is owned by someone else.
+        return True
+    return True
+
+
+def read_lock() -> dict | None:
+    try:
+        return json.loads(LOCK_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def acquire_lock(run_id: str, force: bool = False) -> dict:
+    """Claim outputs/ for this run, or refuse if another run holds it.
+
+    A stale lock - one whose process is gone, e.g. after a crash or a kill -
+    is reclaimed automatically and reported. Only a LIVE holder blocks.
+    """
+    config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    existing = read_lock()
+    if existing and not force:
+        pid = existing.get("pid")
+        if isinstance(pid, int) and pid != os.getpid() and _process_alive(pid):
+            raise RuntimeError(
+                f"another evaluation run is already using this outputs/ "
+                f"directory:\n"
+                f"    run_id  {existing.get('run_id')}\n"
+                f"    pid     {pid}\n"
+                f"    started {existing.get('started_at')}\n"
+                f"    command {existing.get('command')}\n\n"
+                f"Two runs sharing outputs/ silently mix their artifacts and "
+                f"every reported number becomes a blend of both.\n"
+                f"Stop it first:  kill {pid}\n"
+                f"Then re-run. Use --force-lock only if you are certain that "
+                f"process is not writing here."
+            )
+        if existing:
+            print(
+                f"[provenance] reclaiming stale lock from run "
+                f"{existing.get('run_id')} (pid {existing.get('pid')} is gone)"
+            )
+
+    payload = {
+        "run_id": run_id,
+        "pid": os.getpid(),
+        "started_at": datetime.now().isoformat(timespec="seconds"),
+        "command": " ".join(sys.argv),
+    }
+    LOCK_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    return payload
+
+
+def release_lock() -> None:
+    """Drop the lock if this process owns it. Never removes someone else's."""
+    existing = read_lock()
+    if existing and existing.get("pid") == os.getpid():
+        LOCK_PATH.unlink(missing_ok=True)

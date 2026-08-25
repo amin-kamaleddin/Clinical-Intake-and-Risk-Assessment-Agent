@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import atexit
 import json
 import time
 
@@ -212,6 +213,9 @@ def main() -> None:
     parser.add_argument("--systems", nargs="+", choices=config.SYSTEMS,
                         help="Limit scoring/judging to these systems. Default: both.")
     parser.add_argument("--case", default=None, help="Restrict to one case id, e.g. 04-01")
+    parser.add_argument("--force-lock", action="store_true",
+                        help="Start even if another run holds outputs/. Only "
+                             "when you are certain that process is not writing.")
     parser.add_argument("--repetitions", type=int, default=None,
                         help="Independent interactions per scenario. More "
                              "repetitions narrow the confidence intervals; "
@@ -241,6 +245,15 @@ def main() -> None:
 
 
     manifest = provenance.write_manifest(repetitions=args.repetitions)
+
+    # Claim outputs/ before any stage writes to it. Refuses if another run is
+    # live; reclaims automatically if the previous holder is gone.
+    try:
+        provenance.acquire_lock(manifest["run_id"], force=args.force_lock)
+    except RuntimeError as error:
+        print(f"\nREFUSING TO START: {error}\n")
+        raise SystemExit(1)
+    atexit.register(provenance.release_lock)
 
     persona_report = personas.write_assignment(
         seed=args.persona_seed,
