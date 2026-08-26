@@ -462,7 +462,7 @@ def run(systems=None, case_filter: str | None = None) -> dict:
     # is wide and every pair comes back not-significant, which is the honest
     # answer rather than a defect.
     any_reps = any(
-        (u.get("record_score") or {}).get("repetitions_per_scenario", 1) > 1
+        ((u.get("record_score") or {}).get("repetitions_per_scenario") or 1) > 1
         for u in report["uncertainty"].values()
     )
     if any_reps:

@@ -246,7 +246,7 @@ JUDGE_MODEL_NAME = os.getenv("CIRA_JUDGE_MODEL", "google/gemini-3.1-flash-lite")
 #       python -m harness.stages.run_judge --system cira
 #   python -m tools.judge_agreement
 #
-JUDGE_MODEL_B = os.getenv("CIRA_JUDGE_MODEL_B", "x-ai/grok-4-fast")
+JUDGE_MODEL_B = os.getenv("CIRA_JUDGE_MODEL_B", "x-ai/grok-4.3")
 
 # Namespaces judge artifacts so two judges can coexist. Empty = primary judge.
 JUDGE_LABEL = os.getenv("CIRA_JUDGE_LABEL", "").strip()
