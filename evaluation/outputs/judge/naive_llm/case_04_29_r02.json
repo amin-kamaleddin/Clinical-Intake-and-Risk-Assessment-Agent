@@ -1,0 +1,429 @@
+{
+  "system": "naive_llm",
+  "case_id": "29",
+  "scenario_case_id": "04-29",
+  "repetition": 2,
+  "persona_id": "confused",
+  "record_score": 0.9875,
+  "flow_score": 0.7,
+  "record_detail": {
+    "record_score": 0.9875,
+    "record_score_contested": 0.975,
+    "fields_contested": 20,
+    "fields_auto_resolved": 20,
+    "fields_confirmed_absent": 12,
+    "fields_scored": 40,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 39,
+      "partial": 1,
+      "missing": 0,
+      "contradicted": 0,
+      "fabricated": 1
+    },
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_treatments"
+    ],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 9.5,
+        "score": 0.95
+      },
+      "past_psychiatric_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medications": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      }
+    }
+  },
+  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona by breaking down complex questions and providing necessary clarification. However, the system struggled with the standardized questionnaires, repeatedly failing to accept the patient's initial responses and forcing the patient to repeat themselves, which created a mechanical and frustrating experience.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "questionnaire_management",
+      "evidence": "The interviewer repeatedly forced the patient to re-state answers for PHQ-9 and GAD-7 items, such as: 'For PHQ-9 question 1, which option fits best overall: 0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day?'"
+    },
+    {
+      "severity": "minor",
+      "category": "flow",
+      "evidence": "The interviewer occasionally struggled to maintain a smooth flow during the GAD-7 section, leading to redundant questioning: 'For GAD-7 question 3, which response fits best overall: 0 Not at all, 1 Several days, 2 More than half the days, or 3 Nearly every day?' followed immediately by another attempt."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "JAMAL WHITFIELD",
+      "produced": "Jamal Whitfield"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Male",
+      "produced": "Male"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M6S3Z3",
+      "produced": "M6S3Z3"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "jamal.whitfield@example.com",
+      "produced": "jamal.whitfield@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550356",
+      "produced": "4165550356"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. GRACE ODUYA",
+      "produced": "Dr. Grace Oduya"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "179 cm",
+      "produced": "179 cm"
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "70 kg",
+      "produced": "70 kg"
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "28/11/2003",
+      "produced": "28th November, 2003"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Province (Ontario) is missing.",
+      "expected": "300 Jane Street, Toronto, Ontario",
+      "produced": "300 Jane Street, Toronto"
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Growing sense over eight months that neighbours are watching and talking about him; occasionally hears his name called when no one is there; withdrew from his college course; still questions whether the feelings are real.",
+      "produced": "Over approximately eight months, growing concerns that neighbours are watching and talking about him, uncertainty about whether this is real, and sometimes hearing his name called when nobody is there. Withdrew from college because he could not keep up."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Work out what is happening to me; get back to my course.",
+      "produced": "Work out what is happening and return to his course; finish the course and move into his own place."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Maternal uncle; schizophrenia; multiple admissions.",
+      "produced": "Maternal uncle has schizophrenia and has had multiple admissions. No other family psychiatric history reported."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; beer; occasionally at weekends; about three years",
+      "produced": "Beer occasionally, usually on weekends, for about three years; typically about two days per week, with an unspecified number described as a few beers per occasion."
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never uses nicotine, including cigarettes, vaping, or nicotine products."
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; dried flower; daily; about four years",
+      "produced": "Dried cannabis flower daily for about four years; amount per day unspecified."
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never uses stimulants such as cocaine, amphetamines, or non-prescribed ADHD medication."
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "No opioid use reported."
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never uses benzodiazepines without a prescription."
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never uses hallucinogens."
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "No other recreational or non-prescribed substance use."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Some college; did not complete",
+      "produced": "Some college; did not finish."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Kitchen assistant, Bloor Street Bistro; 2023 to 2025",
+      "produced": "Kitchen assistant at Bloor Street Bistro from 2023 to 2025; not working since 2025."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Currently not working; 2025 to present",
+      "produced": "Kitchen assistant at Bloor Street Bistro from 2023 to 2025; not working since 2025."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Toronto; described as a sociable child.",
+      "produced": "Born and raised in Toronto; described himself as a sociable child, with no significant difficulties reported."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Completed high school; started a college programme at 19 and withdrew at 21.",
+      "produced": "Finished high school, started a college program at age 19, and withdrew at age 21."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Lives with his mother; contact with two school friends has dropped off.",
+      "produced": "Lives with his mother. Contact with two school friends has recently dropped off."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Finish my course and move into my own place.",
+      "produced": "Finish his course and move into his own place."
+    }
+  ],
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_treatments",
+      "section": "past_psychiatric_history",
+      "field": "previous_treatments",
+      "entry_index": null,
+      "expected": null,
+      "produced": "No other mental-health treatment, including crisis service, support group, or psychiatric program.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
+}

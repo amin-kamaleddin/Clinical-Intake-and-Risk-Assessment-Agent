@@ -1,0 +1,418 @@
+{
+  "system": "rule_based",
+  "case_id": "38",
+  "scenario_case_id": "04-38",
+  "repetition": 1,
+  "persona_id": "confused",
+  "record_score": 0.9359,
+  "flow_score": 0.4,
+  "record_detail": {
+    "record_score": 0.9359,
+    "record_score_contested": 0.8214,
+    "fields_contested": 14,
+    "fields_auto_resolved": 25,
+    "fields_confirmed_absent": 13,
+    "fields_scored": 39,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 36,
+      "partial": 1,
+      "missing": 2,
+      "contradicted": 0,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 8.0,
+        "score": 0.8
+      },
+      "past_psychiatric_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medications": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 3.5,
+        "score": 0.875
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      }
+    }
+  },
+  "flow_summary": "The interviewer repeatedly ignored the confused patient's explicit requests for clarification on name format, address, family doctor, and psychiatrist, forcing yes/no answers or skipping to narrower fields instead of rephrasing or breaking questions down. Vague or tangled responses were transcribed without recovery on multiple occasions. Later sections (PHQ-9/GAD-7, substance use, family history) followed a cleaner one-question-at-a-time pattern once the patient was on script.",
+  "issues": [
+    {
+      "severity": "major",
+      "category": "failure to recover vague answer",
+      "evidence": "Patient: 'Um, sorry, what do you mean exactly by legal documents? ... I get mixed up with these forms.' → next question immediately switched to gender."
+    },
+    {
+      "severity": "major",
+      "category": "failure to recover vague answer",
+      "evidence": "Patient: 'Uh, sorry, I’m a bit mixed up — do you mean the street part, or the whole mailing address?' → interviewer asked only for postal code."
+    },
+    {
+      "severity": "major",
+      "category": "failure to recover vague answer",
+      "evidence": "Patient: 'I’m not sure if you mean someone I’m seeing now ... Could you maybe rephrase it?' → interviewer replied 'Please answer yes or no.'"
+    },
+    {
+      "severity": "moderate",
+      "category": "abrupt or mechanical transition",
+      "evidence": "After DOB given as 02/02/2006, interviewer asked 'Please repeat your date of birth in DD/MM/YYYY format.'"
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "02/02/2006",
+      "produced": "02/02/2006"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M5S1G4",
+      "produced": "M5S1G4"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "olivia.tremblay@example.com",
+      "produced": "olivia.tremblay@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550448",
+      "produced": "4165550448"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. GRACE LIM",
+      "produced": "DR. GRACE LIM"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Finish my degree and apply to graduate school.",
+      "produced": "Finish my degree and apply to graduate school."
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "Name not captured",
+      "expected": "OLIVIA TREMBLAY",
+      "produced": "UM, SORRY, WHAT DO YOU MEAN EXACTLY BY LEGAL DOCUMENTS? I MEAN, I CAN GIVE YOU MY NAME, BUT I’M NOT SURE IF YOU WANT THE FULL THING OR LIKE HOW IT’S WRITTEN… I GET MIXED UP WITH THESE FORMS."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female."
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "Address not captured",
+      "expected": "89 Harbord Street, Toronto, Ontario",
+      "produced": "Uh, sorry, I’m a bit mixed up — do you mean the street part, or the whole mailing address? I can’t quite sort out what you’re asking for at the moment."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Anxiety about final examinations for two months; difficulty sleeping the night before assessments; stomach upset; describes the workload as killing her, using the phrase figuratively.",
+      "produced": "It’s mostly the exams, honestly — they’ve been kind of taking over everything for the past couple months. I get really anxious about final exams, and then the night before I just can’t sleep properly, and my stomach gets all upset. It sounds dramatic, I know, but these exams are killing me… I mean that figuratively, not like, you know."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Get through finals without falling apart; sleep before exams.",
+      "produced": "Mostly just to get through finals without totally falling apart, and to be able to sleep the night before exams."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "164 cm",
+      "produced": "164 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "57 kg",
+      "produced": "57 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Mother; anxiety; treated with therapy.",
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Anxiety.; Additional Details: She was treated with therapy. That’s all I know, really."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; beer; occasionally at social events; about a year",
+      "produced": "Status: Current; Substance or product: Beer.; Quantity or frequency: Occasionally at social events.; Duration: About a year."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Second year, undergraduate psychology programme",
+      "produced": "Um, second year… undergraduate psychology programme. That’s where I’m at."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Barista, Campus Coffee; 2024 to present",
+      "produced": "Job 1: Name Or Description: Campus Coffee.; Job Title: Barista.; Dates: 2024 to present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Sudbury; describes a happy childhood.",
+      "produced": "I was born and raised in Sudbury, and it was a happy childhood. Nothing too dramatic, really."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Strong student; moved to Toronto for university at 18.",
+      "produced": "I was a pretty strong student, and then I moved to Toronto for university when I was 18… that’s the main thing, I think."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "missing residence and friends details",
+      "expected": "Single; lives in residence; close group of friends.",
+      "produced": "I’m single. Nothing really to add there."
+    }
+  ],
+  "fabricated": []
+}

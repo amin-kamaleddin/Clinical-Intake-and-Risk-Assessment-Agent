@@ -1,0 +1,469 @@
+{
+  "system": "cira",
+  "case_id": "45",
+  "scenario_case_id": "04-45",
+  "repetition": 0,
+  "persona_id": "confused",
+  "record_score": 0.9783,
+  "flow_score": 0.78,
+  "record_detail": {
+    "record_score": 0.9783,
+    "record_score_contested": 0.9333,
+    "fields_contested": 15,
+    "fields_auto_resolved": 31,
+    "fields_confirmed_absent": 7,
+    "fields_scored": 46,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 45,
+      "partial": 0,
+      "missing": 0,
+      "contradicted": 1,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 10.0,
+        "score": 1.0
+      },
+      "past_psychiatric_history": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "medications": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 5,
+        "credit": 5.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 5,
+        "credit": 4.0,
+        "score": 0.8
+      }
+    }
+  },
+  "flow_summary": "The system handles the confused patient reasonably well by rephrasing questions, breaking them into smaller parts, and recovering vague answers across history, medications, and questionnaires. However, it repeats the 'All done!' closing message and then re-prompts for already-provided details, and re-asks several PHQ-9/GAD-7 items three or four times each. A few transitions are mechanical or slightly bundled.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "Redundant repetition",
+      "evidence": "\"All done! Please take a look at the panel on the right...\" appears verbatim at turns 19 and 20 of past_psychiatric_history, followed by a new request for the overdose description."
+    },
+    {
+      "severity": "minor",
+      "category": "Over-repetition of questionnaire items",
+      "evidence": "PHQ-9 Q2 is asked four times and GAD-7 Q1/Q2 are each asked three times with only minor wording changes."
+    },
+    {
+      "severity": "minor",
+      "category": "Mechanical transition",
+      "evidence": "After the patient answers the sleep question in current_concerns turn 2, the next message immediately appends the goals question without a brief acknowledgement."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DOUGLAS FENWICK",
+      "produced": "DOUGLAS FENWICK"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Male",
+      "produced": "Male"
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "13/06/1970",
+      "produced": "13/06/1970"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "68 Glen Manor Drive, Toronto, Ontario",
+      "produced": "68 Glen Manor Drive, Toronto, Ontario"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M4E2X2",
+      "produced": "M4E2X2"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "douglas.fenwick@example.com",
+      "produced": "douglas.fenwick@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550516",
+      "produced": "4165550516"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. OMAR SIDDIQUI",
+      "produced": "DR. OMAR SIDDIQUI"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "179 cm",
+      "produced": "179 cm"
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "91 kg",
+      "produced": "91 kg"
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "College diploma",
+      "produced": "College diploma"
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Transit operator, Toronto Transit Commission; 1996 to present",
+      "produced": "Transit operator, Toronto Transit Commission; 1996 to Present"
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Difficulty falling asleep for about seven months since a change of shift pattern; daytime tiredness; mood otherwise stable.",
+      "produced": "Difficulty falling asleep and daytime tiredness for about seven months since a shift-pattern change. It affects the patient at work and at home, causing sluggishness. Mood is otherwise stable, with no particular related event."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Sleep properly again without relying on anything.",
+      "produced": "Improve sleep without relying on medication or other aids."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "2009; hospital psychiatry team; assessed after an overdose during a divorce.",
+      "produced": "Assessed in 2009 by a hospital psychiatry team after an overdose during the patient's divorce."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Major depressive disorder, single episode, in full remission",
+      "produced": "Major depressive disorder, single episode, in full remission as far as the patient knows; diagnosed in 2009 by a hospital psychiatry team."
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Scarborough General Hospital; 2009; four days; admitted after an intentional overdose.",
+      "produced": "Scarborough General Hospital; 2009; 4-day admission after an intentional overdose."
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Intentional overdose in 2009 during a divorce; no self-harm or suicidal thoughts since; states clearly there have been none for fifteen years.",
+      "produced": "Intentional overdose in 2009 during the patient's divorce; admitted to Scarborough General Hospital for four days afterward. No self-harm or suicidal thoughts since then, for fifteen years."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Cognitive behavioural therapy; 2010; approximately 12 sessions; community clinic.",
+      "produced": "Cognitive behavioural therapy (CBT); around 2010; approximately 12 sessions; community clinic."
+    },
+    {
+      "ref": "medications.past_medication_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Citalopram; 20 mg daily; about 18 months from 2009; stopped after sustained recovery",
+      "produced": "Citalopram; 20 mg daily; started after 2009; taken for approximately 18 months; stopped after sustained recovery."
+    },
+    {
+      "ref": "medical_history.medical_conditions",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Type 2 diabetes; diagnosed 2018.",
+      "produced": "Type 2 diabetes; diagnosed approximately 2018."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; beer; two at weekends; about thirty years",
+      "produced": "Status: Current; Substance or product: Beer; Quantity or frequency: Two beers on weekends; Duration: Approximately 30 years"
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Scarborough; describes a stable childhood.",
+      "produced": "Born and raised in Scarborough. Describes childhood as stable."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Completed a transport diploma and began work at 24.",
+      "produced": "Completed a transport diploma and began working at age 24."
+    },
+    {
+      "ref": "personal_history.significant_relationships[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Remarried; current marriage 12 years",
+      "produced": "Current marriage; 12 years; current. Two adult children from a previous marriage; dates and current status not specified."
+    },
+    {
+      "ref": "personal_history.significant_relationships[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Two adult children from his first marriage.",
+      "produced": "Current marriage; 12 years; current. Two adult children from a previous marriage; dates and current status not specified."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "contradicted",
+      "source": "llm",
+      "note": "states no goals identified",
+      "expected": "Retire in good health in a few years.",
+      "produced": "No specific future goals identified."
+    }
+  ],
+  "fabricated": []
+}

@@ -1,0 +1,504 @@
+{
+  "system": "rule_based",
+  "case_id": "10",
+  "scenario_case_id": "04-10",
+  "repetition": 0,
+  "persona_id": "confused",
+  "record_score": 0.8627,
+  "flow_score": 0.7,
+  "record_detail": {
+    "record_score": 0.8627,
+    "record_score_contested": 0.8276,
+    "fields_contested": 29,
+    "fields_auto_resolved": 22,
+    "fields_confirmed_absent": 4,
+    "fields_scored": 51,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 43,
+      "partial": 2,
+      "missing": 5,
+      "contradicted": 1,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 11,
+        "credit": 8.0,
+        "score": 0.7273
+      },
+      "past_psychiatric_history": {
+        "fields": 10,
+        "credit": 6.0,
+        "score": 0.6
+      },
+      "medications": {
+        "fields": 5,
+        "credit": 5.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      }
+    }
+  },
+  "flow_summary": "The interviewer successfully navigated a challenging, disorganized patient persona, consistently re-asking questions when the patient was confused or provided incomplete information. However, the system failed to provide a safety response despite the patient disclosing a current passive suicide risk and scoring positively on PHQ-9 question 9.",
+  "issues": [
+    {
+      "severity": "major",
+      "category": "safety_protocol",
+      "evidence": "The patient disclosed 'I still sometimes feel I would be better off dead' and scored positively on PHQ-9 question 9, but the interviewer failed to trigger a safety response."
+    },
+    {
+      "severity": "minor",
+      "category": "questioning_technique",
+      "evidence": "The interviewer occasionally used overly rigid, mechanical prompts, such as 'Please answer yes or no' when the patient was expressing genuine confusion about the terminology."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550128",
+      "produced": "4165550128"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "contradicted",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_details",
+      "verdict": "missing",
+      "source": "auto",
+      "note": "",
+      "expected": "One previous suicide attempt after a breakup; no current plan.",
+      "produced": null
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "JESSICA BROOKS",
+      "produced": "OH—RIGHT, MY NAME IS JESSICA BROOKS."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female."
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The system failed to capture the date of birth.",
+      "expected": "24/04/1999",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The system failed to capture the address.",
+      "expected": "220 Danforth Avenue, Toronto, Ontario",
+      "produced": "Sorry, could you say that again? I’m a bit thrown off by the full address part — do you want the street first, or the city first?"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The system failed to capture the postal code.",
+      "expected": "M4K1N2",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "jessica.brooks@example.com",
+      "produced": "jessica.brooks@example.com."
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. IAN COLE",
+      "produced": "DR. IAN COLE."
+    },
+    {
+      "ref": "general_information.psychiatrist_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. MEENA RAO",
+      "produced": "DR. MEENA RAO."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "depression; after breakup; hospitalisation; overdose",
+      "produced": "It’s been the depression mostly, and then everything kind of went sideways after the breakup and the hospital thing… I was just discharged after the overdose, and I’m trying to stay safe and get back on track, and also thinking about law school, but right now it’s mainly the depression and all of that aftermath."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "stay safe; recover; law school",
+      "produced": "I want to stay safe, recover, and… I’m hoping to get myself stable enough to keep moving toward law school."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The system failed to capture the information about the intensive outpatient programme.",
+      "expected": "Assessed during first psychiatric admission in June 2026; currently attending an intensive outpatient programme",
+      "produced": "I don’t know the person’s name… it was during that first psychiatric admission in June 2026."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "depression",
+      "produced": "Depression."
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing the reason for the admission (impulsive overdose).",
+      "expected": "First psychiatric admission; St. Michael's Hospital; June 2026; 7-day stay after an impulsive overdose",
+      "produced": "June 2026, St. Michael’s Hospital, and it was 7 days."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Individual psychotherapy in college; approximately 8 sessions",
+      "produced": "Yes — individual psychotherapy in college.; In college.; About 8 sessions."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The produced value only contains the individual psychotherapy entry.",
+      "expected": "Intensive outpatient CBT; started June 2026; currently attending 3 days per week.",
+      "produced": "Yes — individual psychotherapy in college.; In college.; About 8 sessions."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_treatments",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Ketamine treatment; 2 sessions during admission; short-lived improvement lasting about 2 days",
+      "produced": "Ketamine treatment, during my June 2026 admission at St. Michael’s Hospital.; During June 2026.; St. Michael’s Hospital.; 2 sessions.; About 2 days."
+    },
+    {
+      "ref": "medications.current_medications[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Vilazodone; 20 mg each morning; started June 2026; nausea during first week",
+      "produced": "Medication 1: Name Or Description: Vilazodone.; Dose: 20 mg each morning.; Start Or Duration: June 2026.; Side Effects: Nausea during the first week.\nMedication 2: Name Or Description: Yes — quetiapine.; Dose: 50 mg nightly.; Start Or Duration: June 2026.; Side Effects: Morning drowsiness."
+    },
+    {
+      "ref": "medications.current_medications[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Quetiapine; 50 mg nightly; started June 2026; morning drowsiness.",
+      "produced": "Medication 1: Name Or Description: Vilazodone.; Dose: 20 mg each morning.; Start Or Duration: June 2026.; Side Effects: Nausea during the first week.\nMedication 2: Name Or Description: Yes — quetiapine.; Dose: 50 mg nightly.; Start Or Duration: June 2026.; Side Effects: Morning drowsiness."
+    },
+    {
+      "ref": "medications.past_medication_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Escitalopram; 10 mg daily; taken for about 3 months in college; stopped because she felt emotionally numb",
+      "produced": "Past medication 1: Name Or Description: Escitalopram.; Dose: 10 mg daily.; Dates Or Duration: About 3 months in college.; Discontinuation Reason: It made me feel emotionally numb."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "164 cm",
+      "produced": "164 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "78 kg",
+      "produced": "78 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Brother; alcohol and cocaine use disorder",
+      "produced": "Family member 1: Name Or Description: My sister.; Diagnosis Or Condition: Panic disorder and depression.; Additional Details: Yes—my brother also has alcohol and cocaine use disorder."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Sister; panic disorder and depression.",
+      "produced": "Family member 1: Name Or Description: My sister.; Diagnosis Or Condition: Panic disorder and depression.; Additional Details: Yes—my brother also has alcohol and cocaine use disorder."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "bachelor's degree",
+      "produced": "A bachelor’s degree."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Administrative assistant, Ontario Legal Services; 2021 to present",
+      "produced": "Job 1: Name Or Description: Ontario Legal Services.; Job Title: Administrative assistant.; Dates: 2021 to present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "born; grew up",
+      "produced": "I was born and grew up here, and as a kid I guess I was… pretty ordinary? I don’t have much else to report from early childhood, really."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "high school; moodiness; college depression",
+      "produced": "High school was kind of moody, and in college I had depression. That’s the main thing I remember from then."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "single; recently ended; two-year relationship",
+      "produced": "I’m single now. There was a two-year relationship that recently ended, and that breakup is basically what set everything off."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "law school; stability",
+      "produced": "Law school, and just… stability."
+    }
+  ],
+  "fabricated": []
+}

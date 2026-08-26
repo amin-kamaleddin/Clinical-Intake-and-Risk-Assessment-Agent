@@ -1,0 +1,440 @@
+{
+  "system": "rule_based",
+  "case_id": "27",
+  "scenario_case_id": "04-27",
+  "repetition": 2,
+  "persona_id": "moderate",
+  "record_score": 0.9419,
+  "flow_score": 0.68,
+  "record_detail": {
+    "record_score": 0.9419,
+    "record_score_contested": 0.8684,
+    "fields_contested": 19,
+    "fields_auto_resolved": 24,
+    "fields_confirmed_absent": 11,
+    "fields_scored": 43,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 40,
+      "partial": 1,
+      "missing": 2,
+      "contradicted": 0,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 10.0,
+        "score": 1.0
+      },
+      "past_psychiatric_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medications": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 5,
+        "credit": 5.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 4,
+        "credit": 3.0,
+        "score": 0.75
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 1.5,
+        "score": 0.75
+      },
+      "personal_history": {
+        "fields": 5,
+        "credit": 4.0,
+        "score": 0.8
+      }
+    }
+  },
+  "flow_summary": "Mostly clean single-question flow and logical progression through sections. Two vague/hedged answers were not recovered (name and current medications); the system instead moved on or issued a blunt yes/no instruction. Repeatable topics were handled correctly with explicit \"any others\" checks, and no safety flag was raised (PHQ-9 Q9 = 0, risk absent).",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "failure_to_recover_vague_answer",
+      "evidence": "Patient: \"I think it’s Sophie Marchand, but I’m not totally sure what you need exactly…\" → next question immediately switches to gender."
+    },
+    {
+      "severity": "minor",
+      "category": "abrupt_instruction",
+      "evidence": "Patient hedges on medications; interviewer replies \"Please answer yes or no.\""
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "17/05/1994",
+      "produced": "17/05/1994"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M6G2X2",
+      "produced": "M6G2X2"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "sophie.marchand@example.com",
+      "produced": "sophie.marchand@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550332",
+      "produced": "4165550332"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "SOPHIE MARCHAND",
+      "produced": "I THINK IT’S SOPHIE MARCHAND, BUT I’M NOT TOTALLY SURE WHAT YOU NEED EXACTLY—DO YOU WANT THE NAME JUST AS IT’S LISTED ON THE DOCUMENTS?"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female."
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "63 Wychwood Avenue, Toronto, Ontario",
+      "produced": "63 Wychwood Avenue, Toronto, Ontario."
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. ANNA WEISS",
+      "produced": "DR. ANNA WEISS."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "missing details on timing, avoidance, and checking",
+      "expected": "Unwanted intrusive images of her baby being harmed since the birth ten weeks ago; finds them repugnant and frightening; avoids bathing the baby alone; checking on the baby many times a night.",
+      "produced": "I’ve been having these unwanted intrusive images about my baby being harmed since she was born. It’s really frightening and upsetting."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Stop the thoughts; feel safe caring for my daughter on my own.",
+      "produced": "I want the thoughts to stop, and I want to feel safe caring for my daughter on my own."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Perinatal counselling; 2026; approximately 3 sessions; hospital perinatal clinic.",
+      "produced": "I did have some perinatal counselling. I think it was around 2026, maybe about 3 sessions at the hospital perinatal clinic.; Around 2026.; About 3 sessions."
+    },
+    {
+      "ref": "medical_history.surgical_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Caesarean section; 2026; no ongoing complications.",
+      "produced": "Surgery: A caesarean section.; Date: In 2026, I think.; Details: No, nothing ongoing or anything like that."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "165 cm",
+      "produced": "165 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "68 kg",
+      "produced": "68 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Mother; obsessive-compulsive disorder; treated with medication.",
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Obsessive-compulsive disorder.; Additional Details: She was treated with medication."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Bachelor's degree",
+      "produced": "A bachelor's degree."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Physiotherapist, Riverdale Rehabilitation; 2018 to 2026",
+      "produced": "Job 1: Name Or Description: Riverdale Rehabilitation.; Job Title: Physiotherapist.; Dates: 2018 to 2026."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "parental leave entry absent",
+      "expected": "Currently on parental leave; 2026 to present",
+      "produced": "Job 1: Name Or Description: Riverdale Rehabilitation.; Job Title: Physiotherapist.; Dates: 2018 to 2026."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Montreal; moved to Toronto at 24; describes a careful, conscientious child.",
+      "produced": "I was born and raised in Montreal, and I moved to Toronto when I was 24. I was a pretty careful, conscientious kid."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Completed a physiotherapy degree; no significant difficulties.",
+      "produced": "I finished a physiotherapy degree, and I don’t really remember any major difficulties."
+    },
+    {
+      "ref": "personal_history.significant_relationships[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Marriage; 5 years; current and supportive",
+      "produced": "I’m married — it’s been about 5 years, and it’s current and supportive."
+    },
+    {
+      "ref": "personal_history.significant_relationships[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "daughter entry absent",
+      "expected": "One newborn daughter.",
+      "produced": "I’m married — it’s been about 5 years, and it’s current and supportive."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Enjoy my daughter without being frightened of my own mind.",
+      "produced": "I’d like to enjoy my daughter without being frightened of my own mind."
+    }
+  ],
+  "fabricated": []
+}

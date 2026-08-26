@@ -1,0 +1,440 @@
+{
+  "system": "rule_based",
+  "case_id": "24",
+  "scenario_case_id": "04-24",
+  "repetition": 2,
+  "persona_id": "moderate",
+  "record_score": 0.907,
+  "flow_score": 0.88,
+  "record_detail": {
+    "record_score": 0.907,
+    "record_score_contested": 0.8261,
+    "fields_contested": 23,
+    "fields_auto_resolved": 20,
+    "fields_confirmed_absent": 9,
+    "fields_scored": 43,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 37,
+      "partial": 4,
+      "missing": 2,
+      "contradicted": 0,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 11,
+        "credit": 9.0,
+        "score": 0.8182
+      },
+      "past_psychiatric_history": {
+        "fields": 5,
+        "credit": 4.5,
+        "score": 0.9
+      },
+      "medications": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 1.0,
+        "score": 0.5
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 3.5,
+        "score": 0.875
+      }
+    }
+  },
+  "flow_summary": "Clean, systematic progression through sections with one question at a time and proper handling of repeatable items (meds, family, jobs, substances). Follow-ups stay relevant and PHQ-9/GAD-7 items are each asked once. Minor issues: repeated DOB and postal-code format requests after correct answers, and no response to patient's direct clarification question on postal-code spacing.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "redundant confirmation",
+      "evidence": "Turn 4: 'Please repeat your date of birth in DD/MM/YYYY format.' after patient already gave '23/10/1996.'"
+    },
+    {
+      "severity": "minor",
+      "category": "unresponsive to patient",
+      "evidence": "Turn 7 patient asks for clarification on postal-code spacing; next message jumps to email address."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550301",
+      "produced": "4165550301"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "CHLOE BERTRAND",
+      "produced": "IT’S CHLOE BERTRAND."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female."
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "produced states unknown",
+      "expected": "23/10/1996",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "1150 Bathurst Street, Toronto, Ontario",
+      "produced": "1150 Bathurst Street, Toronto, Ontario."
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "produced states unknown",
+      "expected": "M5R3H3",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "chloe.bertrand@example.com",
+      "produced": "chloe.bertrand@example.com."
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. NINA PATEL",
+      "produced": "DR. NINA PATEL."
+    },
+    {
+      "ref": "general_information.psychiatrist_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. OMAR HADDAD",
+      "produced": "DR. OMAR HADDAD."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "low self-esteem omitted",
+      "expected": "Longstanding difficulty finishing tasks, losing belongings and missing deadlines; frustration and low self-esteem; recently placed on a performance plan at work.",
+      "produced": "Mostly I’ve been having trouble finishing tasks and I keep losing things or missing deadlines. It’s been pretty frustrating, and work has been rough too—I got put on a performance plan."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "stop feeling like failing omitted",
+      "expected": "Get organised at work; stop feeling like I am failing at everything.",
+      "produced": "I’m hoping it helps me get more organized... and maybe sort out some of the work stress too. What do you mean exactly by “out of the appointment”?"
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "reason for assessment omitted",
+      "expected": "2024; DR. OMAR HADDAD, psychiatrist; assessed for attention difficulties.",
+      "produced": "In 2024, by Dr. Omar Haddad, the psychiatrist."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Attention-deficit/hyperactivity disorder, combined presentation",
+      "produced": "Yes — ADHD, combined presentation."
+    },
+    {
+      "ref": "medications.current_medications",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Lisdexamfetamine; 40 mg each morning; started November 2024; reduced appetite",
+      "produced": "Medication 1: Name Or Description: Lisdexamfetamine.; Dose: 40 mg each morning.; Start Or Duration: I started it in November 2024.; Side Effects: It’s been reducing my appetite a bit."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "168 cm",
+      "produced": "I’m about 168 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "63 kg",
+      "produced": "Around 63 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Brother; attention-deficit/hyperactivity disorder; diagnosed in childhood.",
+      "produced": "Family member 1: Name Or Description: My brother.; Diagnosis Or Condition: ADHD.; Additional Details: He was diagnosed in childhood, I think."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; wine; two glasses on weekends; about eight years",
+      "produced": "Status: Current; Substance or product: Wine.; Quantity or frequency: Maybe about two glasses on weekends.; Duration: About eight years."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Bachelor's degree",
+      "produced": "A bachelor’s degree."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Event coordinator, Lakeshore Events; 2019 to present",
+      "produced": "Job 1: Name Or Description: Lakeshore Events.; Job Title: Event coordinator.; Dates: Since 2019 to present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Toronto; described as a busy, distractible child.",
+      "produced": "I was born and raised in Toronto, and I was a pretty busy, distractible kid."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Struggled academically despite effort; completed a degree with difficulty.",
+      "produced": "School was hard for me even though I tried a lot, and I ended up finishing my degree with difficulty."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "misses closeness to brother and friends",
+      "expected": "Single; close to her brother and a small group of friends.",
+      "produced": "No significant romantic relationships reported."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Keep my job and feel competent at it.",
+      "produced": "Mostly I want to keep my job and feel competent at it."
+    }
+  ],
+  "fabricated": []
+}

@@ -1,0 +1,485 @@
+{
+  "system": "rule_based",
+  "case_id": "36",
+  "scenario_case_id": "04-36",
+  "repetition": 0,
+  "persona_id": "moderate",
+  "record_score": 0.9111,
+  "flow_score": 0.58,
+  "record_detail": {
+    "record_score": 0.9111,
+    "record_score_contested": 0.8182,
+    "fields_contested": 22,
+    "fields_auto_resolved": 23,
+    "fields_confirmed_absent": 7,
+    "fields_scored": 45,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 39,
+      "partial": 4,
+      "missing": 2,
+      "contradicted": 0,
+      "fabricated": 2
+    },
+    "fabricated_fields": 2,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_diagnoses",
+      "past_psychiatric_history.previous_therapies"
+    ],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 9.0,
+        "score": 0.9
+      },
+      "past_psychiatric_history": {
+        "fields": 5,
+        "credit": 4.0,
+        "score": 0.8
+      },
+      "medications": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 5,
+        "credit": 4.5,
+        "score": 0.9
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 4,
+        "credit": 3.0,
+        "score": 0.75
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 1.5,
+        "score": 0.75
+      },
+      "personal_history": {
+        "fields": 5,
+        "credit": 5.0,
+        "score": 1.0
+      }
+    }
+  },
+  "flow_summary": "The interview maintains one-question-at-a-time structure and correctly queries additional entries for medications, family history, employment, and substances. However, it fails to recover the initial vague name response, forces a yes/no answer after a clear narrative, and asks therapy timing/sessions after the patient has already stated none occurred. Safety disclosure receives an appropriate clarifying question.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "failed recovery",
+      "evidence": "Patient hedges on name ('I think it’s my full name on the documents, but could you tell me...'); interviewer immediately moves to gender without clarification."
+    },
+    {
+      "severity": "moderate",
+      "category": "redundant question",
+      "evidence": "After 'I haven’t had any therapy that I can remember,' interviewer asks 'When did you receive that therapy?' and then session count."
+    },
+    {
+      "severity": "minor",
+      "category": "mechanical transition",
+      "evidence": "After narrative answer about family-doctor assessment, interviewer says 'Please answer yes or no.'"
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "18/08/1978",
+      "produced": "18/08/1978"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M4E2T2",
+      "produced": "M4E2T2"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "catherine.moss@example.com",
+      "produced": "catherine.moss@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550424",
+      "produced": "4165550424"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "No name captured",
+      "expected": "CATHERINE MOSS",
+      "produced": "I THINK IT’S MY FULL NAME ON THE DOCUMENTS, BUT COULD YOU TELL ME IF YOU MEAN THE EXACT LEGAL NAME OR JUST WHAT I USUALLY GO BY?"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female."
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "72 Wineva Avenue, Toronto, Ontario",
+      "produced": "72 Wineva Avenue, Toronto, Ontario."
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. LENA HARTMANN",
+      "produced": "DR. LENA HARTMANN."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing plan and intent to end life",
+      "expected": "Severe low mood, hopelessness and insomnia for three months following redundancy and marital separation; has a specific plan to end her life and says she intends to act on it.",
+      "produced": "Mostly a really severe low mood and not sleeping well. It’s been going on for about three months after I lost my job and my marriage split up, and I just feel hopeless."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "I do not know that I want anything any more.",
+      "produced": "I’m not really sure I want anything any more."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing reason for assessment",
+      "expected": "2025; family physician; assessed for low mood after redundancy.",
+      "produced": "It was in 2025, and it was my family physician."
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing no previous attempt",
+      "expected": "Current suicidal thoughts with a specific plan and stated intent; no previous attempt.",
+      "produced": "I’ve been having current suicidal thoughts with a specific plan and I intend to act on it. It’s happening now, so yes, there is an immediate safety concern."
+    },
+    {
+      "ref": "medications.current_medications",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Zopiclone; 7.5 mg at night; started January 2026; bitter taste",
+      "produced": "Medication 1: Name Or Description: It’s zopiclone, for sleep.; Dose: 7.5 mg at night, I think.; Start Or Duration: I started it in January 2026.; Side Effects: A bitter taste, mostly."
+    },
+    {
+      "ref": "medical_history.medical_conditions",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing diagnosis year",
+      "expected": "Hypothyroidism; diagnosed 2012.",
+      "produced": "Just hypothyroidism, as far as I know."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "166 cm",
+      "produced": "166 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "62 kg",
+      "produced": "62 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Mother; depression; treated with medication.",
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Depression.; Additional Details: She was treated with medication."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; wine; three or four glasses most evenings; increased over three months",
+      "produced": "Status: Current; Substance or product: Wine.; Quantity or frequency: Three or four glasses most evenings, something like that.; Duration: It’s been going on for about three months, and it’s been a bit more lately."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Bachelor's degree",
+      "produced": "A bachelor's degree."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Human resources manager, Corbett Manufacturing; 2011 to 2025",
+      "produced": "Job 1: Name Or Description: Corbett Manufacturing.; Job Title: Human resources manager.; Dates: 2011 to 2025."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "Unemployment status not captured",
+      "expected": "Currently unemployed; 2025 to present",
+      "produced": "Job 1: Name Or Description: Corbett Manufacturing.; Job Title: Human resources manager.; Dates: 2011 to 2025."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Kingston, Ontario; describes a stable childhood.",
+      "produced": "I was born and raised in Kingston, Ontario, and it was a pretty stable childhood."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Completed a commerce degree; no significant difficulties.",
+      "produced": "I completed a commerce degree, and I don’t remember any major difficulties from that time."
+    },
+    {
+      "ref": "personal_history.significant_relationships[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Separated three months ago; marriage lasted 19 years",
+      "produced": "I separated from my husband about three months ago, after a 19-year marriage. We have two teenage children, and they’re living with their father."
+    },
+    {
+      "ref": "personal_history.significant_relationships[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Two teenage children living with their father.",
+      "produced": "I separated from my husband about three months ago, after a 19-year marriage. We have two teenage children, and they’re living with their father."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Cannot identify any at present.",
+      "produced": "I can’t really identify any at the moment."
+    }
+  ],
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "section": "past_psychiatric_history",
+      "field": "previous_diagnoses",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I don’t think I was given a formal diagnosis, so nothing specific I can report.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "section": "past_psychiatric_history",
+      "field": "previous_therapies",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I haven’t had any therapy that I can remember.; I don’t know, because I haven’t really had any.; I don’t know.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
+}

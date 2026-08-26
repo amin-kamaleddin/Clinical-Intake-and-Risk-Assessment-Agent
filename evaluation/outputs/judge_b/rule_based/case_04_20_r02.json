@@ -1,0 +1,447 @@
+{
+  "system": "rule_based",
+  "case_id": "20",
+  "scenario_case_id": "04-20",
+  "repetition": 2,
+  "persona_id": "confused",
+  "record_score": 0.8902,
+  "flow_score": 0.28,
+  "record_detail": {
+    "record_score": 0.8902,
+    "record_score_contested": 0.75,
+    "fields_contested": 18,
+    "fields_auto_resolved": 23,
+    "fields_confirmed_absent": 10,
+    "fields_scored": 41,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 36,
+      "partial": 1,
+      "missing": 3,
+      "contradicted": 1,
+      "fabricated": 1
+    },
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_diagnoses"
+    ],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 7.0,
+        "score": 0.7
+      },
+      "past_psychiatric_history": {
+        "fields": 5,
+        "credit": 4.5,
+        "score": 0.9
+      },
+      "medications": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 3.0,
+        "score": 0.75
+      }
+    }
+  },
+  "flow_summary": "The interviewer repeatedly forced yes/no answers or demanded repetition when the confused patient expressed uncertainty about address, email, doctor, and psychiatrist questions, without rephrasing or breaking the query down. Passive suicidal ideation disclosed in current_concerns was ignored with no safety response or acknowledgment. Vague GAD-7 answers were also accepted without recovery.",
+  "issues": [
+    {
+      "severity": "major",
+      "category": "failure_to_recover_vague_answers",
+      "evidence": "Patient: 'Um, I’m not sure what part you want first — like, do you mean the street, or the city?' → Interviewer immediately asked only for postal code."
+    },
+    {
+      "severity": "major",
+      "category": "failure_to_recover_vague_answers",
+      "evidence": "Patient: 'Oh… sorry, I’m not following. Do you mean the one for my parent...' → Interviewer: 'Please repeat your email address.'"
+    },
+    {
+      "severity": "critical",
+      "category": "missing_safety_response",
+      "evidence": "Patient disclosed 'I wish I wouldn’t wake up' in current_concerns; no safety acknowledgment or flag occurred before moving to next topic."
+    },
+    {
+      "severity": "moderate",
+      "category": "mechanical_transitions",
+      "evidence": "Multiple instances of 'Please answer yes or no' to confused replies about family doctor and psychiatrist."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "amelia.frost.parent@example.com",
+      "produced": "amelia.frost.parent@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550263",
+      "produced": "4165550263"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "No employment history reported.",
+      "produced": "No employment history reported."
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "AMELIA FROST",
+      "produced": "UM… I THINK IT’S AMELIA FROST."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female."
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "",
+      "expected": "05/04/2009",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "",
+      "expected": "31 Glenforest Road, Toronto, Ontario",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "",
+      "expected": "M4N1Z8",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. HELEN CHU",
+      "produced": "DR. HELEN CHU."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Low mood, tearfulness and withdrawal from friends for six months; grades slipping; sleeping most of the weekend; thoughts that she wishes she would not wake up.",
+      "produced": "It’s been… low mood, I guess, and crying a lot, and I’ve kind of stopped hanging out with friends. My grades are slipping too, and I sleep most of the weekend. And then there’s this part where I wish I wouldn’t wake up."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Feel something again; get through the school year.",
+      "produced": "I just want to feel something again, I guess… and get through the school year."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "reason for assessment omitted",
+      "expected": "2025; school social worker; assessed for low mood.",
+      "produced": "In 2025, by the school social worker."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "School counselling; 2025; approximately 5 sessions; secondary school.",
+      "produced": "I had school counselling in 2025… about 5 sessions, at my secondary school.; In 2025.; About 5 sessions."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "160 cm",
+      "produced": "160 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "52 kg",
+      "produced": "52 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Mother; recurrent depression; treated with medication.",
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Recurrent depression.; Additional Details: She’s been treated with medication."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Grade 11, currently attending Glenforest Secondary School",
+      "produced": "I’m in Grade 11 right now, at Glenforest Secondary School."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Toronto; described as a shy, sensitive child.",
+      "produced": "I was born and raised in Toronto… I was pretty shy, and sensitive, I guess."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Currently in Grade 11; friendships narrowed over the past year.",
+      "produced": "Uh, I’m still in school, Grade 11, and my friendships have kind of narrowed over the past year. That’s… mostly it, I think."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "contradicted",
+      "source": "llm",
+      "note": "produced denies any information",
+      "expected": "Lives with both parents and a younger brother; one close friend.",
+      "produced": "I don’t really have anything like that to report."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Finish school and study animation.",
+      "produced": "I want to finish school and study animation."
+    }
+  ],
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "section": "past_psychiatric_history",
+      "field": "previous_diagnoses",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I don’t think I’ve been given a diagnosis, no.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
+}

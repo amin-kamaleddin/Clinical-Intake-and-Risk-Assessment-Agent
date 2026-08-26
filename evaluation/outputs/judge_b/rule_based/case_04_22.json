@@ -1,0 +1,490 @@
+{
+  "system": "rule_based",
+  "case_id": "22",
+  "scenario_case_id": "04-22",
+  "repetition": 0,
+  "persona_id": "confused",
+  "record_score": 0.8723,
+  "flow_score": 0.48,
+  "record_detail": {
+    "record_score": 0.8723,
+    "record_score_contested": 0.76,
+    "fields_contested": 25,
+    "fields_auto_resolved": 22,
+    "fields_confirmed_absent": 8,
+    "fields_scored": 47,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 40,
+      "partial": 2,
+      "missing": 5,
+      "contradicted": 0,
+      "fabricated": 1
+    },
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_diagnoses"
+    ],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 6.5,
+        "score": 0.65
+      },
+      "past_psychiatric_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medications": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 7,
+        "credit": 6.5,
+        "score": 0.9286
+      },
+      "medication_allergies": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 4,
+        "credit": 3.0,
+        "score": 0.75
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 5,
+        "credit": 4.0,
+        "score": 0.8
+      }
+    }
+  },
+  "flow_summary": "The interviewer moved through sections in a logical order and correctly asked repeatable items (meds, allergies) with \"any other\" prompts, but repeatedly accepted vague or confused answers from the disorganised patient without recovery. Gender preference, doctor's name, and DOB format confusion were left unresolved; several format-repetition requests did not help the patient and were abandoned. PHQ-9/GAD-7 items were asked cleanly once each with no safety flag needed.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "failed recovery of vague answer",
+      "evidence": "Gender: \"How would you like your gender recorded?\" → vague reply about \"the usual way\"; no clarification or options offered."
+    },
+    {
+      "severity": "moderate",
+      "category": "failed recovery of vague answer",
+      "evidence": "Doctor: \"It’s Dr. Peter… I think.\" followed immediately by \"Do you currently have a psychiatrist?\""
+    },
+    {
+      "severity": "minor",
+      "category": "unhelpful repetition",
+      "evidence": "DOB already given as 08/12/1967; interviewer asked to repeat in DD/MM/YYYY, then moved on when patient remained confused."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "margaret.oyelaran@example.com",
+      "produced": "margaret.oyelaran@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550287",
+      "produced": "4165550287"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "MARGARET OYELARAN",
+      "produced": "OH, RIGHT—MY NAME… IT’S MARGARET OYELARAN."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "no gender stated",
+      "expected": "Female",
+      "produced": "Hmm… recorded how exactly? I mean, I think it’s probably just the usual way they’d put it in, but I’m not sure what format you want."
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "",
+      "expected": "08/12/1967",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "56 Birchmount Road, Toronto, Ontario",
+      "produced": "56 Birchmount Road… Toronto, Ontario."
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "",
+      "expected": "M1N3J7",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "only first name, missing surname",
+      "expected": "DR. PETER HALE",
+      "produced": "OH—HIS NAME? I HAVE IT WRITTEN DOWN SOMEWHERE, BUT I’M BLANKING ON THE EXACT WAY IT’S SUPPOSED TO GO RIGHT NOW. IT’S DR. PETER… I THINK."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Chronic lower back pain since a workplace injury in 2019; low mood, poor sleep and loss of interest for about a year; stopped attending church and social groups.",
+      "produced": "Well, the back pain is the big one, it’s been hanging around since that injury at work back in 2019 and it never really let up. And then lately I’ve just been feeling low, not sleeping properly, not interested in things much—I stopped going to church and the social groups, which isn’t like me. I’m trying to get the pain better controlled, really, and get myself back to my choir."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Manage the pain better; get back to my choir.",
+      "produced": "Mostly I want help managing the pain better… and to get back to my choir, if I can."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Pain management group; 2022; approximately 8 sessions; hospital pain clinic.",
+      "produced": "Yes — I did a pain management group in 2022, at the hospital pain clinic. I think it was about 8 sessions, but… that’s the one I remember.; In 2022.; About 8 sessions."
+    },
+    {
+      "ref": "medications.current_medications[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Hydromorphone; 2 mg three times daily; started 2020; constipation",
+      "produced": "Medication 1: Name Or Description: Hydromorphone.; Dose: 2 mg three times daily.; Start Or Duration: Started in 2020.; Side Effects: Constipation.\nMedication 2: Name Or Description: Yes… there is another one, duloxetine.; Dose: 60 mg each morning.; Start Or Duration: Started in 2023.; Side Effects: Mild nausea."
+    },
+    {
+      "ref": "medications.current_medications[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Duloxetine; 60 mg each morning; started 2023; mild nausea",
+      "produced": "Medication 1: Name Or Description: Hydromorphone.; Dose: 2 mg three times daily.; Start Or Duration: Started in 2020.; Side Effects: Constipation.\nMedication 2: Name Or Description: Yes… there is another one, duloxetine.; Dose: 60 mg each morning.; Start Or Duration: Started in 2023.; Side Effects: Mild nausea."
+    },
+    {
+      "ref": "medical_history.medical_conditions[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Chronic lower back pain; since 2019",
+      "produced": "Chronic lower back pain, and type 2 diabetes."
+    },
+    {
+      "ref": "medical_history.medical_conditions[1]",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "missing diagnosis year",
+      "expected": "Type 2 diabetes; diagnosed 2015.",
+      "produced": "Chronic lower back pain, and type 2 diabetes."
+    },
+    {
+      "ref": "medical_history.surgical_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Lumbar discectomy; 2020.",
+      "produced": "Surgery: Lumbar discectomy.; Date: In 2020.; Details: No, I don’t have anything else to add about it."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "158 cm",
+      "produced": "158 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "82 kg",
+      "produced": "82 kg."
+    },
+    {
+      "ref": "medication_allergies.medication_allergies",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Codeine; nausea and vomiting; 2015.",
+      "produced": "Allergy 1: Name Or Description: Codeine.; Reaction: Nausea and vomiting.; Date Or Age: In 2015."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "High school",
+      "produced": "High school."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Postal worker, Canada Post; 1992 to 2019",
+      "produced": "Job 1: Name Or Description: Canada Post.; Job Title: Postal worker.; Dates: 1992 to 2019."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "disability entry absent",
+      "expected": "Currently on disability; 2019 to present",
+      "produced": "Job 1: Name Or Description: Canada Post.; Job Title: Postal worker.; Dates: 1992 to 2019."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born in Trinidad; moved to Toronto at 14; describes a warm household.",
+      "produced": "I was born in Trinidad, and then I moved to Toronto when I was 14. My childhood home was warm… that’s the way I’d put it."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Completed high school in Toronto and began work at 20.",
+      "produced": "Well, I finished high school in Toronto, and then I started work when I was 20. That’s… mostly what I remember to say about that part."
+    },
+    {
+      "ref": "personal_history.significant_relationships[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Widowed; marriage lasted 28 years",
+      "produced": "I’m widowed. My marriage lasted 28 years. I don’t really have anything else to add there."
+    },
+    {
+      "ref": "personal_history.significant_relationships[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "children absent",
+      "expected": "Three adult children nearby.",
+      "produced": "I’m widowed. My marriage lasted 28 years. I don’t really have anything else to add there."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Be well enough to look after my grandchildren.",
+      "produced": "I’d like to be well enough to look after my grandchildren."
+    }
+  ],
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "section": "past_psychiatric_history",
+      "field": "previous_diagnoses",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I don’t think I’ve been given any psychiatric diagnosis before, no.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
+}

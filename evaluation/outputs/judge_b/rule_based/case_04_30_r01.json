@@ -1,0 +1,469 @@
+{
+  "system": "rule_based",
+  "case_id": "30",
+  "scenario_case_id": "04-30",
+  "repetition": 1,
+  "persona_id": "moderate",
+  "record_score": 0.9022,
+  "flow_score": 0.62,
+  "record_detail": {
+    "record_score": 0.9022,
+    "record_score_contested": 0.82,
+    "fields_contested": 25,
+    "fields_auto_resolved": 21,
+    "fields_confirmed_absent": 8,
+    "fields_scored": 46,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 40,
+      "partial": 3,
+      "missing": 3,
+      "contradicted": 0,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 8.0,
+        "score": 0.8
+      },
+      "past_psychiatric_history": {
+        "fields": 7,
+        "credit": 6.0,
+        "score": 0.8571
+      },
+      "medications": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 1.5,
+        "score": 0.75
+      },
+      "personal_history": {
+        "fields": 5,
+        "credit": 4.0,
+        "score": 0.8
+      }
+    }
+  },
+  "flow_summary": "The interview covers all required sections with one question at a time and correctly loops on repeatable items (meds, family history) until the patient says none remain. However, it repeatedly demands exact-format repetitions after the patient has already supplied the information, and responds to hedging or uncertainty with rigid instructions rather than gentle clarification or acceptance.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "mechanical repetition",
+      "evidence": "\"Please repeat your date of birth in DD/MM/YYYY format.\" after patient already said \"I think it’s 21/03/1986.\""
+    },
+    {
+      "severity": "moderate",
+      "category": "poor recovery of vague answer",
+      "evidence": "\"Please answer yes or no.\" after patient gave a nuanced \"I think so — my family doctor assessed me back in 2021...\""
+    },
+    {
+      "severity": "minor",
+      "category": "ignoring patient uncertainty",
+      "evidence": "\"Please repeat your email address.\" when patient explicitly asked which of two addresses to use."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "ingrid.solberg@example.com",
+      "produced": "ingrid.solberg@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550363",
+      "produced": "4165550363"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "INGRID SOLBERG",
+      "produced": "I THINK IT’S INGRID SOLBERG."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female."
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "date not captured",
+      "expected": "21/03/1986",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "88 Broadview Avenue, Toronto, Ontario",
+      "produced": "88 Broadview Avenue, Toronto, Ontario."
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "postal code not captured",
+      "expected": "M4M2E7",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. SUSAN CHEN",
+      "produced": "DR. SUSAN CHEN."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "missing duration, seasonal improvement, current month",
+      "expected": "Low mood, oversleeping and carbohydrate craving each winter for six years; improves each spring; currently in the fourth month of a low period.",
+      "produced": "Mostly it’s my mood in the winter. I get really low, sleep a lot, and crave carbs."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Get through a winter without losing four months of my life.",
+      "produced": "I’d like to make it through winter without feeling like I lose four months of my life."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "missing reason for assessment",
+      "expected": "2021; family physician; assessed for recurrent winter low mood.",
+      "produced": "In 2021, by my family physician."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Major depressive disorder with seasonal pattern",
+      "produced": "Yes — major depressive disorder with seasonal pattern."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "missing community clinic",
+      "expected": "Cognitive behavioural therapy; 2022; approximately 10 sessions; community clinic.",
+      "produced": "Yes, I did CBT.; In 2022, I think.; About 10 sessions, something like that."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_treatments",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Bright light therapy; winters since 2022; at home; used most mornings; benefit lasts through the season.",
+      "produced": "Yes — bright light therapy.; Mostly in the winters since 2022.; At home.; Most mornings, I used it then.; It seemed to last through the season."
+    },
+    {
+      "ref": "medications.past_medication_details[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Fluoxetine; 20 mg daily; about 5 months in 2021; stopped when spring came",
+      "produced": "Past medication 1: Name Or Description: Fluoxetine.; Dose: 20 mg daily.; Dates Or Duration: About 5 months in 2021, and I stopped when spring came.; Discontinuation Reason: It was stopped when spring came.\nPast medication 2: Name Or Description: Yes, there was another one — bupropion.; Dose: 150 mg daily.; Dates Or Duration: About 6 months in 2023, I think.; Discontinuation Reason: It was stopped because it gave me insomnia."
+    },
+    {
+      "ref": "medications.past_medication_details[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Bupropion; 150 mg daily; about 6 months in 2023; stopped for insomnia",
+      "produced": "Past medication 1: Name Or Description: Fluoxetine.; Dose: 20 mg daily.; Dates Or Duration: About 5 months in 2021, and I stopped when spring came.; Discontinuation Reason: It was stopped when spring came.\nPast medication 2: Name Or Description: Yes, there was another one — bupropion.; Dose: 150 mg daily.; Dates Or Duration: About 6 months in 2023, I think.; Discontinuation Reason: It was stopped because it gave me insomnia."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "171 cm",
+      "produced": "I’m about 171 cm tall."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "74 kg",
+      "produced": "About 74 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Mother; seasonal low mood; never formally treated.",
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Seasonal low mood.; Additional Details: No, not really."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; wine; two glasses on weekends; about twelve years",
+      "produced": "Status: Current; Substance or product: Wine.; Quantity or frequency: About two glasses on weekends.; Duration: About twelve years."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Bachelor's degree",
+      "produced": "A bachelor’s degree."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Landscape architect, Greenline Design; 2013 to present",
+      "produced": "Job 1: Name Or Description: Greenline Design.; Job Title: Landscape architect.; Dates: I think it started in 2013 and it’s still going, so present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born in Oslo; moved to Toronto at 11; describes an outdoorsy childhood.",
+      "produced": "I was born in Oslo and moved to Toronto when I was 11. I had an outdoorsy childhood."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Completed school and an architecture degree without difficulty.",
+      "produced": "School was fine, and I got through an architecture degree without much trouble."
+    },
+    {
+      "ref": "personal_history.significant_relationships[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Marriage; 8 years; current",
+      "produced": "I’m married, and that’s been for about 8 years now."
+    },
+    {
+      "ref": "personal_history.significant_relationships[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "",
+      "expected": "No children.",
+      "produced": "I’m married, and that’s been for about 8 years now."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Keep working through the winter months without losing ground.",
+      "produced": "Mostly to keep working through the winter months without losing ground."
+    }
+  ],
+  "fabricated": []
+}

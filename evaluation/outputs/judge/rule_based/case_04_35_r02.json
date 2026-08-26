@@ -1,0 +1,493 @@
+{
+  "system": "rule_based",
+  "case_id": "35",
+  "scenario_case_id": "04-35",
+  "repetition": 2,
+  "persona_id": "moderate",
+  "record_score": 0.898,
+  "flow_score": 0.7,
+  "record_detail": {
+    "record_score": 0.898,
+    "record_score_contested": 0.8276,
+    "fields_contested": 29,
+    "fields_auto_resolved": 20,
+    "fields_confirmed_absent": 5,
+    "fields_scored": 49,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 42,
+      "partial": 4,
+      "missing": 3,
+      "contradicted": 0,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 11,
+        "credit": 9.0,
+        "score": 0.8182
+      },
+      "past_psychiatric_history": {
+        "fields": 8,
+        "credit": 7.0,
+        "score": 0.875
+      },
+      "medications": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 7.5,
+        "score": 0.9375
+      },
+      "education_employment_legal_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 1.5,
+        "score": 0.75
+      },
+      "personal_history": {
+        "fields": 5,
+        "credit": 4.0,
+        "score": 0.8
+      }
+    }
+  },
+  "flow_summary": "The interviewer successfully completed the intake and gathered all necessary clinical information. However, the system frequently relied on redundant 'Please repeat' prompts when the patient provided information in a conversational format, and it failed to acknowledge the patient's disclosure of a recent suicide attempt with appropriate empathy, instead immediately pivoting to a clinical follow-up.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "empathy",
+      "evidence": "The patient disclosed a recent overdose and current suicidal thoughts; the interviewer responded with: 'Please briefly describe what happened. Is there any current or immediate safety concern?'"
+    },
+    {
+      "severity": "minor",
+      "category": "flow",
+      "evidence": "The interviewer repeatedly asked the patient to reformat answers that were already clear, such as: 'Please repeat your date of birth in DD/MM/YYYY format' and 'Please repeat the postal code using letters and numbers.'"
+    },
+    {
+      "severity": "minor",
+      "category": "flow",
+      "evidence": "The interviewer asked 'Please answer yes or no' after the patient had already clearly answered the question regarding past psychiatric medications."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "lucas.pereira@example.com",
+      "produced": "lucas.pereira@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550417",
+      "produced": "4165550417"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "LUCAS PEREIRA",
+      "produced": "IT’S LUCAS PEREIRA."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Male",
+      "produced": "Male."
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The system failed to capture the date of birth.",
+      "expected": "07/03/1992",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "340 College Street, Toronto, Ontario",
+      "produced": "340 College Street, Toronto, Ontario."
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The system failed to capture the postal code.",
+      "expected": "M5T1S3",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. ALAN WHITFIELD",
+      "produced": "DR. ALAN WHITFIELD."
+    },
+    {
+      "ref": "general_information.psychiatrist_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. LAURA BENNETT",
+      "produced": "DR. LAURA BENNETT."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The system omitted the current suicidal ideation and safety plan status.",
+      "expected": "Low mood, hopelessness and poor sleep for six months; overdose two weeks ago leading to admission; still has thoughts that he would be better off gone, though he is following his safety plan.",
+      "produced": "Mostly low mood and feeling pretty hopeless, and my sleep has been bad for about six months. Also, I was in the hospital after the overdose two weeks ago."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Stay out of hospital; get back to work when I am ready.",
+      "produced": "Mostly I want to stay out of the hospital, and get back to work when I’m ready."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The system omitted the reason for the assessment (overdose).",
+      "expected": "2026; inpatient psychiatry team; assessed after an overdose.",
+      "produced": "In 2026, by the inpatient psychiatry team."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Major depressive disorder, recurrent",
+      "produced": "Yes — major depressive disorder, recurrent."
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The system omitted the reason for the admission (intentional overdose).",
+      "expected": "St. Michael's Hospital; 2026; eight days; admitted after an intentional overdose.",
+      "produced": "It was in 2026, at St. Michael's Hospital, for about eight days."
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Intentional overdose two weeks ago requiring admission; currently has a safety plan and is staying with his sister.",
+      "produced": "I overdosed two weeks ago and was admitted. Right now I still have passive thoughts like I’d be better off gone, but I don’t have a plan or intent. I’m following a safety plan with my sister."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Dialectical behaviour therapy skills group; 2026; approximately 4 sessions so far; hospital outpatient programme.",
+      "produced": "Yes, I’ve done a DBT skills group through the hospital outpatient program.; In 2026.; Something like 4 sessions so far."
+    },
+    {
+      "ref": "medications.current_medications",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Escitalopram; 15 mg each morning; started February 2026; mild nausea",
+      "produced": "Medication 1: Name Or Description: Escitalopram.; Dose: 15 mg each morning.; Start Or Duration: I started it in February 2026.; Side Effects: Just some mild nausea.\nMedication 2: Name Or Description: I was on fluoxetine before, if that’s the one you mean.; Dose: 20 mg daily.; Start Or Duration: About 6 months in 2024.; Side Effects: It didn’t really help, so I stopped it for lack of benefit."
+    },
+    {
+      "ref": "medications.past_medication_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Fluoxetine; 20 mg daily; about 6 months in 2024; stopped for lack of benefit",
+      "produced": "Past medication 1: Name Or Description: Fluoxetine.; Dose: 20 mg daily.; Dates Or Duration: About 6 months in 2024.; Discontinuation Reason: It was stopped for lack of benefit."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "177 cm",
+      "produced": "I’m about 177 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "72 kg",
+      "produced": "About 72 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Father; depression; treated with medication.",
+      "produced": "Family member 1: Name Or Description: My father.; Diagnosis Or Condition: Depression.; Additional Details: He was treated with medication."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing the detail that use stopped after the admission.",
+      "expected": "Previous; beer; heavy use in 2025; stopped after the admission",
+      "produced": "Status: Previous; Substance or product: Beer.; Quantity or frequency: I was drinking heavily in 2025.; Duration: Unknown"
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; cigarettes; about 10 per day; 12 years",
+      "produced": "Status: Current; Substance or product: Cigarettes.; Quantity or frequency: About 10 per day.; Duration: About 12 years."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "College diploma",
+      "produced": "A college diploma."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Chef, Harbourview Restaurant; 2016 to 2026",
+      "produced": "Job 1: Name Or Description: Harbourview Restaurant.; Job Title: Chef.; Dates: From 2016 to 2026. I’m on medical leave now."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Currently on medical leave; 2026 to present",
+      "produced": "Job 1: Name Or Description: Harbourview Restaurant.; Job Title: Chef.; Dates: From 2016 to 2026. I’m on medical leave now."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born in São Paulo; moved to Toronto at 9; describes a close family.",
+      "produced": "I was born in São Paulo and moved to Toronto when I was 9. I had a pretty close family growing up."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Completed culinary school; first depressive episode at 26.",
+      "produced": "I finished culinary school, and I think my first depressive episode was when I was 26."
+    },
+    {
+      "ref": "personal_history.significant_relationships[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Separated; relationship lasted 6 years",
+      "produced": "I’m separated now. It was a relationship that lasted about 6 years."
+    },
+    {
+      "ref": "personal_history.significant_relationships[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The fact about living with his sister is not present in the produced text.",
+      "expected": "Currently living with his sister.",
+      "produced": "I’m separated now. It was a relationship that lasted about 6 years."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Get steady again and go back to my kitchen.",
+      "produced": "I want to get steady again and go back to my kitchen."
+    }
+  ],
+  "fabricated": []
+}

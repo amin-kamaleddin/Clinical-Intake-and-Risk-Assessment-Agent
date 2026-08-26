@@ -1,0 +1,482 @@
+{
+  "system": "rule_based",
+  "case_id": "45",
+  "scenario_case_id": "04-45",
+  "repetition": 1,
+  "persona_id": "confused",
+  "record_score": 0.9239,
+  "flow_score": 0.3,
+  "record_detail": {
+    "record_score": 0.9239,
+    "record_score_contested": 0.8478,
+    "fields_contested": 23,
+    "fields_auto_resolved": 23,
+    "fields_confirmed_absent": 6,
+    "fields_scored": 46,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 41,
+      "partial": 3,
+      "missing": 2,
+      "contradicted": 0,
+      "fabricated": 1
+    },
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_treatments"
+    ],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 9.0,
+        "score": 0.9
+      },
+      "past_psychiatric_history": {
+        "fields": 8,
+        "credit": 6.5,
+        "score": 0.8125
+      },
+      "medications": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 5,
+        "credit": 5.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 1.0,
+        "score": 0.5
+      },
+      "personal_history": {
+        "fields": 5,
+        "credit": 5.0,
+        "score": 1.0
+      }
+    }
+  },
+  "flow_summary": "The interviewer showed almost no recovery or redirection for this confused, disorganised patient. Vague or muddled answers (current concerns, address, name format) were ignored or bypassed; after the patient said “I don’t think so—nothing like that” for biological treatments, the system still asked four follow-up detail questions. The single clear question rule was followed, but active guidance was absent.",
+  "issues": [
+    {
+      "severity": "major",
+      "category": "failure_to_recover_vague_answer",
+      "evidence": "After patient said “sleep has been off, but—sorry—do you mean the main reason… or what’s been bothering me day to day? I get a bit muddled”, interviewer switched to “What do you hope to get out of your appointment?” without clarifying."
+    },
+    {
+      "severity": "major",
+      "category": "repeated_question_after_unknown",
+      "evidence": "Patient answered biological-treatment question with “I don’t think so—nothing like that, no.” Interviewer then asked “When was it received?”, “Where was it received?”, “Approximately how many sessions?”, and “How long did the benefit last?”"
+    },
+    {
+      "severity": "moderate",
+      "category": "missed_clarification",
+      "evidence": "Patient expressed uncertainty about address number and DOB format; interviewer moved on without obtaining or confirming the missing details."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "13/06/1970",
+      "produced": "13/06/1970"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M4E2X2",
+      "produced": "M4E2X2"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "douglas.fenwick@example.com",
+      "produced": "douglas.fenwick@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550516",
+      "produced": "4165550516"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DOUGLAS FENWICK",
+      "produced": "OH—RIGHT, THE FULL LEGAL NAME, YOU MEAN. I ALWAYS GET A BIT TANGLED WITH THE WAY THAT’S ASKED. I’M DOUGLAS… FENWICK, I THINK THAT’S THE PART YOU WANT? OR DO YOU MEAN EVERY BIT EXACTLY AS IT’S WRITTEN ON THE DOCUMENTS?"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Male",
+      "produced": "Male."
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "",
+      "expected": "68 Glen Manor Drive, Toronto, Ontario",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. OMAR SIDDIQUI",
+      "produced": "DR. OMAR SIDDIQUI."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "",
+      "expected": "Difficulty falling asleep for about seven months since a change of shift pattern; daytime tiredness; mood otherwise stable.",
+      "produced": "Well, it’s been a bit all over the place. I’ve been coming because sleep has been off, but—sorry—do you mean the main reason I’m here, or what’s been bothering me day to day? I get a bit muddled with that one."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Sleep properly again without relying on anything.",
+      "produced": "I just want to sleep properly again, without relying on anything."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "reason for assessment omitted",
+      "expected": "2009; hospital psychiatry team; assessed after an overdose during a divorce.",
+      "produced": "2009, by a hospital psychiatry team."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Major depressive disorder, single episode, in full remission",
+      "produced": "Yes—major depressive disorder, single episode, in full remission."
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "reason for admission omitted",
+      "expected": "Scarborough General Hospital; 2009; four days; admitted after an intentional overdose.",
+      "produced": "It was in 2009, at Scarborough General Hospital, and I was there for four days."
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Intentional overdose in 2009 during a divorce; no self-harm or suicidal thoughts since; states clearly there have been none for fifteen years.",
+      "produced": "It was an intentional overdose back in 2009, during my divorce. Since then I’ve been well for about fifteen years, and I’ve had no self-harm thoughts since. No current or immediate safety concern."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "location omitted",
+      "expected": "Cognitive behavioural therapy; 2010; approximately 12 sessions; community clinic.",
+      "produced": "Yes, CBT.; In 2010.; About 12 sessions."
+    },
+    {
+      "ref": "medications.past_medication_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Citalopram; 20 mg daily; about 18 months from 2009; stopped after sustained recovery",
+      "produced": "Past medication 1: Name Or Description: Citalopram.; Dose: 20 mg daily.; Dates Or Duration: About 18 months from 2009, and then I stopped after I’d recovered properly.; Discontinuation Reason: I stopped it after sustained recovery."
+    },
+    {
+      "ref": "medical_history.medical_conditions",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Type 2 diabetes; diagnosed 2018.",
+      "produced": "Type 2 diabetes, diagnosed in 2018."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "179 cm",
+      "produced": "179 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "91 kg",
+      "produced": "91 kg."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; beer; two at weekends; about thirty years",
+      "produced": "Status: Current; Substance or product: Beer.; Quantity or frequency: Two at weekends.; Duration: About thirty years."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "College diploma",
+      "produced": "College diploma."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Transit operator, Toronto Transit Commission; 1996 to present",
+      "produced": "Job 1: Name Or Description: Toronto Transit Commission.; Job Title: Transit operator.; Dates: 1996 to present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Scarborough; describes a stable childhood.",
+      "produced": "I was born and raised in Scarborough, and it was a stable childhood. Nothing too dramatic, really."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Completed a transport diploma and began work at 24.",
+      "produced": "I did a transport diploma and started work when I was 24… that’s about it, really."
+    },
+    {
+      "ref": "personal_history.significant_relationships[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Remarried; current marriage 12 years",
+      "produced": "I’m remarried now — current marriage has been about 12 years. I also have two adult children from my first marriage."
+    },
+    {
+      "ref": "personal_history.significant_relationships[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Two adult children from his first marriage.",
+      "produced": "I’m remarried now — current marriage has been about 12 years. I also have two adult children from my first marriage."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Retire in good health in a few years.",
+      "produced": "I’d like to retire in good health in a few years."
+    }
+  ],
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_treatments",
+      "section": "past_psychiatric_history",
+      "field": "previous_treatments",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I don’t think so — nothing like that, no.; I don’t know.; I don’t know.; I don’t know.; I don’t know.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
+}

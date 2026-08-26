@@ -1,0 +1,461 @@
+{
+  "system": "rule_based",
+  "case_id": "21",
+  "scenario_case_id": "04-21",
+  "repetition": 0,
+  "persona_id": "moderate",
+  "record_score": 0.9333,
+  "flow_score": 0.45,
+  "record_detail": {
+    "record_score": 0.9333,
+    "record_score_contested": 0.8636,
+    "fields_contested": 22,
+    "fields_auto_resolved": 23,
+    "fields_confirmed_absent": 8,
+    "fields_scored": 45,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 41,
+      "partial": 2,
+      "missing": 2,
+      "contradicted": 0,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 9.0,
+        "score": 0.9
+      },
+      "past_psychiatric_history": {
+        "fields": 6,
+        "credit": 6.0,
+        "score": 1.0
+      },
+      "medications": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 5,
+        "credit": 4.5,
+        "score": 0.9
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 1.5,
+        "score": 0.75
+      },
+      "personal_history": {
+        "fields": 5,
+        "credit": 4.0,
+        "score": 0.8
+      }
+    }
+  },
+  "flow_summary": "Mostly one-question-at-a-time flow with sensible sequencing, but failed to clarify vague name/DOB responses, inserted an abrupt 'yes or no' prompt, and omitted any safety response after PHQ-9 Q9 >0 despite current passive risk. Recovery of imprecise answers was inconsistent.",
+  "issues": [
+    {
+      "severity": "major",
+      "category": "safety",
+      "evidence": "PHQ-9 Q9 answered 'Several days' with safety_profile noting current passive thoughts; no safety flag, acknowledgment, or protocol response appears in transcript."
+    },
+    {
+      "severity": "moderate",
+      "category": "recovery",
+      "evidence": "Patient hedged on full legal name ('It’s Brian… I think that’s how it’s listed'); interviewer moved directly to gender without clarification or follow-up."
+    },
+    {
+      "severity": "minor",
+      "category": "transitions",
+      "evidence": "After employment history answer, interviewer said 'Please answer yes or no' with no visible prior question tying to it."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "19/06/1974",
+      "produced": "19/06/1974"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M4L3B6",
+      "produced": "M4L3B6"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "brian.calloway@example.com",
+      "produced": "brian.calloway@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550270",
+      "produced": "4165550270"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. SIMON GREEN",
+      "produced": "DR. SIMON GREEN"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "full name not captured",
+      "expected": "BRIAN CALLOWAY",
+      "produced": "IT’S BRIAN… I THINK THAT’S HOW IT’S LISTED. DO YOU MEAN THE FULL NAME ON THE ID, OR JUST THE NAME I GO BY?"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Male",
+      "produced": "Male."
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "203 Coxwell Avenue, Toronto, Ontario",
+      "produced": "203 Coxwell Avenue, Toronto, Ontario."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "missing duration, guilt, and suicidal ideation",
+      "expected": "Daily alcohol use to get to sleep for about two years; low mood and guilt; missed work; occasional thoughts that his family would be better off without him.",
+      "produced": "Mostly I’ve been drinking every night to get to sleep, and my mood’s been pretty low. I’ve also been missing work some."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Cut down the drinking; sleep without it; stop feeling like a burden.",
+      "produced": "I want to cut down the drinking and be able to sleep without it, and just stop feeling like such a burden to everyone."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "2023; addictions service; assessed for alcohol use.",
+      "produced": "I think it was in 2023, and it was through an addictions service… a community addictions clinic, I believe."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Alcohol use disorder",
+      "produced": "Alcohol use disorder."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Motivational interviewing; 2023; approximately 6 sessions; community addictions clinic.",
+      "produced": "Yes, I did some motivational interviewing.; Back in 2023, I think. It was around six sessions at a community addictions clinic.; About 6 sessions, something like that."
+    },
+    {
+      "ref": "medications.past_medication_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Mirtazapine; 30 mg nightly; about 4 months in 2023; stopped for weight gain",
+      "produced": "Past medication 1: Name Or Description: Mirtazapine.; Dose: 30 mg nightly.; Dates Or Duration: I took it for about 4 months in 2023.; Discontinuation Reason: It was stopped because I gained weight on it."
+    },
+    {
+      "ref": "medical_history.medical_conditions",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "missing diagnosis year",
+      "expected": "Hypertension; diagnosed 2020.",
+      "produced": "Hypertension."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "176 cm",
+      "produced": "I’m about 176 cm tall."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "101 kg",
+      "produced": "About 101 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Father; alcohol use disorder; never treated.",
+      "produced": "Family member 1: Name Or Description: My father.; Diagnosis Or Condition: Alcohol use disorder.; Additional Details: He was never treated for it."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; spirits and beer; approximately eight standard drinks most evenings; about two years at this level",
+      "produced": "Status: Current; Substance or product: Mostly spirits and beer.; Quantity or frequency: Maybe around eight standard drinks most evenings.; Duration: About two years at that level."
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Previous; cigarettes; about 20 per day; 15 years",
+      "produced": "Status: Previous; Substance or product: Cigarettes.; Quantity or frequency: About 20 a day, more or less.; Duration: For about 15 years."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "High school",
+      "produced": "High school."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Warehouse supervisor, Portland Distribution; 2009 to present",
+      "produced": "Job 1: Name Or Description: Portland Distribution.; Job Title: Warehouse supervisor.; Dates: 2009 to present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Scarborough; describes a difficult home with his father's drinking.",
+      "produced": "I grew up in Scarborough. Home was pretty tough, mostly because of my dad’s drinking."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Left school at 18 and started work immediately.",
+      "produced": "I left school when I was 18 and started working right away."
+    },
+    {
+      "ref": "personal_history.significant_relationships[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Marriage; 22 years; current but strained",
+      "produced": "I’ve been married for 22 years. It’s still current, but it’s strained lately."
+    },
+    {
+      "ref": "personal_history.significant_relationships[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "",
+      "expected": "Two adult children.",
+      "produced": "I’ve been married for 22 years. It’s still current, but it’s strained lately."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Be sober and useful to my family again.",
+      "produced": "I want to be sober and useful to my family again."
+    }
+  ],
+  "fabricated": []
+}

@@ -1,0 +1,477 @@
+{
+  "system": "rule_based",
+  "case_id": "09",
+  "scenario_case_id": "04-09",
+  "repetition": 2,
+  "persona_id": "moderate",
+  "record_score": 0.8723,
+  "flow_score": 0.62,
+  "record_detail": {
+    "record_score": 0.8723,
+    "record_score_contested": 0.7391,
+    "fields_contested": 23,
+    "fields_auto_resolved": 24,
+    "fields_confirmed_absent": 11,
+    "fields_scored": 47,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 40,
+      "partial": 2,
+      "missing": 5,
+      "contradicted": 0,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 9.0,
+        "score": 0.9
+      },
+      "past_psychiatric_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medications": {
+        "fields": 5,
+        "credit": 5.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 9,
+        "credit": 4.5,
+        "score": 0.5
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 2.5,
+        "score": 0.8333
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      }
+    }
+  },
+  "flow_summary": "The interview follows a logical section order and correctly handles repeatable medication/family entries by re-asking until the patient says no more. However, it fails to recover the patient's explicit confusion about the address question and instead pivots to postal code; it also inserts an unexplained 'Please answer yes or no' prompt after employment details and accepts several vague personal-history answers without clarification.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "failure to recover vague answer",
+      "evidence": "After patient says 'I’m not quite sure what you mean there—do you want the street part, or the city and province too?', interviewer immediately asks only for postal code."
+    },
+    {
+      "severity": "minor",
+      "category": "abrupt or unexplained prompt",
+      "evidence": "Turn 4 in education_employment_legal_history: 'Please answer yes or no.' with no preceding context."
+    },
+    {
+      "severity": "minor",
+      "category": "failure to recover vague answer",
+      "evidence": "Open-ended personal-history questions receive brief, imprecise replies ('pretty ordinary childhood', 'School was the big thing') that are not followed up."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "19/05/1953",
+      "produced": "19/05/1953"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "L6J1H8",
+      "produced": "L6J1H8"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "robert.miller@example.com",
+      "produced": "robert.miller@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "9055550172",
+      "produced": "9055550172"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. SUSAN PARK",
+      "produced": "DR. SUSAN PARK"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "ROBERT MILLER",
+      "produced": "I THINK IT’S ROBERT MILLER."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Male",
+      "produced": "Probably as male, I think."
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "no address given",
+      "expected": "76 Lakeshore Road East, Oakville, Ontario",
+      "produced": "I’m not quite sure what you mean there—do you want the street part, or the city and province too?"
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "lost interest; fatigue; social withdrawal; sleep",
+      "produced": "Mostly I’ve lost interest in things, and I’ve been tired. I’ve also been pulling back socially a bit, and sleep has been harder."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "enjoy life; stay active",
+      "produced": "I’d like to enjoy life again and stay active."
+    },
+    {
+      "ref": "medications.current_medications[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Carbidopa-levodopa; 25/100 mg, one tablet three times daily; started 2024; occasional nausea",
+      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: It’s the 25/100 mg tablets, one tablet three times a day.; Start Or Duration: I started it in 2024, I think.; Side Effects: Occasionally it makes me a bit nauseous.\nMedication 2: Name Or Description: Yes — I’m also on latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: I started those in 2021.; Side Effects: None that I know of.\nMedication 3: Name Or Description: Yes — allopurinol.; Dose: 100 mg daily.; Start Or Duration: I started it in 2019.; Side Effects: None known."
+    },
+    {
+      "ref": "medications.current_medications[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Latanoprost eye drops; one drop in each eye nightly; started 2021; no known side effects",
+      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: It’s the 25/100 mg tablets, one tablet three times a day.; Start Or Duration: I started it in 2024, I think.; Side Effects: Occasionally it makes me a bit nauseous.\nMedication 2: Name Or Description: Yes — I’m also on latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: I started those in 2021.; Side Effects: None that I know of.\nMedication 3: Name Or Description: Yes — allopurinol.; Dose: 100 mg daily.; Start Or Duration: I started it in 2019.; Side Effects: None known."
+    },
+    {
+      "ref": "medications.current_medications[2]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Allopurinol; 100 mg daily; started 2019; no known side effects.",
+      "produced": "Medication 1: Name Or Description: Carbidopa-levodopa.; Dose: It’s the 25/100 mg tablets, one tablet three times a day.; Start Or Duration: I started it in 2024, I think.; Side Effects: Occasionally it makes me a bit nauseous.\nMedication 2: Name Or Description: Yes — I’m also on latanoprost eye drops.; Dose: One drop in each eye nightly.; Start Or Duration: I started those in 2021.; Side Effects: None that I know of.\nMedication 3: Name Or Description: Yes — allopurinol.; Dose: 100 mg daily.; Start Or Duration: I started it in 2019.; Side Effects: None known."
+    },
+    {
+      "ref": "medical_history.medical_conditions[0]",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "missing diagnosis year",
+      "expected": "Parkinson's disease; diagnosed 2024",
+      "produced": "I have Parkinson’s disease, and that’s the main one I know about."
+    },
+    {
+      "ref": "medical_history.medical_conditions[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "not mentioned",
+      "expected": "Prostate cancer; treated in 2018 and currently in remission",
+      "produced": "I have Parkinson’s disease, and that’s the main one I know about."
+    },
+    {
+      "ref": "medical_history.medical_conditions[2]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "not mentioned",
+      "expected": "Glaucoma; diagnosed 2021",
+      "produced": "I have Parkinson’s disease, and that’s the main one I know about."
+    },
+    {
+      "ref": "medical_history.medical_conditions[3]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "not mentioned",
+      "expected": "Gout; diagnosed 2019",
+      "produced": "I have Parkinson’s disease, and that’s the main one I know about."
+    },
+    {
+      "ref": "medical_history.medical_conditions[4]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "No mention of REM sleep behaviour disorder",
+      "expected": "REM sleep behaviour disorder; diagnosed 2025.",
+      "produced": "I have Parkinson’s disease, and that’s the main one I know about."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "175 cm",
+      "produced": "I’m about 175 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "74 kg",
+      "produced": "About 74 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Granddaughter; ADHD; diagnosed at age 9",
+      "produced": "Family member 1: Name Or Description: My granddaughter.; Diagnosis Or Condition: ADHD.; Additional Details: She was diagnosed when she was 9, I think."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "current; wine; monthly; minimal",
+      "produced": "Status: Current; Substance or product: Wine.; Quantity or frequency: Maybe monthly, and it’s minimal.; Duration: I don’t know."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "bachelor's degree; teacher",
+      "produced": "I have a bachelor’s degree, and I’m a teacher by training."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Retired status absent",
+      "expected": "High school science teacher, Oakville District School Board; 1978 to 2013; retired",
+      "produced": "Job 1: Name Or Description: Oakville District School Board.; Job Title: High school science teacher.; Dates: 1978 to 2013."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "born; grew up",
+      "produced": "I was born and grew up… just a pretty ordinary childhood, really. Nothing much else I can think of."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "school; became a teacher",
+      "produced": "School was the big thing, and then I became a teacher. That’s most of it, really."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "married; 49 years; supportive wife",
+      "produced": "I’ve been married for 49 years, and my wife has been supportive."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "enjoy life; manage illness",
+      "produced": "Mostly to enjoy life and manage the illness."
+    }
+  ],
+  "fabricated": []
+}

@@ -1,0 +1,469 @@
+{
+  "system": "rule_based",
+  "case_id": "15",
+  "scenario_case_id": "04-15",
+  "repetition": 0,
+  "persona_id": "moderate",
+  "record_score": 0.9348,
+  "flow_score": 0.55,
+  "record_detail": {
+    "record_score": 0.9348,
+    "record_score_contested": 0.8636,
+    "fields_contested": 22,
+    "fields_auto_resolved": 24,
+    "fields_confirmed_absent": 7,
+    "fields_scored": 46,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 41,
+      "partial": 4,
+      "missing": 1,
+      "contradicted": 0,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 9.0,
+        "score": 0.9
+      },
+      "past_psychiatric_history": {
+        "fields": 6,
+        "credit": 5.5,
+        "score": 0.9167
+      },
+      "medications": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 6,
+        "credit": 5.5,
+        "score": 0.9167
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 7.5,
+        "score": 0.9375
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 1.5,
+        "score": 0.75
+      },
+      "personal_history": {
+        "fields": 5,
+        "credit": 5.0,
+        "score": 1.0
+      }
+    }
+  },
+  "flow_summary": "The interview follows a mostly logical sequence with one question at a time and appropriate follow-ups on details like medication dose and duration. However, it fails to pursue the vague name response, misclassifies a clearly past medication as current (asking dose/side effects after \"I was on one before\"), and omits any safety response despite PHQ-9 Q9 > 0 with documented current passive risk.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "vague answer not recovered",
+      "evidence": "\"I think it’s Marcus Reid.\" followed immediately by gender question without clarification."
+    },
+    {
+      "severity": "major",
+      "category": "misclassified past vs current medication",
+      "evidence": "Patient: \"Yeah, I was on one before for mood — paroxetine.\" then system asks \"What dose do you take?\" and side effects as if current."
+    },
+    {
+      "severity": "critical",
+      "category": "missing safety response",
+      "evidence": "PHQ-9 Q9 answered \"Several days\" with safety_profile noting current passive suicidal thoughts; no safety intervention appears in transcript."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "14/02/1985",
+      "produced": "14/02/1985"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "18 Rushbrooke Avenue, Toronto, Ontario",
+      "produced": "18 Rushbrooke Avenue, Toronto, Ontario"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M4M2X3",
+      "produced": "M4M2X3"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "marcus.reid@example.com",
+      "produced": "marcus.reid@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550228",
+      "produced": "4165550228"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. SUSAN CHEN",
+      "produced": "DR. SUSAN CHEN"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "MARCUS REID",
+      "produced": "I THINK IT’S MARCUS REID."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "no gender stated",
+      "expected": "Male",
+      "produced": "Uh, what do you mean exactly—just, how it should be listed?"
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "only sleep and edge mentioned",
+      "expected": "Nightmares and flashbacks about a deployment; hypervigilance; avoiding crowds; irritability with his wife; poor sleep for about eight months; thoughts that he would rather not wake up.",
+      "produced": "It’s been more like I’m not sleeping great and I’ve been pretty on edge. If you want, I can go into what’s been bothering me most."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Sleep through the night; stop snapping at my family; feel less on edge.",
+      "produced": "Mostly I want to sleep through the night, stop snapping at my family, and feel less on edge."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "deployment context omitted",
+      "expected": "2019; military mental health service; assessed after returning from deployment.",
+      "produced": "2019, by the military mental health service."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Post-traumatic stress disorder",
+      "produced": "Yes — post-traumatic stress disorder."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Trauma-focused cognitive behavioural therapy; 2019 to 2020; approximately 20 sessions; veterans clinic.",
+      "produced": "Yeah, I did trauma-focused cognitive behavioural therapy. It was at a veterans clinic, if that helps.; 2019 to 2020, roughly.; About 20 sessions, something like that."
+    },
+    {
+      "ref": "medications.current_medications",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Prazosin; 2 mg nightly; started January 2025; light-headed on standing",
+      "produced": "Medication 1: Name Or Description: Prazosin.; Dose: 2 mg at night.; Start Or Duration: I started it in January 2025.; Side Effects: I get a bit light-headed when I stand up.\nMedication 2: Name Or Description: Yeah, I was on one before for mood — paroxetine.; Dose: 20 mg daily.; Start Or Duration: About 14 months from 2019.; Side Effects: Unknown"
+    },
+    {
+      "ref": "medications.past_medication_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Paroxetine; 20 mg daily; about 14 months from 2019; stopped because of sexual side effects",
+      "produced": "Past medication 1: Name Or Description: Paroxetine.; Dose: 20 mg daily.; Dates Or Duration: I took it for about 14 months, starting in 2019.; Discontinuation Reason: It was stopped because of sexual side effects."
+    },
+    {
+      "ref": "medical_history.medical_conditions",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "diagnosis year omitted",
+      "expected": "Tinnitus; diagnosed 2018.",
+      "produced": "Tinnitus."
+    },
+    {
+      "ref": "medical_history.surgical_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Right knee arthroscopy; 2016.",
+      "produced": "Surgery: Right knee arthroscopy.; Date: 2016.; Details: Not that I know of."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "185 cm",
+      "produced": "185 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "94 kg",
+      "produced": "94 kg."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "missed increase over past year",
+      "expected": "Current; beer; four or five drinks most evenings; increased over the past year",
+      "produced": "Status: Current; Substance or product: Beer.; Quantity or frequency: Maybe four or five drinks most evenings.; Duration: Unknown"
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; cigarettes; about 15 per day; 20 years",
+      "produced": "Status: Current; Substance or product: Cigarettes.; Quantity or frequency: About 15 a day.; Duration: About 20 years."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "College diploma",
+      "produced": "College diploma."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Logistics supervisor, Harbourfront Freight; 2021 to present",
+      "produced": "Job 1: Name Or Description: Harbourfront Freight.; Job Title: Logistics supervisor.; Dates: 2021 to present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Hamilton; describes a stable but strict household.",
+      "produced": "I was born and raised in Hamilton. It was a stable but pretty strict household."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Joined the forces at 19 after college; two overseas deployments.",
+      "produced": "I joined the forces at 19 after college, and I had two overseas deployments."
+    },
+    {
+      "ref": "personal_history.significant_relationships[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Marriage; 12 years; current, though strained",
+      "produced": "I’m married. It’s been about 12 years, and it’s current, though it’s a bit strained lately. We’ve got two kids."
+    },
+    {
+      "ref": "personal_history.significant_relationships[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Two children.",
+      "produced": "I’m married. It’s been about 12 years, and it’s current, though it’s a bit strained lately. We’ve got two kids."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Be present for my kids and get back to sleeping normally.",
+      "produced": "I want to be there for my kids and get back to sleeping normally."
+    }
+  ],
+  "fabricated": []
+}

@@ -1,0 +1,482 @@
+{
+  "system": "rule_based",
+  "case_id": "40",
+  "scenario_case_id": "04-40",
+  "repetition": 1,
+  "persona_id": "moderate",
+  "record_score": 0.8913,
+  "flow_score": 0.7,
+  "record_detail": {
+    "record_score": 0.8913,
+    "record_score_contested": 0.8148,
+    "fields_contested": 27,
+    "fields_auto_resolved": 19,
+    "fields_confirmed_absent": 6,
+    "fields_scored": 46,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 39,
+      "partial": 4,
+      "missing": 3,
+      "contradicted": 0,
+      "fabricated": 1
+    },
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_treatments"
+    ],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 8.0,
+        "score": 0.8
+      },
+      "past_psychiatric_history": {
+        "fields": 7,
+        "credit": 5.5,
+        "score": 0.7857
+      },
+      "medications": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 5,
+        "credit": 5.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 9,
+        "credit": 7.5,
+        "score": 0.8333
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      }
+    }
+  },
+  "flow_summary": "The system successfully completed the intake and gathered all necessary clinical information. However, it struggled with the patient's slightly imprecise communication style, leading to some mechanical and repetitive interactions, particularly when the patient was unsure of specific details.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "recovery_and_redirection",
+      "evidence": "When the patient was unsure about their family doctor, the system responded with 'Please answer yes or no,' which felt overly rigid and failed to acknowledge the patient's attempt to provide context."
+    },
+    {
+      "severity": "moderate",
+      "category": "recovery_and_redirection",
+      "evidence": "When the patient stated they did not know the details of a biological treatment, the system continued to ask three separate, specific questions ('When was it received?', 'Where was it received?', 'Approximately how many sessions did you receive?') despite the patient having already established a lack of knowledge."
+    },
+    {
+      "severity": "minor",
+      "category": "flow",
+      "evidence": "The system asked for the date of birth twice in a row, likely due to a formatting requirement, which felt redundant to the user."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550462",
+      "produced": "4165550462"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "SHANNON DELACROIX",
+      "produced": "SHANNON DELACROIX."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female."
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The system recorded 'Unknown' instead of the provided date.",
+      "expected": "11/11/1988",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "88 Carlton Street, Toronto, Ontario",
+      "produced": "88 Carlton Street, Toronto, Ontario."
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The system recorded 'Unknown' instead of the provided postal code.",
+      "expected": "M5B1L6",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "shannon.delacroix@example.com",
+      "produced": "shannon.delacroix@example.com."
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. MARCUS REID",
+      "produced": "DR. MARCUS REID."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Low mood and low energy over the past five months while stable on opioid maintenance; worried a relapse would follow; isolated since moving away from old contacts.",
+      "produced": "Mostly low mood and low energy, I’d say over the last few months. I’ve also been kind of isolated since moving away from old contacts, and I worry a relapse could happen if things slip."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Stay in recovery; build a social life that is not about using.",
+      "produced": "I want to stay in recovery and build a social life that isn’t about using."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The reason for the assessment (opioid use disorder) is missing.",
+      "expected": "2023; addictions medicine service; assessed for opioid use disorder.",
+      "produced": "2023, by an addictions medicine service."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Opioid use disorder, in sustained remission",
+      "produced": "I’ve had opioid use disorder, in sustained remission."
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The reason for the admission (medically supervised withdrawal) is missing.",
+      "expected": "Toronto Western Hospital; 2023; six days; admitted for medically supervised withdrawal.",
+      "produced": "2023, at Toronto Western Hospital, for about six days."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing the location (community addictions clinic).",
+      "expected": "Relapse prevention group; 2024; approximately 12 sessions; community addictions clinic.",
+      "produced": "Yes, I did a relapse prevention group.; 2024.; I think it was about 12 sessions."
+    },
+    {
+      "ref": "medications.current_medications",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Buprenorphine-naloxone; 12 mg daily; started 2024; mild constipation",
+      "produced": "Medication 1: Name Or Description: Buprenorphine-naloxone.; Dose: 12 mg daily.; Start Or Duration: Started in 2024, I think.; Side Effects: Just some mild constipation."
+    },
+    {
+      "ref": "medical_history.medical_conditions",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Hepatitis C, treated and cleared; 2023.",
+      "produced": "Hepatitis C, treated and cleared in 2023."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "168 cm",
+      "produced": "About 168 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "60 kg",
+      "produced": "I’m around 60 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Brother; opioid use disorder; currently in treatment.",
+      "produced": "Family member 1: Name Or Description: My brother.; Diagnosis Or Condition: Opioid use disorder.; Additional Details: He’s currently in treatment. No, those are all."
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; cigarettes; about 15 per day; 18 years",
+      "produced": "Status: Current; Substance or product: Cigarettes.; Quantity or frequency: About 15 a day, I think.; Duration: Around 18 years."
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use[0]",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing the end date (stopped in 2024).",
+      "expected": "Previous; nonmedical use of illicit opioids; daily; approximately six years, stopped in 2024",
+      "produced": "Status: Previous; Substance or product: Illicit opioids.; Quantity or frequency: Daily.; Duration: About six years."
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The system did not capture the clarification regarding therapeutic use.",
+      "expected": "Current prescribed buprenorphine-naloxone maintenance is therapeutic, not nonmedical use.",
+      "produced": "Status: Previous; Substance or product: Illicit opioids.; Quantity or frequency: Daily.; Duration: About six years."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "High school",
+      "produced": "High school."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Peer support worker, Recovery Pathways; 2025 to present",
+      "produced": "Job 1: Name Or Description: Recovery Pathways.; Job Title: Peer support worker.; Dates: 2025 to present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Oshawa; describes an unstable household.",
+      "produced": "I was born and raised in Oshawa, and the household was pretty unstable."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Left school at 17; first opioid use at 21 after a prescribed course.",
+      "produced": "I left school when I was 17, and I first used opioids when I was 21 after a prescribed course."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Single; close to her sponsor and her brother.",
+      "produced": "I’m single, so nothing current there. I’m close to my sponsor and my brother, if that helps."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Qualify as an addictions counsellor.",
+      "produced": "I want to qualify as an addictions counsellor."
+    }
+  ],
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_treatments",
+      "section": "past_psychiatric_history",
+      "field": "previous_treatments",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I don’t know of any, no.; Unknown; Unknown; Unknown; I don’t know.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
+}

@@ -1,0 +1,453 @@
+{
+  "system": "rule_based",
+  "case_id": "11",
+  "scenario_case_id": "04-11",
+  "repetition": 1,
+  "persona_id": "moderate",
+  "record_score": 0.8864,
+  "flow_score": 0.7,
+  "record_detail": {
+    "record_score": 0.8864,
+    "record_score_contested": 0.7368,
+    "fields_contested": 19,
+    "fields_auto_resolved": 25,
+    "fields_confirmed_absent": 10,
+    "fields_scored": 44,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 36,
+      "partial": 6,
+      "missing": 2,
+      "contradicted": 0,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 8.5,
+        "score": 0.85
+      },
+      "past_psychiatric_history": {
+        "fields": 5,
+        "credit": 4.5,
+        "score": 0.9
+      },
+      "medications": {
+        "fields": 3,
+        "credit": 2.5,
+        "score": 0.8333
+      },
+      "medical_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 4,
+        "credit": 2.5,
+        "score": 0.625
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 1.5,
+        "score": 0.75
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 3.5,
+        "score": 0.875
+      }
+    }
+  },
+  "flow_summary": "The interviewer conducted a comprehensive intake but struggled with the patient's initial confusion and some redundant questioning. While the system successfully navigated the PHQ-9 and GAD-7, it failed to address the patient's initial request for clarification regarding their legal name, instead jumping to a different topic.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "responsiveness",
+      "evidence": "The patient asked for clarification on the legal name question, but the interviewer ignored this and immediately switched to asking about gender."
+    },
+    {
+      "severity": "minor",
+      "category": "redundancy",
+      "evidence": "The interviewer asked 'Which family member, and what is their relationship to you?' and then immediately followed up with 'What diagnosis or mental health condition did they have?' despite the patient having already provided the diagnosis in the previous turn."
+    },
+    {
+      "severity": "minor",
+      "category": "flow",
+      "evidence": "The interviewer asked 'What was the employer or organization for your most recent job?' immediately after the patient had already stated 'I’m an architect at Northline Studio'."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "15/06/1994",
+      "produced": "15/06/1994"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M5R1B2",
+      "produced": "M5R1B2"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "james.campbell@example.com",
+      "produced": "james.campbell@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550185",
+      "produced": "4165550185"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. EVA LINDQVIST",
+      "produced": "DR. EVA LINDQVIST"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The system failed to extract the name and instead recorded a conversational clarification request.",
+      "expected": "JAMES CAMPBELL",
+      "produced": "I’M SORRY, COULD YOU CLARIFY WHAT YOU MEAN? DO YOU MEAN THE NAME ON MY ID OR SOMETHING LIKE THAT?"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Male",
+      "produced": "Male."
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The province (Ontario) is missing from the address.",
+      "expected": "9 Prince Arthur Avenue, Toronto, Ontario",
+      "produced": "9 Prince Arthur Avenue, Toronto."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The 'no future orientation' concern is missing.",
+      "expected": "floundering at work; cannot concentrate; no future orientation",
+      "produced": "Mostly I’m floundering at work. I can’t seem to get moving on even a simple project, and I’m having a hard time concentrating."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "function at work; move forward",
+      "produced": "I’d like to function at work again and just be able to move forward, really."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The 'recurrent' nature of the depression is missing.",
+      "expected": "depression; college; recurrent",
+      "produced": "Yes — depression, back in college."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "time off after father's death",
+      "produced": "I had some time off after my father died, but I don’t know if that counts as a specific therapy.; Unknown; I don’t know, I didn’t really keep track of sessions."
+    },
+    {
+      "ref": "medications.current_medications",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The frequency (one tablet each morning) is missing.",
+      "expected": "Antidepressant; patient does not remember the name or dose; takes one tablet each morning; started about 4 months ago; no side effects recalled",
+      "produced": "Medication 1: Name Or Description: I don’t remember the name, just that it’s an antidepressant.; Dose: I don’t know the dose, sorry.; Start Or Duration: Maybe about 4 months ago, give or take.; Side Effects: None that I can think of."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "183 cm",
+      "produced": "I’m about 183 cm tall."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "79 kg",
+      "produced": "Around 79 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The mother's history of major depressive disorder is not present in the produced text.",
+      "expected": "Mother; major depressive disorder",
+      "produced": "Family member 1: Name Or Description: My sister also has depression.; Diagnosis Or Condition: My sister has depression.; Additional Details: I also know my maternal uncle died by suicide."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Sister; depression",
+      "produced": "Family member 1: Name Or Description: My sister also has depression.; Diagnosis Or Condition: My sister has depression.; Additional Details: I also know my maternal uncle died by suicide."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[2]",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The year of the suicide (2008) is missing.",
+      "expected": "Maternal uncle; died by suicide in 2008.",
+      "produced": "Family member 1: Name Or Description: My sister also has depression.; Diagnosis Or Condition: My sister has depression.; Additional Details: I also know my maternal uncle died by suicide."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "master's degree; architecture",
+      "produced": "I’ve got a master’s degree in architecture."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Architect, Northline Studio; 2020 to present",
+      "produced": "Job 1: Name Or Description: Northline Studio.; Job Title: Architect.; Dates: 2020 to present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "born; grew up",
+      "produced": "I was born and grew up here, and that’s about all I can really say."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "college; father died; leukemia",
+      "produced": "I was in college then, and my father died of leukemia. That’s probably the biggest thing I remember from that period."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "The interest in a coworker is missing.",
+      "expected": "Separated from spouse after 6 years of marriage; divorce in progress; interested in a coworker",
+      "produced": "I was married for about 6 years, but we’re separated now and going through a divorce."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "rebuild; career",
+      "produced": "I want to rebuild things, mostly my career."
+    }
+  ],
+  "fabricated": []
+}

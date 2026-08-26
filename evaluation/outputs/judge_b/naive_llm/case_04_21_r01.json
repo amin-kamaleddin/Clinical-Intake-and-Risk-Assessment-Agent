@@ -1,0 +1,469 @@
+{
+  "system": "naive_llm",
+  "case_id": "21",
+  "scenario_case_id": "04-21",
+  "repetition": 1,
+  "persona_id": "moderate",
+  "record_score": 0.9444,
+  "flow_score": 0.82,
+  "record_detail": {
+    "record_score": 0.9444,
+    "record_score_contested": 0.9038,
+    "fields_contested": 26,
+    "fields_auto_resolved": 19,
+    "fields_confirmed_absent": 7,
+    "fields_scored": 45,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 40,
+      "partial": 5,
+      "missing": 0,
+      "contradicted": 0,
+      "fabricated": 1
+    },
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.self_harm_details"
+    ],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 9.0,
+        "score": 0.9
+      },
+      "past_psychiatric_history": {
+        "fields": 6,
+        "credit": 5.5,
+        "score": 0.9167
+      },
+      "medications": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 5,
+        "credit": 4.5,
+        "score": 0.9
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 5,
+        "credit": 5.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 1.5,
+        "score": 0.75
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      }
+    }
+  },
+  "flow_summary": "Handles the somewhat unclear patient effectively by rephrasing unclear questionnaire items (PHQ-9 Q3, GAD-7 Q3/Q4) and re-asking the phone number once. Follows up on the vague DOB and current passive SI disclosure with appropriate safety steps. Minor issues include a lengthy, repeated safety message and one slightly redundant therapy question after the 2023 service was already noted.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "acknowledgement",
+      "evidence": "The safety response after current SI disclosure is long and repeated at the end: \"Thank you for telling me, Brian. Because you’re having thoughts of dying right now, please contact 988...\" and again in the closing message."
+    },
+    {
+      "severity": "minor",
+      "category": "redundant_question",
+      "evidence": "\"Have you had any previous therapy or counseling, including the addictions service in 2023?\" right after the patient already described the 2023 assessment."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "BRIAN CALLOWAY",
+      "produced": "Brian Calloway"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Male",
+      "produced": "Male"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M4L3B6",
+      "produced": "M4L3B6"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "brian.calloway@example.com",
+      "produced": "brian.calloway@example.com"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. SIMON GREEN",
+      "produced": "Dr. Simon Green"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "High school",
+      "produced": "High school"
+    },
+    {
+      "ref": "personal_history.significant_relationships[1]",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Two adult children.",
+      "produced": "Married for 22 years; relationship currently strained. Has two adult children."
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "day missing",
+      "expected": "19/06/1974",
+      "produced": "June 1974"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "province missing",
+      "expected": "203 Coxwell Avenue, Toronto, Ontario",
+      "produced": "203 Coxwell Avenue, Toronto"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "4165550270",
+      "produced": "416-555-0270"
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "missed work and passive suicidal ideation absent",
+      "expected": "Daily alcohol use to get to sleep for about two years; low mood and guilt; missed work; occasional thoughts that his family would be better off without him.",
+      "produced": "Drinking every night to get to sleep, low mood, guilt, and feeling like he is letting his family down."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Cut down the drinking; sleep without it; stop feeling like a burden.",
+      "produced": "Cut down drinking, sleep without alcohol, stop feeling like a burden to his family, become sober, and be useful to his family again."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "2023; addictions service; assessed for alcohol use.",
+      "produced": "Seen in 2023 at an addictions service for alcohol use."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Alcohol use disorder",
+      "produced": "Alcohol use disorder, believed by patient."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "session count missing",
+      "expected": "Motivational interviewing; 2023; approximately 6 sessions; community addictions clinic.",
+      "produced": "Motivational interviewing in 2023 at a community addictions clinic."
+    },
+    {
+      "ref": "medications.past_medication_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Mirtazapine; 30 mg nightly; about 4 months in 2023; stopped for weight gain",
+      "produced": "Mirtazapine 30 mg nightly for about four months in 2023; stopped due to weight gain. No other past medications recalled."
+    },
+    {
+      "ref": "medical_history.medical_conditions",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "diagnosis year missing",
+      "expected": "Hypertension; diagnosed 2020.",
+      "produced": "High blood pressure."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "176 cm",
+      "produced": "About 176 cm"
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "101 kg",
+      "produced": "Around 101 kg"
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Father; alcohol use disorder; never treated.",
+      "produced": "Father had alcohol problems and was reportedly never treated."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; spirits and beer; approximately eight standard drinks most evenings; about two years at this level",
+      "produced": "Drinks most evenings, usually spirits and beer, approximately eight standard drinks; ongoing for about two years. Most recent drink was last night."
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Previous; cigarettes; about 20 per day; 15 years",
+      "produced": "Not currently using nicotine. Previously smoked about 20 cigarettes daily for approximately 15 years; exact quit date unknown."
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never really used cannabis."
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "None reported."
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "None reported."
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "None reported."
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "None reported."
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Never",
+      "produced": "None reported."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Warehouse supervisor, Portland Distribution; 2009 to present",
+      "produced": "Warehouse supervisor at Portland Distribution since around 2009."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Scarborough; describes a difficult home with his father's drinking.",
+      "produced": "Grew up in Scarborough in a tough home because of his father's drinking."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Left school at 18 and started work immediately.",
+      "produced": "Left school at age 18 and went straight into work; no other significant experiences reported."
+    },
+    {
+      "ref": "personal_history.significant_relationships[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Marriage; 22 years; current but strained",
+      "produced": "Married for 22 years; relationship currently strained. Has two adult children."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Be sober and useful to my family again.",
+      "produced": "Wants to be sober and useful to his family again."
+    }
+  ],
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.self_harm_details",
+      "section": "past_psychiatric_history",
+      "field": "self_harm_details",
+      "entry_index": null,
+      "expected": null,
+      "produced": "No intentional self-harm or suicide attempts reported. Patient reports thoughts that his family would be better off without him and current thoughts of dying, without plan or intent.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
+}

@@ -1,0 +1,477 @@
+{
+  "system": "rule_based",
+  "case_id": "14",
+  "scenario_case_id": "04-14",
+  "repetition": 2,
+  "persona_id": "moderate",
+  "record_score": 0.9348,
+  "flow_score": 0.7,
+  "record_detail": {
+    "record_score": 0.9348,
+    "record_score_contested": 0.85,
+    "fields_contested": 20,
+    "fields_auto_resolved": 26,
+    "fields_confirmed_absent": 6,
+    "fields_scored": 46,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 42,
+      "partial": 2,
+      "missing": 2,
+      "contradicted": 0,
+      "fabricated": 1
+    },
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_treatments"
+    ],
+    "by_section": {
+      "general_information": {
+        "fields": 11,
+        "credit": 11.0,
+        "score": 1.0
+      },
+      "past_psychiatric_history": {
+        "fields": 7,
+        "credit": 5.0,
+        "score": 0.7143
+      },
+      "medications": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 1.0,
+        "score": 0.5
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      }
+    }
+  },
+  "flow_summary": "The interviewer successfully completed the intake and gathered all necessary clinical information. However, the system failed to address the patient's request for clarification regarding 'main problems' and instead moved immediately to the next question, and it continued to ask follow-up questions about biological treatments even after the patient clearly stated they had not received any.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "recovery_and_redirection",
+      "evidence": "Patient: 'What do you mean exactly by “main problems” — symptoms, or how they’re affecting day to day?' Interviewer: 'What do you hope to get out of your appointment?'"
+    },
+    {
+      "severity": "moderate",
+      "category": "repetition_and_looping",
+      "evidence": "Interviewer: 'When was it received?' Patient: 'I don’t know — I haven’t had that kind of treatment.' Interviewer: 'Where was it received?'"
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "09/11/1998",
+      "produced": "09/11/1998"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "412 Sherbourne Street, Toronto, Ontario",
+      "produced": "412 Sherbourne Street, Toronto, Ontario"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M4X1K2",
+      "produced": "M4X1K2"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "daniel.okafor@example.com",
+      "produced": "daniel.okafor@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550211",
+      "produced": "4165550211"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. NINA PATEL",
+      "produced": "DR. NINA PATEL"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.psychiatrist_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. HAROLD BLYTH",
+      "produced": "DR. HAROLD BLYTH"
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DANIEL OKAFOR",
+      "produced": "IT’S DANIEL OKAFOR."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Male",
+      "produced": "I think it’s male, but do you mean for the form or just generally?"
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The system failed to capture the specific symptoms and functional impact described.",
+      "expected": "Contamination fears and repeated handwashing; checking the stove and door locks up to thirty times before leaving; about three hours each day; late for work most mornings.",
+      "produced": "Mostly some ongoing trouble with routines, I think. What do you mean exactly by “main problems” — symptoms, or how they’re affecting day to day?"
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Cut down the checking; get to work on time; stop the hand washing hurting my skin.",
+      "produced": "I’m hoping to get the checking down and maybe stop the hand washing from hurting my skin. Also, getting to work on time would be a big help."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing the reason for the assessment (obsessive-compulsive symptoms).",
+      "expected": "2021; DR. HAROLD BLYTH, psychiatrist; assessed for obsessive-compulsive symptoms.",
+      "produced": "In 2021, by Dr. Harold Blyth, the psychiatrist."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Obsessive-compulsive disorder",
+      "produced": "Yes — obsessive-compulsive disorder."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies[0]",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing the location (hospital outpatient clinic).",
+      "expected": "Cognitive behavioural therapy; 2021; approximately 16 sessions; hospital outpatient clinic",
+      "produced": "Yes — I did cognitive behavioural therapy in 2021.; In 2021.; Maybe around 16 sessions."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "The produced value only contains information about the first therapy.",
+      "expected": "Exposure and response prevention; 2023; approximately 10 sessions; private practice.",
+      "produced": "Yes — I did cognitive behavioural therapy in 2021.; In 2021.; Maybe around 16 sessions."
+    },
+    {
+      "ref": "medications.current_medications",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Fluvoxamine; 150 mg nightly; started March 2023; drowsiness in the morning",
+      "produced": "Medication 1: Name Or Description: Fluvoxamine.; Dose: 150 mg nightly.; Start Or Duration: Started March 2023, something like that.; Side Effects: It makes me drowsy in the morning.\nMedication 2: Name Or Description: Yes — I’ve taken one before as well, sertraline.; Dose: 100 mg daily.; Start Or Duration: About 8 months in 2021.; Side Effects: No side effects that I remember."
+    },
+    {
+      "ref": "medications.past_medication_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Sertraline; 100 mg daily; about 8 months in 2021; stopped for limited benefit",
+      "produced": "Past medication 1: Name Or Description: Sertraline.; Dose: 100 mg daily.; Dates Or Duration: About 8 months in 2021.; Discontinuation Reason: It was stopped because it didn’t help enough."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "180 cm",
+      "produced": "180 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "74 kg",
+      "produced": "74 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Father; obsessive-compulsive traits; never formally diagnosed.",
+      "produced": "Family member 1: Name Or Description: My father.; Diagnosis Or Condition: He had obsessive-compulsive traits, though not a formal diagnosis.; Additional Details: No, that’s all I know."
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Previous; cigarettes; about 10 per day; 3 years",
+      "produced": "Status: Previous; Substance or product: Cigarettes.; Quantity or frequency: About 10 a day.; Duration: About 3 years."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Bachelor's degree",
+      "produced": "Bachelor's degree."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Data analyst, Ridgeway Insurance; 2021 to present",
+      "produced": "Job 1: Name Or Description: Ridgeway Insurance.; Job Title: Data analyst.; Dates: 2021 to present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born in Lagos; moved to Toronto at age 7; described as a careful, orderly child.",
+      "produced": "I was born in Lagos and moved to Toronto when I was 7. I was a pretty careful, orderly kid, I think."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Strong student; began checking rituals around age 19 during university.",
+      "produced": "I was a strong student, and then I started the checking rituals around age 19 during university."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Single; close to his mother and younger sister.",
+      "produced": "I’m single. I’m close to my mother and younger sister, if that helps."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Manage the rituals well enough to live independently without them.",
+      "produced": "I want to manage the rituals well enough to live independently without them."
+    }
+  ],
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_treatments",
+      "section": "past_psychiatric_history",
+      "field": "previous_treatments",
+      "entry_index": null,
+      "expected": null,
+      "produced": "I don’t think so — nothing like that.; I don’t know — I haven’t had that kind of treatment.; I don’t know.; I don’t know.; I don’t know.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
+}

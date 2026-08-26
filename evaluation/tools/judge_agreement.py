@@ -34,7 +34,7 @@ def _load(path):
 
 
 def _index(report: dict) -> dict:
-    """(system, case, repetition) -> case record."""
+    """(system, case, repetition) -> case record, from a comparison report."""
     out = {}
     for system, cases in (report.get("cases") or {}).items():
         for case in cases:
@@ -47,8 +47,52 @@ def _index(report: dict) -> dict:
     return out
 
 
+def _index_from_artifacts(label: str) -> dict:
+    """(system, case, repetition) -> case record, read from per-case files.
+
+    The comparison report is DERIVED; outputs/judge*/<system>/case_*.json are
+    the primary artifacts and carry the same verdicts and flow score. Reading
+    them directly means agreement can be recomputed whenever the per-case files
+    exist, without re-judging - which matters, because a comparison report is a
+    single file and therefore a single point of failure, while 450 per-case
+    files are not.
+    """
+    import re
+    out = {}
+    for system in config.SYSTEMS:
+        old_label, config.JUDGE_LABEL = config.JUDGE_LABEL, label
+        try:
+            directory = config.judge_dir(system)
+        finally:
+            config.JUDGE_LABEL = old_label
+        for path in sorted(directory.glob("case_*.json")):
+            try:
+                case = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                continue
+            if case.get("flow_score") is None and not case.get("field_verdicts"):
+                continue
+            case_id = case.get("scenario_case_id")
+            if not case_id:
+                continue
+            out[(system, case_id, case.get("repetition", 0))] = case
+    return out
+
+
+def _best_index(report, label):
+    """Prefer per-case artifacts; fall back to the comparison report."""
+    from_files = _index_from_artifacts(label)
+    if from_files:
+        return from_files, f"per-case artifacts ({len(from_files)})"
+    return _index(report or {}), "comparison report"
+
+
 def compare(report_a: dict, report_b: dict, judged_only: bool = True) -> dict:
-    a_index, b_index = _index(report_a), _index(report_b)
+    """Agreement between two judges. `compare.label` names judge B's namespace."""
+    a_index, source_a = _best_index(report_a, "")
+    b_index, source_b = _best_index(report_b, compare.label)
+    print(f"  judge A source: {source_a}")
+    print(f"  judge B source: {source_b}")
     shared = sorted(set(a_index) & set(b_index))
 
     systems: dict = {}
@@ -126,14 +170,15 @@ def main() -> None:
     report_b = _load(config.judge_report_path(args.label))
     if not report_a:
         raise SystemExit("No primary judge report. Run: python run_all.py --only judge")
-    if not report_b:
+    if not report_b and not _index_from_artifacts(args.label):
         raise SystemExit(
             f"No second-judge report at {config.judge_report_path(args.label)}.\n"
             f'Run: CIRA_JUDGE_MODEL="$CIRA_JUDGE_MODEL_B" CIRA_JUDGE_LABEL={args.label} '
             "python -m harness.stages.run_judge"
         )
 
-    report = compare(report_a, report_b, judged_only=not args.all_rows)
+    compare.label = args.label
+    report = compare(report_a or {}, report_b or {}, judged_only=not args.all_rows)
     print(agreement.format_summary(report))
 
     pooled = report["pooled"]

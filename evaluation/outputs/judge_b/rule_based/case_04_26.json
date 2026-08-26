@@ -1,0 +1,432 @@
+{
+  "system": "rule_based",
+  "case_id": "26",
+  "scenario_case_id": "04-26",
+  "repetition": 0,
+  "persona_id": "clear",
+  "record_score": 0.9524,
+  "flow_score": 0.82,
+  "record_detail": {
+    "record_score": 0.9524,
+    "record_score_contested": 0.8667,
+    "fields_contested": 15,
+    "fields_auto_resolved": 27,
+    "fields_confirmed_absent": 12,
+    "fields_scored": 42,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 39,
+      "partial": 2,
+      "missing": 1,
+      "contradicted": 0,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 10.0,
+        "score": 1.0
+      },
+      "past_psychiatric_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medications": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 5,
+        "credit": 4.5,
+        "score": 0.9
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 3,
+        "credit": 2.5,
+        "score": 0.8333
+      },
+      "personal_history": {
+        "fields": 5,
+        "credit": 4.0,
+        "score": 0.8
+      }
+    }
+  },
+  "flow_summary": "Interview flows logically with one question at a time and proper follow-ups on repeatable items (medications, jobs, substances). Minor issues include a redundant medical-conditions prompt after the diagnosis was already given and a mechanical 'Please answer yes or no' request after the patient had already supplied employment details.",
+  "issues": [
+    {
+      "severity": "minor",
+      "category": "redundant_question",
+      "evidence": "medical_history turn 2: 'Please list all diagnosed medical conditions.' after patient already answered the prior diagnosis question with 'I have obstructive sleep apnoea.'"
+    },
+    {
+      "severity": "minor",
+      "category": "mechanical_transition",
+      "evidence": "education_employment_legal_history turn 4: 'Please answer yes or no.' after patient had already described current job in response to the prior question."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "STEPHEN OKONKWO",
+      "produced": "STEPHEN OKONKWO"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Male",
+      "produced": "Male"
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "02/09/1978",
+      "produced": "02/09/1978"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "410 Eglinton Avenue East, Toronto, Ontario",
+      "produced": "410 Eglinton Avenue East, Toronto, Ontario"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M4P1N9",
+      "produced": "M4P1N9"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "stephen.okonkwo@example.com",
+      "produced": "stephen.okonkwo@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550325",
+      "produced": "4165550325"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. LENA HARTMANN",
+      "produced": "DR. LENA HARTMANN"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "current_concerns.primary_problems[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Waking at about 3 a.m",
+      "produced": "I’ve been waking up around 3 a.m. most nights for the past six months and can’t get back to sleep."
+    },
+    {
+      "ref": "current_concerns.primary_problems[1]",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "daytime fatigue and work worry absent",
+      "expected": "most nights for six months and unable to return to sleep; daytime fatigue; worry about work performance.",
+      "produced": "I’ve been waking up around 3 a.m. most nights for the past six months and can’t get back to sleep."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Sleep through the night; stop worrying about not sleeping.",
+      "produced": "To sleep through the night and stop worrying about not sleeping."
+    },
+    {
+      "ref": "medications.current_medications",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Lorazepam; 0.5 mg at night as needed; started February 2026; morning drowsiness",
+      "produced": "Medication 1: Name Or Description: Lorazepam.; Dose: 0.5 mg at night as needed.; Start Or Duration: I started it in February 2026.; Side Effects: Morning drowsiness."
+    },
+    {
+      "ref": "medical_history.medical_conditions",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "diagnosis year absent",
+      "expected": "Obstructive sleep apnoea; diagnosed 2021.",
+      "produced": "I have obstructive sleep apnoea."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "181 cm",
+      "produced": "I’m 181 cm tall."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "99 kg",
+      "produced": "I weigh 99 kg."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; wine; one glass most evenings; about fifteen years",
+      "produced": "Status: Current; Substance or product: Wine.; Quantity or frequency: One glass most evenings.; Duration: About fifteen years."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Bachelor's degree",
+      "produced": "Bachelor's degree."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Operations manager, Delta Logistics; 2011 to present",
+      "produced": "Job 1: Name Or Description: Delta Logistics.; Job Title: Operations manager.; Dates: 2011 to present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born in Abuja; moved to Canada at 26; describes a supportive family.",
+      "produced": "I was born in Abuja, moved to Canada when I was 26, and I come from a supportive family."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Completed an engineering degree in Nigeria before emigrating.",
+      "produced": "I completed an engineering degree in Nigeria before I emigrated."
+    },
+    {
+      "ref": "personal_history.significant_relationships[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Marriage; 16 years; current",
+      "produced": "I’m married, and it’s been 16 years."
+    },
+    {
+      "ref": "personal_history.significant_relationships[1]",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "children not mentioned",
+      "expected": "Three children.",
+      "produced": "I’m married, and it’s been 16 years."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Sleep properly and be less irritable at home.",
+      "produced": "I want to sleep properly and be less irritable at home."
+    }
+  ],
+  "fabricated": []
+}

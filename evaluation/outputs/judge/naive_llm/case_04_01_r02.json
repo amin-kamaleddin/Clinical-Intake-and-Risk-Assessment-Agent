@@ -1,0 +1,477 @@
+{
+  "system": "naive_llm",
+  "case_id": "01",
+  "scenario_case_id": "04-01",
+  "repetition": 2,
+  "persona_id": "moderate",
+  "record_score": 0.8696,
+  "flow_score": 0.7,
+  "record_detail": {
+    "record_score": 0.8696,
+    "record_score_contested": 0.7857,
+    "fields_contested": 28,
+    "fields_auto_resolved": 18,
+    "fields_confirmed_absent": 7,
+    "fields_scored": 46,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 34,
+      "partial": 12,
+      "missing": 0,
+      "contradicted": 0,
+      "fabricated": 1
+    },
+    "fabricated_fields": 1,
+    "fabricated_refs": [
+      "past_psychiatric_history.previous_treatments"
+    ],
+    "by_section": {
+      "general_information": {
+        "fields": 11,
+        "credit": 10.5,
+        "score": 0.9545
+      },
+      "past_psychiatric_history": {
+        "fields": 6,
+        "credit": 5.5,
+        "score": 0.9167
+      },
+      "medications": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 2.5,
+        "score": 0.8333
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 1.5,
+        "score": 0.75
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 4.0,
+        "score": 0.5
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      }
+    }
+  },
+  "flow_summary": "The interviewer conducted a thorough intake and managed the patient's occasional vagueness well. However, the system struggled with the questionnaire section, repeatedly re-asking questions when the patient expressed uncertainty rather than accepting the response or clarifying the scale, and it failed to ask each item exactly once.",
+  "issues": [
+    {
+      "severity": "moderate",
+      "category": "questionnaire_administration",
+      "evidence": "The interviewer re-asked PHQ-9 question 7 and GAD-7 questions 2 and 3 after the patient expressed uncertainty, rather than simply clarifying the options or accepting the response."
+    },
+    {
+      "severity": "minor",
+      "category": "efficiency",
+      "evidence": "The system repeated the full text of the questionnaire items when the patient asked for clarification, which was slightly redundant."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "WYATT MORGAN",
+      "produced": "Wyatt Morgan"
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Male",
+      "produced": "Male"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "wyatt.morgan.parent@example.com",
+      "produced": "wyatt.morgan.parent@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550142",
+      "produced": "4165550142"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. HELEN CHU",
+      "produced": "Dr. Helen Chu"
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.psychiatrist_name",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "DR. RAJ PATEL",
+      "produced": "Dr. Raj Patel"
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "14/03/2014",
+      "produced": "14 March 2014"
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "City and province information missing.",
+      "expected": "88 Fairlawn Avenue, Toronto, Ontario",
+      "produced": "88 Fairlawn Avenue"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "M5M1S8",
+      "produced": "M5M 1S8"
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Mention of school suspension is missing.",
+      "expected": "temper outbursts; irritable; conflicts at home and school; suspension",
+      "produced": "Irritability and temper outbursts causing trouble at home and school; school has been difficult."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "more friends; do better in school; stop getting angry",
+      "produced": "Stop getting angry so much, make more friends, and do better in school."
+    },
+    {
+      "ref": "past_psychiatric_history.assessment_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Assessed at age 10 by DR. RAJ PATEL, child psychiatrist, for school inattention and impulsivity",
+      "produced": "Seen by Dr. Raj Patel at about age 10 for school inattention and impulsivity."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_diagnoses",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "ADHD; combined",
+      "produced": "ADHD, combined type."
+    },
+    {
+      "ref": "past_psychiatric_history.previous_therapies",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Number of sessions and setting information missing.",
+      "expected": "Behavioural therapy; age 10 to 11; approximately 12 sessions; outpatient clinic",
+      "produced": "Behavioural therapy around ages 10 to 11."
+    },
+    {
+      "ref": "medications.current_medications",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Methylphenidate short-acting; 10 mg each morning and 5 mg at noon; started September 2024; reduced appetite at lunch",
+      "produced": "Methylphenidate, short-acting: 10 mg in the morning and 5 mg at noon; started September 2024. Patient reports decreased appetite at lunch. No other current medications."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "152 cm",
+      "produced": "About 152 cm"
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "43 kg",
+      "produced": "About 43 kg"
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[0]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Father; anxiety and depression",
+      "produced": "Father has anxiety and depression; mother has ADHD; maternal grandfather had alcohol problems. No other family psychiatric, developmental, substance-use, or suicide-related history reported."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[1]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Mother; ADHD",
+      "produced": "Father has anxiety and depression; mother has ADHD; maternal grandfather had alcohol problems. No other family psychiatric, developmental, substance-use, or suicide-related history reported."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details[2]",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Maternal grandfather; alcohol use disorder.",
+      "produced": "Father has anxiety and depression; mother has ADHD; maternal grandfather had alcohol problems. No other family psychiatric, developmental, substance-use, or suicide-related history reported."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Expected 'Never' lifetime, but produced 'Never in the past year'.",
+      "expected": "Never",
+      "produced": "Never in the past year."
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Expected 'Never' lifetime, but produced 'Never in the past year'.",
+      "expected": "Never",
+      "produced": "Never in the past year."
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Expected 'Never' lifetime, but produced 'Never in the past year'.",
+      "expected": "Never",
+      "produced": "Never in the past year."
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Expected 'Never' lifetime, but produced 'Never in the past year'.",
+      "expected": "Never",
+      "produced": "Never in the past year, other than prescribed methylphenidate."
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Expected 'Never' lifetime, but produced 'Never in the past year'.",
+      "expected": "Never",
+      "produced": "Never in the past year."
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Expected 'Never' lifetime, but produced 'Never in the past year'.",
+      "expected": "Never",
+      "produced": "Never in the past year."
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Expected 'Never' lifetime, but produced 'Never in the past year'.",
+      "expected": "Never",
+      "produced": "Never in the past year."
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Expected 'Never' lifetime, but produced 'Never in the past year'.",
+      "expected": "Never",
+      "produced": "Never in the past year."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "Missing current school name.",
+      "expected": "Grade 6; currently attending Northview Middle School",
+      "produced": "Currently in grade 6."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Student; no employment history",
+      "produced": "Student; no jobs or volunteer roles reported."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "irritability; early childhood; outbursts",
+      "produced": "Irritable with outbursts since early childhood."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "grade 6; school difficulties",
+      "produced": "School has been difficult, especially in grade 6; has few friends, and siblings sometimes avoid him."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "siblings avoid; few friends",
+      "produced": "Siblings avoid him lately; has only a few friends."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "more friends; school; manage anger",
+      "produced": "Make more friends, do better in school, and better manage anger."
+    }
+  ],
+  "fabricated": [
+    {
+      "ref": "past_psychiatric_history.previous_treatments",
+      "section": "past_psychiatric_history",
+      "field": "previous_treatments",
+      "entry_index": null,
+      "expected": null,
+      "produced": "Currently treated with short-acting methylphenidate for ADHD.",
+      "verdict": "fabricated",
+      "reason": "scenario provides no value for this field"
+    }
+  ]
+}

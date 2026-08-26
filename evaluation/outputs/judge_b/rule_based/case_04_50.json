@@ -1,0 +1,413 @@
+{
+  "system": "rule_based",
+  "case_id": "50",
+  "scenario_case_id": "04-50",
+  "repetition": 0,
+  "persona_id": "confused",
+  "record_score": 0.9615,
+  "flow_score": 0.35,
+  "record_detail": {
+    "record_score": 0.9615,
+    "record_score_contested": 0.9062,
+    "fields_contested": 16,
+    "fields_auto_resolved": 23,
+    "fields_confirmed_absent": 13,
+    "fields_scored": 39,
+    "fields_unjudged": 0,
+    "unjudged_refs": [],
+    "verdict_counts": {
+      "match": 37,
+      "partial": 1,
+      "missing": 1,
+      "contradicted": 0,
+      "fabricated": 0
+    },
+    "fabricated_fields": 0,
+    "fabricated_refs": [],
+    "by_section": {
+      "general_information": {
+        "fields": 10,
+        "credit": 9.0,
+        "score": 0.9
+      },
+      "past_psychiatric_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "medications": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "medical_history": {
+        "fields": 4,
+        "credit": 4.0,
+        "score": 1.0
+      },
+      "medication_allergies": {
+        "fields": 1,
+        "credit": 1.0,
+        "score": 1.0
+      },
+      "family_psychiatric_history": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "substance_use": {
+        "fields": 8,
+        "credit": 8.0,
+        "score": 1.0
+      },
+      "education_employment_legal_history": {
+        "fields": 3,
+        "credit": 3.0,
+        "score": 1.0
+      },
+      "current_concerns": {
+        "fields": 2,
+        "credit": 2.0,
+        "score": 1.0
+      },
+      "personal_history": {
+        "fields": 4,
+        "credit": 3.5,
+        "score": 0.875
+      }
+    }
+  },
+  "flow_summary": "The interviewer repeatedly failed to recover or clarify the confused patient's vague or uncertain answers, defaulting to blunt 'yes or no' demands instead of rephrasing, breaking down questions, or guiding the patient. Several clinically relevant details (full address, family doctor status, prior assessments, hospital admissions) were left unresolved after the patient explicitly signaled confusion. Transitions were mechanical and the system did not adapt its style to the disorganised persona.",
+  "issues": [
+    {
+      "severity": "major",
+      "category": "failure_to_recover_vague_answer",
+      "evidence": "Patient: 'Sorry, could you say that again? I’m not sure if you want the street, or the city too…' → Interviewer immediately asked only for postal code."
+    },
+    {
+      "severity": "major",
+      "category": "failure_to_recover_vague_answer",
+      "evidence": "Patient expressed confusion on 'assessed by a mental health professional' and 'admitted to a hospital'; both times met with 'Please answer yes or no.'"
+    },
+    {
+      "severity": "moderate",
+      "category": "failure_to_recover_vague_answer",
+      "evidence": "PHQ-9 Q1: Patient said 'that wording is a bit confusing' yet received no re-explanation or scale clarification before the next item."
+    }
+  ],
+  "field_verdicts": [
+    {
+      "ref": "general_information.date_of_birth",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "19/05/2005",
+      "produced": "19/05/2005"
+    },
+    {
+      "ref": "general_information.postal_code",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "M5V1K4",
+      "produced": "M5V1K4"
+    },
+    {
+      "ref": "general_information.email",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "maya.sandberg@example.com",
+      "produced": "maya.sandberg@example.com"
+    },
+    {
+      "ref": "general_information.phone",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "4165550561",
+      "produced": "4165550561"
+    },
+    {
+      "ref": "general_information.has_family_doctor",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "general_information.has_psychiatrist",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.previously_assessed",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.hospital_admission",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "past_psychiatric_history.self_harm_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_current_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medications.has_past_medications",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_medical_conditions",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medical_history.has_surgical_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "medication_allergies.has_medication_allergies",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "family_psychiatric_history.has_family_psychiatric_history",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": true,
+      "produced": true
+    },
+    {
+      "ref": "substance_use.nonmedical_nicotine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_marijuana_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_stimulant_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_opioid_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_benzodiazepine_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_hallucinogen_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "substance_use.nonmedical_other_substance_use",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": "Never",
+      "produced": "Never"
+    },
+    {
+      "ref": "education_employment_legal_history.active_legal_cases",
+      "verdict": "match",
+      "source": "auto",
+      "note": "",
+      "expected": false,
+      "produced": false
+    },
+    {
+      "ref": "general_information.name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "MAYA SANDBERG",
+      "produced": "OH—FULL LEGAL NAME, RIGHT. IT’S MAYA SANDBERG."
+    },
+    {
+      "ref": "general_information.gender",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Female",
+      "produced": "Female, I think."
+    },
+    {
+      "ref": "general_information.address",
+      "verdict": "missing",
+      "source": "llm",
+      "note": "",
+      "expected": "455 King Street West, Toronto, Ontario",
+      "produced": "Unknown"
+    },
+    {
+      "ref": "general_information.family_doctor_name",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "DR. MARCUS REID",
+      "produced": "DR. MARCUS REID."
+    },
+    {
+      "ref": "current_concerns.primary_problems",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Low mood, poor sleep and loss of interest for five months since relocating for work; few friends in the city; skipping meals; withdrawn from video calls with family.",
+      "produced": "It’s been… kind of hard to sort out. Since I moved to Toronto for work, I’ve been feeling low a lot, not sleeping properly, and I just don’t feel interested in things the way I used to. I’ve got hardly any friends here, so I end up kind of keeping to myself. I also skip meals sometimes, and I’ve been avoiding video calls with my family back home, which feels bad because I’m close to them. It’s been going on for about five months now."
+    },
+    {
+      "ref": "current_concerns.goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Feel like myself again; make some friends here.",
+      "produced": "I want to feel like myself again, mostly. And… maybe make some friends here, instead of just counting down the days till I go back home."
+    },
+    {
+      "ref": "medical_history.height",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "169 cm",
+      "produced": "169 cm."
+    },
+    {
+      "ref": "medical_history.weight",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "60 kg",
+      "produced": "60 kg."
+    },
+    {
+      "ref": "family_psychiatric_history.family_psychiatric_history_details",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Mother; depression; treated with medication.",
+      "produced": "Family member 1: Name Or Description: My mother.; Diagnosis Or Condition: Depression.; Additional Details: She was treated with medication. That’s… pretty much all I know."
+    },
+    {
+      "ref": "substance_use.nonmedical_alcohol_use",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Current; wine; one or two glasses at weekends; about two years",
+      "produced": "Status: Current; Substance or product: Wine.; Quantity or frequency: One or two glasses at weekends.; Duration: About two years."
+    },
+    {
+      "ref": "education_employment_legal_history.highest_education",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Bachelor's degree",
+      "produced": "Bachelor's degree."
+    },
+    {
+      "ref": "education_employment_legal_history.employment_history",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Junior architect, Fielding Partners; 2025 to present",
+      "produced": "Job 1: Name Or Description: Fielding Partners.; Job Title: Junior architect.; Dates: 2025 to present."
+    },
+    {
+      "ref": "personal_history.early_childhood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Born and raised in Halifax; describes a happy, sociable childhood.",
+      "produced": "I was born and raised in Halifax, and… I remember it as a happy childhood, pretty sociable too, I had friends and was generally outgoing."
+    },
+    {
+      "ref": "personal_history.adolescence_early_adulthood",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Completed an architecture degree; moved to Toronto at 21.",
+      "produced": "I finished my architecture degree, and then I moved to Toronto when I was 21. That’s… kind of the big thing that changed everything."
+    },
+    {
+      "ref": "personal_history.significant_relationships",
+      "verdict": "partial",
+      "source": "llm",
+      "note": "missing closeness to parents and friends",
+      "expected": "Single; close to her parents and two friends back home.",
+      "produced": "I’m single. Nothing else really to add there."
+    },
+    {
+      "ref": "personal_history.future_goals",
+      "verdict": "match",
+      "source": "llm",
+      "note": "",
+      "expected": "Build a life here rather than counting the days to visits.",
+      "produced": "I want to build a life here, instead of just counting the days until I can visit home."
+    }
+  ],
+  "fabricated": []
+}
