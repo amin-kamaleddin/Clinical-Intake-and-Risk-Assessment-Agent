@@ -91,6 +91,15 @@ def _prompt_hashes() -> dict:
     return hashes
 
 
+def new_run_id() -> str:
+    """A fresh run id, minted before anything is written.
+
+    Separate from build_manifest so the id can be claimed by the lock first;
+    the manifest write is destructive and must be the last step, not the first.
+    """
+    return uuid.uuid4().hex[:12]
+
+
 def build_manifest(run_id: str | None = None, repetitions: int | None = None) -> dict:
     """Everything needed to reproduce a result set."""
     return {
@@ -333,3 +342,43 @@ def release_lock() -> None:
     existing = read_lock()
     if existing and existing.get("pid") == os.getpid():
         LOCK_PATH.unlink(missing_ok=True)
+
+def guard_completed_run(force: bool = False) -> None:
+    """Refuse to overwrite the manifest of a run that already finished.
+
+    The lock only protects a run while it is in progress. Once it exits and
+    releases, any later `run_all` invocation writes a fresh manifest with a new
+    run id - and every artifact of the completed run is instantly orphaned from
+    the id that is supposed to identify it. Nothing warns, because from the
+    code's point of view a new run is starting normally.
+
+    This is not theoretical. It happened to a frozen, committed result set:
+    the manifest was rewritten nine seconds before the summary, reassigning
+    900 artifacts to a run that never produced them. It is also the most likely
+    explanation for the original benchmark's `artifact_freshness.clean = false`
+    with every artifact stale against the reported id.
+
+    A run is treated as complete when both a manifest and a summary exist.
+    Clearing outputs/ - the correct way to start fresh - removes both.
+    """
+    if force:
+        return
+    manifest = load_manifest()
+    if not manifest or not config.SUMMARY_REPORT_PATH.exists():
+        return
+    raise RuntimeError(
+        f"outputs/ already holds a COMPLETED run:\n"
+        f"    run_id  {manifest.get('run_id')}\n"
+        f"    code    {manifest.get('code_revision')}\n"
+        f"    started {manifest.get('started_at')}\n\n"
+        f"Starting here would write a new manifest and orphan every artifact "
+        f"of that run from its own run id.\n\n"
+        f"To start a fresh run:      rm -rf outputs\n"
+        f"To re-score without a new id, use the stages directly - they inherit "
+        f"the manifest's run id and never mint one:\n"
+        f"    python -m harness.stages.score_records --system cira\n"
+        f"    python -m harness.stages.run_judge\n"
+        f"    python -c \"from run_all import stage_summary; "
+        f"stage_summary(['cira','rule_based','naive_llm'], repetitions=3)\"\n\n"
+        f"Override only if you intend to replace that run: --force-lock"
+    )

@@ -244,16 +244,22 @@ def main() -> None:
     }
 
 
-    manifest = provenance.write_manifest(repetitions=args.repetitions)
-
-    # Claim outputs/ before any stage writes to it. Refuses if another run is
-    # live; reclaims automatically if the previous holder is gone.
+    # Order matters. Both checks run BEFORE the manifest is written, because
+    # write_manifest is itself destructive: it reassigns the run id that every
+    # artifact in outputs/ is stamped with. A run that is refused must leave
+    # the directory exactly as it found it.
     try:
-        provenance.acquire_lock(manifest["run_id"], force=args.force_lock)
+        provenance.guard_completed_run(force=args.force_lock)
+        run_id = provenance.new_run_id()
+        provenance.acquire_lock(run_id, force=args.force_lock)
     except RuntimeError as error:
         print(f"\nREFUSING TO START: {error}\n")
         raise SystemExit(1)
     atexit.register(provenance.release_lock)
+
+    manifest = provenance.write_manifest(
+        run_id=run_id, repetitions=args.repetitions
+    )
 
     persona_report = personas.write_assignment(
         seed=args.persona_seed,
