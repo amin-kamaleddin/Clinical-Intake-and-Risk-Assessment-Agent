@@ -136,6 +136,51 @@ def test_patient_utterances_are_fully_localised() -> None:
     print("  ok  difficulty maps by scale position; unknown values pass through")
 
 
+def test_english_record_rule_is_enforced_not_requested() -> None:
+    print("\n6. THE ENGLISH-RECORD RULE IS ENFORCED AT THE TOOL BOUNDARY")
+    # The record judge compares a produced value against ENGLISH ground truth, so
+    # a field left in Mandarin scores as wrong even when the intake understood it
+    # perfectly. Asking the model was not enough: a live Mandarin run stored 3 of
+    # 14 text fields in Chinese, including primary_problems and goals - the two
+    # richest free-text fields. It is now rejected the way any invalid write is.
+    import os
+    os.environ.setdefault("OPENAI_API_KEY", "placeholder-no-request-is-made")
+    sys.path.insert(0, str(config.CIRA_DIR))
+    from graph.nodes import _reject_non_english, MAX_ENGLISH_REJECTIONS
+    from core.languages import non_latin_script, PROPER_NOUN_FIELDS
+
+    for value, script in [("易怒和烦躁", "Chinese"), ("أنثى", "Arabic or Persian"),
+                          ("बिल्कुल नहीं", "Devanagari")]:
+        check(non_latin_script(value) == script,
+              f"{value!r} should be detected as {script}")
+    # Latin stays Latin, accents included. This is the known gap: a French answer
+    # left in French is NOT detectable by script and needs a reader.
+    for value in ("Irritability and outbursts", "Féminin", "Sertraline 50 mg", ""):
+        check(non_latin_script(value) is None, f"{value!r} must read as Latin")
+    print("  ok  script detection: CJK / Arabic / Devanagari caught, Latin passes")
+
+    # Bounded: refuse, refuse, then accept - a model that will not comply must not
+    # be able to stall the intake forever, and losing the answer entirely would be
+    # worse than storing it in the wrong language.
+    state, results, call = {}, {}, {"id": "c1"}
+    refusals = sum(
+        1 for _ in range(MAX_ENGLISH_REJECTIONS + 2)
+        if _reject_non_english(state, "primary_problems", "易怒和烦躁", results, call)
+    )
+    check(refusals == MAX_ENGLISH_REJECTIONS,
+          f"expected {MAX_ENGLISH_REJECTIONS} refusals, got {refusals}")
+    check("English" in results["c1"], "the refusal must say to use English")
+    print(f"  ok  refuses {MAX_ENGLISH_REJECTIONS}x then accepts - cannot stall the intake")
+
+    check(not _reject_non_english({}, "primary_problems", "Irritability", {}, call),
+          "an English value must not be refused")
+    for field in ("name", "address", "email"):
+        check(not _reject_non_english({}, field, "张伟", {}, call),
+              f"{field} is a proper noun and must be exempt")
+    check(PROPER_NOUN_FIELDS, "the exempt list must not be empty")
+    print(f"  ok  English passes; {len(PROPER_NOUN_FIELDS)} proper-noun fields exempt")
+
+
 def test_phrases_are_distinct_across_languages() -> None:
     print("\n5. NO PHRASE IS SHARED BETWEEN TWO LANGUAGES")
     # A phrase appearing in two languages would make the score ambiguous when the
@@ -232,6 +277,7 @@ def main() -> None:
     test_wrong_instrument_is_not_matched()
     test_every_language_has_complete_instrument_wording()
     test_patient_utterances_are_fully_localised()
+    test_english_record_rule_is_enforced_not_requested()
     test_phrases_are_distinct_across_languages()
     test_crisis_reply_exists_and_is_detected_in_every_language()
     test_conditional_split_is_only_claimed_where_it_holds()

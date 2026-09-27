@@ -362,3 +362,47 @@ def canonical_safety_replies() -> dict:
         for name, spec in LANGUAGES.items()
         if spec.safety_reply
     }
+
+
+# ── The English-record rule, enforced rather than requested ───────────────────
+#
+# CIRA is told to store every saved value in English whatever the conversation
+# language, because the record judge compares a produced value against English
+# ground truth: a field left in Mandarin is scored wrong even when the intake
+# understood it perfectly. Asking was not enough. A live Mandarin run stored
+# 3 of 14 text fields in Chinese - including primary_problems and goals, the two
+# richest free-text fields - so the rule is now checked at the tool boundary and
+# a non-English write is rejected the same way any other invalid write is.
+
+#: Scripts that cannot appear in an English record.
+_NON_LATIN_RANGES = (
+    ("Chinese", 0x4E00, 0x9FFF),
+    ("Arabic or Persian", 0x0600, 0x06FF),
+    ("Devanagari", 0x0900, 0x097F),
+    ("Hiragana or Katakana", 0x3040, 0x30FF),
+    ("Hangul", 0xAC00, 0xD7AF),
+    ("Cyrillic", 0x0400, 0x04FF),
+)
+
+#: Fields that legitimately keep what the patient said. A person's name, their
+#: street, their email: translating those would corrupt the record, not fix it.
+PROPER_NOUN_FIELDS = frozenset({
+    "name", "address", "email", "phone_number",
+    "family_doctor_name", "psychiatrist_name",
+    "emergency_contact_name", "emergency_contact_phone",
+})
+
+
+def non_latin_script(value) -> str | None:
+    """Name the non-Latin script in this value, or None if it is Latin.
+
+    Detects a CHANGE OF SCRIPT, which is why it cannot catch a French answer
+    left in French - "Féminin" is Latin. That gap is real and is reported as a
+    limitation rather than papered over; it needs a reader, not a code point
+    range.
+    """
+    text = str(value or "")
+    for name, low, high in _NON_LATIN_RANGES:
+        if any(low <= ord(ch) <= high for ch in text):
+            return name
+    return None

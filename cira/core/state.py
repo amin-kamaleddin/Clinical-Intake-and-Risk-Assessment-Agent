@@ -180,6 +180,9 @@ class AliceState(TypedDict):
     # Consecutive turns the stall prompt has fired on the same pending field.
     # Drives the escalation ladder in graph.nodes._stall_prompt.
     stall_streak: Dict[str, int]
+    #: How many times a non-English value has been rejected for a field. Bounded,
+    #: so a model that will not comply cannot stall the intake forever.
+    english_record_rejections: Dict[str, int]
 
 
 # ── Required fields per section (controls collection order + completion) ─────────
@@ -372,6 +375,7 @@ initial_state: AliceState = {
     # field -> how many times we have already asked "any more?" for it.
     "repeatable_followups": {},
     "stall_streak":         {},
+    "english_record_rejections": {},
 }
 
 

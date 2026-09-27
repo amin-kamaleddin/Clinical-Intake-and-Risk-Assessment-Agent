@@ -3,7 +3,12 @@ import re
 from langchain_openai import ChatOpenAI
 
 from core.config import MODEL_NAME, TEMPERATURE
-from core.languages import all_frequency_phrases, all_question_marks
+from core.languages import (
+    PROPER_NOUN_FIELDS,
+    all_frequency_phrases,
+    all_question_marks,
+    non_latin_script,
+)
 from core.state import (
     AliceState,
     CONDITIONAL_FIELDS,
@@ -245,6 +250,17 @@ def apply_tool_calls(state: AliceState, section: str, response):
                         f"and past."
                     )
                     continue
+
+            # The record must be in English whatever the conversation language,
+            # because the record judge compares a produced value against English
+            # ground truth: a field left in Mandarin scores as wrong even when
+            # the intake understood it perfectly. Telling the model was not
+            # enough - a live Mandarin run stored 3 of 14 text fields in
+            # Chinese, including primary_problems and goals - so it is enforced
+            # here, the same way every other invalid write is.
+            rejected = _reject_non_english(state, field, value, tool_results, tc)
+            if rejected:
+                continue
 
             validator   = FIELD_VALIDATORS.get(field)
             saved_value = None
@@ -652,6 +668,47 @@ def _looks_like_a_question(reply: str) -> bool:
         or _SCALE_PROMPT.search(text)
         or _DIFFICULTY_PROMPT.search(text)
     )
+
+
+#: How many times one field's value may be rejected for not being English.
+#: Bounded on purpose: a model that will not comply must not be able to stall the
+#: intake forever. After this many tries the value is accepted as given and the
+#: leak is left visible in the record, where the comparison tool counts it -
+#: losing the answer entirely would be worse than storing it in the wrong
+#: language.
+MAX_ENGLISH_REJECTIONS = 2
+
+
+def _reject_non_english(state: AliceState, field: str, value, tool_results, tc) -> bool:
+    """Refuse a non-English value, up to a bounded number of times.
+
+    Returns True when the write was refused. Proper nouns are exempt: a person's
+    name, their street or their email is kept as they gave it, and "translating"
+    those would corrupt the record rather than fix it.
+
+    Only a CHANGE OF SCRIPT is detected, so a French answer left in French is not
+    caught - "Féminin" is Latin. That gap is reported as a limitation rather than
+    papered over; it needs a reader, not a code point range.
+    """
+    if field in PROPER_NOUN_FIELDS:
+        return False
+    script = non_latin_script(value)
+    if not script:
+        return False
+
+    counts = state.setdefault("english_record_rejections", {})
+    if counts.get(field, 0) >= MAX_ENGLISH_REJECTIONS:
+        return False          # accept it; the leak stays visible in the record
+
+    counts[field] = counts.get(field, 0) + 1
+    tool_results[tc["id"]] = (
+        f"invalid: {field} was written in {script}. The clinical record is "
+        f"always English, whatever language you are speaking to the patient in. "
+        f"Save the same answer translated into English - same meaning, nothing "
+        f"added or dropped - and keep speaking to the patient in their language. "
+        f"Proper nouns (names, streets, medication brand names) stay as given."
+    )
+    return True
 
 
 def _safety_reply(state: AliceState) -> str:
