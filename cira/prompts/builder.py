@@ -121,7 +121,52 @@ def build_voice_context(state: AliceState) -> str:
         f"Preferred conversation language: {language}\n"
         f"Speech-to-text mode: {speech_mode}\n"
         f"Latest input source: {input_source}"
+        + build_questionnaire_language_block(language)
     )
+
+
+def build_questionnaire_language_block(language: str) -> str:
+    """The canonical questionnaire wording for a non-English conversation.
+
+    Two things went wrong without this, both seen in a live Mandarin intake:
+
+      * the item LABEL was translated for one instrument and not the other -
+        "**PHQ-9 Question 1:**" but "GAD-7 问题 1：" - and a label the harness
+        cannot parse costs that item its ground-truth answer.
+      * the RESPONSE OPTIONS were translated ad hoc, so the model offered
+        "完全没有" while the canonical option is "完全不会". Both mean "not at
+        all", but the patient and the interviewer were then working from
+        different wording, which is not a difference any instrument intends.
+
+    Pinning both to core.languages removes the ambiguity: one table, read by the
+    agent and by the patient simulator alike.
+    """
+    from core.languages import LANGUAGES, get
+
+    if language not in LANGUAGES or language == "English":
+        return ""
+
+    spec = get(language)
+    options = "\n".join(
+        f"  {score} - {phrase}" for score, phrase in enumerate(spec.frequency_phrases)
+    )
+    difficulty = "\n".join(f"  - {phrase}" for phrase in spec.difficulty_phrases)
+    return f"""
+
+QUESTIONNAIRE WORDING IN {language.upper()}
+Keep the item LABEL exactly as written, in Latin script with an Arabic numeral,
+even though the rest of the sentence is in {language}:
+  "PHQ-9 Question 1: ...", "GAD-7 Question 1: ..."
+Do NOT translate the words "PHQ-9", "GAD-7" or "Question". Translate only the
+item text that follows. The label is what identifies the item in the record.
+
+Use EXACTLY these response options for PHQ-9 and GAD-7 items:
+{options}
+
+And exactly these for the functional-difficulty item:
+{difficulty}
+
+Do not paraphrase an option, and do not offer wording of your own."""
 
 
 SAFETY_HANDLED_DIRECTIVE = """

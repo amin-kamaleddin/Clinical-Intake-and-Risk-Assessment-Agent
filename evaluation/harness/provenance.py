@@ -130,6 +130,10 @@ def build_manifest(run_id: str | None = None, repetitions: int | None = None) ->
             "judge": config.JUDGE_TEMPERATURE,
             "patient_temperature_pinned": config.PATIENT_TEMPERATURE_IS_PINNED,
         },
+        # The conversation language. Without this an artifact cannot say which
+        # language produced it, and the multilingual arms are indistinguishable
+        # from the English one once the directory name is lost.
+        "language": config.LANGUAGE,
         "judge_temperature": config.JUDGE_TEMPERATURE,
         # The EFFECTIVE count, not the environment default. --repetitions N used
         # to run N repetitions while the manifest recorded config.REPETITIONS,

@@ -27,5 +27,9 @@ STT_MODEL        = os.getenv("CIRA_STT_MODEL", "gpt-4o-transcribe")
 TTS_MODEL        = os.getenv("CIRA_TTS_MODEL", "gpt-4o-mini-tts")
 TTS_VOICE        = os.getenv("CIRA_TTS_VOICE", "shimmer")
 
-SUPPORTED_TEST_LANGUAGES = ["English", "French", "Hindi"]
+# Read from the language registry so the prompt, the patient simulator and the
+# questionnaire phrases can never disagree about which languages are supported.
+from core.languages import LANGUAGES as _LANGUAGES  # noqa: E402
+
+SUPPORTED_TEST_LANGUAGES = list(_LANGUAGES)
 

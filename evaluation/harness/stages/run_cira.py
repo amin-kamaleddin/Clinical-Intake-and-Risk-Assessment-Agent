@@ -70,6 +70,10 @@ def create_cira_state(initial_state: dict, case_id: str) -> dict:
     state["scenario_case_id"] = case_id
     state["current_section"] = "general_information"
     state["messages"] = []
+    # The intake is conducted in this language; the RECORD is still written in
+    # English (see cira/prompts/static_prompt.py), which is what lets record
+    # scoring and the judges run unchanged across languages.
+    state["preferred_language"] = config.LANGUAGE
     return state
 
 

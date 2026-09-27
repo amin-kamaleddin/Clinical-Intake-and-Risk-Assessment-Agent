@@ -3,6 +3,7 @@ import re
 from langchain_openai import ChatOpenAI
 
 from core.config import MODEL_NAME, TEMPERATURE
+from core.languages import all_frequency_phrases, all_question_marks
 from core.state import (
     AliceState,
     CONDITIONAL_FIELDS,
@@ -64,11 +65,17 @@ def _merge_repeatable_value(existing, incoming):
 QUESTIONNAIRE_ITEM = re.compile(r"^(?:phq9|gad7)_q\d+$")
 
 # Wordings that constitute an actual selection on the 0-3 frequency scale.
+#
+# The English list also carries loose paraphrases ("most days", "all the time")
+# that a patient reaches for instead of the printed option. The per-language
+# phrases come from the registry, so a Mandarin or Arabic patient answering with
+# the printed option is recognised too - without them, a correctly answered item
+# was rejected as "no option selected" and the interview re-asked it forever.
 _SCALE_RESPONSES = (
     "not at all", "several days", "more than half", "nearly every day",
     "never", "every day", "most days", "a few days", "some days",
     "half the days", "all the time",
-)
+) + all_frequency_phrases()
 
 # The patient asking for help is not the patient finishing a list.
 _CLARIFICATION_MARKERS = (
@@ -455,6 +462,28 @@ _CLOSING_PHRASES = (
     "i'm here if you need", "i am here if you need", "i'm here to help",
     "i am here to help", "no further information", "available if you have",
     "thank you for completing", "that completes",
+
+    # Completion phrasings outside English. A DELIBERATELY SMALL, high-confidence
+    # set: these decide whether a reply that ends in a question mark is treated
+    # as a real question, and a wrong entry here suppresses a genuine question.
+    #
+    # Coverage outside English is therefore lower than inside it, and that is an
+    # accepted limitation rather than an oversight. It degrades safely: when a
+    # completion phrase is missed the pending-field nudge is simply not appended,
+    # the field stays in the prompt, and the model usually asks on the next turn.
+    # The driver's stall guard, the gate inference and the empty-detail ladder all
+    # act on the ENGLISH record, so section completion is still protected.
+    # 中文
+    "全部完成", "已完成", "记录完毕", "问诊结束", "已记录",
+    # Français
+    "tout est terminé", "c'est terminé", "l'entretien est terminé",
+    "vos réponses ont été enregistrées",
+    # العربية
+    "تم الانتهاء", "انتهى التقييم", "تم تسجيل", "اكتمل",
+    # हिन्दी
+    "पूरा हो गया", "सब कुछ दर्ज", "मूल्यांकन पूरा",
+    # فارسی
+    "تمام شد", "به پایان رسید", "ثبت شد", "کامل شد",
 )
 
 
@@ -582,6 +611,8 @@ _CLARIFYING_RESTATEMENT = re.compile(
     r"|\b(?:either|any) (?:one|order|format|is fine)\b"
 )
 
+_QUESTION_MARKS = all_question_marks()
+
 _SCALE_PROMPT = re.compile(r"not at all\b.*\bnearly every day")
 _DIFFICULTY_PROMPT = re.compile(r"not difficult at all\b.*\bextremely difficult")
 
@@ -609,7 +640,10 @@ def _looks_like_a_question(reply: str) -> bool:
         return False
     if any(phrase in text for phrase in _CLOSING_PHRASES):
         return False
-    if "?" in text:
+    # Any script's question mark. Mandarin punctuates with U+FF1F and Arabic and
+    # Farsi with U+061F, so testing only for "?" read every non-English question
+    # as a statement and appended a redundant nudge to it.
+    if any(mark in text for mark in _QUESTION_MARKS):
         return True
     return bool(
         _IMPERATIVE_REQUEST.search(text)

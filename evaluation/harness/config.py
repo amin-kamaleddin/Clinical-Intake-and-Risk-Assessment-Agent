@@ -16,7 +16,19 @@ CIRA_DIR = PROJECT_ROOT / "cira"              # the real CIRA package (sibling f
 
 SCENARIO_FILE = EVALUATION_DIR / "cira_scenarios.json"
 
-OUTPUTS_DIR = EVALUATION_DIR / "outputs"
+# Conversation language for the whole run. Anything other than English writes
+# into its OWN outputs tree, so the frozen English result set stays untouched and
+# serves as the control arm: outputs/ for English, outputs_arabic/ and so on for
+# the rest. Without this every language overwrote the previous one's artifacts.
+LANGUAGE = os.getenv("CIRA_LANGUAGE", "English").strip() or "English"
+_LANGUAGE_SLUG = (
+    "" if LANGUAGE == "English"
+    else LANGUAGE.lower().replace(" ", "_").replace("-", "_")
+)
+
+OUTPUTS_DIR = EVALUATION_DIR / (
+    "outputs" if not _LANGUAGE_SLUG else f"outputs_{_LANGUAGE_SLUG}"
+)
 REPORTS_DIR = OUTPUTS_DIR / "reports"
 JUDGE_DIR = OUTPUTS_DIR / "judge"
 

@@ -38,6 +38,21 @@ DIFFICULTY_SIGNATURES = {
 }
 
 
+#: Arabic-Indic (٠-٩) and Persian/Urdu (۰-۹) digits, mapped to ASCII.
+#: Arabic and Farsi intakes number items in their own numerals, and an item
+#: labelled "GAD-7 السؤال ٣" carries no ASCII digit for the matcher to find.
+_DIGIT_TRANSLATION = str.maketrans(
+    "\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669"
+    "\u06f0\u06f1\u06f2\u06f3\u06f4\u06f5\u06f6\u06f7\u06f8\u06f9",
+    "01234567890123456789",
+)
+
+
+def _normalize_digits(text: str) -> str:
+    """Rewrite non-ASCII numerals as ASCII so one matcher serves every script."""
+    return str(text or "").translate(_DIGIT_TRANSLATION)
+
+
 def identify_item_by_text(question: str) -> str | None:
     """Resolve a questionnaire item from its wording alone.
 
@@ -53,6 +68,28 @@ def identify_item_by_text(question: str) -> str | None:
     return matches[0] if len(matches) == 1 else None
 
 
+def _language():
+    """The active conversation language, from the shared registry.
+
+    Imported lazily and through cira/, so the simulator and the agent read the
+    SAME table. Two copies of these phrases would drift, and a drift means CIRA
+    rejects a correctly answered item as "no option selected" - which looks like
+    a comprehension failure in the transcript but is really bookkeeping.
+    """
+    import sys
+    cira_root = str(config.CIRA_DIR)
+    if cira_root not in sys.path:
+        sys.path.insert(0, cira_root)
+    from core.languages import get
+    return get(config.LANGUAGE)
+
+
+def score_to_response(score: int) -> str:
+    """The printed option a patient says out loud for this score."""
+    return _language().frequency_phrases[int(score)]
+
+
+#: English phrases, kept for the English path and for tests that assert them.
 SCORE_TO_RESPONSE = {
     0: "Not at all",
     1: "Several days",
@@ -142,6 +179,9 @@ class PatientSimulator:
         # instrument total was silently corrupted. Latching the item means a
         # re-ask still resolves to the same stored score.
         self._current_item: str | None = None
+        #: Items that could not be resolved deterministically. See answer().
+        self._questionnaire_fall_throughs = 0
+        self._fall_through_log: list = []
 
         self.history = []
         self.system_prompt = self._build_system_prompt()
@@ -189,12 +229,11 @@ MULTI-ENTRY RULES
 6. If CIRA explicitly asks for all entries together, you may list all supplied entries.
 7. Never invent a dose, frequency, start date, duration, or stopping reason.
 
+{self._language_block()}
+
 QUESTIONNAIRE RULES
 Use exactly:
-0 = Not at all
-1 = Several days
-2 = More than half the days
-3 = Nearly every day
+{self._scale_block()}
 
 Patient description:
 {self.scenario.get("patient_simulator_instructions", "")}
@@ -210,6 +249,32 @@ Patient facts:
 
 {self._persona_precedence_block()}
 """.strip()
+
+    def _language_block(self) -> str:
+        """Tell the patient which language to speak, or say nothing for English.
+
+        The patient must speak the SAME language CIRA is using, or the transcript
+        is a code-switching artefact and the flow judge scores that instead of
+        the intake. Facts stay bound to patient_facts either way: this changes
+        only the language they are said in, never their content.
+        """
+        language = _language()
+        if language.name == "English":
+            return ""
+        return f"""LANGUAGE
+Speak {language.name} ({language.native_name}) for the ENTIRE conversation.
+- Reply in {language.name} even though the facts below are written in English.
+- Translate the facts faithfully. Never add, drop or soften a detail in
+  translation, and never invent one that is not listed.
+- Numbers, medication names and dates stay recognisable: give a medication by
+  the name written below, transliterated if that is normal in {language.name}.
+- Say questionnaire answers using the exact printed option listed under
+  QUESTIONNAIRE RULES below, in {language.name}."""
+
+    def _scale_block(self) -> str:
+        """The four printed frequency options, in the conversation language."""
+        phrases = _language().frequency_phrases
+        return "\n".join(f"{score} = {phrase}" for score, phrase in enumerate(phrases))
 
     def _persona_precedence_block(self) -> str:
         """The persona block, placed LAST and declared to win on conflicts.
@@ -247,7 +312,7 @@ Style is yours to control; content is not.
     @classmethod
     def _question_number(cls, question: str, instrument: str, max_question: int) -> int | None:
         """Extract a questionnaire item number from common CIRA wording."""
-        lower = question.lower()
+        lower = _normalize_digits(question.lower())
         inst = cls._instrument_regex(instrument)
 
         patterns = [
@@ -260,6 +325,19 @@ Style is yours to control; content is not.
             rf"\bq\s*([1-{max_question}])\b",
             # explicit key "phq9_q3" / "phq-9_q3"
             rf"{inst}_q([1-{max_question}])\b",
+            # LANGUAGE-AGNOSTIC fallback, tried last so the specific patterns win.
+            #
+            # The word for "question" gets translated even when the instrument
+            # name does not: CIRA wrote "**PHQ-9 Question 1:**" but
+            # "GAD-7 问题 1：" in the same Mandarin intake. The optional
+            # (?:question|item|...) group above cannot skip 问题, so all seven
+            # GAD-7 items fell through to the LLM and their ground-truth answers
+            # were lost while all nine PHQ-9 items resolved.
+            #
+            # The instrument name and the digit stay stable in every language, so
+            # anything non-numeric between them is allowed. Bounded and non-greedy
+            # so it takes the item number rather than some later digit.
+            rf"{inst}[^0-9]{{0,16}}?([1-{max_question}])(?![0-9])",
         ]
         for pattern in patterns:
             match = re.search(pattern, lower)
@@ -278,7 +356,10 @@ Style is yours to control; content is not.
 
     def _bare_question_number(self, question: str) -> int | None:
         """Item number from an unqualified "Question 3:" / "Question 3 of 9"."""
-        match = re.search(r"\bquestion\s*#?\s*(\d{1,2})\b", question.lower())
+        match = re.search(
+            r"\bquestion\s*#?\s*(\d{1,2})\b",
+            _normalize_digits(question.lower()),
+        )
         return int(match.group(1)) if match else None
 
     def _looks_like_scale_prompt(self, question: str) -> bool:
@@ -341,7 +422,7 @@ Style is yours to control; content is not.
         if by_text is not None:
             self._current_item = by_text
             self._current_instrument = by_text.split("_", 1)[0]
-            return by_text, SCORE_TO_RESPONSE[int(self._answer_for(by_text))]
+            return by_text, score_to_response(self._answer_for(by_text))
 
         # Numbered lookup, CURRENT instrument first. Trying one instrument
         # unconditionally first lets a stray token from the other one win; the
@@ -357,7 +438,7 @@ Style is yours to control; content is not.
                 key = f"{instrument}_q{number}"
                 self._current_item = key
                 self._current_instrument = instrument
-                return key, SCORE_TO_RESPONSE[int(self._answer_for(key))]
+                return key, score_to_response(self._answer_for(key))
 
         # Bare "Question N:" with no instrument named at all - resolve against
         # whichever instrument the current section administers.
@@ -367,7 +448,7 @@ Style is yours to control; content is not.
             if number is not None and 1 <= number <= limit:
                 key = f"{self._current_instrument}_q{number}"
                 self._current_item = key
-                return key, SCORE_TO_RESPONSE[int(self._answer_for(key))]
+                return key, score_to_response(self._answer_for(key))
 
         lower = question.lower()
         if ("phq-9" in lower or "phq9" in lower) and "difficult" in lower:
@@ -396,7 +477,7 @@ Style is yours to control; content is not.
             key = self._current_item
             if key.endswith("_difficulty"):
                 return key, self._answer_for(key)
-            return key, SCORE_TO_RESPONSE[int(self._answer_for(key))]
+            return key, score_to_response(self._answer_for(key))
 
         return None
 
@@ -540,6 +621,15 @@ Style is yours to control; content is not.
                     f"which invalidates the instrument total."
                 )
             if self._looks_like_questionnaire(cira_question):
+                # RECORDED, not only warned about. A fall-through means the item
+                # did not use its stored ground-truth answer, so a structured
+                # score computed over fall-throughs measures the simulator's
+                # improvisation rather than the intake. The count has to survive
+                # in the artifacts: reading it back off a console log means it is
+                # gone the moment the log is rotated or deleted, and it is the
+                # first number to check on any non-English run.
+                self._questionnaire_fall_throughs += 1
+                self._fall_through_log.append(cira_question[:200])
                 print(
                     "[patient_simulator] WARNING: questionnaire item fell through "
                     f"to the LLM (no deterministic answer): {cira_question!r}",
@@ -582,6 +672,10 @@ Style is yours to control; content is not.
             "temperature": self.temperature,
             "temperature_pinned": config.PATIENT_TEMPERATURE_IS_PINNED,
             "questionnaire_deflections": sum(self._deflections_by_item.values()),
+            # Must be 0. Anything above it means that many items were answered by
+            # the LLM instead of from ground truth.
+            "questionnaire_fall_throughs": self._questionnaire_fall_throughs,
+            "fall_through_questions": self._fall_through_log,
             "freetext_hedges": self._hedges_used,
             "max_consecutive_hedges": 1,
             "hedges_by_section": dict(self._hedges_by_section),

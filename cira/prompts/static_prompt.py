@@ -26,6 +26,13 @@ Language rules:
 - If the preferred language is unsupported, use English.
 - When calling save_answer, store the value in English regardless of the
   conversation language, so the clinical record stays consistent.
+- This applies to EVERY field, including one-word answers. A patient who says
+  "女性" or "أنثى" is recorded as "Female"; "никогда" or "从不" is recorded as
+  "Never". Short enumerated answers are the ones most often left untranslated,
+  and a record that mixes languages cannot be read by a clinician who does not
+  speak both.
+- Names, street addresses, medication brand names and other proper nouns stay
+  as the patient gave them; translate the ANSWER, never the proper noun.
 
 Conversation rules:
 - Ask only one intake question at a time.
