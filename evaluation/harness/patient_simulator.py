@@ -68,6 +68,19 @@ def identify_item_by_text(question: str) -> str | None:
     return matches[0] if len(matches) == 1 else None
 
 
+def _load_languages():
+    """The shared language registry, imported through cira/ like everything else."""
+    import sys
+    cira_root = str(config.CIRA_DIR)
+    if cira_root not in sys.path:
+        sys.path.insert(0, cira_root)
+    from core.languages import LANGUAGES as registry
+    return registry
+
+
+LANGUAGES = _load_languages()
+
+
 def _language():
     """The active conversation language, from the shared registry.
 
@@ -87,6 +100,21 @@ def _language():
 def score_to_response(score: int) -> str:
     """The printed option a patient says out loud for this score."""
     return _language().frequency_phrases[int(score)]
+
+
+def _offers_difficulty_options(question: str) -> bool:
+    """True when the message presents the functional-difficulty scale.
+
+    Requires TWO of the four options, so a single word shared with ordinary prose
+    cannot trigger it. Checked across every language rather than only the active
+    one, because a re-ask can arrive before the language is known.
+    """
+    text = str(question or "")
+    for language in LANGUAGES.values():
+        hits = sum(1 for phrase in language.difficulty_phrases if phrase in text)
+        if hits >= 2:
+            return True
+    return False
 
 
 def difficulty_to_response(value) -> str:
@@ -488,12 +516,21 @@ Style is yours to control; content is not.
                 self._current_item = key
                 return key, score_to_response(self._answer_for(key))
 
+        # The functional-difficulty item, which carries no number for the matcher
+        # above to find. Requiring the English word "difficult" lost it entirely
+        # outside English: CIRA wrote "PHQ-9 功能受影响程度" and "GAD-7 功能困难"
+        # in the same run, so even one translated keyword would not have covered
+        # both. The reliable signal is that the message OFFERS THE DIFFICULTY
+        # OPTIONS rather than the 0-3 frequency scale, and those options are
+        # canonical - the agent is instructed to use them verbatim.
         lower = question.lower()
-        if ("phq-9" in lower or "phq9" in lower) and "difficult" in lower:
+        difficulty_asked = "difficult" in lower or _offers_difficulty_options(question)
+
+        if ("phq-9" in lower or "phq9" in lower) and difficulty_asked:
             self._current_item = "phq9_difficulty"
             return "phq9_difficulty", difficulty_to_response(self._answer_for("phq9_difficulty"))
 
-        if ("gad-7" in lower or "gad7" in lower) and "difficult" in lower:
+        if ("gad-7" in lower or "gad7" in lower) and difficulty_asked:
             self._current_item = "gad7_difficulty"
             return "gad7_difficulty", difficulty_to_response(self._answer_for("gad7_difficulty"))
 

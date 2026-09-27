@@ -67,6 +67,51 @@ def test_item_labels_resolve_in_every_script() -> None:
         print(f"  ok  {instrument} item {got}  {text[:46]}")
 
 
+def test_difficulty_item_resolves_without_a_number() -> None:
+    print("\n2. THE FUNCTIONAL-DIFFICULTY ITEM")
+    # It carries no number, so the label is all there is - and CIRA translated it
+    # two different ways in ONE Mandarin run ("功能受影响程度" and "功能困难"),
+    # which is why no keyword list could cover it. Detected instead by the
+    # canonical difficulty OPTIONS, which the agent is told to use verbatim.
+    from harness.patient_simulator import _offers_difficulty_options, PatientSimulator
+    for text, expected, label in [
+        ("**PHQ-9 功能受影响程度**\n- 一点也不困难\n- 有些困难\n- 很困难", True,
+         "Mandarin, first wording"),
+        ("**GAD-7 功能困难**\n- 一点也不困难\n- 有些困难", True,
+         "Mandarin, second wording"),
+        ("PHQ-9 صعوبة\n- ليس صعباً على الإطلاق\n- صعب نوعاً ما", True, "Arabic"),
+        ("GAD-7\n- به هیچ وجه دشوار نبود\n- تا حدی دشوار", True, "Farsi"),
+        ("PHQ-9 Question 3\n0 - 完全不会\n1 - 有几天\n2 - 一半以上的天数", False,
+         "frequency scale must NOT read as difficulty"),
+        ("您今天感觉怎么样？", False, "ordinary question"),
+    ]:
+        got = _offers_difficulty_options(text)
+        check(got is expected, f"{label}: got {got}, want {expected}")
+        print(f"  ok  {got!s:<6} {label}")
+
+    # And the whole path resolves to the right key.
+    for instrument in ("PHQ-9", "GAD-7"):
+        text = f"**{instrument} 功能困难**\n- 一点也不困难\n- 有些困难"
+        sim = _difficulty_probe()
+        resolved = sim._identify_questionnaire_item(text)
+        want = f"{instrument.replace('-', '').lower()}_difficulty"
+        check(resolved is not None and resolved[0] == want,
+              f"{instrument} difficulty resolved to {resolved}, want {want}")
+        print(f"  ok  {instrument} 功能困难 -> {resolved[0]}")
+
+
+def _difficulty_probe():
+    """A simulator on a scenario that has both difficulty answers stored."""
+    import json
+    from harness import personas
+    from harness.patient_simulator import PatientSimulator
+    scenarios = json.loads(config.SCENARIO_FILE.read_text(encoding="utf-8"))
+    scenario = next(s for s in scenarios if s["case_id"] == MULTILINGUAL_CASE_IDS[0])
+    sim = PatientSimulator(scenario, persona=personas.PERSONAS["clear"], seed=1)
+    sim.begin_section("phq9")
+    return sim
+
+
 def test_non_ascii_digits_normalise() -> None:
     print("\n2. NON-ASCII NUMERALS")
     for raw, want in [("٣", "3"), ("۵", "5"), ("٠٩", "09"), ("7", "7")]:
@@ -273,6 +318,7 @@ def main() -> None:
     print("MULTILINGUAL EVALUATION")
     print("=" * 70)
     test_item_labels_resolve_in_every_script()
+    test_difficulty_item_resolves_without_a_number()
     test_non_ascii_digits_normalise()
     test_wrong_instrument_is_not_matched()
     test_every_language_has_complete_instrument_wording()

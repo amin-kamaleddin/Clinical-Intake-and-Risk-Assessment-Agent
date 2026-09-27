@@ -157,8 +157,11 @@ QUESTIONNAIRE WORDING IN {language.upper()}
 Keep the item LABEL exactly as written, in Latin script with an Arabic numeral,
 even though the rest of the sentence is in {language}:
   "PHQ-9 Question 1: ...", "GAD-7 Question 1: ..."
-Do NOT translate the words "PHQ-9", "GAD-7" or "Question". Translate only the
-item text that follows. The label is what identifies the item in the record.
+  "PHQ-9 functional difficulty: ...", "GAD-7 functional difficulty: ..."
+Do NOT translate the words "PHQ-9", "GAD-7", "Question" or "functional
+difficulty". Translate only the item text that follows. The label is what
+identifies the item in the record - the difficulty item carries no number, so
+its label is the only thing identifying it at all.
 
 Use EXACTLY these response options for PHQ-9 and GAD-7 items:
 {options}
