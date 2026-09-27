@@ -89,6 +89,37 @@ def score_to_response(score: int) -> str:
     return _language().frequency_phrases[int(score)]
 
 
+def difficulty_to_response(value) -> str:
+    """Translate a stored difficulty answer into the conversation language.
+
+    patient_facts holds the English option ("Somewhat difficult") because that is
+    the ground truth the record is scored against, so without this the patient
+    answered the functional-difficulty item in English in the middle of an
+    otherwise Mandarin interview.
+
+    Mapped by POSITION on the scale rather than by translating the words, so the
+    severity a scenario specified is the severity the patient reports. An
+    unrecognised value is passed through unchanged rather than guessed at: a
+    wrong option here silently changes what the scenario says.
+    """
+    text = str(value or "").strip()
+    english = [phrase.lower() for phrase in ENGLISH_DIFFICULTY]
+    try:
+        index = english.index(text.lower())
+    except ValueError:
+        return text
+    return _language().difficulty_phrases[index]
+
+
+#: The English functional-difficulty scale, in ascending severity. Used to find
+#: a stored answer's POSITION so it can be re-expressed in another language.
+ENGLISH_DIFFICULTY = (
+    "Not difficult at all",
+    "Somewhat difficult",
+    "Very difficult",
+    "Extremely difficult",
+)
+
 #: English phrases, kept for the English path and for tests that assert them.
 SCORE_TO_RESPONSE = {
     0: "Not at all",
@@ -224,12 +255,10 @@ MULTI-ENTRY RULES
 1. For medications and other repeatable information, reveal one entry at a time.
 2. Give missing details for the current entry when CIRA asks.
 3. Reveal the next entry only when CIRA asks whether there are any others.
-4. After the final entry, clearly say: "No, those are all."
+4. After the final entry, clearly say: "{_language().no_more_entries}"
 5. Do not repeat an entry already disclosed.
 6. If CIRA explicitly asks for all entries together, you may list all supplied entries.
 7. Never invent a dose, frequency, start date, duration, or stopping reason.
-
-{self._language_block()}
 
 QUESTIONNAIRE RULES
 Use exactly:
@@ -248,6 +277,8 @@ Patient facts:
 {patient_facts}
 
 {self._persona_precedence_block()}
+
+{self._language_block()}
 """.strip()
 
     def _language_block(self) -> str:
@@ -261,8 +292,15 @@ Patient facts:
         language = _language()
         if language.name == "English":
             return ""
-        return f"""LANGUAGE
+        return f"""LANGUAGE - THIS SECTION OVERRIDES EVERYTHING ABOVE
 Speak {language.name} ({language.native_name}) for the ENTIRE conversation.
+- The patient description and the rules above are written in English and quote
+  English phrases. Those are the MEANINGS to convey, not the words to say. Where
+  anything above tells you to say a specific English phrase, say its
+  {language.name} equivalent instead.
+- In particular: when you have disclosed every entry and are asked whether there
+  are more, say "{language.no_more_entries}" - NOT the English wording quoted
+  above.
 - Reply in {language.name} even though the facts below are written in English.
 - Translate the facts faithfully. Never add, drop or soften a detail in
   translation, and never invent one that is not listed.
@@ -453,11 +491,11 @@ Style is yours to control; content is not.
         lower = question.lower()
         if ("phq-9" in lower or "phq9" in lower) and "difficult" in lower:
             self._current_item = "phq9_difficulty"
-            return "phq9_difficulty", self._answer_for("phq9_difficulty")
+            return "phq9_difficulty", difficulty_to_response(self._answer_for("phq9_difficulty"))
 
         if ("gad-7" in lower or "gad7" in lower) and "difficult" in lower:
             self._current_item = "gad7_difficulty"
-            return "gad7_difficulty", self._answer_for("gad7_difficulty")
+            return "gad7_difficulty", difficulty_to_response(self._answer_for("gad7_difficulty"))
 
         # Unlabelled re-ask: the message restates the response options but
         # carries no item label, so it is a clarification of the item already
@@ -573,7 +611,17 @@ Style is yours to control; content is not.
         return self._rng.random() < persona.questionnaire_deflection_probability
 
     def _deflection_line(self, item_key: str) -> str:
-        line = self._rng.choice(self.persona.deflection_lines)
+        # Outside English, draw from the language's pool instead of the persona's
+        # English list. The persona still controls HOW OFTEN it deflects (its
+        # probability and budgets); only the wording comes from the language.
+        # English is untouched, so the frozen English run is unaffected.
+        language = _language()
+        pool = (
+            language.deflection_lines
+            if language.name != "English" and language.deflection_lines
+            else self.persona.deflection_lines
+        )
+        line = self._rng.choice(pool)
         instrument = self._instrument_of(item_key)
         self._deflections_by_item[item_key] = self._deflections_by_item.get(item_key, 0) + 1
         self._deflections_by_instrument[instrument] = (

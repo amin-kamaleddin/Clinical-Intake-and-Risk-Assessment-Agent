@@ -19,6 +19,7 @@ from core.state import (
 from core.tools import tools
 from core.validators import FIELD_VALIDATORS
 from core.safety import explicit_safety_trigger, SAFETY_REPLY
+from core.languages import safety_reply_for
 from core.scoring import calculate_phq9_total, calculate_gad7_total
 from core.storage import save_record
 from prompts.builder import build_system_prompt, get_pending_fields
@@ -179,7 +180,7 @@ def handle_safety(state: AliceState) -> AliceState:
 
     if not already_raised:
         state["messages"] = state["messages"] + [
-            {"role": "assistant", "content": SAFETY_REPLY}
+            {"role": "assistant", "content": _safety_reply(state)}
         ]
 
     update_completion(state, state["current_section"])
@@ -414,7 +415,7 @@ def section_node(state: AliceState) -> AliceState:
 
     if (safety_raised or deterministic_safety) and not _safety_text_already_sent(state):
         state["safety_flag"] = True
-        reply = SAFETY_REPLY + "\n\n" + (reply or "")
+        reply = _safety_reply(state) + "\n\n" + (reply or "")
         state["safety_text_sent"] = True
 
     # A reply must carry a question whenever the section still has pending
@@ -650,6 +651,23 @@ def _looks_like_a_question(reply: str) -> bool:
         or _CLARIFYING_RESTATEMENT.search(text)
         or _SCALE_PROMPT.search(text)
         or _DIFFICULTY_PROMPT.search(text)
+    )
+
+
+def _safety_reply(state: AliceState) -> str:
+    """The crisis response in the conversation's language.
+
+    A patient disclosing current risk is the one moment the intake must be
+    understood. In a live Mandarin run this was the ONLY English sentence in the
+    whole conversation - the crisis instruction itself - which is the worst
+    possible sentence to be unreadable.
+
+    The number stays 988 in every language: these intakes are set at
+    St. Michael's Hospital, Unity Health Toronto, so that is the correct line
+    whatever the patient speaks.
+    """
+    return safety_reply_for(
+        state.get("preferred_language", "English"), SAFETY_REPLY
     )
 
 

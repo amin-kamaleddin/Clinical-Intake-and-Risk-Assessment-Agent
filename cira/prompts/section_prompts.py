@@ -159,8 +159,13 @@ Hospital admission:
 - If no, skip hospital_details and move on.
 
 Self-harm history:
-- Ask this question gently and exactly as follows:
+- Ask this question gently, with exactly this meaning and scope - neither
+  narrowed nor broadened - phrased in the PREFERRED CONVERSATION LANGUAGE:
   "Have you ever thought about or tried to intentionally hurt yourself?"
+  The sentence above is English because this instruction is written in English.
+  It is the question to ask, not the characters to copy. Asking it in English
+  during a conversation in another language leaves the patient unable to answer
+  the one question in the intake they most need to understand.
 - Call save_answer("self_harm_history", "yes") or save_answer("self_harm_history", "no") immediately.
 - If yes, ask them to briefly describe the event and clarify whether there is any
   current or immediate safety concern.
@@ -663,7 +668,10 @@ General rules:
   options, and ask again. Never record a score they did not choose, and never
   record 0 for an item they did not answer - 0 means "Not at all", which is a
   clinical finding, not a placeholder.
-- Use the exact questionnaire wording from the intake form.
+- Use the exact questionnaire wording from the intake form, translated into the
+  preferred conversation language. "Exact" constrains the MEANING, not the
+  script: keep the item label ("PHQ-9 Question 3") in Latin, translate the item
+  text, and never alter what the item asks.
 - Do not diagnose, interpret, or discuss the score.
 - Do not change the meaning of any questionnaire item.
 - Do not combine multiple questions.

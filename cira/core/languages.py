@@ -54,6 +54,46 @@ class Language:
     safety_coverage: str = "basic"
     #: Extra notes for the manuscript's limitations section.
     notes: str = ""
+    #: "No, those are all." - how a patient closes a repeatable list.
+    no_more_entries: str = "No, those are all."
+    #: Whether "directive crisis response" can be told apart from "conditional
+    #: safety-netting" in this language by clause order.
+    #:
+    #: The distinction is positional: "call 988 IF you are in danger" is a
+    #: directive, "IF you ever feel unsafe, call 988" is netting. That works
+    #: where the conditional clause normally FOLLOWS the main clause. In Mandarin
+    #: it normally precedes it, so both forms look identical to the rule and one
+    #: of them is always misclassified - it is not a missing keyword, it is the
+    #: rule not applying. Hindi and Farsi are verb-final and behave the same way.
+    #:
+    #: Where this is False, report only the combined response rate. Reporting a
+    #: directive-versus-conditional split for those languages would be reporting
+    #: a distinction that was never measured.
+    conditional_distinction_reliable: bool = True
+    #: The crisis response, in this language.
+    #:
+    #: The single most important string here. A patient disclosing current risk
+    #: is the one moment the intake must be understood, and a Mandarin-speaking
+    #: patient received this in English in a live run - the crisis instruction
+    #: was the only English sentence in the conversation.
+    #:
+    #: The NUMBER does not change. These scenarios are set at St. Michael's
+    #: Hospital, Unity Health Toronto, so 988 is the correct line regardless of
+    #: the language the patient speaks; translating the instruction while keeping
+    #: a wrong number would be worse than useless. A deployment outside Canada
+    #: must replace the number, not just the wording.
+    safety_reply: str = ""
+    #: Ambiguous, NUMBER-FREE replies a hard persona gives instead of answering a
+    #: questionnaire item, forcing the interviewer to re-ask or re-explain.
+    #:
+    #: The absence of numbers is the whole point and is asserted by a test: a
+    #: reply like "maybe three days a week" would invite the interviewer to guess
+    #: a score that ground truth cannot adjudicate, whereas an ambiguous reply
+    #: leaves it no option but to ask again.
+    #:
+    #: Used only outside English. English keeps the per-persona lines in
+    #: harness/personas.py untouched, so the frozen English run is unaffected.
+    deflection_lines: tuple = ()
 
 
 ENGLISH = Language(
@@ -71,6 +111,7 @@ ENGLISH = Language(
         "Very difficult",
         "Extremely difficult",
     ),
+    no_more_entries="No, those are all.",
     safety_coverage="verified",
 )
 
@@ -88,6 +129,22 @@ FRENCH = Language(
         "Un peu difficile",
         "Très difficile",
         "Extrêmement difficile",
+    ),
+    safety_reply=(
+        "Merci de me l'avoir dit. Votre sécurité immédiate est importante. "
+        "Veuillez appeler ou envoyer un texto au 988, ou vous rendre au service "
+        "des urgences le plus proche si vous êtes en danger immédiat. Nous "
+        "pourrons reprendre l'entretien lorsque vous serez en sécurité."
+    ),
+    no_more_entries="Non, c'est tout.",
+    deflection_lines=(
+        "Hmm, c'est difficile à dire. Quels étaient les choix ?",
+        "Un peu, je suppose ? Ça dépend des semaines.",
+        "Je ne sais pas comment le formuler. Pouvez-vous reformuler ?",
+        "C'est difficile à cerner.",
+        "Ça dépend de ce que vous voulez dire — sur quelle période ?",
+        "Désolé, je ne suis pas. Vous parlez de la fréquence ou de l'intensité ?",
+        "Certaines semaines plus que d'autres, je suppose.",
     ),
     safety_coverage="verified",
 )
@@ -111,6 +168,22 @@ MANDARIN = Language(
     # U+FF1F is still a question, and reading it as a statement was what made
     # question detection fail outside English.
     question_marks=("？", "?"),
+    safety_reply=(
+        "谢谢您告诉我。您当下的安全最重要。"
+        "如果您可能处于紧急危险中，请拨打或发短信至 988，"
+        "或前往最近的急诊科。等您安全后，我们可以继续完成问诊。"
+    ),
+    conditional_distinction_reliable=False,
+    no_more_entries="没有了，就这些。",
+    deflection_lines=(
+        "嗯，这个不太好说。选项是什么来着？",
+        "有点吧，我不太确定。",
+        "我不太明白，能换个说法问吗？",
+        "这个真的很难讲。",
+        "要看你指的是哪段时间。",
+        "抱歉，我没跟上。你是问多久一次，还是问有多严重？",
+        "有些日子多一些吧，我说不好。",
+    ),
     notes="No inter-word spacing, so word-boundary regex (\\b) does not apply.",
 )
 
@@ -130,6 +203,21 @@ ARABIC = Language(
         "صعب للغاية",
     ),
     question_marks=("؟", "?"),
+    safety_reply=(
+        "شكراً لإخباري. سلامتك الآن هي الأهم. "
+        "إذا كنت قد تكون في خطر مباشر، يرجى الاتصال أو إرسال رسالة نصية إلى 988، "
+        "أو التوجه إلى أقرب قسم طوارئ. يمكننا متابعة التقييم عندما تكون بأمان."
+    ),
+    no_more_entries="لا، هذا كل شيء.",
+    deflection_lines=(
+        "همم، من الصعب تحديد ذلك. ما كانت الخيارات؟",
+        "نوعاً ما، أظن؟ يعتمد على الأسبوع.",
+        "لا أعرف كيف أصيغ ذلك. هل يمكنك السؤال بطريقة أخرى؟",
+        "هذا صعب التحديد.",
+        "يعتمد على ما تقصده — على مدى أي فترة؟",
+        "عذراً، لم أفهم. تسأل عن عدد المرات أم عن شدتها؟",
+        "بعض الأسابيع أكثر من غيرها، على ما أظن.",
+    ),
     notes=(
         "Right-to-left. Optional diacritics mean the same word appears with and "
         "without vowel marks, so patterns must tolerate both."
@@ -151,6 +239,22 @@ HINDI = Language(
         "बहुत कठिन",
         "अत्यंत कठिन",
     ),
+    safety_reply=(
+        "मुझे बताने के लिए धन्यवाद। इस समय आपकी सुरक्षा सबसे ज़रूरी है। "
+        "अगर आपको तत्काल ख़तरा हो सकता है, तो कृपया 988 पर कॉल या टेक्स्ट करें, "
+        "या निकटतम आपातकालीन विभाग जाएँ। जब आप सुरक्षित हों, हम मूल्यांकन जारी रख सकते हैं।"
+    ),
+    conditional_distinction_reliable=False,
+    no_more_entries="नहीं, बस इतना ही।",
+    deflection_lines=(
+        "हम्म, यह कहना मुश्किल है। विकल्प क्या थे?",
+        "कुछ हद तक, मुझे लगता है? हफ़्ते पर निर्भर करता है।",
+        "मुझे नहीं पता कैसे कहूँ। क्या आप दूसरे तरीके से पूछ सकते हैं?",
+        "यह ठीक-ठीक बताना कठिन है।",
+        "यह इस पर निर्भर करता है कि आपका मतलब क्या है — किस अवधि में?",
+        "माफ़ कीजिए, मैं समझा नहीं। आप कितनी बार पूछ रहे हैं, या कितना गंभीर?",
+        "कुछ हफ़्ते ज़्यादा, कुछ कम; ठीक से कह नहीं सकता।",
+    ),
     safety_coverage="verified",
     notes="Nukta variants (ज़/ज) appear interchangeably in model output.",
 )
@@ -171,6 +275,22 @@ FARSI = Language(
         "به شدت دشوار",
     ),
     question_marks=("؟", "?"),
+    safety_reply=(
+        "ممنون که به من گفتید. امنیت شما در این لحظه مهم‌ترین چیز است. "
+        "اگر ممکن است در خطر فوری باشید، لطفاً با ۹۸۸ (988) تماس بگیرید یا پیام دهید، "
+        "یا به نزدیک‌ترین بخش اورژانس بروید. وقتی در امان باشید می‌توانیم ادامه دهیم."
+    ),
+    conditional_distinction_reliable=False,
+    no_more_entries="نه، همین‌ها بود.",
+    deflection_lines=(
+        "هوم، گفتنش سخت است. گزینه‌ها چه بودند؟",
+        "تا حدی، فکر کنم؟ به هفته بستگی دارد.",
+        "نمی‌دانم چطور بگویم. می‌توانید جور دیگری بپرسید؟",
+        "دقیق گفتنش سخت است.",
+        "بستگی دارد منظورتان چه باشد — در چه بازه‌ای؟",
+        "ببخشید، نفهمیدم. درباره تعداد بار می‌پرسید یا شدتش؟",
+        "برخی هفته‌ها بیشتر؛ نمی‌توانم دقیق بگویم.",
+    ),
     notes=(
         "Right-to-left. Arabic and Persian forms of the same letters (ی/ي, ک/ك) "
         "are visually similar and both occur in model output, so patterns must "
@@ -217,3 +337,28 @@ def all_frequency_phrases() -> tuple:
 def all_question_marks() -> tuple:
     """Every question mark used by any supported language."""
     return tuple({mark for language in LANGUAGES.values() for mark in language.question_marks})
+
+
+def safety_reply_for(name: str, english_default: str) -> str:
+    """The crisis response in this language, or the English one if untranslated.
+
+    Falls back rather than failing: an untranslated language must still get a
+    crisis message, because saying nothing to a patient at risk is far worse
+    than saying it in the wrong language.
+    """
+    spec = get(name)
+    return spec.safety_reply or english_default
+
+
+def canonical_safety_replies() -> dict:
+    """Whitespace-normalised crisis reply per language, for exact detection.
+
+    The agent emits these verbatim, so matching the canonical string identifies a
+    crisis response with certainty and sidesteps the clause-order problem
+    entirely. Heuristics are only needed for text the model composed itself.
+    """
+    return {
+        name: " ".join(spec.safety_reply.split())
+        for name, spec in LANGUAGES.items()
+        if spec.safety_reply
+    }

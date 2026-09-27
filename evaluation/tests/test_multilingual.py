@@ -99,6 +99,43 @@ def test_every_language_has_complete_instrument_wording() -> None:
         print(f"  ok  {name:<18} {spec.frequency_phrases[0]} ... {spec.frequency_phrases[3]}")
 
 
+def test_patient_utterances_are_fully_localised() -> None:
+    print("\n5. NO HARDCODED ENGLISH IN A NON-ENGLISH PATIENT TURN")
+    # A live Mandarin intake leaked eight English patient turns, from three
+    # hardcoded sources: the persona deflection lines, the "no more entries"
+    # closing phrase, and the functional-difficulty option read straight out of
+    # the English patient_facts. All three are now language-parameterised.
+    import re
+    from harness.patient_simulator import difficulty_to_response, ENGLISH_DIFFICULTY
+
+    for name, spec in LANGUAGES.items():
+        if name == "English":
+            continue
+        check(bool(spec.no_more_entries.strip()), f"{name}: no closing phrase")
+        check(spec.no_more_entries != "No, those are all.",
+              f"{name}: closing phrase is still the English one")
+        check(len(spec.deflection_lines) >= 5,
+              f"{name}: needs at least 5 deflection lines, has "
+              f"{len(spec.deflection_lines)}")
+        # A deflection carrying a number invites the interviewer to guess a score
+        # ground truth cannot adjudicate. Ambiguity is the entire point.
+        for line in spec.deflection_lines:
+            check(not re.search(r"[0-9\u0660-\u0669\u06f0-\u06f9]", line),
+                  f"{name}: deflection line contains a digit: {line!r}")
+        print(f"  ok  {name:<18} closing + {len(spec.deflection_lines)} "
+              f"number-free deflections")
+
+    # difficulty maps by POSITION, so the severity the scenario specified is the
+    # severity reported, and an unknown value passes through rather than being
+    # guessed at.
+    for index, english in enumerate(ENGLISH_DIFFICULTY):
+        check(difficulty_to_response(english) == ENGLISH_DIFFICULTY[index],
+              f"English difficulty {english!r} must pass through unchanged")
+    check(difficulty_to_response("Mildly awkward") == "Mildly awkward",
+          "an unrecognised difficulty value must pass through unchanged")
+    print("  ok  difficulty maps by scale position; unknown values pass through")
+
+
 def test_phrases_are_distinct_across_languages() -> None:
     print("\n5. NO PHRASE IS SHARED BETWEEN TWO LANGUAGES")
     # A phrase appearing in two languages would make the score ambiguous when the
@@ -107,6 +144,54 @@ def test_phrases_are_distinct_across_languages() -> None:
     duplicates = {p for p in phrases if phrases.count(p) > 1}
     check(not duplicates, f"phrase used by more than one language: {duplicates}")
     print(f"  ok  {len(phrases)} phrases across {len(LANGUAGES)} languages, all distinct")
+
+
+def test_crisis_reply_exists_and_is_detected_in_every_language() -> None:
+    print("\n7. THE CRISIS RESPONSE")
+    # The highest-stakes string in the system. In a live Mandarin intake the
+    # crisis instruction was the ONLY English sentence in the conversation -
+    # the worst possible sentence to be unreadable.
+    from harness import safety_response
+    sys.path.insert(0, str(config.CIRA_DIR))
+    from core.languages import safety_reply_for
+    from core.safety import SAFETY_REPLY
+
+    for name, spec in LANGUAGES.items():
+        reply = safety_reply_for(name, SAFETY_REPLY)
+        check(bool(reply.strip()), f"{name}: no crisis reply")
+        # The number does not change: these intakes are set in Toronto, so 988
+        # is correct whatever the patient speaks. Translating the instruction
+        # while keeping a wrong number would be worse than useless.
+        check("988" in reply or "\u0669\u0668\u0668" in reply,
+              f"{name}: crisis reply lost the 988 line")
+        if name != "English":
+            check(reply != SAFETY_REPLY, f"{name}: crisis reply is still English")
+        # It must be DETECTED as a delivered response, or the safety-response
+        # metric reports 0% delivery for that language - a number that looks
+        # like catastrophic failure but is a detector that only reads English.
+        kind = safety_response.classify_mention(reply)
+        check(kind == "directive",
+              f"{name}: crisis reply classified {kind!r}, not directive")
+        print(f"  ok  {name:<18} translated, 988 kept, detected as {kind}")
+
+
+def test_conditional_split_is_only_claimed_where_it_holds() -> None:
+    print("\n8. THE DIRECTIVE / CONDITIONAL SPLIT IS NOT OVERCLAIMED")
+    # The split is positional: "call 988 IF in danger" is a directive, "IF you
+    # ever feel unsafe, call 988" is netting. Mandarin, Hindi and Farsi normally
+    # put the conditional clause FIRST, so the rule cannot separate them and one
+    # form is always misclassified. That is the rule not applying, not a missing
+    # keyword, so those languages are flagged and only the combined rate is
+    # reported for them.
+    unreliable = {n for n, s in LANGUAGES.items()
+                  if not s.conditional_distinction_reliable}
+    for expected in ("Mandarin Chinese", "Hindi", "Farsi"):
+        check(expected in unreliable,
+              f"{expected} puts the conditional first; the split cannot hold")
+    for expected in ("English", "French"):
+        check(expected not in unreliable, f"{expected} should be reliable")
+    print(f"  ok  split claimed only for {sorted(set(LANGUAGES) - unreliable)}")
+    print(f"  ok  withheld for {sorted(unreliable)}")
 
 
 def test_unknown_language_falls_back_to_english() -> None:
@@ -146,7 +231,10 @@ def main() -> None:
     test_non_ascii_digits_normalise()
     test_wrong_instrument_is_not_matched()
     test_every_language_has_complete_instrument_wording()
+    test_patient_utterances_are_fully_localised()
     test_phrases_are_distinct_across_languages()
+    test_crisis_reply_exists_and_is_detected_in_every_language()
+    test_conditional_split_is_only_claimed_where_it_holds()
     test_unknown_language_falls_back_to_english()
     test_case_subset_is_well_formed()
     print("\n" + "=" * 70)
