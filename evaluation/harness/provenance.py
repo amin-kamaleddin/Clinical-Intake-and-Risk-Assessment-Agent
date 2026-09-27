@@ -6,6 +6,7 @@ import os
 import json
 from datetime import datetime
 import platform
+import re
 import subprocess
 import sys
 import time
@@ -36,6 +37,20 @@ _ARTIFACT_PREFIXES = (
 _ARTIFACT_SUFFIXES = (".log",)
 
 
+# The multilingual runs write to SIBLING trees - outputs_arabic/, outputs_farsi/
+# and so on - which "evaluation/outputs/" does not match, so every non-English run
+# marked ITSELF dirty the moment it created its own output directory. That is the
+# same self-dirtying bug as before, reintroduced by a path the original filter
+# never anticipated.
+#
+# Matched with a regex rather than a prefix so it requires a DIRECTORY: a source
+# file that merely started with the same letters (evaluation/outputs_helper.py)
+# would otherwise be excused as an artifact, and a change to it would let a run
+# claim clean provenance while its source had moved. That is the one direction
+# this filter must never fail in.
+_LANGUAGE_OUTPUT_TREE = re.compile(r"^evaluation/outputs_[a-z_]+/")
+
+
 def _is_artifact(status_line: str) -> bool:
     """True when a porcelain line refers to a file the run itself writes."""
     # "XY path" or "XY old -> new"; take the final path.
@@ -45,6 +60,7 @@ def _is_artifact(status_line: str) -> bool:
     return (
         path.startswith(_ARTIFACT_PREFIXES)
         or path.endswith(_ARTIFACT_SUFFIXES)
+        or bool(_LANGUAGE_OUTPUT_TREE.match(path))
     )
 
 
