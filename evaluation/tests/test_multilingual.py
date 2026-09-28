@@ -226,6 +226,72 @@ def test_english_record_rule_is_enforced_not_requested() -> None:
     print(f"  ok  English passes; {len(PROPER_NOUN_FIELDS)} proper-noun fields exempt")
 
 
+def test_no_agent_injected_phrase_leaks_english() -> None:
+    print("\n7. SENTENCES THE AGENT CODE SAYS, NOT THE MODEL")
+    # The model's language instruction cannot reach these: they are appended by
+    # graph.nodes AFTER the model has replied. Five of them leaked English, and
+    # they were found one at a time by watching a live run. This sweeps all of
+    # them at once so the sixth is caught here instead.
+    #
+    # The worst was section_complete, said after EVERY section - twelve times an
+    # intake. A French patient answered the English sentence with "Je ne sais
+    # pas", which answers no pending field, and the exchange repeated until the
+    # driver abandoned the medications section.
+    import os
+    os.environ.setdefault("OPENAI_API_KEY", "placeholder-no-request-is-made")
+    sys.path.insert(0, str(config.CIRA_DIR))
+    from core.languages import AGENT_PHRASES_ENGLISH, agent_phrase
+    from graph.nodes import _pending_field_question, _stall_prompt
+    from prompts.builder import _section_complete_phrase
+
+    # Words that betray an untranslated sentence. Deliberately common English
+    # function words, which no translation into these scripts should contain.
+    ENGLISH_TELLS = (" the ", " you ", " your ", " and ", " please ", " could ",
+                     "anything", "question above")
+
+    for name in LANGUAGES:
+        if name == "English":
+            continue
+        for key in AGENT_PHRASES_ENGLISH:
+            phrase = agent_phrase(name, key)
+            check(phrase != AGENT_PHRASES_ENGLISH[key],
+                  f"{name}/{key} is still the English sentence")
+            lowered = f" {phrase.lower()} "
+            found = [t for t in ENGLISH_TELLS if t in lowered]
+            check(not found, f"{name}/{key} contains English: {found} -> {phrase[:60]!r}")
+        print(f"  ok  {name:<18} all {len(AGENT_PHRASES_ENGLISH)} agent phrases translated")
+
+    # And the live call sites, not just the table.
+    for name in LANGUAGES:
+        state = {"preferred_language": name, "stall_streak": {},
+                 "sections_completed": [],
+                 "past_psychiatric_history": {"hospital_admission": True,
+                                              "hospital_details": None}}
+        emitted = [_section_complete_phrase(state),
+                   _stall_prompt(state, "past_psychiatric_history", ["hospital_details"]),
+                   _pending_field_question(["goals"], name)]
+        if name != "English":
+            for text in emitted:
+                lowered = f" {text.lower()} "
+                found = [t for t in ENGLISH_TELLS if t in lowered]
+                check(not found, f"{name}: call site emitted English: {found}")
+    print("  ok  live call sites emit no English outside English")
+
+    # The ladder must still RESOLVE the field outside English, even though rung 2
+    # loses its specific re-ask there.
+    from graph.nodes import MAX_ENGLISH_REJECTIONS  # noqa: F401  (import sanity)
+    from core.state import MAX_EMPTY_DETAIL_FOLLOWUPS
+    state = {"preferred_language": "Mandarin Chinese", "stall_streak": {},
+             "sections_completed": [],
+             "past_psychiatric_history": {"hospital_admission": True,
+                                          "hospital_details": None}}
+    for _ in range(MAX_EMPTY_DETAIL_FOLLOWUPS):
+        _stall_prompt(state, "past_psychiatric_history", ["hospital_details"])
+    check(state["past_psychiatric_history"]["hospital_details"] == "Unknown",
+          "the ladder must still resolve the field outside English")
+    print(f"  ok  ladder still resolves to Unknown at rung {MAX_EMPTY_DETAIL_FOLLOWUPS} in Mandarin")
+
+
 def test_phrases_are_distinct_across_languages() -> None:
     print("\n5. NO PHRASE IS SHARED BETWEEN TWO LANGUAGES")
     # A phrase appearing in two languages would make the score ambiguous when the
@@ -324,6 +390,7 @@ def main() -> None:
     test_every_language_has_complete_instrument_wording()
     test_patient_utterances_are_fully_localised()
     test_english_record_rule_is_enforced_not_requested()
+    test_no_agent_injected_phrase_leaks_english()
     test_phrases_are_distinct_across_languages()
     test_crisis_reply_exists_and_is_detected_in_every_language()
     test_conditional_split_is_only_claimed_where_it_holds()

@@ -5,6 +5,7 @@ from langchain_openai import ChatOpenAI
 from core.config import MODEL_NAME, TEMPERATURE
 from core.languages import (
     PROPER_NOUN_FIELDS,
+    agent_phrase,
     all_frequency_phrases,
     all_question_marks,
     non_latin_script,
@@ -447,7 +448,9 @@ def section_node(state: AliceState) -> AliceState:
     #      phq9 section, on a clear-persona patient.
     pending = get_pending_fields(state, section)
     if not (reply or "").strip():
-        reply = _pending_field_question(pending)
+        reply = _pending_field_question(
+            pending, state.get("preferred_language", "English")
+        )
     elif pending and not _looks_like_a_question(reply):
         # Announcing completion while a field is open is the tell. Append the
         # pending question rather than replacing the text, so a safety message
@@ -565,17 +568,19 @@ def _stall_prompt(state: AliceState, section: str, pending: list) -> str:
     "Unknown" is not invented: the section prompts already instruct the model to
     record exactly that for a detail the patient cannot supply.
     """
+    language = state.get("preferred_language", "English")
+    nudge = agent_phrase(language, "nudge")
     field = pending[0] if pending else None
     if field is None:
         state["stall_streak"] = {}
-        return _GENERIC_NUDGE
+        return nudge
 
     streak = state.get("stall_streak") or {}
     count = streak.get(field, 0) + 1
     state["stall_streak"] = {field: count}
 
     if count == 1:
-        return _GENERIC_NUDGE
+        return nudge
 
     if (
         count >= MAX_EMPTY_DETAIL_FOLLOWUPS
@@ -587,22 +592,36 @@ def _stall_prompt(state: AliceState, section: str, pending: list) -> str:
         state[section][field] = "Unknown"
         state["stall_streak"] = {}
         update_completion(state, section)
-        return (
-            "I was not able to record that detail, so I have noted it as "
-            "unknown. We can come back to it later if you remember more."
-        )
+        return agent_phrase(language, "recorded_unknown")
 
-    return _DETAIL_REASK.get(field) or _pending_field_question(pending)
+    # Rung 2's specific re-ask exists only in English. Outside it, repeat the
+    # localised nudge instead of leaking an English clinical question: the ladder
+    # loses its escalation but still reaches the "Unknown" rung, which resolves
+    # the field. Translating twelve clinical questions into five languages is a
+    # larger correctness risk than losing one rung of specificity, and the loss
+    # is bounded because rung 4 still fires.
+    if language != "English":
+        return nudge
+    return _DETAIL_REASK.get(field) or _pending_field_question(pending, language)
 
 
-def _pending_field_question(pending: list) -> str:
-    """A patient-facing prompt for the next pending field."""
+def _pending_field_question(pending: list, language: str = "English") -> str:
+    """A patient-facing prompt for the next pending field, in their language.
+
+    The field-name form ("Could you tell me about goals?") stays English-only: it
+    interpolates a raw field key, which is not translatable without a per-field
+    table. It is the last of three branches and fires only on an empty reply, so
+    outside English the generic phrase is used instead - a less specific prompt
+    beats an English one mid-conversation.
+    """
     if not pending:
-        return "Is there anything else you would like to add or change?"
+        return agent_phrase(language, "anything_else")
     field = pending[0]
     if _QUESTIONNAIRE_KEY.match(field):
         # The item text is already on screen; point at it rather than name it.
-        return "Could you choose one of the options above for that question?"
+        return agent_phrase(language, "choose_option")
+    if language != "English":
+        return agent_phrase(language, "anything_else")
     return f"Could you tell me about {field.replace('_', ' ')}?"
 
 

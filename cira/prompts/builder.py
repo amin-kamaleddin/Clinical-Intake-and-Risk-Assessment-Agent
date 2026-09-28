@@ -107,9 +107,21 @@ def build_section_prompt(state: AliceState) -> str:
         f"{repeatable_status(state, section)}\n"
         f"{SECTION_PROMPTS[section]}\n\n"
         "When all fields are collected say: "
-        "'All done! Please take a look at the panel on the right — "
-        "if anything looks incorrect or if you'd like to add or change anything, just let me know.'"
+        f"'{_section_complete_phrase(state)}'"
     )
+
+
+def _section_complete_phrase(state: AliceState) -> str:
+    """The section-complete sentence, in the conversation language.
+
+    Said after EVERY section - twelve times an intake - so an English one in a
+    French interview is the most frequent leak there is. It stalled the
+    medications section: the patient answered the English sentence with "Je ne
+    sais pas", which is not an answer to any pending field, and the exchange
+    repeated until the driver abandoned the section.
+    """
+    from core.languages import agent_phrase
+    return agent_phrase(state.get("preferred_language", "English"), "section_complete")
 
 
 def build_voice_context(state: AliceState) -> str:

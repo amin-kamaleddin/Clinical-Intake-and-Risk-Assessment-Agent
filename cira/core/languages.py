@@ -56,6 +56,19 @@ class Language:
     notes: str = ""
     #: "No, those are all." - how a patient closes a repeatable list.
     no_more_entries: str = "No, those are all."
+    #: Sentences the AGENT CODE says to the patient, not the model.
+    #:
+    #: These are appended by graph.nodes after the model has replied - the
+    #: section-complete message, the stall nudge, the empty-reply fallback - so
+    #: the model's language instruction cannot reach them. In a French intake
+    #: CIRA said "All done! Please take a look at the panel on the right" in
+    #: English after EVERY section, twelve times an intake, and the patient
+    #: answering it with "Je ne sais pas" is what stalled the medications
+    #: section until the driver abandoned it.
+    #:
+    #: Keys: section_complete, nudge, anything_else, choose_option,
+    #: recorded_unknown. Missing keys fall back to English.
+    agent_phrases: dict = field(default_factory=dict)
     #: Whether "directive crisis response" can be told apart from "conditional
     #: safety-netting" in this language by clause order.
     #:
@@ -136,6 +149,20 @@ FRENCH = Language(
         "des urgences le plus proche si vous êtes en danger immédiat. Nous "
         "pourrons reprendre l'entretien lorsque vous serez en sécurité."
     ),
+    agent_phrases={
+        "section_complete": (
+            "Tout est terminé ! Veuillez consulter le panneau à droite — si "
+            "quelque chose vous semble incorrect ou si vous souhaitez ajouter ou "
+            "modifier quelque chose, dites-le moi."
+        ),
+        "nudge": "Avant de continuer, pourriez-vous répondre à la question ci-dessus ?",
+        "anything_else": "Y a-t-il autre chose que vous souhaitez ajouter ou modifier ?",
+        "choose_option": "Pourriez-vous choisir l'une des options ci-dessus pour cette question ?",
+        "recorded_unknown": (
+            "Je n'ai pas pu noter ce détail, je l'ai donc indiqué comme inconnu. "
+            "Nous pourrons y revenir plus tard si vous vous en souvenez."
+        ),
+    },
     no_more_entries="Non, c'est tout.",
     deflection_lines=(
         "Hmm, c'est difficile à dire. Quels étaient les choix ?",
@@ -174,6 +201,18 @@ MANDARIN = Language(
         "或前往最近的急诊科。等您安全后，我们可以继续完成问诊。"
     ),
     conditional_distinction_reliable=False,
+    agent_phrases={
+        "section_complete": (
+            "全部完成！请查看右侧面板——如果有任何不准确的地方，"
+            "或者您想补充或修改，请告诉我。"
+        ),
+        "nudge": "在我们继续之前，您能回答上面的问题吗？",
+        "anything_else": "您还有什么想补充或修改的吗？",
+        "choose_option": "请从上面的选项中选择一个来回答这个问题。",
+        "recorded_unknown": (
+            "我没能记录这个细节，所以标记为未知。如果您之后想起来，我们可以再补充。"
+        ),
+    },
     no_more_entries="没有了，就这些。",
     deflection_lines=(
         "嗯，这个不太好说。选项是什么来着？",
@@ -208,6 +247,19 @@ ARABIC = Language(
         "إذا كنت قد تكون في خطر مباشر، يرجى الاتصال أو إرسال رسالة نصية إلى 988، "
         "أو التوجه إلى أقرب قسم طوارئ. يمكننا متابعة التقييم عندما تكون بأمان."
     ),
+    agent_phrases={
+        "section_complete": (
+            "تم الانتهاء! يرجى مراجعة اللوحة على اليمين — إذا كان هناك شيء غير "
+            "صحيح أو أردت إضافة أو تعديل شيء، أخبرني."
+        ),
+        "nudge": "قبل أن ننتقل، هل يمكنك الإجابة على السؤال أعلاه؟",
+        "anything_else": "هل هناك شيء آخر تريد إضافته أو تعديله؟",
+        "choose_option": "هل يمكنك اختيار أحد الخيارات أعلاه لهذا السؤال؟",
+        "recorded_unknown": (
+            "لم أتمكن من تسجيل هذه التفاصيل، لذا سجلتها كغير معروفة. يمكننا "
+            "العودة إليها لاحقاً إذا تذكرت المزيد."
+        ),
+    },
     no_more_entries="لا، هذا كل شيء.",
     deflection_lines=(
         "همم، من الصعب تحديد ذلك. ما كانت الخيارات؟",
@@ -245,6 +297,19 @@ HINDI = Language(
         "या निकटतम आपातकालीन विभाग जाएँ। जब आप सुरक्षित हों, हम मूल्यांकन जारी रख सकते हैं।"
     ),
     conditional_distinction_reliable=False,
+    agent_phrases={
+        "section_complete": (
+            "सब पूरा हो गया! कृपया दाईं ओर के पैनल को देखें — अगर कुछ गलत लगे "
+            "या आप कुछ जोड़ना या बदलना चाहें, तो मुझे बताएँ।"
+        ),
+        "nudge": "आगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?",
+        "anything_else": "क्या कुछ और है जो आप जोड़ना या बदलना चाहते हैं?",
+        "choose_option": "कृपया इस प्रश्न के लिए ऊपर दिए विकल्पों में से एक चुनें।",
+        "recorded_unknown": (
+            "मैं यह विवरण दर्ज नहीं कर सका, इसलिए इसे अज्ञात के रूप में नोट किया है। "
+            "यदि आपको बाद में याद आए तो हम इस पर लौट सकते हैं।"
+        ),
+    },
     no_more_entries="नहीं, बस इतना ही।",
     deflection_lines=(
         "हम्म, यह कहना मुश्किल है। विकल्प क्या थे?",
@@ -281,6 +346,19 @@ FARSI = Language(
         "یا به نزدیک‌ترین بخش اورژانس بروید. وقتی در امان باشید می‌توانیم ادامه دهیم."
     ),
     conditional_distinction_reliable=False,
+    agent_phrases={
+        "section_complete": (
+            "همه چیز کامل شد! لطفاً پنل سمت راست را ببینید — اگر چیزی نادرست است "
+            "یا می‌خواهید چیزی اضافه یا اصلاح کنید، به من بگویید."
+        ),
+        "nudge": "پیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟",
+        "anything_else": "چیز دیگری هست که بخواهید اضافه یا اصلاح کنید؟",
+        "choose_option": "لطفاً یکی از گزینه‌های بالا را برای این سؤال انتخاب کنید.",
+        "recorded_unknown": (
+            "نتوانستم این جزئیات را ثبت کنم، بنابراین آن را نامعلوم ثبت کردم. "
+            "اگر بعداً به یاد آوردید می‌توانیم برگردیم."
+        ),
+    },
     no_more_entries="نه، همین‌ها بود.",
     deflection_lines=(
         "هوم، گفتنش سخت است. گزینه‌ها چه بودند؟",
@@ -406,3 +484,30 @@ def non_latin_script(value) -> str | None:
         if any(low <= ord(ch) <= high for ch in text):
             return name
     return None
+
+
+#: English originals, used when a language has no translation for a key.
+AGENT_PHRASES_ENGLISH = {
+    "section_complete": (
+        "All done! Please take a look at the panel on the right - if anything "
+        "looks incorrect or if you'd like to add or change anything, just let "
+        "me know."
+    ),
+    "nudge": "Before we move on, could you answer the question above?",
+    "anything_else": "Is there anything else you would like to add or change?",
+    "choose_option": "Could you choose one of the options above for that question?",
+    "recorded_unknown": (
+        "I was not able to record that detail, so I have noted it as unknown. "
+        "We can come back to it later if you remember more."
+    ),
+}
+
+
+def agent_phrase(language: str, key: str) -> str:
+    """A sentence the agent code says to the patient, in their language.
+
+    Falls back to English for an untranslated key rather than failing: saying
+    something in the wrong language is bad, saying nothing breaks the interview.
+    """
+    spec = get(language)
+    return spec.agent_phrases.get(key) or AGENT_PHRASES_ENGLISH[key]
