@@ -102,6 +102,28 @@ def score_to_response(score: int) -> str:
     return _language().frequency_phrases[int(score)]
 
 
+def item_is_being_administered(question: str) -> bool:
+    """Whether this message actually puts a questionnaire item to the patient.
+
+    Shared by the simulator (which warns and counts) and by
+    tools/compare_languages (which reclassifies what was counted), so the two can
+    never disagree about what a fall-through is.
+    """
+    text = _normalize_digits(str(question or ""))
+    lowered = text.lower()
+    if not re.search(r"phq[\s-]?9|gad[\s-]?7", lowered):
+        return False
+    # An item number directly after the instrument name.
+    if re.search(r"(?:phq[\s-]?9|gad[\s-]?7)[^0-9]{0,16}?[1-9](?![0-9])", lowered):
+        return True
+    # Or the response scale, in any language: two frequency options, or two
+    # difficulty options. Presenting the scale IS asking the item.
+    for language in LANGUAGES.values():
+        if sum(1 for p in language.frequency_phrases if p.lower() in lowered) >= 2:
+            return True
+    return _offers_difficulty_options(text)
+
+
 def _offers_difficulty_options(question: str) -> bool:
     """True when the message presents the functional-difficulty scale.
 
@@ -558,7 +580,21 @@ Style is yours to control; content is not.
 
     @staticmethod
     def _looks_like_questionnaire(question: str) -> bool:
-        return bool(re.search(r"phq[\s-]?9|gad[\s-]?7", question.lower()))
+        """True only when the message is ADMINISTERING an item, not mentioning one.
+
+        Naming the instrument is not enough. CIRA says "PHQ-9 问卷已经完成，您的
+        答案已记录" - the PHQ-9 is finished and your answers are recorded - which
+        contains "PHQ-9" and asks nothing. Counting that as an item produced
+        fall-through warnings on a questionnaire that had already completed
+        correctly, which is the one diagnostic a non-English run is read on: a
+        real fall-through means an answer was improvised instead of taken from
+        ground truth, and inflating it with confirmations makes a clean run look
+        corrupted.
+
+        An item is the instrument name PLUS something to answer: a number, or the
+        response scale.
+        """
+        return item_is_being_administered(question)
 
     # ------------------------------------------------------------------ #
     # Persona-driven deferral

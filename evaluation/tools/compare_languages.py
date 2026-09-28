@@ -206,6 +206,8 @@ def fall_throughs(language: str) -> int | None:
     Counted from the saved artifacts rather than a log, so it survives the log
     being deleted and can be recomputed at any time.
     """
+    from harness.patient_simulator import item_is_being_administered
+
     root = outputs_dir(language)
     directory = root / "cira" / "transcripts"
     if not directory.is_dir():
@@ -214,7 +216,20 @@ def fall_throughs(language: str) -> int | None:
     for path in sorted(directory.glob("case_*.json")):
         data = _load(path) or {}
         behaviour = data.get("patient_behaviour") or {}
-        total += int(behaviour.get("questionnaire_fall_throughs") or 0)
+        recorded = int(behaviour.get("questionnaire_fall_throughs") or 0)
+        questions = behaviour.get("fall_through_questions") or []
+        # RECLASSIFIED from the stored question text, not trusted as counted.
+        #
+        # An earlier simulator counted any message NAMING an instrument, so
+        # CIRA's "the PHQ-9 is complete, your answers are recorded" was logged as
+        # a fall-through on a questionnaire that had finished correctly. Runs
+        # produced by that version are still scoreable because the questions were
+        # stored alongside the count: re-judging them here gives the true number
+        # without re-running the intakes.
+        if questions:
+            total += sum(1 for q in questions if item_is_being_administered(q))
+        else:
+            total += recorded
     return total
 
 
