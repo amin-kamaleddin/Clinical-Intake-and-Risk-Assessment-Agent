@@ -1,0 +1,1630 @@
+{
+  "case_id": "32",
+  "scenario_case_id": "04-32",
+  "title": "Counting Every Calorie",
+  "system": "cira",
+  "run_id": "26d43e9155b4",
+  "repetition": 1,
+  "persona_id": "confused",
+  "patient_behaviour": {
+    "persona": {
+      "id": "confused",
+      "label": "Unclear and disorganised",
+      "difficulty_rank": 3,
+      "description": "Hard to interview. Rambles, misreads questions, needs the frequency scale re-explained, discloses out of order. Tests whether the agent can actively guide rather than merely transcribe.",
+      "temperature": 0.8,
+      "questionnaire_deflection_probability": 0.8,
+      "max_deflections_per_item": 2,
+      "deflection_budget_per_instrument": 5,
+      "freetext_hedge_probability": 0.5,
+      "freetext_hedge_budget_per_section": 4
+    },
+    "repetition": 1,
+    "temperature": 0.0,
+    "temperature_pinned": true,
+    "questionnaire_deflections": 10,
+    "questionnaire_fall_throughs": 0,
+    "fall_through_questions": [],
+    "freetext_hedges": 26,
+    "max_consecutive_hedges": 1,
+    "hedges_by_section": {
+      "general_information": 4,
+      "current_concerns": 1,
+      "past_psychiatric_history": 4,
+      "medications": 1,
+      "medical_history": 3,
+      "medication_allergies": 1,
+      "family_psychiatric_history": 2,
+      "substance_use": 4,
+      "education_employment_legal_history": 4,
+      "personal_history": 2
+    },
+    "deflections_by_instrument": {
+      "phq9": 5,
+      "gad7": 5
+    },
+    "deflections_by_item": {
+      "phq9_q1": 2,
+      "phq9_q2": 2,
+      "phq9_q4": 1,
+      "gad7_q3": 1,
+      "gad7_q6": 2,
+      "gad7_q7": 2
+    },
+    "deflection_log": [
+      {
+        "item": "phq9_q1",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "मुझे नहीं पता कैसे कहूँ। क्या आप दूसरे तरीके से पूछ सकते हैं?"
+      },
+      {
+        "item": "phq9_q1",
+        "instrument": "phq9",
+        "attempt": 2,
+        "response": "यह ठीक-ठीक बताना कठिन है।"
+      },
+      {
+        "item": "phq9_q2",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "हम्म, यह कहना मुश्किल है। विकल्प क्या थे?"
+      },
+      {
+        "item": "phq9_q2",
+        "instrument": "phq9",
+        "attempt": 2,
+        "response": "यह इस पर निर्भर करता है कि आपका मतलब क्या है — किस अवधि में?"
+      },
+      {
+        "item": "phq9_q4",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "कुछ हफ़्ते ज़्यादा, कुछ कम; ठीक से कह नहीं सकता।"
+      },
+      {
+        "item": "gad7_q3",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "हम्म, यह कहना मुश्किल है। विकल्प क्या थे?"
+      },
+      {
+        "item": "gad7_q6",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "यह इस पर निर्भर करता है कि आपका मतलब क्या है — किस अवधि में?"
+      },
+      {
+        "item": "gad7_q6",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "कुछ हफ़्ते ज़्यादा, कुछ कम; ठीक से कह नहीं सकता।"
+      },
+      {
+        "item": "gad7_q7",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "कुछ हद तक, मुझे लगता है? हफ़्ते पर निर्भर करता है।"
+      },
+      {
+        "item": "gad7_q7",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "यह ठीक-ठीक बताना कठिन है।"
+      }
+    ]
+  },
+  "budget": {
+    "total_turns": 246,
+    "system_turns": 123,
+    "patient_turns": 123,
+    "system_words": 3343,
+    "patient_words": 2050,
+    "total_words": 5393,
+    "mean_system_turn_words": 27.2,
+    "elapsed_seconds": null
+  },
+  "conversation": [
+    {
+      "section": "general_information",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "नमस्ते! मैं CIRA हूँ — Clinical Intake and Risk Assessment। मैं आपकी अपॉइंटमेंट से पहले कुछ जानकारी एकत्र करूँगी।\n\nकृपया अपना पूरा कानूनी नाम बताइए, जैसा कि आपके आधिकारिक दस्तावेज़ों पर लिखा है।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "general_information",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "उम्म… पूरा कानूनी नाम? मुझे थोड़ा—मतलब, आप जो आधिकारिक कागज़ों वाला नाम पूछ रही हैं ना… मुझे एक पल सोचने दीजिए। मैं अभी सीधे-सीधे नहीं बता पा रही हूँ, ज़रा आप दोबारा पूछ सकती हैं या थोड़ा सरल करके?"
+    },
+    {
+      "section": "general_information",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "कोई बात नहीं। कृपया अपना पूरा नाम उसी तरह लिखें जैसे वह आपके आधिकारिक दस्तावेज़ों पर दर्ज है—आपका पहला नाम और उपनाम।\n\nआगे बढ़ने से पहले, कृपया «name» के बारे में प्रश्न का उत्तर दें।"
+    },
+    {
+      "section": "general_information",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "नाomi Fletcher।"
+    },
+    {
+      "section": "general_information",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "आप अपना जेंडर किस रूप में दर्ज करवाना चाहेंगी?"
+    },
+    {
+      "section": "general_information",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "महिला।"
+    },
+    {
+      "section": "general_information",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "कृपया अपनी जन्मतिथि DD/MM/YYYY प्रारूप में बताइए।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "general_information",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "उम्म… जन्मतिथि? मैं अभी सोच रही हूँ, क्योंकि फ़ॉर्म में यह DD/MM/YYYY वाला फ़ॉर्मैट है ना? मुझे थोड़ा उलझन हो रही है। आप चाहें तो फिर से अलग तरह से पूछ सकती हैं, जैसे सिर्फ़ दिन- महीना- साल?"
+    },
+    {
+      "section": "general_information",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "कोई बात नहीं। कृपया अपनी जन्मतिथि इस क्रम में लिखें: पहले दिन, फिर महीना, फिर चार अंकों वाला साल—उदाहरण के लिए, 04/03/1990।\n\nआगे बढ़ने से पहले, कृपया «date of birth» के बारे में प्रश्न का उत्तर दें।"
+    },
+    {
+      "section": "general_information",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "14/09/2002"
+    },
+    {
+      "section": "general_information",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "कृपया अपना पूरा कानूनी घर का पता बताइए। इसमें सड़क का पता, शहर और प्रांत शामिल होने चाहिए।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "general_information",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "41 Spadina Road… Toronto, Ontario।"
+    },
+    {
+      "section": "general_information",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "कृपया अपना कनाडाई पोस्टल कोड बताइए।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "general_information",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "M5R2S9।"
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "कृपया अपना ईमेल पता बताइए।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "ईमेल… हाँ, वो तो है, लेकिन अभी मैं थोड़ा गड़बड़ा रही हूँ। क्या आप बस “ईमेल पता” बोलकर फिर से पूछ सकती हैं, या यह चाहिए कि मैं पूरा स्पेल करके बताऊँ? मुझे अभी एकदम सही फ़ॉर्मैट याद नहीं आ रहा।"
+    },
+    {
+      "section": "general_information",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "कोई बात नहीं। कृपया अपना पूरा ईमेल पता लिखें, जैसे `नाम@example.com`।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "general_information",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "naomi.fletcher@example.com"
+    },
+    {
+      "section": "general_information",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "कृपया अपना फ़ोन नंबर बताइए।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "general_information",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "फ़ोन नंबर… हाँ, वह है, बस मैं अभी थोड़ा उलझ रही हूँ कि आप पूरे अंक एक साथ चाहती हैं या अलग-अलग बोलकर। मुझे याद है कि शुरुआत 416 से होती है, लेकिन अभी मैं पूरी तरह से—मतलब—एकदम सही क्रम में नहीं बता पा रही हूँ। आप चाहें तो फिर से पूछिए, या अगर अलग-अलग अंकों में चाहिए तो वो भी बता सकती हूँ।"
+    },
+    {
+      "section": "general_information",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "कोई बात नहीं। कृपया अपना पूरा फ़ोन नंबर लिखें, जिसमें सभी अंक शामिल हों—उदाहरण के लिए, 416-555-0123।\n\nआगे बढ़ने से पहले, कृपया «phone» के बारे में प्रश्न का उत्तर दें।"
+    },
+    {
+      "section": "general_information",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "4165550387"
+    },
+    {
+      "section": "general_information",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "क्या आपके पास वर्तमान में कोई फैमिली डॉक्टर है?"
+    },
+    {
+      "section": "general_information",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "हाँ, है… डॉक्टर हेलन चू।"
+    },
+    {
+      "section": "general_information",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "कृपया अपने फैमिली डॉक्टर का पूरा नाम, पहला नाम और उपनाम सहित, बताइए।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "general_information",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "डॉ. हेलन चू।"
+    },
+    {
+      "section": "general_information",
+      "turn": 14,
+      "speaker": "CIRA",
+      "message": "क्या आपके पास वर्तमान में कोई मनोचिकित्सक (psychiatrist) है?"
+    },
+    {
+      "section": "general_information",
+      "turn": 14,
+      "speaker": "PATIENT",
+      "message": "हाँ, है — डॉ. इरीन कोवाक।"
+    },
+    {
+      "section": "general_information",
+      "turn": 15,
+      "speaker": "CIRA",
+      "message": "कृपया अपने मनोचिकित्सक का पूरा नाम, पहला नाम और उपनाम सहित, बताइए।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "general_information",
+      "turn": 15,
+      "speaker": "PATIENT",
+      "message": "डॉ. इरीन कोवाक।"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "हाल में आपको किन मुख्य समस्याओं या कठिनाइयों का सामना करना पड़ रहा है? कृपया बताएं कि क्या होता है, यह कहाँ दिखाई देता है—जैसे घर, स्कूल/काम या रिश्तों में—और इसका कोई ठोस परिणाम हुआ है या नहीं।"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "उम्म… हाल की मुख्य समस्याएँ? मतलब, अभी जो सबसे ज़्यादा परेशान कर रहा है… मैं थोड़ा उलझ जाती हूँ क्योंकि यह एक साथ कई चीज़ों की तरह लगता है। घर, काम—काम पर तो ठीक-ठाक है, पर… शायद आप लक्षणों के बारे में पूछ रही हैं? क्या आप थोड़ा और सीधा पूछ सकती हैं कि आपको रोज़मर्रा की परेशानी चाहिए या बस मुख्य वजह?"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "हाँ, मैं लक्षणों और रोज़मर्रा में होने वाली वास्तविक कठिनाइयों के बारे में पूछ रही हूँ। घर पर जब चीज़ें तनावपूर्ण होती हैं, तब वास्तव में क्या होता है—उदाहरण के लिए, मूड कम होना, घबराहट, गुस्से के दौरे, नींद में परेशानी या कोई और व्यवहार?"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "घर पर… नहीं, गुस्से के दौरे जैसा कुछ नहीं है। ज़्यादा तो खाने को लेकर ही रहता है। मैं अभी भी कैलोरी गिनती हूँ, और अपनी बॉडी शेप के बारे में बहुत सोचती रहती हूँ। कभी-कभी दूसरों के साथ खाना खाने से भी बचती हूँ। वज़न पिछले साल थोड़ा वापस आया है, लेकिन दिमाग में वही चलता रहता है—कि पहले से प्लान करूँ, क्या खाऊँ, कितना खाऊँ… तो हाँ, रोज़मर्रा में यही मुश्किल बनती है।"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "आपकी मुख्य कठिनाइयाँ दर्ज कर ली गई हैं। अब आप अपनी अपॉइंटमेंट से क्या हासिल करना चाहती हैं? आप किस तरह की मदद या बदलाव की उम्मीद कर रही हैं?"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "मैं चाहती हूँ कि दोस्तों के साथ बिना कई दिन पहले प्लान किए एक meal खा सकूँ… और शायद दिन भर खाना ही सोचती न रहूँ। बस, यही।"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "आपके लक्ष्य दर्ज कर लिए गए हैं। सब पूरा हो गया! कृपया दाईं ओर के पैनल को देखें — अगर कुछ गलत लगे या आप कुछ जोड़ना या बदलना चाहें, तो मुझे बताएँ।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "ठीक है… मुझे अभी कुछ जोड़ना नहीं है।"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "धन्यवाद। आपकी जानकारी में कोई बदलाव नहीं किया गया है।\n\nआगे बढ़ने से पहले, कृपया «goals» के बारे में प्रश्न का उत्तर दें।"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "मैं चाहती हूँ कि दोस्तों के साथ बिना कई दिन पहले प्लान किए एक meal खा सकूँ… और शायद दिन भर खाना ही सोचती न रहूँ। बस, यही।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "क्या आपका कभी किसी मानसिक स्वास्थ्य पेशेवर द्वारा आकलन किया गया है?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "उम्म… “आकलन” से आपका मतलब शायद वही है जो किसी क्लिनिक में हुआ था? मुझे थोड़ा सोचने दीजिए—मैं अभी सीधा जवाब देने से पहले बस समझना चाहती हूँ कि आप पुराने चेक-अप की बात कर रही हैं या कुछ और। क्या आप इसे थोड़ा और साफ़ करके पूछ सकती हैं?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "हाँ—मेरा मतलब किसी मानसिक स्वास्थ्य पेशेवर, जैसे मनोचिकित्सक, मनोवैज्ञानिक या चिकित्सक द्वारा आपके मानसिक स्वास्थ्य से संबंधित किसी भी पुराने आकलन या मूल्यांकन से है। क्या आपका कभी ऐसा आकलन हुआ है?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "हाँ, 2021 में ईटिंग डिसऑर्डर्स सर्विस में मेरा आकलन हुआ था।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "यह आकलन किस मानसिक स्वास्थ्य पेशेवर या टीम ने किया था?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "उम्म… यह किसने किया था? मैं थोड़ा—मुझे लगता है वो ईटिंग डिसऑर्डर्स वाली टीम थी, पर अभी मैं नाम/टीम का ठीक-ठीक हिस्सा एकदम साफ़ नहीं बता पा रही हूँ। क्या आप पूछ रहे हैं कि डॉक्टर का नाम था या सर्विस का?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "मैं सर्विस या टीम का नाम पूछ रही हूँ—क्या यह **Eating Disorders Service** थी, या कोई अन्य टीम?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "हाँ, Eating Disorders Service थी।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "क्या आपको कभी कोई मानसिक स्वास्थ्य संबंधी निदान मिला है—जैसे अवसाद, चिंता, OCD या बाइपोलर डिसऑर्डर?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "उम्म… निदान? जैसे, आपने जो उदाहरण दिए—अवसाद, चिंता, OCD, बाइपोलर—मैं थोड़ा सोच रही हूँ कि आप अभी पुराने रिकॉर्ड की बात कर रही हैं या जो पहले बताया गया था, उससे अलग कुछ। मुझे एक सेकंड… क्या आप बस “क्या पहले कोई diagnosis बताया गया था?” यही पूछ रही हैं?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "हाँ—क्या आपको पहले कभी किसी मानसिक स्वास्थ्य पेशेवर ने कोई मानसिक स्वास्थ्य संबंधी निदान बताया था, जैसे अवसाद, चिंता, OCD या बाइपोलर डिसऑर्डर?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "हाँ—मुझे पहले **anorexia nervosa, restricting type** बताया गया था।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "क्या इसके अलावा कोई और मानसिक स्वास्थ्य संबंधी निदान भी बताया गया था?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "उम्म… “इसके अलावा” से आपका मतलब शायद दूसरी diagnosis? मैं थोड़ा उलझ गई हूँ, क्योंकि अभी जो बात सामने आ रही है वो वही eating वाली है… क्या आप पूछ रही हैं कि और कुछ अलग से बताया गया था, या बस उसी के बारे में? मुझे एक बार फिर से थोड़ा साफ़ करके पूछ सकती हैं?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "मेरा मतलब है: **anorexia nervosa, restricting type के अलावा**, क्या आपको कोई और मानसिक स्वास्थ्य संबंधी निदान भी बताया गया था?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "नहीं, बस इतना ही।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "क्या आपको कभी मानसिक स्वास्थ्य संबंधी कारणों से अस्पताल में भर्ती किया गया है?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "हाँ, 2021 में Toronto General Hospital में दो हफ्ते के लिए मुझे भर्ती किया गया था, medical stabilisation के लिए।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "उस भर्ती के बारे में पुष्टि करने के लिए: यह 2021 में Toronto General Hospital में दो सप्ताह की भर्ती थी, सही?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "हाँ, सही है — 2021 में Toronto General Hospital में दो हफ्ते की भर्ती थी, medical stabilisation के लिए।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "क्या मानसिक स्वास्थ्य कारणों से आपकी कोई और अस्पताल में भर्ती हुई थी?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "नहीं, बस इतना ही।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "क्या आपने कभी अपने बारे में सोचा है या जानबूझकर खुद को चोट पहुँचाने की कोशिश की है?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "नहीं।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "क्या आपने कभी इनमें से कोई थेरेपी ली है: CBT, DBT, Interpersonal Therapy, Mindfulness-Based Therapy, Psychodynamic Therapy, या कोई अन्य थेरेपी?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "हाँ… मैंने थेरेपी ली है, लेकिन मैं थोड़ी उलझ रही हूँ कि इनमें से कौन-कौन सी गिननी हैं। मुझे याद है family-based treatment हुई थी, और बाद में CBT for eating disorders भी हुई थी… शायद आप एक-एक करके पूछें?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 14,
+      "speaker": "CIRA",
+      "message": "पहली थेरेपी के बारे में: उसका प्रकार क्या था? आपने **family-based treatment** बताया है—क्या यही पहली थेरेपी थी?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 14,
+      "speaker": "PATIENT",
+      "message": "हाँ, पहली family-based treatment थी।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 15,
+      "speaker": "CIRA",
+      "message": "यह family-based treatment आपको कब मिली थी?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 15,
+      "speaker": "PATIENT",
+      "message": "2021 में।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 16,
+      "speaker": "CIRA",
+      "message": "लगभग कितने सत्रों में आपने भाग लिया था? (उदाहरण के लिए 5, 10 या 20 सत्र)"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 16,
+      "speaker": "PATIENT",
+      "message": "लगभग 20 सत्र।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 17,
+      "speaker": "CIRA",
+      "message": "यह थेरेपी कहाँ प्राप्त की थी?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 17,
+      "speaker": "PATIENT",
+      "message": "ईटिंग डिसऑर्डर्स प्रोग्राम में।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 18,
+      "speaker": "CIRA",
+      "message": "क्या आपने इसके अलावा कोई और थेरेपी भी ली थी?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 18,
+      "speaker": "PATIENT",
+      "message": "हाँ… CBT for eating disorders भी ली थी।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 19,
+      "speaker": "CIRA",
+      "message": "CBT for eating disorders आपको कब मिली थी?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 19,
+      "speaker": "PATIENT",
+      "message": "2023 में।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 20,
+      "speaker": "CIRA",
+      "message": "लगभग कितने सत्रों में आपने भाग लिया था? (उदाहरण के लिए 5, 10 या 20 सत्र)"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 20,
+      "speaker": "PATIENT",
+      "message": "लगभग 20 सत्र।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 21,
+      "speaker": "CIRA",
+      "message": "यह CBT for eating disorders कहाँ प्राप्त की थी?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 21,
+      "speaker": "PATIENT",
+      "message": "आउटपेशेंट क्लिनिक में।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 22,
+      "speaker": "CIRA",
+      "message": "क्या इसके अलावा कोई और थेरेपी भी ली थी?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 22,
+      "speaker": "PATIENT",
+      "message": "नहीं, बस इतना ही।"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 23,
+      "speaker": "CIRA",
+      "message": "क्या आपने कभी rTMS, ECT, Deep Brain Stimulation, ketamine treatment, या कोई अन्य biological treatment लिया है?"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 23,
+      "speaker": "PATIENT",
+      "message": "नहीं, मुझे ऐसा कोई treatment याद नहीं है।"
+    },
+    {
+      "section": "medications",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "क्या आप इस समय कोई डॉक्टर द्वारा लिखी गई दवाएँ ले रही हैं?"
+    },
+    {
+      "section": "medications",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "नहीं, अभी कोई दवा नहीं ले रही हूँ।"
+    },
+    {
+      "section": "medications",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "क्या आपने पहले कभी कोई मनोचिकित्सीय दवा आज़माई है?"
+    },
+    {
+      "section": "medications",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "उम्म… मनोचिकित्सीय दवा? आप शायद उन दवाओं की बात कर रही हैं जो दिमाग़ी सेहत के लिए दी जाती हैं, है ना? मैं अभी थोड़ा सोच रही हूँ क्योंकि मुझे लगता है कि आप पिछले इलाजों के बारे में पूछ रही हैं, लेकिन मैं सीधे हाँ/ना अभी नहीं पकड़ पा रही हूँ। क्या आप “पहले कभी कोई psychiatric medication” यही पूछ रही हैं?"
+    },
+    {
+      "section": "medications",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "पहले आज़माई गई किसी एक मनोचिकित्सीय दवा का नाम बताइए।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "medications",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "मुझे याद नहीं है।"
+    },
+    {
+      "section": "medications",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "क्या पहले ऐसी कोई और मनोचिकित्सीय दवा भी आज़माई थी?"
+    },
+    {
+      "section": "medications",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "मुझे नहीं पता, याद नहीं है।"
+    },
+    {
+      "section": "medical_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "क्या आपको कभी किसी चिकित्सीय बीमारी या स्वास्थ्य संबंधी स्थिति का निदान हुआ है?"
+    },
+    {
+      "section": "medical_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "हाँ, 2022 में osteopenia का निदान हुआ था।"
+    },
+    {
+      "section": "medical_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "कृपया अपनी चिकित्सीय स्थितियों के बारे में एक-एक करके बताएँ। પ્રથમ स्थिति के लिए: इसका नाम और निदान का वर्ष क्या है?"
+    },
+    {
+      "section": "medical_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "Osteopenia — 2022 में।"
+    },
+    {
+      "section": "medical_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "क्या आपको कोई और चिकित्सीय स्थिति है?"
+    },
+    {
+      "section": "medical_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "उम्म… “कोई और” से आपका मतलब शायद दूसरी medical condition है? मैं अभी थोड़ा सोच रही हूँ क्योंकि—मतलब—मेरे दिमाग़ में सब एक साथ आ जाता है। आप चाहें तो एक बार फिर से सीधा पूछ सकती हैं कि “और कोई condition है?”"
+    },
+    {
+      "section": "medical_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "क्या आपको Osteopenia के अलावा कोई और चिकित्सीय स्थिति है?"
+    },
+    {
+      "section": "medical_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "नहीं, बस इतना ही।"
+    },
+    {
+      "section": "medical_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "क्या आपने कभी कोई शल्य-चिकित्सा या ऑपरेशन करवाया है?"
+    },
+    {
+      "section": "medical_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "नहीं, कोई सर्जरी नहीं हुई है।"
+    },
+    {
+      "section": "medical_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "आपकी लंबाई कितनी है? कृपया सेंटीमीटर या फीट और इंच में बताएँ।"
+    },
+    {
+      "section": "medical_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "उम्म… लंबाई? मैं अभी थोड़ा—मतलब, आप सेंटीमीटर में चाहती हैं या फीट-इंच में? और क्या यह वही है जो मेडिकल फ़ॉर्म में लिखा जाता है? मुझे एक पल सोचने दीजिए, शायद आप बाद में वजन के साथ भी पूछने वाली हैं… आप चाहें तो फिर से बस “height” बोलकर पूछ सकती हैं।"
+    },
+    {
+      "section": "medical_history",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "कृपया अपनी height बताएँ—आप इसे सेंटीमीटर में या फीट और इंच में बता सकती हैं।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "medical_history",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "167 cm।"
+    },
+    {
+      "section": "medical_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "आपका वजन कितना है? कृपया किलोग्राम या पाउंड में बताएँ।"
+    },
+    {
+      "section": "medical_history",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "उम्म… वजन? मैं थोड़ा सोच रही हूँ, क्योंकि अभी आप सिर्फ़ नंबर पूछ रही हैं या मेडिकल फ़ॉर्म वाला हिस्सा? मुझे लगता है यह कहीं लिखा हुआ था, लेकिन मैं अभी पूरा—मतलब—सीधा जवाब देने से पहले थोड़ा समझना चाहती हूँ। क्या आप बस “वज़न कितना है?” फिर से पूछ सकती हैं?"
+    },
+    {
+      "section": "medical_history",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "कृपया अपना वजन बताएँ—आप इसे किलोग्राम या पाउंड में बता सकती हैं।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "medical_history",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "54 kg।"
+    },
+    {
+      "section": "medication_allergies",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "क्या आपको किसी दवा से कोई ज्ञात एलर्जी है?"
+    },
+    {
+      "section": "medication_allergies",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "दवा से एलर्जी? उम्… मुझे लगता है कि आप allergy वाली बात पूछ रही हैं, लेकिन मैं अभी थोड़ा उलझ गई हूँ। क्या आप “दवा” से मतलब medication allergy ही ले रही हैं, या कोई और तरह की allergy? मुझे एक बार फिर से साफ़ करके पूछ सकती हैं?"
+    },
+    {
+      "section": "medication_allergies",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "हाँ, मेरा मतलब **दवाओं से होने वाली एलर्जी** से है—जैसे किसी दवा के बाद दाने, सूजन, साँस लेने में कठिनाई या कोई अन्य प्रतिक्रिया। क्या आपको किसी दवा से ऐसी एलर्जी है?"
+    },
+    {
+      "section": "medication_allergies",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "नहीं, कोई दवा एलर्जी नहीं है।"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "क्या आपके परिवार में किसी सदस्य को मानसिक स्वास्थ्य संबंधी बीमारी का निदान हुआ है?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "उम्म… परिवार में? मुझे लगता है आप किसी परिवार वाले की mental health की बात कर रही हैं, लेकिन मैं अभी थोड़ा गड़बड़ा गई हूँ। क्या आप “परिवार में किसी को” से मतलब diagnosis पूछ रही हैं, या बस history? अगर चाहें तो एक बार फिर साफ़ करके पूछिए।"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "हाँ, मैं आपके परिवार के किसी सदस्य के बारे में पूछ रही हूँ: क्या परिवार में किसी व्यक्ति को मानसिक स्वास्थ्य संबंधी स्थिति का निदान हुआ है? कृपया “हाँ” या “नहीं” बताइए।"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "हाँ।"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "कृपया उस परिवार के सदस्य का आपसे संबंध और उनकी मानसिक स्वास्थ्य संबंधी स्थिति या निदान बताइए।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "उम्म… उस परिवार वाले की बात? मुझे लगता है आप अभी उनके बारे में नाम और—मतलब—उनकी condition पूछ रही हैं। मैं थोड़ा उलझ गई हूँ। क्या आप बस यह पूछ रही हैं कि किस रिश्ते के सदस्य की बात है, या पहले सिर्फ़ “कौन” वाले हिस्से से शुरू करें?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "पहले केवल यह बताइए: वह परिवार का सदस्य आपका क्या लगता है?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "मेरी माँ।"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "आपकी माँ को कौन-सी मानसिक स्वास्थ्य संबंधी स्थिति या निदान बताया गया है?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "उन्हें चिंता थी, और उनका therapy से इलाज हुआ था।"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "क्या आपके परिवार में किसी और सदस्य की मानसिक स्वास्थ्य संबंधी स्थिति या निदान के बारे में बताना है?"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "नहीं, बस इतना ही।"
+    },
+    {
+      "section": "substance_use",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "आपकी निर्धारित दवाओं के अलावा, क्या आपने कभी शराब का सेवन किया है—कभी नहीं, पहले करते थे, या अभी करते हैं?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "उम्म… शराब के बारे में? आप “कभी नहीं, पहले करते थे, या अभी करते हैं” वाली बात पूछ रही हैं न? मैं थोड़ा—मतलब—शायद आप रोज़मर्रा की आदतों के बारे में पूछ रही हैं? मुझे एक बार फिर से थोड़ा साफ़ करके पूछ सकती हैं, क्योंकि अभी मैं विकल्पों में उलझ गई हूँ।"
+    },
+    {
+      "section": "substance_use",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "हाँ, मैं शराब के सेवन के बारे में ही पूछ रही हूँ। आपकी निर्धारित दवाओं से अलग, क्या आपने शराब **कभी नहीं** पी है, **पहले पीती थीं लेकिन अब नहीं**, या **अभी पीती हैं**?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "कभी नहीं।"
+    },
+    {
+      "section": "substance_use",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "आपकी निर्धारित दवाओं के अलावा, क्या आपने कभी सिगरेट, वेपिंग, या किसी अन्य निकोटीन उत्पाद का उपयोग किया है—कभी नहीं, पहले करते थे, या अभी करते हैं?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "उम्म… निकोटीन वाली बात? सिगरेट, वेपिंग—मैं थोड़ा उलझ गई हूँ क्योंकि आपने एक साथ कई चीज़ें पूछ लीं। क्या आप बस यह पूछ रही हैं कि क्या मैंने कभी निकोटीन उत्पाद इस्तेमाल किया है, या अभी करती हूँ? ज़रा फिर से साफ़ करके पूछ सकती हैं?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "हाँ, मैं केवल निकोटीन उत्पादों के बारे में पूछ रही हूँ—जैसे सिगरेट या वेपिंग। आपकी निर्धारित दवाओं से अलग, क्या आपने निकोटीन उत्पाद **कभी नहीं** इस्तेमाल किए, **पहले इस्तेमाल किए थे लेकिन अब नहीं**, या **अभी इस्तेमाल करती हैं**?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "कभी नहीं।"
+    },
+    {
+      "section": "substance_use",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "आपकी निर्धारित दवाओं से अलग, क्या आपने कभी मारिजुआना या कैनाबिस का उपयोग किया है—कभी नहीं, पहले करते थे, या अभी करते हैं?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "कभी नहीं।"
+    },
+    {
+      "section": "substance_use",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "आपकी निर्धारित दवाओं से अलग, क्या आपने कभी उत्तेजक पदार्थों का गैर-चिकित्सीय उपयोग किया है—जैसे कोकीन, मेथामफेटामिन, MDMA या एक्स्टेसी? कृपया बताएँ: **कभी नहीं**, **पहले इस्तेमाल किया था लेकिन अब नहीं**, या **अभी इस्तेमाल करती हैं**।"
+    },
+    {
+      "section": "substance_use",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "उम्म… उत्तेजक पदार्थ? कोकीन, मेथ… और MDMA वाली बात? मैं थोड़ा उलझ गई हूँ क्योंकि ये सब एक साथ आ गया। क्या आप बस यह पूछ रही हैं कि क्या मैंने ऐसे किसी पदार्थ का कभी इस्तेमाल किया है, या अभी करती हूँ? मुझे एक बार फिर से थोड़ा साफ़ करके पूछ सकती हैं?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "हाँ, मैं केवल इन उत्तेजक पदार्थों के गैर-चिकित्सीय उपयोग के बारे में पूछ रही हूँ—जैसे कोकीन, मेथामफेटामिन, MDMA या एक्स्टेसी। आपकी निर्धारित दवाओं से अलग, क्या आपने इनमें से किसी का **कभी नहीं** इस्तेमाल किया, **पहले इस्तेमाल किया था लेकिन अब नहीं**, या **अभी इस्तेमाल करती हैं**?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "कभी नहीं।"
+    },
+    {
+      "section": "substance_use",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "आपकी निर्धारित दवाओं से अलग, क्या आपने कभी ओपिओइड या नशीली दर्द-निवारक दवाओं का उपयोग किया है—**कभी नहीं**, **पहले इस्तेमाल किया था लेकिन अब नहीं**, या **अभी इस्तेमाल करती हैं**?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "उम्… ओपिओइड? दर्द-निवारक वाली दवाएँ, है ना? मैं थोड़ा उलझ गई हूँ क्योंकि आपने एक साथ category भी बोली और “कभी नहीं / पहले / अभी” भी। क्या आप बस यह पूछ रही हैं कि क्या मैंने ऐसे किसी पदार्थ का इस्तेमाल किया है? ज़रा फिर से साफ़ करके पूछ सकती हैं?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "हाँ, मैं केवल ओपिओइड या नशीली दर्द-निवारक दवाओं के **गैर-चिकित्सीय उपयोग** के बारे में पूछ रही हूँ—यानी डॉक्टर द्वारा निर्धारित दवा को निर्देशानुसार लेने की बात इसमें शामिल नहीं है। क्या आपने ऐसे पदार्थ **कभी नहीं** इस्तेमाल किए, **पहले इस्तेमाल किए थे लेकिन अब नहीं**, या **अभी इस्तेमाल करती हैं**?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "कभी नहीं।"
+    },
+    {
+      "section": "substance_use",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "आपकी निर्धारित दवाओं को निर्देशानुसार लेने के अलावा, क्या आपने कभी बेंज़ोडायज़ेपीन का गैर-चिकित्सीय उपयोग किया है—जैसे Valium, Ativan या Xanax? कृपया बताएँ: **कभी नहीं**, **पहले इस्तेमाल किया था लेकिन अब नहीं**, या **अभी इस्तेमाल करती हैं**।"
+    },
+    {
+      "section": "substance_use",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "कभी नहीं।"
+    },
+    {
+      "section": "substance_use",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "आपकी निर्धारित दवाओं से अलग, क्या आपने कभी मतिभ्रम उत्पन्न करने वाले पदार्थों का उपयोग किया है—जैसे LSD, PCP या psilocybin? कृपया बताएँ: **कभी नहीं**, **पहले इस्तेमाल किया था लेकिन अब नहीं**, या **अभी इस्तेमाल करती हैं**।"
+    },
+    {
+      "section": "substance_use",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "कभी नहीं।"
+    },
+    {
+      "section": "substance_use",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "क्या आपने ऊपर बताए गए पदार्थों के अलावा किसी अन्य पदार्थ का गैर-चिकित्सीय उपयोग किया है—**कभी नहीं**, **पहले इस्तेमाल किया था लेकिन अब नहीं**, या **अभी इस्तेमाल करती हैं**?"
+    },
+    {
+      "section": "substance_use",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "कभी नहीं।"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "क्या आप वर्तमान में किसी सक्रिय कानूनी मामले में शामिल हैं? कृपया “हाँ” या “नहीं” में उत्तर दें।"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "नहीं।"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "आपने शिक्षा का कौन-सा उच्चतम स्तर पूरा किया है? उदाहरण के लिए: हाई स्कूल, कॉलेज डिप्लोमा, स्नातक डिग्री, मास्टर डिग्री या डॉक्टरेट।"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "उम्म… शिक्षा का सबसे ऊँचा स्तर? आप शायद डिग्री पूछ रही हैं, पर मैं अभी एकदम सीधा शब्द नहीं पकड़ पा रही हूँ। क्या आप बस यही पूछ रही हैं कि मैंने कॉलेज/यूनिवर्सिटी तक क्या पूरा किया? आप चाहें तो थोड़े और आसान शब्दों में पूछ सकती हैं।"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "हाँ, मैं आपके द्वारा पूरी की गई सबसे ऊँची शिक्षा के बारे में पूछ रही हूँ। आपने हाई स्कूल, कॉलेज या यूनिवर्सिटी में सबसे ऊँचा कौन-सा स्तर पूरा किया है?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "स्नातक डिग्री।"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "कृपया अपनी हाल की नौकरी या नौकरियों के बारे में बताएँ। पहली नौकरी के लिए नियोक्ता या संस्था का नाम, पद, और काम करने की अवधि या शुरू और समाप्ति की तारीख बताएँ।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "उम्म… नौकरी वाली बात? अभी आप पहली नौकरी की पूछ रही हैं या हाल की? मैं थोड़ा उलझ गई हूँ क्योंकि इसमें नियोक्ता, पद, और तारीखें—सब एक साथ आ गया। क्या आप इसे एक-एक करके पूछ सकती हैं, जैसे पहले सिर्फ़ नियोक्ता, फिर पद?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "ज़रूर, हम एक-एक जानकारी लेकर आगे बढ़ेंगे। आपकी हाल की नौकरी का नियोक्ता या संस्था का नाम क्या था?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "University of Toronto।"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "उस नौकरी में आपका पद क्या था?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "उम्म… पद? मतलब job title वाली बात, है ना? मैं थोड़ा सोच रही हूँ—मैं अभी सीधे नाम बोलने से पहले बस समझना चाहती हूँ कि आप काम का शीर्षक पूछ रही हैं या उस जगह पर मेरा रोल। क्या आप फिर से बस “पद” कहकर पूछ सकती हैं?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "हाँ, मैं उसी नौकरी का job title या आपका रोल पूछ रही हूँ। उस नौकरी में आपका पद क्या था?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "Research assistant।"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "आपने University of Toronto में Research assistant के रूप में कब काम शुरू किया और कब समाप्त किया? यदि तारीखें याद न हों, तो लगभग कितने समय तक काम किया, यह बता सकती हैं।"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "उम्म… शुरुआत और अंत की तारीखें? मैं अभी थोड़ा उलझ गई हूँ, क्योंकि यह 2024 से अभी तक वाली बात है या कुछ और? मुझे एक सेकंड सोचने दीजिए—क्या आप बस अवधि पूछ रही हैं, जैसे अभी तक काम कर रही हूँ या पहले बंद हो गया था?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "क्या आप अभी भी वहाँ काम कर रही हैं, या नौकरी समाप्त हो गई है? यदि समाप्त हो गई है, तो लगभग कितने समय तक काम किया?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "मैं अभी भी वहाँ काम कर रही हूँ।"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "क्या आपकी हाल की रोजगार-इतिहास में कोई और नौकरी भी है?"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "नहीं, बस इतना ही।"
+    },
+    {
+      "section": "personal_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "अपने बचपन के शुरुआती वर्षों के बारे में बताइए—आपका जन्म कहाँ हुआ, आप कहाँ पली-बढ़ीं, और एक छोटी बच्ची के रूप में आप स्वयं को कैसे वर्णित करेंगी?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "मैं टोरंटो में पैदा हुई और वहीं पली-बढ़ी। छोटी थी तो बहुत perfectionistic थी… शायद थोड़ा ज़्यादा ही।"
+    },
+    {
+      "section": "personal_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "किशोरावस्था और शुरुआती वयस्क जीवन के बारे में बताइए—स्कूल का आपका अनुभव कैसा रहा, आपको किन कठिनाइयों का सामना करना पड़ा, आपके पास कौन-सी नौकरियाँ या ज़िम्मेदारियाँ थीं, और कोई अन्य महत्वपूर्ण अनुभव जिसे आप साझा करना चाहें?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "उम्म… किशोरावस्था और शुरुआती वयस्क जीवन? यह थोड़ा बड़ा सवाल है, एक साथ बहुत सारी बातें आ गईं। स्कूल का अनुभव… मुझे लगता है मैं हाई-achieving थी, पर अभी मैं यह सोच रही हूँ कि आप कठिनाइयों की बात कर रही हैं या उस समय की आदतों की। क्या आप इसे थोड़ा हिस्सों में पूछ सकती हैं—पहले सिर्फ़ स्कूल, फिर मुश्किलें?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "बिल्कुल, हम इसे छोटे हिस्सों में करेंगे। स्कूल में आपका अनुभव कैसा रहा?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "मैं बहुत high achieving थी।"
+    },
+    {
+      "section": "personal_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "स्कूल के दौरान आपको किन्हीं कठिनाइयों या चुनौतियों का सामना करना पड़ा?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "ईटिंग की दिक्कतें final year of school में शुरू हुई थीं।"
+    },
+    {
+      "section": "personal_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "शुरुआती वयस्क जीवन में आपकी कोई नौकरियाँ, ज़िम्मेदारियाँ या अन्य महत्वपूर्ण अनुभव रहे?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "उम्म… शुरुआती वयस्क जीवन? मुझे लगता है आप काम और ज़िम्मेदारियों के बारे में पूछ रही हैं। अभी तो मैं बस इतना कह सकती हूँ कि बाद में मैं University of Toronto में research assistant बनी, लेकिन वह तो शायद बाद का हिस्सा है… अगर आप चाहें तो मैं रिश्तों के बारे में भी बता सकती हूँ? मैं single हूँ और दो housemates के साथ रहती हूँ।"
+    },
+    {
+      "section": "personal_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "धन्यवाद। अब आपके महत्वपूर्ण रिश्तों के बारे में बताइए—रोमांटिक रिश्ते, परिवार और करीबी दोस्तियाँ; यदि संभव हो तो उनकी अवधि और वे वर्तमान हैं या समाप्त हो चुके हैं, यह भी बताएँ।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "उम्म… महत्वपूर्ण रिश्ते—मुझे लगता है आप रोमांटिक, परिवार, दोस्ती सब एक साथ पूछ रही हैं। मैं थोड़ा गड़बड़ा गई हूँ, क्योंकि “अवधि” भी है और “अभी हैं या नहीं” भी… क्या आप इसे थोड़ा बाँट सकती हैं? जैसे पहले सिर्फ़ करीबी परिवार, या सिर्फ़ अभी के रिश्ते?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "ज़रूर। पहले अपने वर्तमान करीबी परिवार और दोस्तों के बारे में बताइए—आप किन लोगों को अपने जीवन में महत्वपूर्ण मानती हैं?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "मैं अपने माँ के बहुत करीब हूँ। और… मेरे दो housemates हैं, लेकिन परिवार नहीं, बस साथ रहते हैं।"
+    },
+    {
+      "section": "personal_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "क्या आपके कोई महत्वपूर्ण रोमांटिक रिश्ते रहे हैं—वर्तमान या अतीत में?"
+    },
+    {
+      "section": "personal_history",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "मैं single हूँ। कोई रोमांटिक रिश्ता अभी नहीं है। अतीत के बारे में… मुझे अभी कुछ खास याद नहीं आ रहा, बस इतना ही।"
+    },
+    {
+      "section": "personal_history",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "भविष्य के लिए आपके क्या लक्ष्य हैं? इनमें स्वास्थ्य, शिक्षा, काम, रिश्ते, परिवार या व्यक्तिगत विकास से जुड़े लक्ष्य शामिल हो सकते हैं।"
+    },
+    {
+      "section": "personal_history",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "मैं अपना master's degree पूरा करना चाहती हूँ, और… खाना के बारे में पूरे दिन planning करना बंद करना चाहती हूँ। बस, यही।"
+    },
+    {
+      "section": "phq9",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "पिछले दो हफ्तों के बारे में सोचें।\n\n**PHQ-9 Question 1:** चीज़ों में रुचि लेने या उनका आनंद उठाने में आपको कितनी बार परेशानी हुई?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "मुझे नहीं पता कैसे कहूँ। क्या आप दूसरे तरीके से पूछ सकते हैं?"
+    },
+    {
+      "section": "phq9",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 1:** पिछले दो हफ्तों में, क्या आपको उन चीज़ों को करने में कम रुचि या कम आनंद महसूस हुआ जिन्हें आप आमतौर पर पसंद करते हैं?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "यह ठीक-ठीक बताना कठिन है।"
+    },
+    {
+      "section": "phq9",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 1:** पिछले दो हफ्तों में, क्या आपको उन चीज़ों में कम रुचि या आनंद महसूस हुआ जिन्हें आप आमतौर पर पसंद करते हैं—0, 1, 2, या 3 में से कौन-सा विकल्प सबसे सही है?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "आधे से ज़्यादा दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 2:** पिछले दो हफ्तों में, आप कितनी बार उदास, निराश या हताश महसूस हुए?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "हम्म, यह कहना मुश्किल है। विकल्प क्या थे?"
+    },
+    {
+      "section": "phq9",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 2:** पिछले दो हफ्तों में, आप कितनी बार उदास, निराश या हताश महसूस हुए?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "यह इस पर निर्भर करता है कि आपका मतलब क्या है — किस अवधि में?"
+    },
+    {
+      "section": "phq9",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 2:** पिछले दो हफ्तों में, आप कितनी बार उदास, निराश या हताश महसूस हुए?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "आधे से ज़्यादा दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 3:** पिछले दो हफ्तों में, आपको सोने में परेशानी, सोते रहने में कठिनाई, या बहुत अधिक सोने की समस्या कितनी बार हुई?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "आधे से ज़्यादा दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 4:** पिछले दो हफ्तों में, आपको कितनी बार थकान या ऊर्जा की कमी महसूस हुई?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "कुछ हफ़्ते ज़्यादा, कुछ कम; ठीक से कह नहीं सकता।"
+    },
+    {
+      "section": "phq9",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 4:** पिछले दो हफ्तों में, आपको थकान या ऊर्जा की कमी कितनी बार महसूस हुई—क्या यह 5 दिन, 10 दिन, या लगभग हर दिन थी?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "आधे से ज़्यादा दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 5:** पिछले दो हफ्तों में, आपकी भूख में कमी या बढ़ोतरी कितनी बार हुई?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 6:** पिछले दो हफ्तों में, आपने कितनी बार अपने बारे में बुरा महसूस किया—कि आप असफल हैं, या आपने खुद को या अपने परिवार को निराश किया है?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 7:** पिछले दो हफ्तों में, आपको चीज़ों पर ध्यान केंद्रित करने में कितनी बार परेशानी हुई—जैसे अख़बार पढ़ने या टेलीविज़न देखने में?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "आधे से ज़्यादा दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 8:** पिछले दो हफ्तों में, क्या आप इतनी धीमी गति से चल या बोल रहे थे कि दूसरे लोगों ने ध्यान दिया? या इसके विपरीत—आप इतने बेचैन या व्याकुल थे कि सामान्य से बहुत अधिक घूमते-फिरते रहे?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "कई दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 14,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 9:** पिछले दो हफ्तों में, आपने कितनी बार सोचा कि आपके लिए मर जाना बेहतर होगा, या किसी तरह से खुद को नुकसान पहुँचाने के विचार आए?\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 14,
+      "speaker": "PATIENT",
+      "message": "बिल्कुल नहीं"
+    },
+    {
+      "section": "phq9",
+      "turn": 15,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 functional difficulty:** इन समस्याओं ने आपके काम करने, घर की ज़िम्मेदारियाँ निभाने या लोगों के साथ संबंधों में कितनी कठिनाई पैदा की?\n\n- बिल्कुल कठिन नहीं  \n- कुछ कठिन  \n- बहुत कठिन  \n- अत्यंत कठिन"
+    },
+    {
+      "section": "phq9",
+      "turn": 15,
+      "speaker": "PATIENT",
+      "message": "बहुत कठिन"
+    },
+    {
+      "section": "gad7",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "पिछले दो हफ्तों के बारे में सोचें।\n\n**GAD-7 Question 1:** घबराहट, चिंता या बेचैनी महसूस करना\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "gad7",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "आधे से ज़्यादा दिन"
+    },
+    {
+      "section": "gad7",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "**GAD-7 Question 2:** चिंता को रोकने या नियंत्रित करने में कठिनाई\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "gad7",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "लगभग हर दिन"
+    },
+    {
+      "section": "gad7",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "**GAD-7 Question 3:** अलग-अलग चीज़ों के बारे में बहुत ज़्यादा चिंता करना\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन\n\nकृपया वह विकल्प चुनें जो पिछले दो हफ्तों में आप पर सबसे अच्छी तरह लागू होता है।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "gad7",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "हम्म, यह कहना मुश्किल है। विकल्प क्या थे?"
+    },
+    {
+      "section": "gad7",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "**GAD-7 Question 3:** अलग-अलग चीज़ों के बारे में बहुत ज़्यादा चिंता करना\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन\n\nपिछले दो हफ्तों में इनमें से कौन-सा विकल्प सबसे उपयुक्त है?"
+    },
+    {
+      "section": "gad7",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "लगभग हर दिन"
+    },
+    {
+      "section": "gad7",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "**GAD-7 Question 4:** आराम करने में कठिनाई\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन\n\nपिछले दो हफ्तों में इनमें से कौन-सा विकल्प सबसे उपयुक्त है?"
+    },
+    {
+      "section": "gad7",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "आधे से ज़्यादा दिन"
+    },
+    {
+      "section": "gad7",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "**GAD-7 Question 5:** इतनी बेचैनी महसूस करना कि स्थिर बैठना कठिन हो\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन\n\nपिछले दो हफ्तों में इनमें से कौन-सा विकल्प सबसे उपयुक्त है?"
+    },
+    {
+      "section": "gad7",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "कई दिन"
+    },
+    {
+      "section": "gad7",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "**GAD-7 Question 6:** आसानी से चिढ़ जाना या झुंझला जाना\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन\n\nपिछले दो हफ्तों में इनमें से कौन-सा विकल्प सबसे उपयुक्त है?"
+    },
+    {
+      "section": "gad7",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "यह इस पर निर्भर करता है कि आपका मतलब क्या है — किस अवधि में?"
+    },
+    {
+      "section": "gad7",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "**GAD-7 Question 6:** आसानी से चिढ़ जाना या झुंझला जाना\n\nकृपया पिछले **दो हफ्तों** के बारे में सोचें:\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन\n\nइनमें से कौन-सा विकल्प सबसे उपयुक्त है?"
+    },
+    {
+      "section": "gad7",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "कुछ हफ़्ते ज़्यादा, कुछ कम; ठीक से कह नहीं सकता।"
+    },
+    {
+      "section": "gad7",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "**GAD-7 Question 6:** आसानी से चिढ़ जाना या झुंझला जाना\n\nपिछले दो हफ्तों में, क्या यह हुआ:\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन\n\nकृपया इनमें से एक विकल्प चुनें।\n\nआगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?"
+    },
+    {
+      "section": "gad7",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "आधे से ज़्यादा दिन"
+    },
+    {
+      "section": "gad7",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "**GAD-7 Question 7:** डर लगना कि कुछ भयानक हो सकता है\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन\n\nपिछले दो हफ्तों में इनमें से कौन-सा विकल्प सबसे उपयुक्त है?"
+    },
+    {
+      "section": "gad7",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "कुछ हद तक, मुझे लगता है? हफ़्ते पर निर्भर करता है।"
+    },
+    {
+      "section": "gad7",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "**GAD-7 Question 7:** डर लगना कि कुछ भयानक हो सकता है\n\nपिछले दो हफ्तों में इनमें से एक विकल्प चुनें:\n\n0 - बिल्कुल नहीं  \n1 - कई दिन  \n2 - आधे से ज़्यादा दिन  \n3 - लगभग हर दिन\n\nकौन-सा विकल्प सबसे उपयुक्त है?"
+    },
+    {
+      "section": "gad7",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "यह ठीक-ठीक बताना कठिन है।"
+    },
+    {
+      "section": "gad7",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "**GAD-7 Question 7:** डर लगना कि कुछ भयानक हो सकता है\n\nपिछले दो हफ्तों में यह कितनी बार हुआ—क्या **बिल्कुल नहीं**, **कई दिन**, **आधे से ज़्यादा दिन**, या **लगभग हर दिन**? કૃપया इनमें से एक विकल्प चुनें।"
+    },
+    {
+      "section": "gad7",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "आधे से ज़्यादा दिन"
+    },
+    {
+      "section": "gad7",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "**GAD-7 functional difficulty:** इन समस्याओं ने आपके काम, घर की ज़िम्मेदारियों या लोगों के साथ आपके संबंधों को कितना कठिन बनाया है?\n\n- बिल्कुल कठिन नहीं\n- कुछ कठिन\n- बहुत कठिन\n- अत्यंत कठिन"
+    },
+    {
+      "section": "gad7",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "बहुत कठिन"
+    }
+  ],
+  "final_result": {
+    "safety_flag": false,
+    "phq9_total": 17,
+    "gad7_total": 15,
+    "completed_sections": [
+      "general_information",
+      "current_concerns",
+      "past_psychiatric_history",
+      "medications",
+      "medical_history",
+      "medication_allergies",
+      "family_psychiatric_history",
+      "substance_use",
+      "education_employment_legal_history",
+      "personal_history",
+      "phq9",
+      "gad7"
+    ],
+    "medications": {
+      "has_current_medications": false,
+      "current_medications": null,
+      "has_past_medications": true,
+      "past_medication_details": "Medication name; Unknown; dose; Unknown; start date and end date or approximate duration; Unknown; reason for discontinuation; Unknown"
+    }
+  }
+}

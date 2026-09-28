@@ -105,12 +105,12 @@ def main() -> None:
     if "score" in args.only:
         from harness.stages import score_records
         print(f"\n[{args.language}] scoring")
-        score_records.run(system="cira")
+        score_records.run(system="cira", case_ids=MULTILINGUAL_CASE_IDS)
 
     if "judge" in args.only:
         from harness.stages import run_judge
         print(f"\n[{args.language}] judging")
-        run_judge.run(systems=["cira"])
+        run_judge.run(systems=["cira"], case_ids=MULTILINGUAL_CASE_IDS)
 
     print(f"\n{args.language}: done. Artifacts under {config.OUTPUTS_DIR.name}/")
 

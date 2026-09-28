@@ -1,0 +1,1438 @@
+{
+  "case_id": "32",
+  "scenario_case_id": "04-32",
+  "title": "Counting Every Calorie",
+  "system": "cira",
+  "run_id": "51adc0a6a1d3",
+  "repetition": 2,
+  "persona_id": "confused",
+  "patient_behaviour": {
+    "persona": {
+      "id": "confused",
+      "label": "Unclear and disorganised",
+      "difficulty_rank": 3,
+      "description": "Hard to interview. Rambles, misreads questions, needs the frequency scale re-explained, discloses out of order. Tests whether the agent can actively guide rather than merely transcribe.",
+      "temperature": 0.8,
+      "questionnaire_deflection_probability": 0.8,
+      "max_deflections_per_item": 2,
+      "deflection_budget_per_instrument": 5,
+      "freetext_hedge_probability": 0.5,
+      "freetext_hedge_budget_per_section": 4
+    },
+    "repetition": 2,
+    "temperature": 0.0,
+    "temperature_pinned": true,
+    "questionnaire_deflections": 10,
+    "questionnaire_fall_throughs": 0,
+    "fall_through_questions": [],
+    "freetext_hedges": 24,
+    "max_consecutive_hedges": 1,
+    "hedges_by_section": {
+      "general_information": 4,
+      "current_concerns": 2,
+      "past_psychiatric_history": 4,
+      "medications": 1,
+      "medical_history": 2,
+      "family_psychiatric_history": 3,
+      "substance_use": 3,
+      "education_employment_legal_history": 4,
+      "personal_history": 1
+    },
+    "deflections_by_instrument": {
+      "phq9": 5,
+      "gad7": 5
+    },
+    "deflections_by_item": {
+      "phq9_q2": 1,
+      "phq9_q3": 1,
+      "phq9_q5": 2,
+      "phq9_q6": 1,
+      "gad7_q1": 2,
+      "gad7_q2": 1,
+      "gad7_q3": 2
+    },
+    "deflection_log": [
+      {
+        "item": "phq9_q2",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "抱歉，我没跟上。你是问多久一次，还是问有多严重？"
+      },
+      {
+        "item": "phq9_q3",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "有些日子多一些吧，我说不好。"
+      },
+      {
+        "item": "phq9_q5",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "有点吧，我不太确定。"
+      },
+      {
+        "item": "phq9_q5",
+        "instrument": "phq9",
+        "attempt": 2,
+        "response": "有点吧，我不太确定。"
+      },
+      {
+        "item": "phq9_q6",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "抱歉，我没跟上。你是问多久一次，还是问有多严重？"
+      },
+      {
+        "item": "gad7_q1",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "要看你指的是哪段时间。"
+      },
+      {
+        "item": "gad7_q1",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "嗯，这个不太好说。选项是什么来着？"
+      },
+      {
+        "item": "gad7_q2",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "这个真的很难讲。"
+      },
+      {
+        "item": "gad7_q3",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "抱歉，我没跟上。你是问多久一次，还是问有多严重？"
+      },
+      {
+        "item": "gad7_q3",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "有些日子多一些吧，我说不好。"
+      }
+    ]
+  },
+  "budget": {
+    "total_turns": 214,
+    "system_turns": 107,
+    "patient_turns": 107,
+    "system_words": 590,
+    "patient_words": 142,
+    "total_words": 732,
+    "mean_system_turn_words": 5.5,
+    "elapsed_seconds": null
+  },
+  "conversation": [
+    {
+      "section": "general_information",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "您好，我是 CIRA（临床接诊与风险评估助手），来自圣迈克尔医院（Unity Health Toronto）。我会先收集一些预约前的信息，每次询问一个问题。请提供您在法律文件上显示的完整法定姓名。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "general_information",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "我叫 Naomi……姓是 Fletcher。是不是要完整写出来？我有点一下子想不清楚。"
+    },
+    {
+      "section": "general_information",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "谢谢，NAOMI FLETCHER 已记录。您希望将您的性别记录为什么？\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "general_information",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "嗯，性别……是要填表上那个，还是平常怎么称呼那种？我有点不确定你是要哪一种。可能就是……呃，这个我想确认一下格式，可以再说得简单一点吗？"
+    },
+    {
+      "section": "general_information",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "可以。请告诉我您希望在医疗记录中如何记录您的性别，例如“女性”“男性”或其他称呼。\n\n在我们继续之前，请回答关于「gender」的问题。"
+    },
+    {
+      "section": "general_information",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "女性。"
+    },
+    {
+      "section": "general_information",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "请提供您的出生日期，格式为 DD/MM/YYYY（日/月/年）。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "general_information",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "嗯，出生日期……我知道是九月那边的，但你要我按那个 DD/MM/YYYY 的格式吗？我有点容易把顺序弄混。可以再说一遍你要的是哪一部分吗？"
+    },
+    {
+      "section": "general_information",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "没关系。请按“日/月/年”提供完整出生日期，例如：04/09/1990。您出生日期的日、月和年份分别是什么？\n\n在我们继续之前，请回答关于「date_of_birth」的问题。"
+    },
+    {
+      "section": "general_information",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "14/09/2002"
+    },
+    {
+      "section": "general_information",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "请提供您的完整法定居住地址，包括街道地址、城市和省份。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "general_information",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "呃，地址是 Spadina Road，Toronto，Ontario……门牌号我好像得想一下，是 41。"
+    },
+    {
+      "section": "general_information",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "请提供您的加拿大邮政编码。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "general_information",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "嗯，邮政编码……你是要那个六位数的那个吧？我一下有点记不清了，可能在信件上我得找一下。你能再慢一点问吗，或者告诉我你想要的是哪一部分格式？"
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "可以，请提供完整的加拿大邮政编码，格式通常是“字母、数字、字母、数字、字母、数字”，例如 A1A 1A1。您可以查看信件后告诉我。\n\n在我们继续之前，请回答关于「postal_code」的问题。\n\n在我们继续之前，请回答关于「postal code」的问题。"
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "M5R2S9"
+    },
+    {
+      "section": "general_information",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "请提供您的电子邮箱地址。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "general_information",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "naomi.fletcher@example.com"
+    },
+    {
+      "section": "general_information",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "请提供您的电话号码。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "general_information",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "四一六，五五五，零三八七。"
+    },
+    {
+      "section": "general_information",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "您目前有家庭医生吗？请回答“有”或“没有”。"
+    },
+    {
+      "section": "general_information",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "嗯，家庭医生这个……我好像是有的，但你是想问现在固定看哪一位，还是表格里要不要填那种？我有点没反应过来。"
+    },
+    {
+      "section": "general_information",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "我想确认的是：您目前是否有一位固定的家庭医生？请回答“有”或“没有”。"
+    },
+    {
+      "section": "general_information",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "有。"
+    },
+    {
+      "section": "general_information",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "请提供您家庭医生的全名，包括名字和姓氏。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "general_information",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "Dr. Helen Chu……我想是这个名字。"
+    },
+    {
+      "section": "general_information",
+      "turn": 14,
+      "speaker": "CIRA",
+      "message": "您目前有精神科医生吗？请回答“有”或“没有”。"
+    },
+    {
+      "section": "general_information",
+      "turn": 14,
+      "speaker": "PATIENT",
+      "message": "有。"
+    },
+    {
+      "section": "general_information",
+      "turn": 15,
+      "speaker": "CIRA",
+      "message": "请提供您精神科医生的全名，包括名字和姓氏。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "general_information",
+      "turn": 15,
+      "speaker": "PATIENT",
+      "message": "Dr. Irene Kovac。"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "最近您主要遇到哪些问题或困难？请具体描述发生了什么、主要出现在哪里（例如家里、学校/工作或人际关系），以及是否带来了具体后果。"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "这个……最近主要是有点乱，我一下不知道从哪说起。是要问我身体上的问题，还是情绪，还是吃饭那个部分？我好像总是在想食物和计划，连平时跟别人一起吃饭都很难，不过你刚刚那句我有点没听清楚，是想问“发生了什么”还是“影响了什么”呢？"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "我想了解的是两方面：具体发生了什么，以及它对您的生活造成了什么影响。您提到最近总是在想食物和饮食计划，而且和别人一起吃饭很困难；除此之外，这些情况还带来了哪些具体影响？"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "嗯，除了总是想着吃什么、要怎么安排，我还会一直算热量，这个已经有一段时间了……大概从十八岁开始吧。然后体重这两年也有部分恢复，但脑子里还是一直会想着身体形状什么的，所以有时候会避开和别人一起吃饭。这样就会把一天都围着吃饭去计划，真的很烦。还有……我之前在多伦多总医院住过一回，是为了身体稳定，那个是在 2021 年。"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "谢谢您说明这些情况。我已经记录了：从大约18岁起持续关注食物、饮食计划和热量计算；近两年体重部分恢复，但仍常想到身体形状，有时因此避免与他人一起吃饭；一天的安排常围绕进食，令您感到困扰；您还曾于2021年因身体稳定问题在多伦多总医院住院。\n\n您希望从这次预约中得到什么帮助？"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "嗯，我知道大概是想要帮我把这些……这些和吃饭有关的事情理顺一点，但你这句“从这次预约中得到什么帮助”我有点不知道是问一个很具体的目标，还是想知道我最想先解决哪一块。  \n我有点容易把“希望得到什么帮助”和“现在最困扰的是什么”混在一起……你可以再简单一点问吗？"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "可以。简单来说：您希望这次预约帮助您改善或解决哪些事情？您可以先说一件最希望得到帮助的事，然后我会再问您是否还有其他目标。"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "最希望的是，我能……就是可以跟朋友一起吃一顿饭，不用提前好几天一直计划。这样对我来说最重要。"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "您是否曾接受过心理健康专业人员的评估？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "嗯，心理健康专业人员的评估……你是指以前有没有做过那种正式的评估吗？我有点不确定你这边算的是哪一种。可以再说简单一点吗？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "可以。我的意思是：您以前有没有见过心理医生、精神科医生、心理治疗师或其他心理健康专业人员，并和他们谈过您的心理或情绪状况？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "有，2021年的时候在进食障碍服务那边评估过。"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "那次评估是由哪一类心理健康专业人员进行的？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "嗯，是进食障碍服务那边做的评估……我不太确定具体是哪一种人，医生还是治疗师，我不知道。  \n不过那个时候主要是因为限制性进食。"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "您是否曾被诊断患有精神科疾病？例如抑郁症、焦虑症、强迫症或双相情感障碍。"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "这个……你是问以前有没有被正式写进病历里的那种诊断吗？还是只是有人怀疑过、提过一下？我有点把“诊断”和“评估过”混在一起了。可以再说得简单一点吗？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "可以。我的意思是：医生或其他心理健康专业人员以前有没有明确告诉您，您患有某种心理或精神方面的疾病，而不只是怀疑或提到过？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "有，限制性进食型神经性厌食症。"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "除了限制性进食型神经性厌食症以外，您还知道有其他精神科诊断吗？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "嗯，除了那个……我一下有点想不起来你是在问别的正式诊断，还是之前有人提过的一些别的问题。  \n我脑子里现在有点乱，能不能再问得更直接一点？比如是要我列出“还有没有其他诊断名称”那种吗？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "是的，我想问的是：除了限制性进食型神经性厌食症之外，您是否还知道其他正式的诊断名称？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "没有了，就这个。"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "您以前是否曾因心理健康原因住院？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "有，2021年在多伦多总医院住过院，大概两周，是为了身体稳定。"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "那次住院具体是哪一年、在哪家医院，以及大约住了多久？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "嗯，你刚刚是想问那次住院的时间和地方还有住了多久，对吧？我一下有点把顺序弄乱了……是不是还要我按“年份、医院、住院时长”这样一个一个说？我可以再对一下。"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "对，请按这三个方面告诉我：年份、医院名称，以及大约住了多久。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "2021年，多伦多总医院，两个星期左右。"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "除了这次住院以外，您是否还有其他因心理健康原因住院的经历？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "没有了，就这些。"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "您是否曾经想过或尝试过故意伤害自己？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "没有。"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "您以前是否接受过以下任何心理治疗：认知行为治疗（CBT）、辩证行为治疗（DBT）、人际关系治疗、正念治疗、心理动力学治疗，或其他心理治疗？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "嗯，我以前有做过治疗，不过你这一长串名字我有点跟不上……是不是先问我有没有做过，再慢慢问是哪一种？我记得是和吃饭有关的那种治疗。  \n啊，对，认知行为治疗，那个是 2023 年，在门诊那边，大概二十次。还有一个更早一点的，像是家庭那种治疗，2021 年，也大概二十次，在进食障碍项目里。"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 14,
+      "speaker": "CIRA",
+      "message": "除了认知行为治疗和家庭治疗以外，您还接受过其他心理治疗吗？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 14,
+      "speaker": "PATIENT",
+      "message": "没有了，就这些。"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 15,
+      "speaker": "CIRA",
+      "message": "您以前是否接受过以下任何治疗：重复经颅磁刺激（rTMS）、电休克治疗（ECT）、深部脑刺激、氯胺酮治疗，或其他生物治疗？"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 15,
+      "speaker": "PATIENT",
+      "message": "没有。"
+    },
+    {
+      "section": "medications",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "您目前是否正在服用任何处方药？"
+    },
+    {
+      "section": "medications",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "没有。"
+    },
+    {
+      "section": "medications",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "您以前是否尝试过任何精神科药物？"
+    },
+    {
+      "section": "medications",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "嗯，精神科药物……你是问以前有没有吃过那种药吗？我一下有点没弄明白你是想问“现在在吃什么”还是“以前试过什么”。  \n我脑子有点乱，可以再说得更简单一点吗？"
+    },
+    {
+      "section": "medications",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "我的意思是：在过去，您是否曾经服用或尝试过用于心理或精神健康问题的药物？"
+    },
+    {
+      "section": "medications",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "没有。"
+    },
+    {
+      "section": "medical_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "您是否曾被诊断患有任何疾病？"
+    },
+    {
+      "section": "medical_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "嗯，疾病这个……是说身体方面的吗？我好像有点不知道该从哪里开始。  \n啊，对，我记得有骨量减少……这个是在 2022 年诊断的。除此之外我一时想不起来别的。"
+    },
+    {
+      "section": "medical_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "是的，这里指身体方面由医生诊断的疾病或健康状况。您提到的骨量减少是在 2022 年诊断的。除此之外，您目前想不起其他疾病也没关系。\n\n骨量减少当时是否有使用药物或接受其他治疗？"
+    },
+    {
+      "section": "medical_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "这个我不太知道……好像没有什么特别治疗吧，但我不确定。"
+    },
+    {
+      "section": "medical_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "除了骨量减少之外，您还有其他身体疾病或健康状况吗？"
+    },
+    {
+      "section": "medical_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "嗯，身体方面的……我一下有点不知道你是想问“以前医生说过的诊断”，还是“我自己现在会注意到的情况”。我脑子有点乱。  \n你是要我把身体上的问题一个一个列出来吗？可以再说得更直接一点吗？"
+    },
+    {
+      "section": "medical_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "我想问的是：除了 2022 年诊断的骨量减少之外，您是否还曾被医生诊断过其他身体疾病或健康状况？"
+    },
+    {
+      "section": "medical_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "没有了，就这个。"
+    },
+    {
+      "section": "medical_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "您以前做过任何手术吗？"
+    },
+    {
+      "section": "medical_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "嗯，手术……你是指像住院那种，还是做过什么小的处置？我一下有点分不清你这边问的是哪一种。可以再简单说一下吗？"
+    },
+    {
+      "section": "medical_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "我想问的是：您一生中是否做过任何外科手术，包括大型或小型手术？"
+    },
+    {
+      "section": "medical_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "没有。"
+    },
+    {
+      "section": "medical_history",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "您的身高是多少？可以用厘米，或英尺和英寸表示。"
+    },
+    {
+      "section": "medical_history",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "167 厘米。"
+    },
+    {
+      "section": "medical_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "您的体重是多少？可以用公斤或磅表示。"
+    },
+    {
+      "section": "medical_history",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "54 公斤。"
+    },
+    {
+      "section": "medication_allergies",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "您是否知道自己对任何药物过敏？"
+    },
+    {
+      "section": "medication_allergies",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "没有。"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "您的家人中，是否有人曾被诊断患有心理健康方面的疾病？例如抑郁症、焦虑症、强迫症、双相情感障碍或精神分裂症。"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "嗯，家人那边的心理健康情况……你是想问直系家属吗，还是所有亲戚都算？我一时有点搞不清楚你这边的范围。  \n我好像有点想岔了，这题是要问“有没有家族史”对吧？可以再说得更简单一点吗？"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "是的，我想了解的是：您的任何家人或亲戚中，是否有人曾被诊断患有心理健康方面的疾病？"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "有，我妈妈有焦虑症，做过治疗。"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "您母亲的焦虑症治疗是在什么时候进行的？"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "嗯，这个我有点不确定你是想问“什么时候开始的”，还是“做了多久”。我只记得是做过治疗，但具体时间……我一下想不起来。你能再说得更简单一点吗？"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "没关系，我只想确认治疗的大概时间：是在最近几年，还是更早以前？"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "我不知道具体是哪一年，只知道她以前做过治疗。"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "除了您母亲以外，还有其他家人或亲戚有心理健康方面的诊断或相关情况吗？"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "嗯，除了我妈妈……你是想问家里那种“正式诊断”吗，还是只要有情绪方面的问题也算？我一下有点没对上你这题的范围。  \n我脑子有点乱，你可以再说得更直接一点吗？"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "除了您母亲以外，其他家人或亲戚中，是否有人曾被医生诊断患有心理健康方面的疾病？"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "没有了，就她。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "除了医生处方并按指示服用的药物之外，您是否曾经饮酒？请选择：从未、以前使用过，或目前使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "从未。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "除了医生处方并按指示使用的产品之外，您是否曾使用过香烟、电子烟或其他尼古丁产品？请选择：从未、以前使用过，或目前使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "嗯，香烟、电子烟那个……你是想问平时会不会用，还是以前有没有碰过？我一下有点把“尼古丁产品”和别的东西混在一起了。  \n你可以再说得更简单一点吗？"
+    },
+    {
+      "section": "substance_use",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "简单说：除了医生处方并按指示使用的药物之外，您一生中是否用过香烟、电子烟或其他含尼古丁的产品？请选择：从未使用、以前使用过，或目前正在使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "从未使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "除了医生处方并按指示使用的药物之外，您是否曾使用过大麻或其他大麻制品？请选择：从未使用、以前使用过，或目前正在使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "嗯，大麻这个……你是问以前有没有碰过，还是现在？我有点没跟上你这句“除了医生处方并按指示使用的药物之外”是要排除哪些东西。  \n可以再简单说一次吗？"
+    },
+    {
+      "section": "substance_use",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "简单说：您以前或现在有没有使用过大麻？请选择：从未使用、以前使用过，或目前正在使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "从未使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "除了医生处方并按指示服用的药物之外，您以前或现在是否使用过兴奋剂，例如可卡因、甲基苯丙胺、MDMA或摇头丸？请选择：从未使用、以前使用过，或目前正在使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "从未使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "除了医生处方并按指示服用的药物之外，您以前或现在是否使用过阿片类药物或麻醉品？请选择：从未使用、以前使用过，或目前正在使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "从未使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "除了医生处方并按指示服用的药物之外，您以前或现在是否使用过苯二氮䓬类药物，例如安定、阿普唑仑或劳拉西泮？请选择：从未使用、以前使用过，或目前正在使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "从未使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "您以前或现在是否使用过迷幻剂，例如LSD、PCP或裸盖菇素？请选择：从未使用、以前使用过，或目前正在使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "从未使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "除了刚才提到的物质之外，您以前或现在是否使用过其他物质？请选择：从未使用、以前使用过，或目前正在使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "嗯，其他物质……你是指那些不是烟、酒、大麻、兴奋剂、阿片类、安定那一类的吗？我一时有点没分清你这题到底要把哪些都算进去。  \n可以再简单一点问吗？"
+    },
+    {
+      "section": "substance_use",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "简单说：除了烟、酒、大麻、兴奋剂、阿片类药物、苯二氮䓬类药物和迷幻剂以外，您以前或现在有没有使用过其他物质？请选择：从未使用、以前使用过，或目前正在使用。"
+    },
+    {
+      "section": "substance_use",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "从未使用。"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "您目前是否涉及任何正在进行的法律案件？"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "嗯，法律案件……你是问那种正在打官司的，还是别的什么麻烦事？我一时有点没反应过来。可以再说得简单一点吗？"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "我的意思是：您现在是否有正在处理的诉讼、刑事案件，或其他尚未结束的法律案件？答案可以是“有”或“没有”。"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "没有。"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "您完成的最高教育程度是什么？例如高中、大学专科、学士学位、硕士学位或博士学位。"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "学士学位。"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "请告诉我您最近的工作经历。我们先从一份工作开始：雇主或机构名称是什么？"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "嗯，最近的工作……你是想问我现在做什么，还是以前那份？我一下有点把“最近的工作经历”和“雇主名字”混在一起了。  \n你可以先告诉我你是要问公司名称，还是职位？"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "先告诉我最近一份工作的雇主或机构名称即可。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "多伦多大学。"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "您在多伦多大学担任什么职位？"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "研究助理。"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "您从什么时候开始在多伦多大学担任研究助理？如果不记得确切日期，可以告诉我大概的年份或工作了多久。"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "嗯，这个我一时有点想不太起来你是想问“什么时候开始”的那个时间点，还是“做了多久”那种。  \n我知道是现在在做研究助理，但开始时间……我有点怕说错。可以再简单问一遍吗？"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "您大约是哪一年开始这份研究助理工作？例如 2020 年、2023 年，或者“几年前”。"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "2024年。"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "除了多伦多大学的研究助理工作之外，您近期还有其他工作吗？"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "嗯，除了那个……我一下有点没分清你是问“现在还有没有别的工作”，还是“以前做过的别的工作”。我脑子有点乱。你可以再简单说一下吗？"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "除了多伦多大学的研究助理工作，您近期是否还有其他工作经历？有的话请告诉我；没有的话请说“没有”。"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "没有。"
+    },
+    {
+      "section": "personal_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "请描述一下您的童年早期经历。您可以谈谈出生地、成长的地方，以及您小时候是怎样的孩子，例如害羞、外向、敏感或精力充沛。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "personal_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "我是在多伦多长大的，嗯……算是一直都在那边吧。小时候好像有点完美主义，做事情会很想做到对。别的……我一时也想不出太多。"
+    },
+    {
+      "section": "personal_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "请描述一下您的青春期和成年早期经历。您可以谈谈在学校的情况、遇到过的困难、做过的工作或承担的责任，以及其他您认为重要的经历。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "personal_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "嗯，学校那段时间我一直还挺会做事的，算是成绩比较好吧。然后……饮食方面的问题是在高中最后一年开始的，那个时候吧。别的责任或者工作，我一下想不太起来。"
+    },
+    {
+      "section": "personal_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "请描述一下您生命中重要的人际关系，包括家人、朋友以及恋爱关系。您可以提到关系类型、大致的时间或持续多久，以及目前是否仍在继续。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "personal_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "我现在单身，嗯，和两个室友一起住。家里这边我跟妈妈很亲近，算是比较近的关系。朋友……有一些吧，但我一时不知道你是要哪一种关系算重要。"
+    },
+    {
+      "section": "personal_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "谢谢您的分享。您可以把对您来说重要的关系理解为：那些对您有持续影响、让您感到支持，或在您生活中占有重要位置的家人、朋友或伴侣关系。您愿意再说一位对您重要的朋友，或描述一下这些友谊通常持续多久、目前是否仍保持联系吗？"
+    },
+    {
+      "section": "personal_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "嗯……你是想问朋友这部分吗？我有点没弄清楚你是要我举一个具体的人，还是只说大概那种关系会维持多久。  \n我脑子有点乱，朋友这块我一时不知道从哪里讲比较合适。你可以再说得简单一点吗？"
+    },
+    {
+      "section": "personal_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "可以简单说：您有没有一位或几位对您很重要的朋友？如果有，他们现在还和您保持联系吗？"
+    },
+    {
+      "section": "personal_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "有一些朋友，还是有联系的。"
+    },
+    {
+      "section": "personal_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "请描述一下您对未来的目标。可以包括健康、学习、工作、关系、家庭或个人发展方面的目标。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "personal_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "嗯，未来的目标……我想把硕士读完，然后不要再整天围着食物安排时间了。还有就是，能跟朋友一起吃饭的时候不用提前想很多天。"
+    },
+    {
+      "section": "phq9",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "这些问题都针对过去两周。请为每题选择最符合您情况的选项：\n\n**PHQ-9 Question 1：做事情时缺乏兴趣或乐趣**\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "phq9",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "一半以上的天数"
+    },
+    {
+      "section": "phq9",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 2：感到情绪低落、抑郁或绝望**\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "phq9",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "抱歉，我没跟上。你是问多久一次，还是问有多严重？"
+    },
+    {
+      "section": "phq9",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "这是在问：过去两周内，您有多少天感到情绪低落、抑郁或绝望，而不是询问严重程度。\n\n**PHQ-9 Question 2：感到情绪低落、抑郁或绝望**\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n请从上面的选项中选择一个来回答这个问题。"
+    },
+    {
+      "section": "phq9",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "一半以上的天数"
+    },
+    {
+      "section": "phq9",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 3：入睡困难、睡眠不安稳，或睡眠过多**\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n请从上面的选项中选择一个。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "phq9",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "有些日子多一些吧，我说不好。"
+    },
+    {
+      "section": "phq9",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 3：入睡困难、睡眠不安稳，或睡眠过多**\n\n请按过去两周中出现的天数选择：\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n哪一个选项最符合您的情况？"
+    },
+    {
+      "section": "phq9",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "一半以上的天数"
+    },
+    {
+      "section": "phq9",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 4：感到疲倦或没有精力**\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n请从上面的选项中选择一个。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "phq9",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "一半以上的天数"
+    },
+    {
+      "section": "phq9",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 5：食欲不振或吃得过多**\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n请从上面的选项中选择一个。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "phq9",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "有点吧，我不太确定。"
+    },
+    {
+      "section": "phq9",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 5：食欲不振或吃得过多**\n\n过去两周内，这种情况出现了多少天？\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n请从上面的选项中选择一个。"
+    },
+    {
+      "section": "phq9",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "有点吧，我不太确定。"
+    },
+    {
+      "section": "phq9",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 5：食欲不振或吃得过多**\n\n请按过去两周中出现的天数选择：\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n例如，您觉得是 **5天、10天，还是几乎每天**？请选择最接近的一个选项。"
+    },
+    {
+      "section": "phq9",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "几乎每天"
+    },
+    {
+      "section": "phq9",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 6：觉得自己很糟糕，或觉得自己是个失败者，或让自己或家人失望**\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n请从上面的选项中选择一个。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "phq9",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "抱歉，我没跟上。你是问多久一次，还是问有多严重？"
+    },
+    {
+      "section": "phq9",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "这是在问：过去两周内，您有多少天有这些关于自己的负面感受，而不是询问严重程度。\n\n**PHQ-9 Question 6：觉得自己很糟糕，或觉得自己是个失败者，或让自己或家人失望**\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n请从上面的选项中选择一个。\n\n请从上面的选项中选择一个来回答这个问题。"
+    },
+    {
+      "section": "phq9",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "几乎每天"
+    },
+    {
+      "section": "phq9",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 7：难以集中注意力，例如阅读报纸或看电视时**\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n请从上面的选项中选择一个。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "phq9",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "一半以上的天数"
+    },
+    {
+      "section": "phq9",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 8：动作或说话缓慢到别人已经注意到，或者相反，坐立不安、动来动去，比平时多**\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n请从上面的选项中选择一个。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "phq9",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "有几天"
+    },
+    {
+      "section": "phq9",
+      "turn": 14,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 Question 9：想到如果不在了可能会更好，或有以某种方式伤害自己的想法**\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n请从上面的选项中选择一个。\n\n在我们继续之前，您能回答上面的问题吗？"
+    },
+    {
+      "section": "phq9",
+      "turn": 14,
+      "speaker": "PATIENT",
+      "message": "完全不会"
+    },
+    {
+      "section": "phq9",
+      "turn": 15,
+      "speaker": "CIRA",
+      "message": "**PHQ-9 functional difficulty：这些问题给您的工作、处理家务或与他人相处造成了多大困难？**\n\n- 一点也不困难  \n- 有些困难  \n- 很困难  \n- 极其困难"
+    },
+    {
+      "section": "phq9",
+      "turn": 15,
+      "speaker": "PATIENT",
+      "message": "很困难"
+    },
+    {
+      "section": "gad7",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "GAD-7 问题涉及过去两周。\n\nGAD-7 Question 1: 过去两周，您有多经常感到紧张、焦虑或坐立不安？\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天"
+    },
+    {
+      "section": "gad7",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "要看你指的是哪段时间。"
+    },
+    {
+      "section": "gad7",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 1: 指过去两周，也就是从大约 2026 年 9 月 15 日到今天。期间您有多经常感到紧张、焦虑或坐立不安？\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天"
+    },
+    {
+      "section": "gad7",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "嗯，这个不太好说。选项是什么来着？"
+    },
+    {
+      "section": "gad7",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 1: 过去两周，您有多经常感到紧张、焦虑或坐立不安？\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n请选择最符合您情况的一项。"
+    },
+    {
+      "section": "gad7",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "一半以上的天数"
+    },
+    {
+      "section": "gad7",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 2: 过去两周，您有多经常难以停止或控制担忧？\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天"
+    },
+    {
+      "section": "gad7",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "这个真的很难讲。"
+    },
+    {
+      "section": "gad7",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 2: 过去两周，您有多经常难以停止或控制担忧？\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n请根据过去两周的大致情况选择一项。"
+    },
+    {
+      "section": "gad7",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "几乎每天"
+    },
+    {
+      "section": "gad7",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 3: 过去两周，您有多经常对各种不同的事情担忧过多？\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天"
+    },
+    {
+      "section": "gad7",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "抱歉，我没跟上。你是问多久一次，还是问有多严重？"
+    },
+    {
+      "section": "gad7",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 3: 过去两周，您有多经常对各种不同的事情担忧过多？\n\n这里问的是发生的频率，不是严重程度：\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n请选择最符合您过去两周情况的一项。"
+    },
+    {
+      "section": "gad7",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "有些日子多一些吧，我说不好。"
+    },
+    {
+      "section": "gad7",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 3: 过去两周，您有多经常对各种不同的事情担忧过多？\n\n请按大致频率选择：\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天\n\n如果是“有些日子”，请选择 **1 - 有几天**；如果超过一半的天数，请选择 **2 - 一半以上的天数**。"
+    },
+    {
+      "section": "gad7",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "几乎每天"
+    },
+    {
+      "section": "gad7",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 4: 过去两周，您有多经常难以放松？\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天"
+    },
+    {
+      "section": "gad7",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "一半以上的天数"
+    },
+    {
+      "section": "gad7",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 5: 过去两周，您有多经常坐立不安，以至于很难安静地坐着？\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天"
+    },
+    {
+      "section": "gad7",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "有几天"
+    },
+    {
+      "section": "gad7",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 6: 过去两周，您有多经常容易烦恼或易怒？\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天"
+    },
+    {
+      "section": "gad7",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "一半以上的天数"
+    },
+    {
+      "section": "gad7",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 7: 过去两周，您有多经常害怕会发生可怕的事情？\n\n0 - 完全不会  \n1 - 有几天  \n2 - 一半以上的天数  \n3 - 几乎每天"
+    },
+    {
+      "section": "gad7",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "一半以上的天数"
+    },
+    {
+      "section": "gad7",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "GAD-7 functional difficulty: 这些问题给您的工作、处理家务或与他人相处造成了多大困难？\n\n- 一点也不困难  \n- 有些困难  \n- 很困难  \n- 极其困难"
+    },
+    {
+      "section": "gad7",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "很困难"
+    }
+  ],
+  "final_result": {
+    "safety_flag": false,
+    "phq9_total": 17,
+    "gad7_total": 15,
+    "completed_sections": [
+      "general_information",
+      "current_concerns",
+      "past_psychiatric_history",
+      "medications",
+      "medical_history",
+      "medication_allergies",
+      "family_psychiatric_history",
+      "substance_use",
+      "education_employment_legal_history",
+      "personal_history",
+      "phq9",
+      "gad7"
+    ],
+    "medications": {
+      "has_current_medications": false,
+      "current_medications": null,
+      "has_past_medications": false,
+      "past_medication_details": null
+    }
+  }
+}

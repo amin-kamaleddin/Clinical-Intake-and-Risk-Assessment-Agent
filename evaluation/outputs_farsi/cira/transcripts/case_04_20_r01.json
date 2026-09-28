@@ -1,0 +1,1233 @@
+{
+  "case_id": "20",
+  "scenario_case_id": "04-20",
+  "title": "Sixteen And Sinking",
+  "system": "cira",
+  "run_id": "d05c13ba81a3",
+  "repetition": 1,
+  "persona_id": "confused",
+  "patient_behaviour": {
+    "persona": {
+      "id": "confused",
+      "label": "Unclear and disorganised",
+      "difficulty_rank": 3,
+      "description": "Hard to interview. Rambles, misreads questions, needs the frequency scale re-explained, discloses out of order. Tests whether the agent can actively guide rather than merely transcribe.",
+      "temperature": 0.8,
+      "questionnaire_deflection_probability": 0.8,
+      "max_deflections_per_item": 2,
+      "deflection_budget_per_instrument": 5,
+      "freetext_hedge_probability": 0.5,
+      "freetext_hedge_budget_per_section": 4
+    },
+    "repetition": 1,
+    "temperature": 0.0,
+    "temperature_pinned": true,
+    "questionnaire_deflections": 10,
+    "questionnaire_fall_throughs": 0,
+    "fall_through_questions": [],
+    "freetext_hedges": 20,
+    "max_consecutive_hedges": 1,
+    "hedges_by_section": {
+      "general_information": 4,
+      "current_concerns": 1,
+      "past_psychiatric_history": 4,
+      "medications": 1,
+      "medical_history": 1,
+      "family_psychiatric_history": 1,
+      "substance_use": 4,
+      "education_employment_legal_history": 1,
+      "personal_history": 3
+    },
+    "deflections_by_instrument": {
+      "phq9": 5,
+      "gad7": 5
+    },
+    "deflections_by_item": {
+      "phq9_q2": 2,
+      "phq9_q3": 2,
+      "phq9_q6": 1,
+      "gad7_q1": 2,
+      "gad7_q2": 2,
+      "gad7_q3": 1
+    },
+    "deflection_log": [
+      {
+        "item": "phq9_q2",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "دقیق گفتنش سخت است."
+      },
+      {
+        "item": "phq9_q2",
+        "instrument": "phq9",
+        "attempt": 2,
+        "response": "تا حدی، فکر کنم؟ به هفته بستگی دارد."
+      },
+      {
+        "item": "phq9_q3",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "دقیق گفتنش سخت است."
+      },
+      {
+        "item": "phq9_q3",
+        "instrument": "phq9",
+        "attempt": 2,
+        "response": "ببخشید، نفهمیدم. درباره تعداد بار می‌پرسید یا شدتش؟"
+      },
+      {
+        "item": "phq9_q6",
+        "instrument": "phq9",
+        "attempt": 1,
+        "response": "هوم، گفتنش سخت است. گزینه‌ها چه بودند؟"
+      },
+      {
+        "item": "gad7_q1",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "بستگی دارد منظورتان چه باشد — در چه بازه‌ای؟"
+      },
+      {
+        "item": "gad7_q1",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "تا حدی، فکر کنم؟ به هفته بستگی دارد."
+      },
+      {
+        "item": "gad7_q2",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "بستگی دارد منظورتان چه باشد — در چه بازه‌ای؟"
+      },
+      {
+        "item": "gad7_q2",
+        "instrument": "gad7",
+        "attempt": 2,
+        "response": "برخی هفته‌ها بیشتر؛ نمی‌توانم دقیق بگویم."
+      },
+      {
+        "item": "gad7_q3",
+        "instrument": "gad7",
+        "attempt": 1,
+        "response": "برخی هفته‌ها بیشتر؛ نمی‌توانم دقیق بگویم."
+      }
+    ]
+  },
+  "budget": {
+    "total_turns": 180,
+    "system_turns": 90,
+    "patient_turns": 90,
+    "system_words": 2650,
+    "patient_words": 1085,
+    "total_words": 3735,
+    "mean_system_turn_words": 29.4,
+    "elapsed_seconds": null
+  },
+  "conversation": [
+    {
+      "section": "general_information",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "سلام، من CIRA هستم؛ دستیار پذیرش بالینی در بیمارستان سنت مایکلز، Unity Health Toronto. برای شروع، لطفاً نام کامل قانونی خود را دقیقاً همان‌طور که در مدارک شناسایی‌تان نوشته شده وارد کنید.\n\nپیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "اوه… صبر کنید، منظورتان دقیقاً همون اسم روی کارت شناساییه؟ من… راستش یک‌کم گیج شدم. می‌تونید ساده‌تر بگید باید فقط اسم باشه یا چیزهای دیگه هم؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "لطفاً نام و نام خانوادگی کاملتان را، دقیقاً همان‌طور که روی کارت شناسایی یا مدرک قانونی‌تان نوشته شده، وارد کنید.\n\nپیش از آنکه ادامه دهیم، لطفاً به پرسش «name» پاسخ دهید."
+    },
+    {
+      "section": "general_information",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "آملیا فراست… فکر می‌کنم."
+    },
+    {
+      "section": "general_information",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "آیا «آملیا فراست» نام کامل قانونی شماست؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "اِ… منظور از «کامل قانونی» همونیه که توی کارت هست؟ من اسمم آملیاست، ولی… نمی‌دونم می‌خواید همون رو دقیق بنویسم یا نه. می‌شه یک بار دیگه بگید دقیقاً چی لازم دارید؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "بله، منظورم همان نام و نام خانوادگی‌ای است که دقیقاً روی کارت شناسایی یا مدرک قانونی‌تان نوشته شده است. لطفاً همان نام کامل را وارد کنید؛ اگر فقط «آملیا» روی مدرک نوشته شده، همان را بگویید.\n\nپیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "آملیا فراست."
+    },
+    {
+      "section": "general_information",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "لطفاً بگویید جنسیتتان را چگونه ثبت کنم؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "مونث."
+    },
+    {
+      "section": "general_information",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "لطفاً تاریخ تولدتان را در قالب DD/MM/YYYY وارد کنید.\n\nپیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "اِ… تاریخ تولد؟ من مطمئن نیستم که دقیقاً باید به چه شکلی بگم. یعنی همون فرمت روز/ماه/سال…؟ راستش یک‌کم قاطی می‌کنم با این جور چیزها. می‌شه یک بار دیگه خیلی ساده‌تر بگید؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "بله، لطفاً تاریخ تولدتان را به این شکل بنویسید: **روز/ماه/سال**؛ برای مثال: **04/03/1990**.\n\nپیش از آنکه ادامه دهیم، لطفاً به پرسش «date of birth» پاسخ دهید."
+    },
+    {
+      "section": "general_information",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "۰۵/۰۴/۲۰۰۹"
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "لطفاً نشانی کامل محل سکونت قانونی‌تان را وارد کنید؛ شامل **آدرس خیابان، شهر و استان**.\n\nپیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "خیابون گلن‌فورست ۳۱… توی تورنتو، انتاریو."
+    },
+    {
+      "section": "general_information",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "لطفاً کد پستی کانادایی‌تان را وارد کنید.\n\nپیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "اِ… کد پستی؟ من… باید همون عددها و حروفی باشه که روی نامه‌ها هست، درسته؟ راستش یک‌کم دارم قاطی می‌کنم. می‌شه یک بار دیگه بگید فقط کد پستی می‌خواید یا چیز دیگه‌ای هم هست؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "بله، فقط کد پستی کانادایی‌تان را می‌خواهم؛ همان ترکیب شش‌حرفی و عددی که روی نامه‌ها یا مدارک نشانی نوشته می‌شود، مانند **M5V 2T6**.\n\nپیش از آنکه ادامه دهیم، لطفاً به پرسش «postal code» پاسخ دهید."
+    },
+    {
+      "section": "general_information",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "M4N1Z8"
+    },
+    {
+      "section": "general_information",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "لطفاً آدرس ایمیل‌تان را وارد کنید.\n\nپیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "املیا.فراست.parent@example.com"
+    },
+    {
+      "section": "general_information",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "لطفاً شماره تلفن‌تان را وارد کنید.\n\nپیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "۴۱۶… بعدش ۵۵۵… صفر دو شش سه."
+    },
+    {
+      "section": "general_information",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "آیا در حال حاضر پزشک خانواده دارید؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "بله، دارم. دکتر هلن چو."
+    },
+    {
+      "section": "general_information",
+      "turn": 14,
+      "speaker": "CIRA",
+      "message": "آیا در حال حاضر روان‌پزشک دارید؟"
+    },
+    {
+      "section": "general_information",
+      "turn": 14,
+      "speaker": "PATIENT",
+      "message": "نه، ندارم."
+    },
+    {
+      "section": "current_concerns",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "لطفاً بگویید اخیراً چه مشکلات یا دشواری‌های اصلی را تجربه کرده‌اید؟ اگر ممکن است، توضیح دهید دقیقاً چه اتفاقی می‌افتد و این مشکلات بیشتر در خانه، مدرسه یا محل کار، یا در روابط شما دیده می‌شوند."
+    },
+    {
+      "section": "current_concerns",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "اِ… خب، یعنی… این یه کم سختِ گفتنش. من مطمئن نیستم دقیقاً کدوم بخشش رو می‌خواید—از وقتی… مدتیه یه‌جورایی همه‌چیز سنگین شده. می‌شه بگید منظورتون بیشتر توی مدرسه‌ست یا خونه؟"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "اشکالی ندارد؛ لازم نیست همه‌چیز را یک‌باره توضیح دهید. وقتی در خانه اوضاع سخت می‌شود، دقیقاً چه اتفاقی می‌افتد؟"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "خب… در خانه هم بیشتر می‌خوابم و حوصله ندارم حرف بزنم. بعضی وقت‌ها فقط می‌خوام دراز بکشم و… هیچی. اما چیزی که بیشتر اذیتم می‌کنه اینه که چند ماهه حالم پایینِ، زود گریه‌ام می‌گیره و از دوست‌هام هم فاصله گرفتم. مدرسه هم افت کرده… فکر کنم از شش ماه پیش."
+    },
+    {
+      "section": "current_concerns",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "ممنون که توضیح دادید. حالا می‌خواهم بدانم از این قرار ملاقات چه چیزی به دست آورید؟ چه هدف‌هایی دارید یا دوست دارید در چه زمینه‌ای کمک بگیرید؟"
+    },
+    {
+      "section": "current_concerns",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "اِ… دلم می‌خواد یه چیزی حس کنم، انگار هیچ‌چی حس نمی‌کنم. و… اینکه سال تحصیلی رو somehow رد کنم، یعنی بتونم از پسش بربیام."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "آیا تاکنون توسط یک متخصص سلامت روان ارزیابی شده‌اید؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "آره… سال ۲۰۲۵، مددکار اجتماعی مدرسه منو ارزیابی کرد برای همون حال پایین."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "ارزیابی در سال ۲۰۲۵ توسط مددکار اجتماعی مدرسه انجام شد. آیا ارزیابی دیگری هم توسط متخصص سلامت روان داشته‌اید؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "اِ… ارزیابیِ دیگه؟ من… مطمئن نیستم منظورتون از «دیگه» دقیقاً چی‌یه. همون مدرسه بود، ولی اگر منظورتون چیزِ دیگری بعد از اون هست، راستش الان یادم نمیاد. می‌شه ساده‌تر بپرسید؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "آیا به‌جز ارزیابی سال ۲۰۲۵ توسط مددکار اجتماعی مدرسه، تا به حال متخصص سلامت روان دیگری شما را ارزیابی کرده است؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "نه، چیز دیگه‌ای یادم نمیاد."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "آیا تا به حال به دلیل مشکلات سلامت روان در بیمارستان بستری شده‌اید؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "اِ… بستری؟ منظورتون همون جاییه که آدم می‌مونه توی بیمارستان، یا فقط ویزیت و این‌جور چیزها؟ راستش یک‌کم سؤال رو قاطی کردم. می‌شه خیلی ساده‌تر بگید دقیقاً دنبال چی هستید؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "منظورم این است: آیا تا به حال برای مشکلات سلامت روان، شب یا چند روز در بیمارستان مانده‌اید؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "نه، هیچ‌وقت."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "آیا تا به حال به فکر آسیب‌زدن عمدی به خودتان افتاده‌اید یا عمداً به خودتان آسیب زده‌اید؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "نه… عمداً به خودم آسیب نزدم. ولی… بعضی وقت‌ها فکر می‌کنم کاش بیدار نمی‌شدم. الانم… آره، یه جور فکرای این‌طوری دارم، ولی نقشه‌ای ندارم و قصدی هم ندارم."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "ممنون که گفتید. آیا همین حالا احساس می‌کنید ممکن است به خودتان آسیب بزنید، یا نمی‌توانید فعلاً ایمن بمانید؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "اِ… منظور از «ایمن ماندن» دقیقاً چیه؟ من… نمی‌دونم شما دارید درباره همین الان می‌پرسید یا کلاً. یه‌کم گیج شدم، می‌شه خیلی ساده‌تر بگید؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "ممنون که به من گفتید. امنیت شما در این لحظه مهم‌ترین چیز است. اگر ممکن است در خطر فوری باشید، لطفاً با ۹۸۸ (988) تماس بگیرید یا پیام دهید، یا به نزدیک‌ترین بخش اورژانس بروید. وقتی در امان باشید می‌توانیم ادامه دهیم.\n\nمنظورم این است: آیا همین الان ممکن است به خودتان آسیب بزنید، یا مطمئن نیستید که بتوانید جلوی آسیب‌زدن به خودتان را بگیرید؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "نه… الان نقشه‌ای ندارم و قصدی هم ندارم. فقط همون فکرِ این‌که کاش بیدار نمی‌شدم هست."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "آیا تا به حال یکی از این درمان‌ها را دریافت کرده‌اید: CBT، DBT، درمان بین‌فردی، درمان مبتنی بر ذهن‌آگاهی، درمان روان‌پویشی، یا درمان دیگری؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "اِ… فکر کنم همون مشاوره‌ی مدرسه بود. یعنی… توی دبیرستان، سال ۲۰۲۵، حدود ۵ جلسه رفتم. اسمِ نوع درمانش رو نمی‌دونم."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "آیا درمان دیگری هم، جدا از مشاوره مدرسه در سال ۲۰۲۵، دریافت کرده‌اید؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "نه، همون بود."
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "آیا تا به حال rTMS، ECT، تحریک عمقی مغز، درمان با کتامین، یا درمان زیستی دیگری دریافت کرده‌اید؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "اِ… rTMS؟ ECT؟ اینا یعنی چی دقیقاً؟ من… اسمشون رو نمی‌دونم، برای همین شاید دارم سؤال رو اشتباه می‌فهمم. می‌شه خیلی ساده‌تر بگید منظورتون چه جور درمانیه؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "منظورم درمان‌های پزشکی ویژه برای مشکلات سلامت روان است؛ مثل تحریک مغز با دستگاه، درمان با جریان برق، درمان با کتامین، یا روش‌های مشابه. آیا تا به حال یکی از این درمان‌ها را دریافت کرده‌اید؟"
+    },
+    {
+      "section": "past_psychiatric_history",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "نه، هیچ‌کدوم رو نگرفتم."
+    },
+    {
+      "section": "medications",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "آیا در حال حاضر داروی تجویزی مصرف می‌کنید؟"
+    },
+    {
+      "section": "medications",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "اِ… داروی تجویزی؟ منظورتون داروی اعصاب و از این چیزهاست یا هر دارویی کلاً؟ من یک‌کم سؤال رو قاطی کردم. می‌شه بگید دقیقاً کدوم نوع دارو رو می‌پرسید؟"
+    },
+    {
+      "section": "medications",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "منظورم هر داروی تجویزی است، نه فقط داروهای اعصاب. آیا در حال حاضر داروی تجویزی مصرف می‌کنید؟"
+    },
+    {
+      "section": "medications",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "نه، هیچ داروی تجویزی‌ای الان نمی‌خورم."
+    },
+    {
+      "section": "medications",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "آیا قبلاً داروی روان‌پزشکی مصرف کرده‌اید؟"
+    },
+    {
+      "section": "medications",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "نه، قبلاً هم چیزی نخوردم."
+    },
+    {
+      "section": "medical_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "آیا تا به حال پزشک برای شما بیماری یا وضعیت پزشکی‌ای تشخیص داده است؟"
+    },
+    {
+      "section": "medical_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "نه، چیزی ندارم. یعنی… تا جایی که می‌دونم، نه."
+    },
+    {
+      "section": "medical_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "آیا تا به حال عمل جراحی داشته‌اید؟"
+    },
+    {
+      "section": "medical_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "نه، نداشتم."
+    },
+    {
+      "section": "medical_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "قد شما چقدر است؟ لطفاً با سانتی‌متر یا فوت و اینچ بگویید."
+    },
+    {
+      "section": "medical_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "اِ… قد؟ من… مطمئن نیستم دقیقاً باید با سانتی‌متر بگم یا فوت و اینچ. این جور سؤال‌ها رو همیشه قاطی می‌کنم. می‌شه خیلی ساده‌تر بگید کدوم واحد رو می‌خواید؟"
+    },
+    {
+      "section": "medical_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "هر کدام برایتان راحت‌تر است: مثلاً «۱۷۵ سانتی‌متر» یا «۵ فوت و ۹ اینچ». قدتان چقدر است؟"
+    },
+    {
+      "section": "medical_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "۱۶۰ سانتی‌متر."
+    },
+    {
+      "section": "medical_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "وزنتان چقدر است؟ لطفاً با کیلوگرم یا پوند بگویید."
+    },
+    {
+      "section": "medical_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "۵۲ کیلوگرم."
+    },
+    {
+      "section": "medication_allergies",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "آیا به داروهای خاصی حساسیت یا آلرژی شناخته‌شده دارید؟"
+    },
+    {
+      "section": "medication_allergies",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "نه، ندارم."
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "آیا هیچ‌یک از اعضای خانواده‌تان به یک بیماری یا اختلال سلامت روان، مانند افسردگی، اضطراب، وسواس، اختلال دوقطبی یا اسکیزوفرنی، مبتلا تشخیص داده شده‌اند؟"
+    },
+    {
+      "section": "family_psychiatric_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "اِ… منظورِ شما از «اعضای خانواده» کدوم‌هاست؟ چون من یه‌کم قاطی می‌کنم وقتی اسم چند تا چیز کنار هم می‌آد. می‌خواید درباره بیماریِ خودشون بپرسم یا اینکه توی خانواده‌مون…؟ می‌شه ساده‌تر بگید دقیقاً دنبال چی هستید؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "جدا از هرگونه دارویی که برایتان تجویز شده و طبق دستور مصرف می‌کنید، آیا تاکنون الکل مصرف کرده‌اید: هرگز، قبلاً، یا در حال حاضر؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "هرگز."
+    },
+    {
+      "section": "substance_use",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "جدا از مصرف پزشکیِ تجویزشده، آیا تاکنون سیگار، ویپ یا محصولات نیکوتینی دیگری مصرف کرده‌اید: هرگز، قبلاً، یا در حال حاضر؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "اِ… نیکوتین؟ منظور سیگار و اینا…؟ من یک‌کم با این سؤال‌های چندتایی قاطی می‌کنم. می‌شه خیلی ساده‌تر بگید دقیقاً دنبال مصرفِ چی هستید؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "بله، منظورم فقط مصرف غیرپزشکیِ سیگار، ویپ، قلیان یا هر محصول نیکوتینی دیگری است؛ آیا هرگز، قبلاً، یا در حال حاضر از این‌ها استفاده کرده‌اید؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "هرگز."
+    },
+    {
+      "section": "substance_use",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "جدا از هر دارویی که برایتان تجویز شده و طبق دستور مصرف می‌کنید، آیا تاکنون ماری‌جوانا یا کانابیس مصرف کرده‌اید: هرگز، قبلاً، یا در حال حاضر؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "هرگز."
+    },
+    {
+      "section": "substance_use",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "جدا از داروهای تجویزشده‌ای که طبق دستور مصرف می‌کنید، آیا تاکنون مواد محرک مانند کوکائین، مت‌آمفتامین، MDMA یا اکستازی را به‌صورت غیرپزشکی مصرف کرده‌اید: هرگز، قبلاً، یا در حال حاضر؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "اِ… مواد محرک؟ یعنی مثل کوکائین و این چیزها؟ من یک‌کم گیج شدم، چون چند تا اسم با هم گفتید… می‌شه لطفاً خیلی ساده‌تر بگید منظورتون دقیقاً کدومه؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "بله، منظورم فقط مصرف غیرپزشکیِ کوکائین، مت‌آمفتامین، MDMA یا اکستازی است؛ آیا هرگز، قبلاً، یا در حال حاضر از هرکدام از این مواد استفاده کرده‌اید؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "هرگز."
+    },
+    {
+      "section": "substance_use",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "جدا از داروهای مسکنی که برایتان تجویز شده و طبق دستور مصرف می‌کنید، آیا تاکنون مواد افیونی یا مخدرهایی مانند فنتانیل، هروئین، مورفین یا اکسی‌کودون را به‌صورت غیرپزشکی مصرف کرده‌اید: هرگز، قبلاً، یا در حال حاضر؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "هرگز."
+    },
+    {
+      "section": "substance_use",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "جدا از داروهای تجویزشده‌ای که طبق دستور مصرف می‌کنید، آیا تاکنون داروهای آرام‌بخش بنزودیازپینی مانند والیوم، آتیوان یا زاناکس را به‌صورت غیرپزشکی مصرف کرده‌اید: هرگز، قبلاً، یا در حال حاضر؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "اِ… بنزودیازپین؟ یعنی مثل والیوم و آتیوان و زاناکس، درسته؟ من… راستش با این اسم‌ها قاطی می‌کنم. منظورتون از «به‌صورت غیرپزشکی» همون مصرفِ خودسرانه‌ست؟ می‌شه یک بار دیگه خیلی ساده‌تر بگید دقیقاً چی رو می‌پرسید؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "بله، منظورم مصرف خودسرانهٔ والیوم، آتیوان یا زاناکس است؛ یعنی بدون تجویز، داروی شخص دیگری، یا بیشتر از مقدار تجویزشده. آیا هرگز، قبلاً، یا در حال حاضر چنین مصرفی داشته‌اید؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "هرگز."
+    },
+    {
+      "section": "substance_use",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "آیا تاکنون مواد توهم‌زا مانند LSD، PCP یا سیلوسایبین را مصرف کرده‌اید: هرگز، قبلاً، یا در حال حاضر؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "اِ… مواد توهم‌زا؟ یعنی LSD و اینا؟ من… اسم‌هاش رو با هم قاطی می‌کنم. منظورتون دقیقاً همون چیزاییه که آدم رو… خب، می‌دونید… می‌شه یک بار دیگه خیلی ساده‌تر بگید کدوم مصرف رو می‌پرسید؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "بله، منظورم فقط مصرف LSD، PCP یا سیلوسایبین است؛ آیا هرگز، قبلاً، یا در حال حاضر از هرکدام از این مواد استفاده کرده‌اید؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "هرگز."
+    },
+    {
+      "section": "substance_use",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "آیا مادهٔ دیگری را که هنوز درباره‌اش صحبت نکرده‌ایم، به‌صورت غیرپزشکی مصرف کرده‌اید؟"
+    },
+    {
+      "section": "substance_use",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "هرگز."
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "آیا در حال حاضر درگیر پروندهٔ حقوقی فعالی هستید؟"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "نه، ندارم."
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "بالاترین سطح تحصیلاتی که به پایان رسانده‌اید چیست؟"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "اِ… منظورتون اینه که تا کدوم پایه رفتم؟ من یه‌کم با این سؤال‌ها قاطی می‌کنم. می‌خواید بگم الان کجا درس می‌خونم یا اینکه آخرین چیزی که تموم کردم چیه؟"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "منظورم آخرین سطح تحصیلی‌ای است که **با موفقیت به پایان رسانده‌اید**؛ مثلاً دبیرستان، دیپلم کالج، کارشناسی، کارشناسی ارشد یا دکترا.\n\nپیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "پایه یازدهم… الان هم دبیرستان گلن‌فورست سکندری می‌روم."
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "لطفاً دربارهٔ سابقهٔ کاری اخیرتان بگویید. برای هر شغل، نام کارفرما یا سازمان، عنوان شغلی، و تاریخ شروع و پایان یا مدت تقریبی کار را ذکر کنید.\n\nپیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟"
+    },
+    {
+      "section": "education_employment_legal_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "اِ… سابقهٔ کاری؟ من… تا حالا شغلی نداشتم. یعنی چیزی برای گفتن ندارم."
+    },
+    {
+      "section": "personal_history",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "لطفاً درباره دوران کودکیِ خود توضیح دهید؛ از جمله اینکه کجا به دنیا آمدید، کجا بزرگ شدید و خودتان را در کودکی چگونه توصیف می‌کنید.\n\nپیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟"
+    },
+    {
+      "section": "personal_history",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "اِ… دوران کودکی؟ یعنی از بچگی‌م می‌پرسید؟ من یک‌کم قاطی می‌کنم که دقیقاً کدوم قسمت رو می‌خواید—اینکه کجا بزرگ شدم، یا اینکه چه جور بچه‌ای بودم، یا هر دو؟ می‌شه یه‌کم ساده‌تر بگید دقیقاً دنبال چی هستید؟"
+    },
+    {
+      "section": "personal_history",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "بله، هر دو مورد را می‌خواهم: لطفاً بگویید کجا به دنیا آمدید و بزرگ شدید، و در کودکی چه جور بچه‌ای بودید؛ مثلاً خجالتی، اجتماعی، حساس یا پرانرژی.\n\nپیش از آنکه ادامه دهیم، لطفاً به پرسش «early childhood» پاسخ دهید."
+    },
+    {
+      "section": "personal_history",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "تو تورنتو به دنیا اومدم و بزرگ شدم… و فکر کنم بچه‌ی خجالتی و حساسی بودم."
+    },
+    {
+      "section": "personal_history",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "لطفاً درباره دوران نوجوانی و اوایل بزرگسالی‌تان توضیح دهید؛ تجربه‌تان در مدرسه، دشواری‌هایی که داشتید، شغل‌ها یا مسئولیت‌هایتان، و هر تجربه مهم دیگری که مایلید به اشتراک بگذارید.\n\nپیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟"
+    },
+    {
+      "section": "personal_history",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "اِ… نوجوانی و اوایل بزرگسالی؟ من هنوزم توی مدرسه‌ام، یعنی دوازدهم نیستم… ببخشید، گیج شدم. منظورِ شما از «تجربه‌های مهم» بیشتر درس و دوست‌هاست یا چیزهای دیگه هم هست؟ می‌تونید یه‌کم ساده‌تر بگید؟"
+    },
+    {
+      "section": "personal_history",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "منظورم سال‌های نوجوانی و سال‌های ابتدایی بزرگسالی است؛ اگر هنوز در مدرسه هستید، فقط درباره سال‌های نوجوانی‌تان بگویید: مدرسه برایتان چگونه بوده، آیا دشواری‌ای داشته‌اید، چه مسئولیت‌هایی داشته‌اید، و هر تجربه مهم دیگری که خودتان مایلید ذکر کنید.\n\nپیش از آنکه ادامه دهیم، لطفاً به پرسش «adolescence early adulthood» پاسخ دهید."
+    },
+    {
+      "section": "personal_history",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "خب… من الان پایه یازدهمم و مدرسه‌م گلن‌فورست سکندریه. توی یکی دو سال اخیر دوست‌هام کمتر شدن… یعنی دوستی‌هام محدودتر شده. و از حدود شش ماه پیش هم حال‌وهوام پایین اومده و نمره‌هام دارن می‌افتن. همین."
+    },
+    {
+      "section": "personal_history",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "لطفاً درباره روابط مهم زندگی‌تان توضیح دهید؛ از جمله روابط خانوادگی و دوستی‌ها، و اگر رابطه عاطفی یا شراکت طولانی‌مدتی داشته‌اید، مدت یا حدود زمان آن و اینکه اکنون ادامه دارد یا تمام شده است. વિગતો غیرضروری یا خصوصی لازم نیست.\n\nپیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟"
+    },
+    {
+      "section": "personal_history",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "اِ… رابطه‌های مهم؟ یعنی خانواده و دوست‌ها؟ من یک‌کم قاطی می‌کنم که منظورتون دقیقاً کدوم بخشه… چون خب، این چیزها یه‌کم طولانیه. می‌خواید اول درباره خانواده بگم یا دوست‌ها؟"
+    },
+    {
+      "section": "personal_history",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "بله، منظورم هر دو است. لازم نیست طولانی باشد؛ لطفاً به‌طور خلاصه بگویید کدام اعضای خانواده و کدام دوستی‌ها برایتان مهم هستند و این روابط اکنون چگونه‌اند. اگر رابطه عاطفی مهمی هم داشته‌اید، می‌توانید آن را نیز ذکر کنید.\n\nپیش از آنکه ادامه دهیم، لطفاً به پرسش «significant relationships» پاسخ دهید."
+    },
+    {
+      "section": "personal_history",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "با پدر و مادرم زندگی می‌کنم و یه برادر کوچیک‌تر هم دارم. یه دوست صمیمی هم دارم… فقط یکی."
+    },
+    {
+      "section": "personal_history",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "لطفاً درباره هدف‌ها و خواسته‌هایتان برای آینده بگویید؛ این هدف‌ها می‌توانند مربوط به سلامت، تحصیل، کار، روابط، خانواده یا رشد شخصی باشند.\n\nپیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟"
+    },
+    {
+      "section": "personal_history",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "اِ… هدف‌هام؟ می‌خوام مدرسه رو تموم کنم و بعدش انیمیشن بخونم. همین، فکر کنم."
+    },
+    {
+      "section": "phq9",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 1: در طول دو هفته گذشته، چقدر از انجام کارها یا فعالیت‌ها لذت یا علاقه کمتری داشته‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 2: در طول دو هفته گذشته، چقدر احساس ناراحتی، افسردگی یا ناامیدی داشته‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "دقیق گفتنش سخت است."
+    },
+    {
+      "section": "phq9",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 2: در طول دو هفته گذشته، چقدر احساس ناراحتی، افسردگی یا ناامیدی داشته‌اید؟ آیا این احساس در ۵ روز، ۱۰ روز، یا تقریباً هر روز وجود داشته است؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "تا حدی، فکر کنم؟ به هفته بستگی دارد."
+    },
+    {
+      "section": "phq9",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 2: در طول دو هفته گذشته، چقدر احساس ناراحتی، افسردگی یا ناامیدی داشته‌اید؟ لطفاً یکی از گزینه‌های زیر را انتخاب کنید:\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 3: در طول دو هفته گذشته، چقدر در خوابیدن مشکل داشته‌اید، یا بیش از حد خوابیده‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "دقیق گفتنش سخت است."
+    },
+    {
+      "section": "phq9",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 3: در طول دو هفته گذشته، چقدر در خوابیدن مشکل داشته‌اید، یا بیش از حد خوابیده‌اید؟ برای نمونه، آیا این مشکل در ۵ روز، ۱۰ روز، یا تقریباً هر روز وجود داشته است؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "ببخشید، نفهمیدم. درباره تعداد بار می‌پرسید یا شدتش؟"
+    },
+    {
+      "section": "phq9",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 3: در طول دو هفته گذشته، در چند روز مشکل خواب داشته‌اید یا بیش از حد خوابیده‌اید؟ منظور تعداد روزهاست، نه شدت.\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "بیشتر از نیمی از روزها"
+    },
+    {
+      "section": "phq9",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 4: در طول دو هفته گذشته، چقدر احساس خستگی یا کمبود انرژی داشته‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 5: در طول دو هفته گذشته، چقدر اشتهای کمی داشته‌اید یا بیش از حد غذا خورده‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "بیشتر از نیمی از روزها"
+    },
+    {
+      "section": "phq9",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 6: در طول دو هفته گذشته، چقدر احساس بدی نسبت به خودتان داشته‌اید—یا احساس کرده‌اید که شکست خورده‌اید، یا خودتان یا خانواده‌تان را ناامید کرده‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "هوم، گفتنش سخت است. گزینه‌ها چه بودند؟"
+    },
+    {
+      "section": "phq9",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 6: در طول دو هفته گذشته، چقدر احساس بدی نسبت به خودتان داشته‌اید—یا احساس کرده‌اید که شکست خورده‌اید، یا خودتان یا خانواده‌تان را ناامید کرده‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 7: در طول دو هفته گذشته، چقدر در تمرکز کردن روی چیزهایی مانند خواندن روزنامه یا تماشای تلویزیون مشکل داشته‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "بیشتر از نیمی از روزها"
+    },
+    {
+      "section": "phq9",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 8: در طول دو هفته گذشته، چقدر آهسته حرکت یا صحبت کرده‌اید، به‌طوری که دیگران متوجه شوند؟ یا برعکس، آن‌قدر بی‌قرار بوده‌اید که بیش از حد معمول حرکت می‌کردید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "چند روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 14,
+      "speaker": "CIRA",
+      "message": "PHQ-9 Question 9: در طول دو هفته گذشته، چقدر به این فکر کرده‌اید که اگر نبودید بهتر بود، یا به هر نحوی به خودتان آسیب بزنید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "phq9",
+      "turn": 14,
+      "speaker": "PATIENT",
+      "message": "بیشتر از نیمی از روزها"
+    },
+    {
+      "section": "phq9",
+      "turn": 15,
+      "speaker": "CIRA",
+      "message": "PHQ-9 functional difficulty: این مشکلات چقدر انجام کارها، مسئولیت‌های خانه یا ارتباط با دیگران را برای شما دشوار کرده‌اند؟\n\n- به هیچ وجه دشوار نبود\n- تا حدی دشوار\n- بسیار دشوار\n- به شدت دشوار"
+    },
+    {
+      "section": "phq9",
+      "turn": 15,
+      "speaker": "PATIENT",
+      "message": "به شدت دشوار"
+    },
+    {
+      "section": "gad7",
+      "turn": 1,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 1: در دو هفتهٔ گذشته، چند وقت احساس عصبی بودن، اضطراب یا بی‌قراری داشته‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "gad7",
+      "turn": 1,
+      "speaker": "PATIENT",
+      "message": "بستگی دارد منظورتان چه باشد — در چه بازه‌ای؟"
+    },
+    {
+      "section": "gad7",
+      "turn": 2,
+      "speaker": "CIRA",
+      "message": "منظور، **دو هفتهٔ گذشته** است.\n\nGAD-7 Question 1: در دو هفتهٔ گذشته، چند وقت احساس عصبی بودن، اضطراب یا بی‌قراری داشته‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "gad7",
+      "turn": 2,
+      "speaker": "PATIENT",
+      "message": "تا حدی، فکر کنم؟ به هفته بستگی دارد."
+    },
+    {
+      "section": "gad7",
+      "turn": 3,
+      "speaker": "CIRA",
+      "message": "لطفاً بر اساس مجموع **دو هفتهٔ گذشته** نزدیک‌ترین گزینه را انتخاب کنید:\n\nGAD-7 Question 1: در دو هفتهٔ گذشته، چند وقت احساس عصبی بودن، اضطراب یا بی‌قراری داشته‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "gad7",
+      "turn": 3,
+      "speaker": "PATIENT",
+      "message": "بیشتر از نیمی از روزها"
+    },
+    {
+      "section": "gad7",
+      "turn": 4,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 2: در دو هفتهٔ گذشته، چند وقت در متوقف کردن یا کنترل کردن نگرانی خود مشکل داشته‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "gad7",
+      "turn": 4,
+      "speaker": "PATIENT",
+      "message": "بستگی دارد منظورتان چه باشد — در چه بازه‌ای؟"
+    },
+    {
+      "section": "gad7",
+      "turn": 5,
+      "speaker": "CIRA",
+      "message": "منظور، **دو هفتهٔ گذشته** است.\n\nGAD-7 Question 2: در دو هفتهٔ گذشته، چند وقت در متوقف کردن یا کنترل کردن نگرانی خود مشکل داشته‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "gad7",
+      "turn": 5,
+      "speaker": "PATIENT",
+      "message": "برخی هفته‌ها بیشتر؛ نمی‌توانم دقیق بگویم."
+    },
+    {
+      "section": "gad7",
+      "turn": 6,
+      "speaker": "CIRA",
+      "message": "برای پاسخ، مجموع **دو هفتهٔ گذشته** را در نظر بگیرید. آیا این مشکل:\n\nGAD-7 Question 2: در دو هفتهٔ گذشته، چند وقت در متوقف کردن یا کنترل کردن نگرانی خود مشکل داشته‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "gad7",
+      "turn": 6,
+      "speaker": "PATIENT",
+      "message": "بیشتر از نیمی از روزها"
+    },
+    {
+      "section": "gad7",
+      "turn": 7,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 3: در دو هفتهٔ گذشته، چند وقت بیش از حد دربارهٔ مسائل مختلف نگران بوده‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "gad7",
+      "turn": 7,
+      "speaker": "PATIENT",
+      "message": "برخی هفته‌ها بیشتر؛ نمی‌توانم دقیق بگویم."
+    },
+    {
+      "section": "gad7",
+      "turn": 8,
+      "speaker": "CIRA",
+      "message": "لطفاً مجموع **دو هفتهٔ گذشته** را در نظر بگیرید و نزدیک‌ترین گزینه را انتخاب کنید:\n\nGAD-7 Question 3: در دو هفتهٔ گذشته، چند وقت بیش از حد دربارهٔ مسائل مختلف نگران بوده‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "gad7",
+      "turn": 8,
+      "speaker": "PATIENT",
+      "message": "بیشتر از نیمی از روزها"
+    },
+    {
+      "section": "gad7",
+      "turn": 9,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 4: در دو هفتهٔ گذشته، چند وقت در آرام شدن مشکل داشته‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "gad7",
+      "turn": 9,
+      "speaker": "PATIENT",
+      "message": "بیشتر از نیمی از روزها"
+    },
+    {
+      "section": "gad7",
+      "turn": 10,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 5: در دو هفتهٔ گذشته، چند وقت آن‌قدر بی‌قرار بوده‌اید که نشستنِ بی‌حرکت برایتان دشوار باشد؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "gad7",
+      "turn": 10,
+      "speaker": "PATIENT",
+      "message": "چند روز"
+    },
+    {
+      "section": "gad7",
+      "turn": 11,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 6: در دو هفتهٔ گذشته، چند وقت به‌راحتی عصبانی یا تحریک‌پذیر شده‌اید؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "gad7",
+      "turn": 11,
+      "speaker": "PATIENT",
+      "message": "بیشتر از نیمی از روزها"
+    },
+    {
+      "section": "gad7",
+      "turn": 12,
+      "speaker": "CIRA",
+      "message": "GAD-7 Question 7: در دو هفتهٔ گذشته، چند وقت احساس ترس داشته‌اید که ممکن است اتفاق وحشتناکی رخ دهد؟\n\n0 - هیچ وقت  \n1 - چند روز  \n2 - بیشتر از نیمی از روزها  \n3 - تقریباً هر روز"
+    },
+    {
+      "section": "gad7",
+      "turn": 12,
+      "speaker": "PATIENT",
+      "message": "بیشتر از نیمی از روزها"
+    },
+    {
+      "section": "gad7",
+      "turn": 13,
+      "speaker": "CIRA",
+      "message": "GAD-7 functional difficulty: این مشکلات چقدر انجام دادن کارها، مسئولیت‌های خانه یا برقراری رابطه با دیگران را برای شما دشوار کرده‌اند؟\n\n- به هیچ وجه دشوار نبود\n- تا حدی دشوار\n- بسیار دشوار\n- به شدت دشوار"
+    },
+    {
+      "section": "gad7",
+      "turn": 13,
+      "speaker": "PATIENT",
+      "message": "بسیار دشوار"
+    }
+  ],
+  "final_result": {
+    "safety_flag": true,
+    "phq9_total": 21,
+    "gad7_total": 13,
+    "completed_sections": [
+      "general_information",
+      "current_concerns",
+      "past_psychiatric_history",
+      "medications",
+      "medical_history",
+      "medication_allergies",
+      "family_psychiatric_history",
+      "substance_use",
+      "education_employment_legal_history",
+      "personal_history",
+      "phq9",
+      "gad7"
+    ],
+    "medications": {
+      "has_current_medications": false,
+      "current_medications": null,
+      "has_past_medications": false,
+      "past_medication_details": null
+    }
+  }
+}

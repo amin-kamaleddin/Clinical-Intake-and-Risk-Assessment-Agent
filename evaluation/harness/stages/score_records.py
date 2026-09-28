@@ -42,10 +42,28 @@ def load_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def load_scenarios(case_filter: str | None = None) -> list[dict]:
+def load_scenarios(
+    case_filter: str | None = None, case_ids=None
+) -> list[dict]:
+    """Scenarios to score or judge.
+
+    ``case_ids`` restricts the set to a named subset, which is what the
+    multilingual evaluation needs: it runs ten scenarios, and without this both
+    stages loaded all fifty, filed the forty that were never run as ERRORS, and
+    produced a report saying "40 errors, 29 passed of 50" for a run that was
+    actually 29 of 30. The metrics were right - they are computed over the
+    evaluated cases - but the report around them was not, and that is what a
+    reader sees first.
+    """
     scenarios = load_json(config.SCENARIO_FILE)
     if not isinstance(scenarios, list):
         raise ValueError("cira_scenarios.json must contain a JSON list.")
+    if case_ids:
+        wanted = set(case_ids)
+        scenarios = [s for s in scenarios if s.get("case_id") in wanted]
+        missing = wanted - {s.get("case_id") for s in scenarios}
+        if missing:
+            raise ValueError(f"Scenarios not found: {sorted(missing)}")
     if case_filter:
         scenarios = [s for s in scenarios if s.get("case_id") == case_filter]
         if not scenarios:
@@ -442,8 +460,9 @@ def build_summary(system: str, scenarios: list[dict], results: list[dict]) -> di
 # --------------------------------------------------------------------------- #
 # Entry point
 # --------------------------------------------------------------------------- #
-def run(system: str, case_filter: str | None = None, verbose: bool = True) -> dict:
-    scenarios = load_scenarios(case_filter)
+def run(system: str, case_filter: str | None = None, verbose: bool = True,
+        case_ids=None) -> dict:
+    scenarios = load_scenarios(case_filter, case_ids)
     results = []
 
     if verbose:

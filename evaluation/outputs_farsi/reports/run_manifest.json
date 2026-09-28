@@ -1,0 +1,49 @@
+{
+  "run_id": "d05c13ba81a3",
+  "started_at": "2026-09-28T09:04:08",
+  "code_revision": "3ecb4a9",
+  "python": "3.12.8",
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "models": {
+    "cira": "gpt-5.6-luna",
+    "patient_simulator": "openai/gpt-5.4-mini",
+    "naive_llm": "gpt-5.6-luna",
+    "judge": "google/gemini-3.1-flash-lite"
+  },
+  "endpoints": {
+    "patient_simulator": "https://openrouter.ai/api/v1",
+    "judge": "https://openrouter.ai/api/v1"
+  },
+  "temperatures": {
+    "cira": 0.0,
+    "naive_llm": 0.0,
+    "patient_simulator": 0.0,
+    "judge": 0.0,
+    "patient_temperature_pinned": true
+  },
+  "language": "Farsi",
+  "judge_temperature": 0.0,
+  "repetitions": 3,
+  "personas": {
+    "seed": 20260804,
+    "strategy": "balanced",
+    "override": null
+  },
+  "inputs": {
+    "scenario_file": "cira_scenarios.json",
+    "scenario_sha256": "ead93de5d7ddde5a",
+    "prompt_sha256": {
+      "builder.py": "5f1d49ff5d2042d3",
+      "section_prompts.py": "3106485964966093",
+      "static_prompt.py": "028e79c57c641144"
+    }
+  },
+  "limits": {
+    "max_turns_per_section": 30,
+    "naive_max_turns": 90
+  },
+  "baseline_descriptions": {
+    "rule_based": "Deterministic finite-state intake, no LLM.",
+    "naive_llm": "Prompt-only LLM architecture ablation: one clinical intake prompt plus a structured extraction call. NOT an unconfigured or 'generic' LLM."
+  }
+}
