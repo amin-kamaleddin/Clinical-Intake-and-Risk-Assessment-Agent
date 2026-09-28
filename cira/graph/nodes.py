@@ -594,15 +594,15 @@ def _stall_prompt(state: AliceState, section: str, pending: list) -> str:
         update_completion(state, section)
         return agent_phrase(language, "recorded_unknown")
 
-    # Rung 2's specific re-ask exists only in English. Outside it, repeat the
-    # localised nudge instead of leaking an English clinical question: the ladder
-    # loses its escalation but still reaches the "Unknown" rung, which resolves
-    # the field. Translating twelve clinical questions into five languages is a
-    # larger correctness risk than losing one rung of specificity, and the loss
-    # is bounded because rung 4 still fires.
-    if language != "English":
-        return nudge
-    return _DETAIL_REASK.get(field) or _pending_field_question(pending, language)
+    # Rung 2 names the field. _DETAIL_REASK holds hand-written clinical questions
+    # for the conditional details, English only - translating twelve of those into
+    # five languages is a correctness risk not worth taking. Every other language
+    # gets the localised carrier sentence, which is less natural but names the
+    # field, and naming it is the whole point of this rung: a rung that cannot
+    # say what is missing cannot recover a drifted interview.
+    if language == "English":
+        return _DETAIL_REASK.get(field) or _pending_field_question(pending, language)
+    return _pending_field_question(pending, language)
 
 
 def _pending_field_question(pending: list, language: str = "English") -> str:
@@ -619,10 +619,23 @@ def _pending_field_question(pending: list, language: str = "English") -> str:
     field = pending[0]
     if _QUESTIONNAIRE_KEY.match(field):
         # The item text is already on screen; point at it rather than name it.
+        # Checked FIRST so a questionnaire key never reaches the template below:
+        # rendering "gad7_q1" into patient-facing text once made the simulator
+        # resolve a GAD-7 item to phq9_q1 and copy the whole PHQ-9 record.
         return agent_phrase(language, "choose_option")
-    if language != "English":
-        return agent_phrase(language, "anything_else")
-    return f"Could you tell me about {field.replace('_', ' ')}?"
+    # A localised carrier sentence that still NAMES the field. The field key
+    # stays English because a translated label for every field would be a table
+    # of forty entries per language; a mixed-language sentence that redirects is
+    # worth more than a monolingual one that cannot.
+    #
+    # Without the name there is no recovery at all. On a Mandarin intake CIRA
+    # drifted into a safety clarification and never returned to `gender`: the
+    # generic nudge cannot say which field is missing, `gender` is not a
+    # conditional detail so the "Unknown" rung does not apply either, and the
+    # section was abandoned with everything still pending.
+    return agent_phrase(language, "field_question").format(
+        field=field.replace("_", " ")
+    )
 
 
 # CIRA asks for most fields imperatively - "Please provide your phone number,

@@ -277,8 +277,23 @@ def test_no_agent_injected_phrase_leaks_english() -> None:
                 check(not found, f"{name}: call site emitted English: {found}")
     print("  ok  live call sites emit no English outside English")
 
-    # The ladder must still RESOLVE the field outside English, even though rung 2
-    # loses its specific re-ask there.
+    # Rung 2 must NAME the pending field in every language. Without the name
+    # there is no recovery: on a Mandarin intake CIRA drifted into a safety
+    # clarification and never returned to `gender`, the generic nudge could not
+    # say which field was missing, `gender` is not a conditional detail so the
+    # "Unknown" rung did not apply, and the section was abandoned with
+    # everything still pending.
+    for name in LANGUAGES:
+        state = {"preferred_language": name, "stall_streak": {},
+                 "sections_completed": [], "general_information": {"gender": None}}
+        _stall_prompt(state, "general_information", ["gender"])          # rung 1
+        rung2 = _stall_prompt(state, "general_information", ["gender"])  # rung 2
+        check("gender" in rung2,
+              f"{name}: rung 2 must name the pending field, got {rung2!r}")
+    print("  ok  rung 2 names the pending field in all "
+          f"{len(LANGUAGES)} languages")
+
+    # The ladder must still RESOLVE a conditional detail outside English.
     from graph.nodes import MAX_ENGLISH_REJECTIONS  # noqa: F401  (import sanity)
     from core.state import MAX_EMPTY_DETAIL_FOLLOWUPS
     state = {"preferred_language": "Mandarin Chinese", "stall_streak": {},

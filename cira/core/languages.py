@@ -150,6 +150,7 @@ FRENCH = Language(
         "pourrons reprendre l'entretien lorsque vous serez en sécurité."
     ),
     agent_phrases={
+        "field_question": "Avant de continuer, pourriez-vous répondre à la question concernant « {field} » ?",
         "section_complete": (
             "Tout est terminé ! Veuillez consulter le panneau à droite — si "
             "quelque chose vous semble incorrect ou si vous souhaitez ajouter ou "
@@ -202,6 +203,7 @@ MANDARIN = Language(
     ),
     conditional_distinction_reliable=False,
     agent_phrases={
+        "field_question": "在我们继续之前，请回答关于「{field}」的问题。",
         "section_complete": (
             "全部完成！请查看右侧面板——如果有任何不准确的地方，"
             "或者您想补充或修改，请告诉我。"
@@ -248,6 +250,7 @@ ARABIC = Language(
         "أو التوجه إلى أقرب قسم طوارئ. يمكننا متابعة التقييم عندما تكون بأمان."
     ),
     agent_phrases={
+        "field_question": "قبل أن ننتقل، هل يمكنك الإجابة عن سؤال «{field}»؟",
         "section_complete": (
             "تم الانتهاء! يرجى مراجعة اللوحة على اليمين — إذا كان هناك شيء غير "
             "صحيح أو أردت إضافة أو تعديل شيء، أخبرني."
@@ -298,6 +301,7 @@ HINDI = Language(
     ),
     conditional_distinction_reliable=False,
     agent_phrases={
+        "field_question": "आगे बढ़ने से पहले, कृपया «{field}» के बारे में प्रश्न का उत्तर दें।",
         "section_complete": (
             "सब पूरा हो गया! कृपया दाईं ओर के पैनल को देखें — अगर कुछ गलत लगे "
             "या आप कुछ जोड़ना या बदलना चाहें, तो मुझे बताएँ।"
@@ -347,6 +351,7 @@ FARSI = Language(
     ),
     conditional_distinction_reliable=False,
     agent_phrases={
+        "field_question": "پیش از آنکه ادامه دهیم، لطفاً به پرسش «{field}» پاسخ دهید.",
         "section_complete": (
             "همه چیز کامل شد! لطفاً پنل سمت راست را ببینید — اگر چیزی نادرست است "
             "یا می‌خواهید چیزی اضافه یا اصلاح کنید، به من بگویید."
@@ -496,6 +501,7 @@ AGENT_PHRASES_ENGLISH = {
     "nudge": "Before we move on, could you answer the question above?",
     "anything_else": "Is there anything else you would like to add or change?",
     "choose_option": "Could you choose one of the options above for that question?",
+    "field_question": "Could you tell me about {field}?",
     "recorded_unknown": (
         "I was not able to record that detail, so I have noted it as unknown. "
         "We can come back to it later if you remember more."
