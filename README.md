@@ -1,4 +1,4 @@
-# Triage-Agent — CIRA and its evaluation benchmark
+# Clinical Intake and Risk Assessment
 
 Two things live here:
 
@@ -7,9 +7,6 @@ Two things live here:
   before a patient's appointment and flags current safety risk while doing it.
 - **`evaluation/`** — a benchmark that runs CIRA against two baselines over
   50 simulated patients and scores all three on the same measures.
-
-Built for the Interventional Psychiatry Program, Unity Health Toronto
-(St. Michael's Hospital).
 
 ```
 Triage-Agent/
