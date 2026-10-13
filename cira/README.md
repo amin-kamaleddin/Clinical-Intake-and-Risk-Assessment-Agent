@@ -19,11 +19,24 @@ Built for the Interventional Psychiatry Program, Unity Health Toronto
 
 ```bash
 pip install -r requirements.txt
-python cira/main.py
+python cira/main.py          # http://127.0.0.1:8000
 ```
 
-`main.py` loads `.env`, imports the Gradio app from `ui/app.py`, and launches
-it. There is no CLI intake; the agent is driven through the web UI.
+`main.py` starts the FastAPI service in `web/server.py`, which serves the
+interface from `web/static/` and exposes the agent behind a small JSON API.
+There is no CLI intake; the agent is driven through the web interface.
+
+Records are written relative to the directory you start from, so start the
+server where those records should land (see **Records** below).
+
+| variable | purpose | default |
+|---|---|---|
+| `CIRA_HOST` | address to bind | `127.0.0.1` |
+| `CIRA_PORT` | port | `8000` |
+
+Bind to `0.0.0.0` only behind something that terminates TLS and authenticates
+the user. The service has no login of its own, and every record it holds is
+identifying clinical information.
 
 `.env` lives at the **project root** (the folder containing `cira/`), not
 inside `cira/`. `core/config.py` loads it before reading any environment
@@ -52,8 +65,9 @@ Never commit `.env`. If it has been committed, rotate the keys.
 
 ```
 cira/
-├── main.py                    ← entry point: loads .env, launches the Gradio app
+├── main.py                    ← entry point: launches the web service
 ├── core/
+│   ├── languages.py           ← the six supported languages, in one place
 │   ├── config.py              ← model names, .env loading (must run before getenv)
 │   ├── state.py               ← AliceState, REQUIRED_FIELDS, FIELD_TO_SECTION
 │   ├── tools.py               ← save_answer, raise_safety_flag, confirm_no_more_entries
@@ -69,6 +83,11 @@ cira/
 │   ├── builder.py             ← assembles the system prompt per turn
 │   ├── static_prompt.py       ← role, conversation rules, safety protocol
 │   └── section_prompts.py     ← per-section collection instructions
+├── ui/
+│   └── schema.py              ← sections, field labels, state normalisation
+├── web/
+│   ├── server.py              ← FastAPI: the JSON API and the static files
+│   └── static/                ← the interface (index.html, app.css, app.js)
 └── tests/
     └── test_safety_gate.py    ← safety regression tests (offline, no keys)
 ```
@@ -195,15 +214,51 @@ The directory is created relative to the working directory you launched from.
 
 ## Language
 
-`SUPPORTED_TEST_LANGUAGES = ["English", "French", "Hindi"]` and the system
-prompt instructs the model to reply in `preferred_language`.
+`core/languages.py` is the single source of truth, shared by the agent and the
+evaluation harness. Six languages are supported: English, French, Mandarin
+Chinese, Arabic, Hindi, Farsi. Each entry carries the crisis message, the
+PHQ-9 / GAD-7 frequency and difficulty phrases, the question marks the scorer
+accepts, the ISO code for transcription, and the voice instructions for speech.
 
-**There is currently no automatic language detection.** Nothing sets
-`preferred_language`, so in practice every intake runs in English, and the
-deterministic crisis message in `core/safety.py` is English-only. Treat
-multilingual support as unimplemented rather than partial — a crisis message
-that does not reach the patient in their language is a safety issue, not a
-localisation gap.
+The patient chooses the language in the interface, and may change it
+mid-intake. Two things hold regardless:
+
+- **The record is always written in English.** The conversation is not. This is
+  what keeps one intake from being split across two languages, and it is what
+  the evaluation measures against English ground truth.
+- **The crisis message is delivered in the patient's language**, from the
+  translation in `languages.py`, falling back to the English wording in
+  `core/safety.py` only if a language has none. Saying nothing to a patient at
+  risk is worse than saying it in the wrong language.
+
+Speech works in all six: the reply is spoken with per-language voice
+instructions, and a spoken answer is transcribed **with** the chosen language
+rather than by detection — a one-word answer gives a detector almost nothing,
+and a wrong guess returns fluent nonsense rather than an error.
+
+There is still no automatic detection: the language is chosen, never inferred.
+
+---
+
+## Deploying it
+
+One service, one port, no build step - the interface is plain HTML, CSS and
+JavaScript served by the same process as the API.
+
+```bash
+pip install -r cira/requirements.txt
+CIRA_HOST=0.0.0.0 CIRA_PORT=8000 python cira/main.py
+```
+
+Before it faces anyone real:
+
+- put it behind TLS and authentication; it has neither
+- point the working directory at access-controlled storage, not the checkout
+- keep `.env` out of the image and out of the repository
+- confirm that storing this data in that location is permitted under PHIPA and
+  your institution's privacy rules. The record holds a name, a date of birth, a
+  home address, a phone number, an email address, psychiatric history and
+  suicidality. Hosting is the easy part of that sentence.
 
 ---
 
@@ -217,13 +272,16 @@ simulated patients. See `evaluation/README.md`.
 
 ## Known limitations
 
-- No automatic language detection (above).
-- Switching sections in the UI clears the model conversation. Because the
+- The language is chosen, never detected (above).
+- Switching sections clears the model conversation. Because the
   prompt withholds partial multi-detail entries, switching mid-entry can
   discard information that was collected but not yet saved.
-- UI-only state fields are not declared in `AliceState`. Anything not declared
+- Interface-only state fields are not declared in `AliceState`. Anything not declared
   there is dropped by LangGraph on every `graph.invoke()` — if you add state,
   declare it in the TypedDict, not only in `initial_state`.
-- Voice input shows only a placeholder, not the transcript, so a patient cannot
-  verify a mis-transcription before it enters the record.
+- A transcript enters the record on the same turn it is shown, so a patient
+  sees a mis-transcription only after it has been saved.
 - Successful TTS temporary files are not cleaned up.
+- Sessions are held in memory, so a restart ends every intake in progress. The
+  records already written survive; the conversations do not.
+- The service has no authentication of its own.

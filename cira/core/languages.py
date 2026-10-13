@@ -56,6 +56,19 @@ class Language:
     notes: str = ""
     #: "No, those are all." - how a patient closes a repeatable list.
     no_more_entries: str = "No, those are all."
+    #: ISO 639-1 code, for the speech models.
+    #:
+    #: Transcription without it is a guess: a short reply like "没有" or "نعم"
+    #: gives the model almost nothing to identify the language from, and a
+    #: misidentified language comes back as nonsense rather than as an error.
+    iso_code: str = "en"
+    #: How the spoken voice should sound, in this language.
+    #:
+    #: The English instruction asks for "a warm, friendly, young adult feminine
+    #: voice" - describing an English speaking style to a model about to speak
+    #: Mandarin. Each language names itself so the voice does not carry an
+    #: English accent into the patient's own language.
+    voice_instructions: str = ""
     #: Sentences the AGENT CODE says to the patient, not the model.
     #:
     #: These are appended by graph.nodes after the model has replied - the
@@ -110,6 +123,10 @@ class Language:
 
 
 ENGLISH = Language(
+    iso_code="en",
+    voice_instructions=(
+        "Speak English naturally, as an English speaker would. Use a warm, calm, caring and professional tone, at a comfortable and clear pace. You are a clinical intake assistant speaking to a patient who may be distressed, so stay steady and unhurried."
+    ),
     name="English",
     native_name="English",
     frequency_phrases=(
@@ -129,6 +146,10 @@ ENGLISH = Language(
 )
 
 FRENCH = Language(
+    iso_code="fr",
+    voice_instructions=(
+        "Speak French naturally, as a French speaker would. Use a warm, calm, caring and professional tone, at a comfortable and clear pace. You are a clinical intake assistant speaking to a patient who may be distressed, so stay steady and unhurried."
+    ),
     name="French",
     native_name="Français",
     frequency_phrases=(
@@ -178,6 +199,10 @@ FRENCH = Language(
 )
 
 MANDARIN = Language(
+    iso_code="zh",
+    voice_instructions=(
+        "Speak Mandarin Chinese naturally, as a native Mandarin speaker would. Use a warm, calm, caring and professional tone, at a comfortable and clear pace. You are a clinical intake assistant speaking to a patient who may be distressed, so stay steady and unhurried."
+    ),
     name="Mandarin Chinese",
     native_name="中文",
     frequency_phrases=(
@@ -229,6 +254,10 @@ MANDARIN = Language(
 )
 
 ARABIC = Language(
+    iso_code="ar",
+    voice_instructions=(
+        "Speak Modern Standard Arabic naturally, as a native Arabic speaker would. Use a warm, calm, caring and professional tone, at a comfortable and clear pace. You are a clinical intake assistant speaking to a patient who may be distressed, so stay steady and unhurried."
+    ),
     name="Arabic",
     native_name="العربية",
     frequency_phrases=(
@@ -280,6 +309,10 @@ ARABIC = Language(
 )
 
 HINDI = Language(
+    iso_code="hi",
+    voice_instructions=(
+        "Speak Hindi naturally, as a native Hindi speaker would. Use a warm, calm, caring and professional tone, at a comfortable and clear pace. You are a clinical intake assistant speaking to a patient who may be distressed, so stay steady and unhurried."
+    ),
     name="Hindi",
     native_name="हिन्दी",
     frequency_phrases=(
@@ -329,6 +362,10 @@ HINDI = Language(
 )
 
 FARSI = Language(
+    iso_code="fa",
+    voice_instructions=(
+        "Speak Persian (Farsi) naturally, as a native Persian speaker would. Use a warm, calm, caring and professional tone, at a comfortable and clear pace. You are a clinical intake assistant speaking to a patient who may be distressed, so stay steady and unhurried."
+    ),
     name="Farsi",
     native_name="فارسی",
     frequency_phrases=(

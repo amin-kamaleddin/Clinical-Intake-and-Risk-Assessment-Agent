@@ -9,8 +9,33 @@ from core.config import STT_MODEL, TTS_MODEL, TTS_VOICE
 openai_client = OpenAI()
 
 
-def text_to_speech(text):
-    """Convert an ALICE text response into a temporary MP3 file."""
+def _language(name):
+    """Look up a language, falling back to English for anything unknown."""
+    from core.languages import get
+    return get(name or "English")
+
+
+def _iso_code(name):
+    """ISO 639-1 code for the speech models."""
+    return _language(name).iso_code
+
+
+def _voice_instructions(name):
+    """How the spoken voice should sound in this language."""
+    spec = _language(name)
+    return spec.voice_instructions or (
+        "Speak with a warm, calm, caring and professional voice, at a "
+        "comfortable and clear pace."
+    )
+
+
+def text_to_speech(text, language="English"):
+    """Speak a CIRA reply, in the language the conversation is being held in.
+
+    The voice instruction used to describe an English speaking style regardless
+    of the language being spoken, which gives a model about to speak Mandarin a
+    description of an English delivery. Each language now names itself.
+    """
     if not text or not str(text).strip():
         return None
 
@@ -22,11 +47,7 @@ def text_to_speech(text):
             model=TTS_MODEL,
             voice=TTS_VOICE,
             input=str(text),
-            instructions=(
-                "Speak with a warm, friendly, young adult feminine voice. "
-                "Sound calm, caring, natural, and professional. "
-                "Use a comfortable and clear speaking pace."
-            ),
+            instructions=_voice_instructions(language),
         )
         response.write_to_file(temp_file.name)
         return temp_file.name
@@ -40,8 +61,14 @@ def text_to_speech(text):
         return None
 
 
-def transcribe_audio(audio_file):
-    """Transcribe a patient recording, preserving spelled-out identifiers."""
+def transcribe_audio(audio_file, language="English"):
+    """Transcribe a patient recording, preserving spelled-out identifiers.
+
+    The language is passed explicitly rather than left to detection. A short
+    reply - "没有", "نعم", "oui" - carries almost no signal for identification,
+    and a misidentified language comes back as fluent nonsense rather than as an
+    error, which is far harder to notice in a transcript.
+    """
     if not audio_file:
         return None
 
@@ -50,6 +77,7 @@ def transcribe_audio(audio_file):
             transcription = openai_client.audio.transcriptions.create(
                 model=STT_MODEL,
                 file=audio,
+                language=_iso_code(language),
                 prompt=(
                     "This is a Canadian clinical intake conversation. "
                     "The speaker may provide personal names, doctor names, "

@@ -1,4 +1,5 @@
-"""UI-side section schema, labels, and state normalization."""
+"""Record schema: the sections, their fields, the labels shown for them, and
+the normalization every state passes through before it is displayed."""
 
 SECTION_DEFAULTS = {
     "general_information": {
@@ -166,6 +167,34 @@ COMPUTED_FIELDS = {
     "phq9": {"phq9_total"},
     "gad7": {"gad7_total"},
 }
+
+
+def should_show_field(field, data):
+    """Hide conditional detail fields when their controlling answer is False."""
+    conditional_fields = {
+        "family_doctor_name": ("has_family_doctor", False),
+        "psychiatrist_name": ("has_psychiatrist", False),
+        "assessment_details": ("previously_assessed", False),
+        "hospital_details": ("hospital_admission", False),
+        "self_harm_details": ("self_harm_history", False),
+        "current_medications": ("has_current_medications", False),
+        "past_medication_details": ("has_past_medications", False),
+        "medical_conditions": ("has_medical_conditions", False),
+        "surgical_history": ("has_surgical_history", False),
+        "medication_allergies": ("has_medication_allergies", False),
+        "family_psychiatric_history_details": (
+            "has_family_psychiatric_history",
+            False,
+        ),
+        "legal_case_details": ("active_legal_cases", False),
+    }
+
+    dependency = conditional_fields.get(field)
+    if dependency is None:
+        return True
+
+    parent_field, hidden_value = dependency
+    return data.get(parent_field) is not hidden_value
 
 
 def normalize_state_schema(state):
