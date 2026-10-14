@@ -1,0 +1,28 @@
+# Render blueprint: New → Blueprint, point it at this repository, and the
+# service below is created as described. One setting cannot be declared here,
+# and is prompted for instead - see OPENAI_API_KEY.
+#
+# Records are NOT kept. A free instance has no persistent disk and loses
+# filesystem changes whenever it sleeps, so CIRA_RECORD_DIR is deliberately
+# unset and the record leaves through the download in the interface. Giving
+# this a paid plan with a disk, or writing records out to private storage,
+# are both changes to make on purpose - not by forgetting.
+
+services:
+  - type: web
+    name: cira
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+
+    # The service answers this before Render routes traffic to it, so a failed
+    # build or a crashed process shows up as a failed deploy rather than as a
+    # blank page.
+    healthCheckPath: /api/health
+
+    envVars:
+      # sync: false means Render prompts for the value and stores it as a
+      # secret. The key must never be committed; if it ever is, rotate it.
+      - key: OPENAI_API_KEY
+        sync: false

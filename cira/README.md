@@ -39,10 +39,11 @@ Bind to `0.0.0.0` only behind something that terminates TLS and authenticates
 the user. The service has no login of its own, and every record it holds is
 identifying clinical information.
 
-`.env` lives at the **project root** (the folder containing `cira/`), not
-inside `cira/`. `core/config.py` loads it before reading any environment
-variable — if you move that `load_dotenv` call, every setting below silently
-falls back to its default.
+`.env` lives **inside `cira/`**, beside `main.py` — `core/config.py` resolves
+it as `Path(__file__).parent.parent / ".env"`. Copy `cira/.env.example` to
+`cira/.env` to start. It is loaded before any environment variable is read; if
+you move that `load_dotenv` call, every setting below silently falls back to
+its default.
 
 ---
 
@@ -266,9 +267,14 @@ cannot make it safe on its own.
 
 ### Environment
 
-`OPENAI_API_KEY` is required. Copy `.env.example` to `.env` at the project
-root for local runs; on a host, set it as a secret instead - a key in the
-image or the repository is a key that has to be rotated.
+`OPENAI_API_KEY` is required. Copy `cira/.env.example` to `cira/.env` for
+local runs; on a host, set it as a secret instead - a key in the image or the
+repository is a key that has to be rotated.
+
+`.dockerignore` excludes `**/.env` rather than `.env`, because Docker anchors
+an unprefixed pattern to the context root while `.gitignore` matches at any
+depth. A plain `.env` there does not exclude `cira/.env`, and the key ends up
+inside the image.
 
 | variable | purpose | default |
 |---|---|---|
@@ -337,11 +343,20 @@ whoever owns the key, with no rate limit and no login in front of it.
 
 The free tier builds the `Dockerfile` at the repository root and redeploys on
 every push, which makes it the cheapest way to put a working link in front of
-people:
+people.
 
-1. New → Web Service → connect the GitHub repository → Docker.
-2. Add `OPENAI_API_KEY` as an environment variable.
-3. Leave the port alone. Render injects `PORT`, which `main.py` reads first.
+The repository carries a `render.yaml`, so **New → Blueprint** creates the
+service as described there and prompts for the one value that cannot be
+committed:
+
+1. New → Blueprint → connect this repository.
+2. Enter `OPENAI_API_KEY` when prompted. Render stores it as a secret.
+
+Leave the port alone - Render injects `PORT`, which `main.py` reads before
+`CIRA_PORT`. The health check at `/api/health` means a crashed process shows
+up as a failed deploy rather than as a blank page; a missing key crashes on
+import, so forgetting the secret fails loudly rather than at the first
+question.
 
 A free instance sleeps after about fifteen minutes of inactivity and takes
 roughly a minute to wake, so the first visitor after a quiet spell waits. It

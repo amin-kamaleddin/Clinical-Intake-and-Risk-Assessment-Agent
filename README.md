@@ -23,7 +23,7 @@ Triage-Agent/
 ├── cira/                ← the agent            → cira/README.md
 ├── evaluation/          ← the benchmark        → evaluation/README.md
 ├── Dockerfile           ← the deployable image → cira/README.md § Deploying it
-└── .env                 ← API keys (never commit this)
+└── cira/.env            ← API keys (never commit this)
 ```
 
 The block at the top of this file configures a Hugging Face Space. It is
@@ -44,8 +44,8 @@ cd evaluation && python run_all.py                  # single run
 cd evaluation && python run_all.py --repetitions 20 # repeated -> confidence intervals
 ```
 
-`.env` belongs at the project root, not inside `cira/`; copy `.env.example`
-to start. If it has ever been committed, rotate the keys.
+`.env` belongs inside `cira/`, beside `main.py`; copy `cira/.env.example` to
+`cira/.env` to start. If it has ever been committed, rotate the keys.
 
 To run it anywhere else, see **Deploying it** in `cira/README.md`. Read the
 warning at the top of that section first: the service has no authentication

@@ -1,6 +1,14 @@
 # Keep the image small, and keep out anything that must never leave this
 # machine.
-.env
+#
+# Docker anchors a pattern without ** to the context root, unlike .gitignore,
+# which matches at any depth. A plain ".env" here would NOT have excluded
+# cira/.env - which is where the real one lives - and the key would have been
+# baked into the image and pushed to whatever host it was deployed to.
+**/.env
+**/.env.*
+!**/.env.example
+
 .git
 venv/
 records/
