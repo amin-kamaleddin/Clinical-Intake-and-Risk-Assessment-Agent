@@ -384,11 +384,11 @@ The free tier builds the `Dockerfile` at the repository root and redeploys on
 every push, which makes it the cheapest way to put a working link in front of
 people.
 
-The repository carries a `render.yaml`, so **New → Blueprint** creates the
-service as described there and prompts for the one value that cannot be
-committed:
+The repository carries a `render.yaml`, so the **Deploy to Render** button in
+the root README - or **New → Blueprint** in the dashboard - creates the service
+as described there and prompts for the values that cannot be committed:
 
-1. New → Blueprint → connect this repository.
+1. Deploy to Render, or New → Blueprint → connect this repository.
 2. Enter `OPENAI_API_KEY` and `CIRA_RECORD_TOKEN` when prompted. Render stores
    both as secrets. `CIRA_RECORD_REPO` is declared in `render.yaml`; point it
    at your private records repository, or remove it to keep nothing.

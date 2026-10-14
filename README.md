@@ -23,11 +23,20 @@ Triage-Agent/
 ├── cira/                ← the agent            → cira/README.md
 ├── evaluation/          ← the benchmark        → evaluation/README.md
 ├── Dockerfile           ← the deployable image → cira/README.md § Deploying it
+├── render.yaml          ← the deployed service → cira/README.md § Render
 └── cira/.env            ← API keys (never commit this)
 ```
 
 The block at the top of this file configures a Hugging Face Space. It is
 metadata for that host and has no effect on anything else.
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/AmirGadami/Triage-agent)
+
+The button reads `render.yaml` and asks for the two values that are not in
+this repository: `OPENAI_API_KEY`, and `CIRA_RECORD_TOKEN` if you want records
+kept. **Read the warning in `cira/README.md` § Deploying it first** — the
+service has no authentication of its own, and the record it collects is
+identifying clinical information.
 
 ---
 
