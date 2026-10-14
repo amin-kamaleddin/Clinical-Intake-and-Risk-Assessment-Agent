@@ -2,11 +2,11 @@
 # service below is created as described. One setting cannot be declared here,
 # and is prompted for instead - see OPENAI_API_KEY.
 #
-# Records are NOT kept. A free instance has no persistent disk and loses
-# filesystem changes whenever it sleeps, so CIRA_RECORD_DIR is deliberately
-# unset and the record leaves through the download in the interface. Giving
-# this a paid plan with a disk, or writing records out to private storage,
-# are both changes to make on purpose - not by forgetting.
+# A free instance has no persistent disk and loses filesystem changes whenever
+# it sleeps, so records are kept by copying them to a PRIVATE repository -
+# CIRA_RECORD_REPO below. Remove those two variables and nothing is kept
+# beyond the download in the interface, which is a reasonable choice for a
+# demo but should be a deliberate one.
 
 services:
   - type: web
@@ -23,6 +23,16 @@ services:
 
     envVars:
       # sync: false means Render prompts for the value and stores it as a
-      # secret. The key must never be committed; if it ever is, rotate it.
+      # secret. Neither of these may be committed; if either ever is, revoke
+      # and reissue it.
       - key: OPENAI_API_KEY
         sync: false
+
+      # A token with Contents: read and write on the repository below.
+      - key: CIRA_RECORD_TOKEN
+        sync: false
+
+      # Where each intake record is kept. This MUST be a private repository -
+      # a public one publishes every intake. Change it to your own.
+      - key: CIRA_RECORD_REPO
+        value: AmirGadami/cira-records

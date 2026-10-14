@@ -308,8 +308,8 @@ Any host that runs a container works. Three things to get right wherever it
 goes:
 
 1. Set `OPENAI_API_KEY` as a secret, never in the repository.
-2. Point `CIRA_RECORD_DIR` at persistent storage, or records are lost on the
-   next restart.
+2. Keep the records off the instance - `CIRA_RECORD_REPO` below, or a
+   persistent disk. A free instance has neither by default and keeps nothing.
 3. Decide, per the warning above, whether this instance may receive real
    patient information - and if it may not, say so where the patient can see
    it.
@@ -330,14 +330,53 @@ Hosting the service can be free. Keeping its records on the host cannot:
 Free instances sleep when idle - around 15 minutes on Render - and lose
 filesystem changes when they do, so a free instance keeps nothing.
 
-**Records do not need a paid disk.** The interface already hands the record to
-whoever is running the intake as a JSON download, which is enough for a demo,
-and writing each record out to private object storage or a private repository
-costs nothing. A persistent disk is the convenient option, not the only one.
+**Records do not need a paid disk.** `web/records.py` copies each one out to a
+private GitHub repository, which costs nothing - see **Keeping records** below.
+A persistent disk is the convenient option, not the only one.
 
 The cost that no host avoids is the model: every question and answer is an API
 call, and so is each piece of speech. A public link spends the API credit of
 whoever owns the key, with no rate limit and no login in front of it.
+
+#### Keeping records
+
+`core/storage.py` writes every record to the local disk after every turn. On a
+free instance that disk is discarded whenever the service sleeps, so
+`web/records.py` keeps a second copy in a private GitHub repository:
+
+| variable | purpose |
+|---|---|
+| `CIRA_RECORD_REPO` | `owner/name` of a **private** repository |
+| `CIRA_RECORD_TOKEN` | a token with `Contents: read and write` on it |
+| `CIRA_RECORD_BRANCH` | default `main` |
+| `CIRA_RECORD_PREFIX` | directory inside the repo, default `records` |
+| `CIRA_RECORD_FLUSH` | seconds between uploads, default `60` |
+
+Leave `CIRA_RECORD_REPO` unset and none of it runs.
+
+Each intake becomes one file, `records/<session_id>.json`, rewritten as it
+fills in. Uploads are **queued and coalesced**, not sent per answer - a
+seventy-field intake would otherwise be seventy commits. The exception is the
+safety flag: when it is first raised, that record is uploaded immediately,
+because it is the one whose loss to a sleeping instance actually matters.
+
+The transcript is not uploaded. The record is.
+
+Two things it is not. A git repository keeps what you delete, so a record
+committed there cannot truly be withdrawn - which is a problem the moment a
+real patient asks you to remove theirs. And **the repository must be private**;
+a public one publishes every intake. Real patient data belongs in storage that
+supports deletion, encryption and an access log, and this is not that.
+
+```bash
+cd cira
+python -m tests.test_record_upload
+```
+
+Offline, no keys, no network: a stand-in for the GitHub API enforces the
+create-versus-replace rules. It pins the three failures that are otherwise
+silent - uploads multiplying per answer, a stale revision losing a record, and
+a failed upload being dropped rather than retried.
 
 #### Render
 
@@ -350,7 +389,9 @@ service as described there and prompts for the one value that cannot be
 committed:
 
 1. New → Blueprint → connect this repository.
-2. Enter `OPENAI_API_KEY` when prompted. Render stores it as a secret.
+2. Enter `OPENAI_API_KEY` and `CIRA_RECORD_TOKEN` when prompted. Render stores
+   both as secrets. `CIRA_RECORD_REPO` is declared in `render.yaml`; point it
+   at your private records repository, or remove it to keep nothing.
 
 Leave the port alone - Render injects `PORT`, which `main.py` reads before
 `CIRA_PORT`. The health check at `/api/health` means a crashed process shows
@@ -359,9 +400,9 @@ import, so forgetting the secret fails loudly rather than at the first
 question.
 
 A free instance sleeps after about fifteen minutes of inactivity and takes
-roughly a minute to wake, so the first visitor after a quiet spell waits. It
-has no persistent disk, so leave `CIRA_RECORD_DIR` unset and let the record
-leave through the download in the interface.
+roughly a minute to wake, so the first visitor after a quiet spell waits. Its
+disk does not survive that sleep, which is what `CIRA_RECORD_REPO` is for;
+leave `CIRA_RECORD_DIR` unset.
 
 #### Hugging Face Spaces
 

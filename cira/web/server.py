@@ -8,9 +8,11 @@ graph, it only prepares state and reads results.
     python -m cira.web.server          # http://127.0.0.1:8000
 
 Sessions live in memory, keyed by a random id the browser holds: an intake is
-one sitting. Persistence is the agent's own - core.storage writes the record to
-``records/<session_id>.json`` after every turn, relative to the directory the
-server was started in. Start the server where those records should land.
+one sitting. core.storage writes the record to ``records/<session_id>.json``
+after every turn, relative to the directory the server was started in, so start
+the server where those records should land. On a host whose filesystem does not
+survive a restart, set CIRA_RECORD_REPO as well and web.records keeps a copy
+somewhere that does.
 
 Those files carry a name, a date of birth, a home address, a phone number and
 psychiatric history. The only correct home for them is storage that is backed
@@ -48,6 +50,7 @@ from graph.builder import graph  # noqa: E402
 from ui.schema import (  # noqa: E402
     SECTION_TITLES, FIELD_LABELS, normalize_state_schema, should_show_field,
 )
+from web import records  # noqa: E402
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
@@ -169,12 +172,21 @@ def _record(state: dict) -> dict:
 
 def _advance(state: dict) -> tuple[dict, str]:
     """Run one agent turn and return the new state with CIRA's reply."""
+    was_flagged = bool(state.get("safety_flag"))
+
     state = normalize_state_schema(graph.invoke(state))
     reply = ""
     for message in reversed(state.get("messages") or []):
         if message.get("role") == "assistant":
             reply = message.get("content") or ""
             break
+
+    # Queued rather than uploaded: see web.records on why a seventy-field
+    # intake must not become seventy commits. A newly raised flag goes at once.
+    records.remember(
+        _record(state),
+        urgent=bool(state.get("safety_flag")) and not was_flagged,
+    )
     return state, reply
 
 
@@ -304,6 +316,11 @@ def download_record(session_id: str):
 def health():
     return JSONResponse({"status": "ok", "sessions": len(SESSIONS)})
 
+
+# Starts the background uploader, or does nothing if no repository is
+# configured. Here rather than in a startup hook because this module is the
+# application: importing it is what brings the service into being.
+records.start()
 
 app.mount("/", StaticFiles(directory=str(STATIC_DIR), html=True), name="static")
 
