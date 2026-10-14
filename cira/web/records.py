@@ -48,6 +48,9 @@ _blob_sha: dict[str, str] = {}
 _lock = threading.Lock()
 _started = False
 
+#: Whether the repository accepted us at startup. See reachable().
+_reachable: bool | None = None
+
 
 # --------------------------------------------------------------------------- #
 # configuration
@@ -200,14 +203,59 @@ def _flush_forever() -> None:
 # --------------------------------------------------------------------------- #
 # what the server calls
 # --------------------------------------------------------------------------- #
+def reachable() -> bool | None:
+    """Whether the repository actually accepted us at startup.
+
+    True yes, False no, None not checked yet or not configured. Separate from
+    enabled(), which only says the settings are present: an expired token, a
+    typo in the repository name and a repository someone deleted all leave the
+    settings looking perfect while every upload fails.
+    """
+    return _reachable
+
+
+def _verify() -> None:
+    """One authenticated request, to find out now rather than at the first
+    intake whether this is going to work."""
+    global _reachable
+    try:
+        with httpx.Client(timeout=20.0) as client:
+            response = client.get(f"{_api()}/repos/{_repo()}", headers=_headers())
+        if response.status_code == 200:
+            private = response.json().get("private")
+            _reachable = True
+            _log(f"keeping records in {_repo()} every {_interval():.0f}s")
+            if private is False:
+                # Worth shouting about: every intake would be world-readable.
+                _log(f"WARNING: {_repo()} is PUBLIC. Every record written there "
+                     f"is visible to anyone. Make it private.")
+        elif response.status_code in (401, 403):
+            _reachable = False
+            _log(f"the token was refused by {_repo()} (HTTP {response.status_code}). "
+                 f"Records are NOT being kept. Check it has Contents: read and "
+                 f"write, and that it has not expired.")
+        elif response.status_code == 404:
+            _reachable = False
+            _log(f"{_repo()} was not found, or the token cannot see it. Records "
+                 f"are NOT being kept.")
+        else:
+            _reachable = False
+            _log(f"unexpected reply from {_repo()}: HTTP {response.status_code}")
+    except Exception as error:                   # noqa: BLE001
+        _reachable = False
+        _log(f"could not reach {_repo()}: {error}")
+
+
 def start() -> None:
     """Begin flushing in the background, once, if this is configured."""
     global _started
     if _started or not enabled():
         return
     _started = True
+    # Checked in a thread so a slow or unreachable GitHub cannot hold up the
+    # service starting; uploads queue regardless and the first flush retries.
+    threading.Thread(target=_verify, daemon=True, name="cira-records-check").start()
     threading.Thread(target=_flush_forever, daemon=True, name="cira-records").start()
-    _log(f"keeping records in {_repo()} every {_interval():.0f}s")
 
 
 def remember(record: dict, urgent: bool = False) -> None:

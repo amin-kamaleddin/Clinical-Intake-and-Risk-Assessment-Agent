@@ -59,7 +59,19 @@ class Handler(BaseHTTPRequestHandler):
     def _authorized(self):
         return self.headers.get("Authorization", "").startswith("Bearer ")
 
+    #: Set to a status code to make the repository lookup fail, as an expired
+    #: token or a deleted repository would.
+    repo_status = 200
+    repo_private = True
+
     def do_GET(self):
+        # The repository lookup that _verify() makes, as opposed to a file read.
+        if "/contents/" not in self.path:
+            CALLS.append(("GET", "repo", self.repo_status))
+            if self.repo_status != 200:
+                return self._send(self.repo_status, {"message": "nope"})
+            return self._send(200, {"private": self.repo_private})
+
         path = self._file_path()
         if not self._authorized():
             CALLS.append(("GET", path, 401))
@@ -178,6 +190,23 @@ def main():
     records._flush()
     check("uploaded on the next flush", "records/keepme.json" in FILES)
     check("the queue drains", not records._pending, str(records._pending))
+
+    print("\nthe startup check tells the truth about the repository")
+    CALLS.clear()
+    records._verify()
+    check("a working repository reports reachable", records.reachable() is True)
+
+    Handler.repo_status = 401                      # as an expired token would
+    records._verify()
+    check("a refused token reports NOT reachable", records.reachable() is False)
+
+    Handler.repo_status = 404                      # as a deleted repo would
+    records._verify()
+    check("a missing repository reports NOT reachable", records.reachable() is False)
+
+    Handler.repo_status = 200
+    records._verify()
+    check("it recovers when the repository works again", records.reachable() is True)
 
     print("\nunconfigured, nothing happens")
     os.environ.pop("CIRA_RECORD_REPO")

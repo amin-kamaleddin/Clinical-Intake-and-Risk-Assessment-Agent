@@ -359,10 +359,20 @@ def health():
     looks exactly like one that is working, and the only way to find out is to
     go looking for records that were never written.
     """
+    if not records.enabled():
+        kept = "not kept"
+    elif records.reachable() is False:
+        # Configured but refused - the case that otherwise looks like success.
+        kept = "FAILING"
+    elif records.reachable() is None:
+        kept = "checking"
+    else:
+        kept = "kept"
+
     return JSONResponse({
         "status": "ok",
         "sessions": len(SESSIONS),
-        "records": "kept" if records.enabled() else "not kept",
+        "records": kept,
     })
 
 
