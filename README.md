@@ -1,13 +1,3 @@
----
-title: CIRA
-emoji: "🩺"
-colorFrom: indigo
-colorTo: blue
-sdk: docker
-app_port: 8000
-pinned: false
----
-
 # Clinical Intake and Risk Assessment
 
 Two things live here:
