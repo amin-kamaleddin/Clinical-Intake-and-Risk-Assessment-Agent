@@ -43,8 +43,10 @@ from fastapi.staticfiles import StaticFiles  # noqa: E402
 from pydantic import BaseModel  # noqa: E402
 
 from core.audio import text_to_speech, transcribe_audio  # noqa: E402
-from core.languages import EVALUATION_LANGUAGES, get, safety_reply_for  # noqa: E402
-from core.safety import SAFETY_REPLY  # noqa: E402
+from core.languages import (  # noqa: E402
+    EVALUATION_LANGUAGES, agent_phrase, get, safety_reply_for,
+)
+from core.safety import SAFETY_REPLY, explicit_safety_trigger  # noqa: E402
 from core.state import initial_state  # noqa: E402
 from graph.builder import graph  # noqa: E402
 from ui.schema import (  # noqa: E402
@@ -170,6 +172,40 @@ def _record(state: dict) -> dict:
     return {key: value for key, value in state.items() if key not in skip}
 
 
+def _before_any_section(session_id: str, state: dict, text: str) -> dict:
+    """Answer someone who types before choosing a section.
+
+    They get a reply either way - being ignored by a screen you have just
+    spoken to is its own small insult, and a patient who does not understand
+    the interface is exactly the patient least likely to try again.
+
+    The agent is not run: it has no section to collect, and inventing one from
+    an opening remark would put answers in the wrong place. So this is a fixed
+    sentence in the patient's language.
+
+    What is NOT skipped is the safety gate. Someone may disclose risk in their
+    very first message, before touching anything, and "please choose a section"
+    is the wrong answer to that. The deterministic check in core.safety runs on
+    this message exactly as it does mid-interview, and a hit raises the flag and
+    returns the crisis reply instead.
+    """
+    language = state.get("preferred_language", "English")
+
+    if explicit_safety_trigger(text):
+        state["safety_flag"] = True
+        SESSIONS[session_id] = state
+        records.remember(_record(state), urgent=True)
+        return {
+            "snapshot": _snapshot(state),
+            "reply": safety_reply_for(language, SAFETY_REPLY),
+        }
+
+    return {
+        "snapshot": _snapshot(state),
+        "reply": agent_phrase(language, "choose_section"),
+    }
+
+
 def _advance(state: dict) -> tuple[dict, str]:
     """Run one agent turn and return the new state with CIRA's reply."""
     was_flagged = bool(state.get("safety_flag"))
@@ -229,8 +265,7 @@ def send_message(body: MessageBody):
     if not text:
         return {"snapshot": _snapshot(state), "reply": None}
     if state.get("current_section") is None:
-        return {"snapshot": _snapshot(state), "reply": None,
-                "notice": "Choose a section to begin."}
+        return _before_any_section(body.session, state, text)
 
     state["latest_input_source"] = "typed text"
     state["messages"] = (state.get("messages") or []) + [{"role": "user", "content": text}]
@@ -256,8 +291,6 @@ def set_language(body: LanguageBody):
 @app.post("/api/transcribe")
 async def transcribe(session: str = Form(...), audio: UploadFile = File(...)):
     state = _session(session)
-    if state.get("current_section") is None:
-        return {"text": None, "notice": "Choose a section to begin."}
     language = state.get("preferred_language", "English")
 
     suffix = Path(audio.filename or "clip.webm").suffix or ".webm"
@@ -274,6 +307,11 @@ async def transcribe(session: str = Form(...), audio: UploadFile = File(...)):
 
     if not text:
         return {"text": None}
+
+    # Transcribed first, then checked: someone who speaks before choosing a
+    # section is answered like someone who types one, safety gate included.
+    if state.get("current_section") is None:
+        return {"text": text, **_before_any_section(session, state, text)}
 
     state["latest_input_source"] = "speech-to-text"
     state["speech_to_text_active"] = True

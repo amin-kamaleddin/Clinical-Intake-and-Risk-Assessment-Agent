@@ -178,6 +178,10 @@ FRENCH = Language(
             "modifier quelque chose, dites-le moi."
         ),
         "nudge": "Avant de continuer, pourriez-vous répondre à la question ci-dessus ?",
+        "choose_section": (
+            "Merci de m'en parler. Avant de commencer, veuillez choisir une "
+            "section dans la liste, et je vous poserai les questions une à la fois."
+        ),
         "anything_else": "Y a-t-il autre chose que vous souhaitez ajouter ou modifier ?",
         "choose_option": "Pourriez-vous choisir l'une des options ci-dessus pour cette question ?",
         "recorded_unknown": (
@@ -234,6 +238,10 @@ MANDARIN = Language(
             "或者您想补充或修改，请告诉我。"
         ),
         "nudge": "在我们继续之前，您能回答上面的问题吗？",
+        "choose_section": (
+            "谢谢您告诉我。在开始之前，请先从列表中选择一个部分，"
+            "我会逐一向您提问。"
+        ),
         "anything_else": "您还有什么想补充或修改的吗？",
         "choose_option": "请从上面的选项中选择一个来回答这个问题。",
         "recorded_unknown": (
@@ -285,6 +293,10 @@ ARABIC = Language(
             "صحيح أو أردت إضافة أو تعديل شيء، أخبرني."
         ),
         "nudge": "قبل أن ننتقل، هل يمكنك الإجابة على السؤال أعلاه؟",
+        "choose_section": (
+            "شكراً لإخباري. قبل أن نبدأ، يرجى اختيار قسم من القائمة، "
+            "وسأطرح عليك الأسئلة واحداً تلو الآخر."
+        ),
         "anything_else": "هل هناك شيء آخر تريد إضافته أو تعديله؟",
         "choose_option": "هل يمكنك اختيار أحد الخيارات أعلاه لهذا السؤال؟",
         "recorded_unknown": (
@@ -340,6 +352,10 @@ HINDI = Language(
             "या आप कुछ जोड़ना या बदलना चाहें, तो मुझे बताएँ।"
         ),
         "nudge": "आगे बढ़ने से पहले, क्या आप ऊपर दिए गए प्रश्न का उत्तर दे सकते हैं?",
+        "choose_section": (
+            "मुझे बताने के लिए धन्यवाद। शुरू करने से पहले, कृपया सूची में से एक अनुभाग "
+            "चुनें, और मैं आपसे एक-एक करके प्रश्न पूछूँगी।"
+        ),
         "anything_else": "क्या कुछ और है जो आप जोड़ना या बदलना चाहते हैं?",
         "choose_option": "कृपया इस प्रश्न के लिए ऊपर दिए विकल्पों में से एक चुनें।",
         "recorded_unknown": (
@@ -394,6 +410,10 @@ FARSI = Language(
             "یا می‌خواهید چیزی اضافه یا اصلاح کنید، به من بگویید."
         ),
         "nudge": "پیش از آنکه ادامه دهیم، می‌توانید به سؤال بالا پاسخ دهید؟",
+        "choose_section": (
+            "ممنون که گفتید. پیش از شروع، لطفاً یکی از بخش‌ها را از فهرست "
+            "انتخاب کنید تا پرسش‌ها را یکی‌یکی از شما بپرسم."
+        ),
         "anything_else": "چیز دیگری هست که بخواهید اضافه یا اصلاح کنید؟",
         "choose_option": "لطفاً یکی از گزینه‌های بالا را برای این سؤال انتخاب کنید.",
         "recorded_unknown": (
@@ -536,6 +556,10 @@ AGENT_PHRASES_ENGLISH = {
         "me know."
     ),
     "nudge": "Before we move on, could you answer the question above?",
+    "choose_section": (
+        "Thank you for telling me. Before we begin, please choose a section "
+        "from the list, and I'll ask you about it one question at a time."
+    ),
     "anything_else": "Is there anything else you would like to add or change?",
     "choose_option": "Could you choose one of the options above for that question?",
     "field_question": "Could you tell me about {field}?",

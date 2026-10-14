@@ -35,10 +35,15 @@ SECTION_DEFAULTS = {
         "has_family_psychiatric_history": None,
         "family_psychiatric_history_details": None,
     },
+    # These carry the nonmedical_ prefix the agent actually writes, in
+    # core.state.SubstanceUse. Without it the panel read eight keys that never
+    # existed, showed the section as empty however much the patient disclosed,
+    # and added eight null fields of its own to every exported record.
     "substance_use": {
-        "alcohol_use": None, "nicotine_use": None, "marijuana_use": None,
-        "stimulant_use": None, "opioid_use": None, "benzodiazepine_use": None,
-        "hallucinogen_use": None, "other_substance_use": None,
+        "nonmedical_alcohol_use": None, "nonmedical_nicotine_use": None,
+        "nonmedical_marijuana_use": None, "nonmedical_stimulant_use": None,
+        "nonmedical_opioid_use": None, "nonmedical_benzodiazepine_use": None,
+        "nonmedical_hallucinogen_use": None, "nonmedical_other_substance_use": None,
     },
     "education_employment_legal_history": {
         "active_legal_cases": None, "legal_case_details": None,
@@ -120,10 +125,14 @@ FIELD_LABELS = {
         "family_psychiatric_history_details": "Family History Details",
     },
     "substance_use": {
-        "alcohol_use": "Alcohol", "nicotine_use": "Nicotine",
-        "marijuana_use": "Marijuana / Cannabis", "stimulant_use": "Stimulants",
-        "opioid_use": "Opiates / Narcotics", "benzodiazepine_use": "Benzodiazepines",
-        "hallucinogen_use": "Hallucinogens", "other_substance_use": "Other Substances",
+        "nonmedical_alcohol_use": "Alcohol",
+        "nonmedical_nicotine_use": "Nicotine",
+        "nonmedical_marijuana_use": "Marijuana / Cannabis",
+        "nonmedical_stimulant_use": "Stimulants",
+        "nonmedical_opioid_use": "Opiates / Narcotics",
+        "nonmedical_benzodiazepine_use": "Benzodiazepines",
+        "nonmedical_hallucinogen_use": "Hallucinogens",
+        "nonmedical_other_substance_use": "Other Substances",
     },
     "education_employment_legal_history": {
         "active_legal_cases": "Active Legal Cases",

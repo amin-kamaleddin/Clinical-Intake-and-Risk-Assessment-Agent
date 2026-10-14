@@ -282,10 +282,16 @@ function renderRecord(snapshot) {
     badge.textContent = `${section.filled}/${section.total}`;
 
     head.append(chev, title, badge);
+    head.setAttribute("aria-expanded", String(open));
     head.onclick = () => {
-      state.expanded[section.key] = !open;
-      wrapper.classList.toggle("open");
-      list.hidden = open;
+      // Read what is on screen rather than the value captured when this row
+      // was drawn. Capturing it meant the second click wrote back the first
+      // click's answer: the row changed colour but never actually closed.
+      const nowOpen = !wrapper.classList.contains("open");
+      state.expanded[section.key] = nowOpen;
+      wrapper.classList.toggle("open", nowOpen);
+      head.setAttribute("aria-expanded", String(nowOpen));
+      list.hidden = !nowOpen;
     };
 
     const list = document.createElement("ul");
