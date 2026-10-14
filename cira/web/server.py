@@ -352,7 +352,18 @@ def download_record(session_id: str):
 
 @app.get("/api/health")
 def health():
-    return JSONResponse({"status": "ok", "sessions": len(SESSIONS)})
+    """Liveness, and whether records are being kept.
+
+    "records" says only on or off - never the repository, the branch or any
+    part of the token. Without it, a deployment that silently keeps nothing
+    looks exactly like one that is working, and the only way to find out is to
+    go looking for records that were never written.
+    """
+    return JSONResponse({
+        "status": "ok",
+        "sessions": len(SESSIONS),
+        "records": "kept" if records.enabled() else "not kept",
+    })
 
 
 # Starts the background uploader, or does nothing if no repository is
