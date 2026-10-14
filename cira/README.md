@@ -311,7 +311,48 @@ goes:
 GitHub Pages cannot host this. It serves static files only, and this needs a
 Python process and a server-side API key.
 
+#### What it costs
+
+Hosting the service can be free. Keeping its records on the host cannot:
+
+| | free | paid |
+|---|---|---|
+| running it | Render free tier runs the Dockerfile from GitHub | Render Starter, from about $7/month |
+| a Hugging Face Space | static Spaces only, which cannot run this | Docker Spaces need PRO, $9/month |
+| records on the host | no free instance has a persistent disk | HF persistent storage from $5/month |
+
+Free instances sleep when idle - around 15 minutes on Render - and lose
+filesystem changes when they do, so a free instance keeps nothing.
+
+**Records do not need a paid disk.** The interface already hands the record to
+whoever is running the intake as a JSON download, which is enough for a demo,
+and writing each record out to private object storage or a private repository
+costs nothing. A persistent disk is the convenient option, not the only one.
+
+The cost that no host avoids is the model: every question and answer is an API
+call, and so is each piece of speech. A public link spends the API credit of
+whoever owns the key, with no rate limit and no login in front of it.
+
+#### Render
+
+The free tier builds the `Dockerfile` at the repository root and redeploys on
+every push, which makes it the cheapest way to put a working link in front of
+people:
+
+1. New → Web Service → connect the GitHub repository → Docker.
+2. Add `OPENAI_API_KEY` as an environment variable.
+3. Leave the port alone. Render injects `PORT`, which `main.py` reads first.
+
+A free instance sleeps after about fifteen minutes of inactivity and takes
+roughly a minute to wake, so the first visitor after a quiet spell waits. It
+has no persistent disk, so leave `CIRA_RECORD_DIR` unset and let the record
+leave through the download in the interface.
+
 #### Hugging Face Spaces
+
+A Docker Space requires a paid plan - PRO for a personal account - because it
+runs on compute. Only static Spaces are free, and a static Space cannot run
+this.
 
 The Space is configured by the block at the top of the repository's root
 `README.md` (`sdk: docker`, `app_port: 8000`) and built from the `Dockerfile`
@@ -327,12 +368,11 @@ Then, in the Space's settings:
 - **Secrets** → add `OPENAI_API_KEY`. It is read at runtime and never baked
   into the image.
 - **Persistent storage** → enable it, and add a variable
-  `CIRA_RECORD_DIR=/data`. Without this the Space's filesystem is wiped on
-  every restart and rebuild, and every intake goes with it. A free Space has
-  no persistent storage, so treat a free Space as a demo that keeps nothing.
+  `CIRA_RECORD_DIR=/data`. Without it the Space's filesystem is wiped on every
+  restart and rebuild, and every intake goes with it.
 
-A public Space is readable and usable by anyone with the link, and it spends
-your API credit on every visitor.
+A public Space is usable by anyone with the link. A protected or private Space
+needs a paid plan too.
 
 ---
 
