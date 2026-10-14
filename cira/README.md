@@ -32,6 +32,7 @@ server where those records should land (see **Records** below).
 | variable | purpose | default |
 |---|---|---|
 | `CIRA_HOST` | address to bind | `127.0.0.1` |
+| `CIRA_RECORD_DIR` | where records are written | the working directory |
 | `CIRA_PORT` | port | `8000` |
 
 Bind to `0.0.0.0` only behind something that terminates TLS and authenticates
@@ -275,6 +276,7 @@ image or the repository is a key that has to be rotated.
 | `PORT` | port, as most hosts inject it | — |
 | `CIRA_PORT` | port, when running it by hand | `8000` |
 | `CIRA_HOST` | address to bind | `127.0.0.1` |
+| `CIRA_RECORD_DIR` | where records are written | the working directory |
 
 `PORT` wins over `CIRA_PORT`, so a host that assigns a port is routed to
 correctly without further configuration.
@@ -296,18 +298,41 @@ every intake disappears on the next restart or redeploy.
 
 ### Hosting
 
-Any host that runs a container works - Render, Railway, Fly.io, Cloud Run,
-Hugging Face Spaces with the Docker SDK. Three things to get right wherever it
+Any host that runs a container works. Three things to get right wherever it
 goes:
 
 1. Set `OPENAI_API_KEY` as a secret, never in the repository.
-2. Attach persistent storage at the working directory, or records are lost.
+2. Point `CIRA_RECORD_DIR` at persistent storage, or records are lost on the
+   next restart.
 3. Decide, per the warning above, whether this instance may receive real
    patient information - and if it may not, say so where the patient can see
    it.
 
 GitHub Pages cannot host this. It serves static files only, and this needs a
 Python process and a server-side API key.
+
+#### Hugging Face Spaces
+
+The Space is configured by the block at the top of the repository's root
+`README.md` (`sdk: docker`, `app_port: 8000`) and built from the `Dockerfile`
+beside it. A Space is its own git repository, so it is a second remote:
+
+```bash
+git remote add space https://huggingface.co/spaces/<user>/<space>
+git push space main
+```
+
+Then, in the Space's settings:
+
+- **Secrets** → add `OPENAI_API_KEY`. It is read at runtime and never baked
+  into the image.
+- **Persistent storage** → enable it, and add a variable
+  `CIRA_RECORD_DIR=/data`. Without this the Space's filesystem is wiped on
+  every restart and rebuild, and every intake goes with it. A free Space has
+  no persistent storage, so treat a free Space as a demo that keeps nothing.
+
+A public Space is readable and usable by anyone with the link, and it spends
+your API credit on every visitor.
 
 ---
 

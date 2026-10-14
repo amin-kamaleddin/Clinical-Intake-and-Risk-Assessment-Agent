@@ -8,14 +8,36 @@ The interface is a FastAPI service that serves the page and exposes the agent
 behind a small JSON API; see cira/web/server.py.
 
 Records are written relative to the working directory, so start the server
-where those records should land.
+where those records should land - or set CIRA_RECORD_DIR and let it do that
+for you.
 """
 
 import os
+from pathlib import Path
 
 import uvicorn
 
 from web.server import app
+
+
+def _use_record_dir() -> None:
+    """Move to CIRA_RECORD_DIR, if one was set.
+
+    core.storage writes records relative to the working directory, so the
+    working directory IS the record location. On a host, the persistent disk is
+    mounted at a fixed path (/data on Hugging Face Spaces) and the container
+    starts somewhere else, so this is what puts the two together without
+    rebuilding the image.
+
+    Safe to do before anything runs: .env is loaded from an absolute path, and
+    nothing else here resolves a relative one.
+    """
+    directory = os.getenv("CIRA_RECORD_DIR", "").strip()
+    if not directory:
+        return
+    path = Path(directory).expanduser()
+    path.mkdir(parents=True, exist_ok=True)
+    os.chdir(path)
 
 
 def _port() -> int:
@@ -39,4 +61,5 @@ def _host() -> str:
 
 
 if __name__ == "__main__":
+    _use_record_dir()
     uvicorn.run(app, host=_host(), port=_port())

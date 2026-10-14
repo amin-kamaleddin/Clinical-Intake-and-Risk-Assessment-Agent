@@ -1,3 +1,13 @@
+---
+title: CIRA
+emoji: "🩺"
+colorFrom: indigo
+colorTo: blue
+sdk: docker
+app_port: 8000
+pinned: false
+---
+
 # Clinical Intake and Risk Assessment
 
 Two things live here:
@@ -12,15 +22,19 @@ Two things live here:
 Triage-Agent/
 ├── cira/                ← the agent            → cira/README.md
 ├── evaluation/          ← the benchmark        → evaluation/README.md
+├── Dockerfile           ← the deployable image → cira/README.md § Deploying it
 └── .env                 ← API keys (never commit this)
 ```
+
+The block at the top of this file configures a Hugging Face Space. It is
+metadata for that host and has no effect on anything else.
 
 ---
 
 ## Quick start
 
 ```bash
-# the agent
+# the agent, at http://127.0.0.1:8000
 pip install -r cira/requirements.txt
 python cira/main.py
 
@@ -30,8 +44,12 @@ cd evaluation && python run_all.py                  # single run
 cd evaluation && python run_all.py --repetitions 20 # repeated -> confidence intervals
 ```
 
-`.env` belongs at the project root, not inside `cira/`. If it has ever been
-committed, rotate the keys.
+`.env` belongs at the project root, not inside `cira/`; copy `.env.example`
+to start. If it has ever been committed, rotate the keys.
+
+To run it anywhere else, see **Deploying it** in `cira/README.md`. Read the
+warning at the top of that section first: the service has no authentication
+of its own, and the record it collects is identifying clinical information.
 
 ---
 

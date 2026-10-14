@@ -31,13 +31,19 @@ WORKDIR /records
 
 # A container reached from outside must bind every interface; the default is
 # loopback precisely so that running it by hand does not expose it by accident.
+#
+# CIRA_RECORD_DIR points at the writable location for records. Override it to
+# the host's persistent disk - /data on Hugging Face Spaces - or records live
+# only as long as the container does.
 ENV CIRA_HOST=0.0.0.0 \
-    CIRA_PORT=8000
+    CIRA_PORT=8000 \
+    CIRA_RECORD_DIR=/records
 EXPOSE 8000
 
 # Nothing privileged here, and the records directory must be writable by the
-# user that writes them.
-RUN useradd --create-home --uid 10001 cira && chown cira /records
+# user that writes them. uid 1000 is what Hugging Face Spaces expects, and is
+# unremarkable everywhere else.
+RUN useradd --create-home --uid 1000 cira && chown cira /records
 USER cira
 
 CMD ["python", "/app/cira/main.py"]
