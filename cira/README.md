@@ -242,23 +242,72 @@ There is still no automatic detection: the language is chosen, never inferred.
 
 ## Deploying it
 
-One service, one port, no build step - the interface is plain HTML, CSS and
-JavaScript served by the same process as the API.
+One service, one port, no build step: FastAPI serves the page and the agent
+API from the same process, and the interface is plain HTML, CSS and
+JavaScript.
+
+### Before anything is exposed
+
+This service has **no authentication and no TLS of its own**, and the record
+it collects holds a name, a date of birth, a home address, a phone number, an
+email address, psychiatric history and suicidality. Two different deployments
+follow from that:
+
+- **A public demo.** Fine as it stands, provided no real patient uses it. Say
+  so on the page, and treat everything it collects as disposable.
+- **Real intake.** Needs an authenticating proxy in front of it, TLS, and a
+  host that your institution has approved for PHI under PHIPA. The API key
+  must be a server-side secret, and records must land on storage that is
+  encrypted, backed up and access-controlled.
+
+Deciding which of those this is, is not a technical question, and the code
+cannot make it safe on its own.
+
+### Environment
+
+`OPENAI_API_KEY` is required. Copy `.env.example` to `.env` at the project
+root for local runs; on a host, set it as a secret instead - a key in the
+image or the repository is a key that has to be rotated.
+
+| variable | purpose | default |
+|---|---|---|
+| `OPENAI_API_KEY` | provider credential | — |
+| `PORT` | port, as most hosts inject it | — |
+| `CIRA_PORT` | port, when running it by hand | `8000` |
+| `CIRA_HOST` | address to bind | `127.0.0.1` |
+
+`PORT` wins over `CIRA_PORT`, so a host that assigns a port is routed to
+correctly without further configuration.
+
+### Docker
 
 ```bash
-pip install -r cira/requirements.txt
-CIRA_HOST=0.0.0.0 CIRA_PORT=8000 python cira/main.py
+docker build -t cira .
+docker run -p 8000:8000 -e OPENAI_API_KEY=sk-... -v "$PWD/records:/records" cira
 ```
 
-Before it faces anyone real:
+The image binds `0.0.0.0` because a container has to; running `main.py`
+directly binds loopback, so a local run is never exposed by accident.
 
-- put it behind TLS and authentication; it has neither
-- point the working directory at access-controlled storage, not the checkout
-- keep `.env` out of the image and out of the repository
-- confirm that storing this data in that location is permitted under PHIPA and
-  your institution's privacy rules. The record holds a name, a date of birth, a
-  home address, a phone number, an email address, psychiatric history and
-  suicidality. Hosting is the easy part of that sentence.
+**The volume is not optional.** Records are written to the working directory,
+which in the container is `/records`, and a container's filesystem is
+discarded when it stops. Without a mounted volume or a host's persistent disk,
+every intake disappears on the next restart or redeploy.
+
+### Hosting
+
+Any host that runs a container works - Render, Railway, Fly.io, Cloud Run,
+Hugging Face Spaces with the Docker SDK. Three things to get right wherever it
+goes:
+
+1. Set `OPENAI_API_KEY` as a secret, never in the repository.
+2. Attach persistent storage at the working directory, or records are lost.
+3. Decide, per the warning above, whether this instance may receive real
+   patient information - and if it may not, say so where the patient can see
+   it.
+
+GitHub Pages cannot host this. It serves static files only, and this needs a
+Python process and a server-side API key.
 
 ---
 
